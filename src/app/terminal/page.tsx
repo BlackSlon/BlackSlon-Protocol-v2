@@ -1,357 +1,144 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import FormulaDisplay from '@/components/FormulaDisplay'
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
+// Definicja typów dla TypeScripta
 interface MarketData {
-  FW: number
-  FM: number
-  FQ: number
-  FY: number
-  isGBP?: boolean
+    country: string;
+    index: string;
+    price: number;
+    role: string;
+    oi: number;
 }
 
-interface Market {
-  country: string
-  index: string
-  price: number
-  role: string
-  oi: number
-  status?: string
-}
-
-interface Prices {
-  power: Market[]
-  gas: Market[]
-  future: Market[]
-}
-
-const MARKETS_DATA = {
-  POWER: {
-    DE: { FW: 85.4, FM: 85.4, FQ: 85.4, FY: 85.4 },
-    PL: { FW: 101.2, FM: 101.2, FQ: 101.2, FY: 101.2 },
-    FR: { FW: 71.6, FM: 71.6, FQ: 71.6, FY: 71.6 },
-    RO: { FW: 91.4, FM: 91.4, FQ: 91.4, FY: 91.4 },
-    NO: { FW: 83.6, FM: 83.6, FQ: 83.6, FY: 83.6 },
-    BG: { FW: 105.4, FM: 105.4, FQ: 105.4, FY: 105.4 },
-    GB: { FW: 92.0, FM: 92.0, FQ: 92.0, FY: 92.0, isGBP: true },
-    HU: { FW: 106.2, FM: 106.2, FQ: 106.2, FY: 106.2 },
-    IT: { FW: 109.3, FM: 109.3, FQ: 109.3, FY: 109.3 }
-  },
-  GAS: {
-    NL: { FW: 32.8, FM: 32.8, FQ: 32.8, FY: 32.8 },
-    DE: { FW: 42.0, FM: 42.0, FQ: 42.0, FY: 42.0 },
-    PL: { FW: 31.2, FM: 31.2, FQ: 31.2, FY: 31.2 },
-    FR: { FW: 35.8, FM: 35.8, FQ: 35.8, FY: 35.8 },
-    BG: { FW: 32.5, FM: 32.5, FQ: 32.5, FY: 32.5 },
-    AT: { FW: 38.6, FM: 38.6, FQ: 38.6, FY: 38.6 },
-    IT: { FW: 34.0, FM: 36.3, FQ: 34.48, FY: 29.03 },
-    GB: { FW: 81.7675, FM: 81.7675, FQ: 81.7675, FY: 81.7675, isGBP: true }
-  }
-}
-
-const calculateFinalPrice = (data: MarketData, country: string, marketType: string) => {
-  const weighted_raw = (data.FW * 0.1) + (data.FM * 0.4) + (data.FQ * 0.25) + (data.FY * 0.25)
-  if (marketType === 'gas' && country === 'GB') {
-    return (81.7675 * 1.15 * 34.12) / 100 / 10
-  } else if (marketType === 'gas') {
-    return weighted_raw / 10
-  } else if (marketType === 'power') {
-    return weighted_raw / 10
-  } else {
-    return weighted_raw / 10
-  }
-}
-
-const getMarketRole = (country: string, marketType: string) => {
-  if (marketType === 'power') {
-    switch (country) {
-      case 'DE': return 'Anchor'
-      case 'PL': return 'Coal Base'
-      case 'FR': return 'Nuclear Base'
-      case 'RO': return 'Strong Flow'
-      case 'NO': return 'Hydro'
-      case 'BG': return 'Balkan Entry'
-      case 'GB': return 'Island Market'
-      case 'HU': return 'CEE Hub'
-      case 'IT': return 'South Demand'
-      default: return 'Market'
-    }
-  } else if (marketType === 'gas') {
-    switch (country) {
-      case 'NL': return 'Liquidity'
-      case 'DE': return 'Physical Flow'
-      case 'PL': return 'Dynamic Growth'
-      case 'FR': return 'LNG'
-      case 'BG': return 'Balkan Hub'
-      case 'AT': return 'Baumgarten'
-      case 'IT': return 'Southern Flow'
-      case 'GB': return 'Island'
-      default: return 'Market'
-    }
-  }
-  return 'Market'
-}
-
-const getMarketOI = (country: string, marketType: string) => {
-  if (marketType === 'power') {
-    switch (country) {
-      case 'DE': return 1245000
-      case 'PL': return 890000
-      case 'FR': return 2100000
-      case 'RO': return 180000
-      case 'NO': return 1100000
-      case 'BG': return 220000
-      case 'GB': return 95000
-      case 'HU': return 450000
-      case 'IT': return 750000
-      default: return 100000
-    }
-  } else if (marketType === 'gas') {
-    switch (country) {
-      case 'NL': return 5600000
-      case 'DE': return 3200000
-      case 'PL': return 1200000
-      case 'FR': return 1800000
-      case 'BG': return 850000
-      case 'AT': return 640000
-      case 'IT': return 950000
-      case 'GB': return 420000
-      default: return 100000
-    }
-  }
-  return 100000
+interface PricesState {
+    [key: string]: MarketData[];
 }
 
 export default function TerminalPage() {
-  const [activeTab, setActiveTab] = useState<'power' | 'gas'>('power')
+    const [activeTab, setActiveTab] = useState<string>('power');
+    const [prices, setPrices] = useState<PricesState>({
+        power: [
+            { country: 'DE', index: 'BS-E-DE', price: 9.15, role: 'Anchor', oi: 1245000 },
+            { country: 'PL', index: 'BS-E-PL', price: 10.21, role: 'Coal Base', oi: 890000 },
+            { country: 'FR', index: 'BS-E-FR', price: 7.16, role: 'Nuclear Base', oi: 2100000 },
+            { country: 'RO', index: 'BS-E-RO', price: 9.14, role: 'Strong Flow', oi: 180000 },
+            { country: 'NO', index: 'BS-E-NO', price: 8.36, role: 'Hydro', oi: 1100000 },
+            { country: 'BG', index: 'BS-E-BG', price: 10.54, role: 'Balkan Entry', oi: 220000 },
+            { country: 'GB', index: 'BS-E-GB', price: 9.31, role: 'Island Market', oi: 95000 },
+            { country: 'HU', index: 'BS-E-HU', price: 10.62, role: 'CEE Hub', oi: 450000 },
+            { country: 'IT', index: 'BS-E-IT', price: 10.93, role: 'South Demand', oi: 750000 }
+        ],
+        nat_gas: [
+            { country: 'NL', index: 'BS-G-NL', price: 28.50, role: 'EU Benchmark', oi: 5600000 },
+            { country: 'PL', index: 'BS-G-PL', price: 31.20, role: 'Growth', oi: 1200000 },
+            { country: 'UA', index: 'BS-G-UA', price: 34.10, role: 'Storage', oi: 8900000 },
+            { country: 'IT', index: 'BS-G-IT', price: 35.45, role: 'South Demand', oi: 750000 },
+            { country: 'UK', index: 'BS-G-UK', price: 27.90, role: 'Island Market', oi: 420000 },
+            { country: 'TR', index: 'BS-G-TR', price: 36.80, role: 'Asian Corridor', oi: 310000 },
+            { country: 'AT', index: 'BS-G-AT', price: 32.10, role: 'CEE Hub', oi: 640000 },
+            { country: 'BG', index: 'BS-G-BG', price: 33.50, role: 'Balkan Entry', oi: 220000 }
+        ]
+    });
 
-  const prices: Prices = {
-    power: Object.entries(MARKETS_DATA.POWER).map(([country, data]) => ({
-      country,
-      index: `BS-E-${country}`,
-      price: calculateFinalPrice(data, country, 'power'),
-      role: getMarketRole(country, 'power'),
-      oi: getMarketOI(country, 'power')
-    })),
-    gas: Object.entries(MARKETS_DATA.GAS).map(([country, data]) => ({
-      country,
-      index: `BS-G-${country}`,
-      price: calculateFinalPrice(data, country, 'gas'),
-      role: getMarketRole(country, 'gas'),
-      oi: getMarketOI(country, 'gas')
-    })),
-    future: [
-      { country: 'LPG', index: 'BS-LPG-EU', price: 0.62, role: 'Regional Hub', status: 'development' },
-      { country: 'Diesel', index: 'BS-D-EU', price: 7.58, role: 'Transport Fuel', status: 'development' },
-      { country: 'Gasoline', index: 'BS-GSN-EU', price: 7.35, role: 'Motor Fuel', status: 'development' }
-    ]
-  }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPrices(prev => {
+                const next = { ...prev };
+                const vol = 0.01; // Stała niska wolatylność dla energii i gazu
+                if (next[activeTab]) {
+                    next[activeTab] = next[activeTab].map(m => {
+                        const rawNewPrice = m.price + (Math.random() - 0.5) * vol;
+                        return {
+                            ...m, 
+                            price: +(Math.max(0.01, rawNewPrice)).toFixed(2),
+                            oi: Math.max(0, m.oi + Math.floor((Math.random() - 0.4) * 100))
+                        }
+                    });
+                }
+                return next;
+            });
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [activeTab]);
 
-  // Find DE Power market from the actual calculated prices array
-  const dePowerMarket = prices.power.find(m => m.country === 'DE')
+    const getAccent = () => {
+        return activeTab === 'power' ? '#FFD700' : '#87CEEB';
+    };
 
-  const [selectedMarket, setSelectedMarket] = useState<Market>(dePowerMarket || prices.power[0])
-  const [basePrice, setBasePrice] = useState<number>(dePowerMarket?.price || prices.power[0].price)
+    const displayPrice = (val: number) => val.toFixed(2);
 
-  const [pricesState, setPricesState] = useState<Prices>(prices)
+    const calculateBenchmarkValue = () => {
+        const currentPrices = prices[activeTab];
+        if (!currentPrices) return "0.00";
+        const avg = currentPrices.reduce((a, b) => a + b.price, 0) / currentPrices.length;
+        return avg.toFixed(2);
+    };
 
-  // Sync Engine: Update onClick for every tile to update global selectedMarket state
-  const handleMarketClick = (market: Market) => {
-    setSelectedMarket(market)
-    setBasePrice(market.price)
-  }
-
-  // Handle tab switching to set appropriate default market
-  const handleTabSwitch = (tab: 'power' | 'gas') => {
-    setActiveTab(tab)
-    if (tab === 'power') {
-      // Set DE Power as default for power tab
-      const dePowerMarket = pricesState.power.find(m => m.country === 'DE')
-      if (dePowerMarket) {
-        setSelectedMarket(dePowerMarket)
-        setBasePrice(dePowerMarket.price)
-      }
-    } else if (tab === 'gas') {
-      // Set NL Gas as default for gas tab
-      const nlGasMarket = pricesState.gas.find(m => m.country === 'NL')
-      if (nlGasMarket) {
-        setSelectedMarket(nlGasMarket)
-        setBasePrice(nlGasMarket.price)
-      }
-    }
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPricesState(prev => {
-        const next = { ...prev }
-        const vol = (activeTab === 'power' || activeTab === 'gas') ? 0.05 : 1.5
-        next[activeTab] = next[activeTab].map((m: Market) => {
-          const rawNewPrice = m.price + (Math.random() - 0.5) * vol
-          return {
-            ...m, 
-            price: +(Math.max(0.01, rawNewPrice)).toFixed(2),
-            oi: Math.max(0, m.oi + Math.floor((Math.random() - 0.4) * 100))
-          }
-        })
-        return next
-      })
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [activeTab])
-
-  const getAccent = () => {
-    if(activeTab === 'power') return '#FFD700'
-    if(activeTab === 'gas') return '#87CEEB'
-    return '#00ced1'
-  }
-
-  const getUnit = () => {
-    return 'kWh'
-  }
-
-  const getMarketLabel = (country: string, role: string) => {
-    return `${country} // ${role}`
-  }
-
-  return (
-    <div style={{ minHeight: '100vh', background: '#000', color: '#fff', padding: '20px', fontFamily: 'monospace' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        {/* Header & Branding */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-          <div>
-            <h1 style={{ fontSize: '24px', fontWeight: 'bold', margin: 0, color: '#fff' }}>BlackSlon Energy Indexes</h1>
-            <p style={{ margin: '5px 0', color: '#888', fontSize: '12px' }}>ZERO SPREAD | ZERO EXPIRY | LIQUIDTY 24/7</p>
-          </div>
-          <button style={{ background: '#fff', color: '#000', padding: '12px 24px', border: 'none', cursor: 'pointer', fontWeight: 'bold', borderRadius: '4px' }}>
-            CONNECT WALLET
-          </button>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-1 mb-8">
-          <button 
-            onClick={() => handleTabSwitch('power')} 
-            style={{ 
-              background: activeTab === 'power' ? getAccent() : 'transparent', 
-              color: activeTab === 'power' ? '#000' : '#fff', 
-              border: `1px solid ${getAccent()}`, 
-              padding: '8px 10px', 
-              cursor: 'pointer', 
-              fontSize: '9px', 
-              fontWeight: 'bold', 
-              textTransform: 'uppercase' 
-            }}
-          >
-            BlackSlon Power Indexes
-          </button>
-          <button 
-            onClick={() => handleTabSwitch('gas')} 
-            style={{ 
-              background: activeTab === 'gas' ? getAccent() : 'transparent', 
-              color: activeTab === 'gas' ? '#000' : '#fff', 
-              border: `1px solid ${getAccent()}`, 
-              padding: '8px 10px', 
-              cursor: 'pointer', 
-              fontSize: '9px', 
-              fontWeight: 'bold', 
-              textTransform: 'uppercase' 
-            }}
-          >
-            BlackSlon Gas Indexes
-          </button>
-        </div>
-
-        {/* Price Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-          {pricesState[activeTab].map(m => (
-            <div 
-              key={m.index}
-              onClick={() => handleMarketClick(m)}
-              style={{ 
-                background: '#0a0a0a', 
-                border: `1px solid ${getAccent()}`, 
-                padding: '16px', 
-                cursor: 'pointer',
-                borderRadius: '8px',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = getAccent()
-                e.currentTarget.style.transform = 'scale(1.02)'
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = '#1a1a1a'
-                e.currentTarget.style.transform = 'scale(1)'
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                <div>
-                  <div style={{ fontSize: '10px', color: '#888', marginBottom: '2px' }}>{m.country}</div>
-                  <div style={{ fontSize: '11px', color: getAccent(), fontWeight: 'bold' }}>{m.index}</div>
-                </div>
-                <div style={{ fontSize: '9px', color: '#666' }}>{m.role}</div>
-              </div>
-              
-              <div style={{ textAlign: 'center', marginBottom: '12px' }}>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#fff', marginBottom: '4px' }}>
-                  {(m.price ?? 0).toFixed(2)}
-                </div>
-                <div style={{ fontSize: '10px', color: '#888' }}>€/100 {getUnit()}</div>
-              </div>
-
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                <button 
-                  style={{ 
-                    flex: 1, 
-                    background: 'transparent', 
-                    color: '#00ff88', 
-                    border: '1px solid #00ff88', 
-                    padding: '8px 0', 
-                    fontSize: '10px', 
-                    fontWeight: 'bold', 
-                    cursor: 'pointer',
-                    borderRadius: '4px'
-                  }}
-                >
-                  BUY
-                </button>
-                <button 
-                  style={{ 
-                    flex: 1, 
-                    background: 'transparent', 
-                    color: '#ff4444', 
-                    border: '1px solid #ff4444', 
-                    padding: '8px 0', 
-                    fontSize: '10px', 
-                    fontWeight: 'bold', 
-                    cursor: 'pointer',
-                    borderRadius: '4px'
-                  }}
-                >
-                  SELL
-                </button>
-              </div>
-              <div className="text-xs text-gray-500">
-                OI: {(m.oi || 0).toLocaleString()}
-              </div>
-              {m.status === 'development' && (
-                <div className="text-xs text-gray-500 mt-1">
-                  <span className="bg-gray-700 px-2 py-1 rounded">In Development</span>
-                </div>
-              )}
+    return (
+        <main style={{ backgroundColor: '#000', minHeight: '100vh', padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+                <Link href="/" style={{ width: '32px', height: '32px', border: '2px solid #fff', backgroundColor: '#000', display: 'block' }}></Link>
             </div>
-          ))}
-        </div>
 
-        {/* Formula Display Section */}
-        <div className="max-w-6xl mx-auto mt-8">
-          <FormulaDisplay 
-            activeMarket={selectedMarket}
-          />
-        </div>
-      </div>
-    </div>
-  )
+            <div style={{ background: '#000', color: '#fff', fontFamily: 'monospace', padding: '15px', border: `2px solid ${getAccent()}`, maxWidth: '1000px', margin: 'auto', transition: 'border-color 0.5s ease' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', marginBottom: '20px', paddingBottom: '10px' }}>
+                    <div>
+                        <div style={{ fontSize: '18px', fontWeight: 'bold' }}>BlackSlon Energy Indexes</div>
+                        <div style={{ fontSize: '9px', color: '#666' }}>Zero Spread | Zero Expiry | 24/7 **Liquidty** protocol</div>
+                    </div>
+                    <button style={{ background: '#fff', color: '#000', border: '1px solid #fff', padding: '5px 10px', fontSize: '9px', cursor: 'pointer', fontWeight: 'bold' }}>CONNECT WALLET</button>
+                </div>
+
+                {/* PRZEŁĄCZNIKI: TYLKO POWER I GAS */}
+                <div style={{ display: 'flex', marginBottom: '25px', gap: '4px' }}>
+                    <button onClick={() => setActiveTab('power')} style={{ 
+                        background: activeTab === 'power' ? '#FFD700' : 'transparent', 
+                        color: activeTab === 'power' ? '#000' : '#fff', 
+                        border: '1px solid #FFD700', padding: '8px 15px', cursor: 'pointer', fontSize: '9px', fontWeight: 'bold' 
+                    }}> BLACKSLON POWER </button>
+                    <button onClick={() => setActiveTab('nat_gas')} style={{ 
+                        background: activeTab === 'nat_gas' ? '#87CEEB' : 'transparent', 
+                        color: activeTab === 'nat_gas' ? '#000' : '#fff', 
+                        border: '1px solid #87CEEB', padding: '8px 15px', cursor: 'pointer', fontSize: '9px', fontWeight: 'bold' 
+                    }}> BLACKSLON GAS </button>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '8px' }}>
+                    {(prices[activeTab] || []).map(m => (
+                        <div key={m.index} style={{ background: '#050505', padding: '12px', border: '1px solid #1a1a1a' }}>
+                            <div style={{ fontSize: '8px', color: '#444' }}>{m.country} // {m.role}</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '11px' }}>{m.index}</div>
+                            <div style={{ margin: '8px 0' }}>
+                                <span style={{ fontSize: '20px', fontWeight: 'bold', color: getAccent() }}>
+                                    {displayPrice(m.price)}
+                                </span>
+                                <span style={{ fontSize: '7px', color: '#444', marginLeft: '3px' }}>€/100 kWh eq</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '4px', marginBottom: '10px' }}>
+                                <button style={{ flex: 1, background: 'transparent', color: '#00ff88', border: '1px solid #00ff88', padding: '6px 0', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer' }}>BUY</button>
+                                <button style={{ flex: 1, background: 'transparent', color: '#ff4444', border: '1px solid #ff4444', padding: '6px 0', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer' }}>SELL</button>
+                            </div>
+                            <div style={{ borderTop: '1px solid #111', paddingTop: '8px' }}>
+                                <div style={{ fontSize: '7px', color: '#444' }}>OPEN INTEREST</div>
+                                <div style={{ fontSize: '10px', color: '#fff' }}>{m.oi.toLocaleString()} kWh</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div style={{ marginTop: '20px', padding: '20px 10px', border: '2px solid #333', background: '#050505', textAlign: 'center', borderColor: getAccent() }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#fff' }}>
+                            {activeTab.toUpperCase()} BENCHMARK:
+                        </span>
+                        <span style={{ fontSize: '22px', fontWeight: 'bold', color: getAccent() }}>
+                            {calculateBenchmarkValue()}
+                        </span>
+                        <span style={{ fontSize: '9px', color: '#666' }}>€/100 kWh eq</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
 }
