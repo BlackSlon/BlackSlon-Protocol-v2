@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix of BlackSlon Events</title>
+</head>
+<body>
+
+<div id="blackslon-matrix-root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+  body { background-color: #000; margin: 0; padding: 20px; padding-top: 100px; font-family: 'Courier New', monospace; color: #fff; }
+  :root { --bs-blue: #4682B4; --bs-red: #cc0000; --bs-green: #00ff88; --bs-yellow: #ffcc00; }
+  
+  /* SYMBOL PROTOKOŁU - POJEDYNCZA CIENKA RAMKA */
+  .protocol-home-link {
+    position: absolute; 
+    top: 30px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    text-decoration: none; 
+    z-index: 1000;
+  }
+  .logo-symbol { 
+    width: 32px; 
+    height: 32px; 
+    border: 2px solid #fff; /* Cienka biała ramka */
+    background-color: #000; /* Czarny środek */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.3s ease;
+  }
+  .logo-symbol:hover { 
+    transform: scale(1.1); 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    border-color: #fff;
+  }
+
+  /* LAYOUT */
+  .matrix-layout { display: flex; gap: 15px; max-width: 1300px; margin: auto; }
+
+  @media (max-width: 768px) {
+    .matrix-layout { flex-direction: column; }
+    .side-panel { width: 100% !important; order: -1; position: relative !important; top: 0 !important; }
+    .event-grid { grid-template-columns: 1fr !important; }
+  }
+
+  .matrix-main { flex: 1; border: 1px solid #1a1a1a; padding: 15px; background: #020202; position: relative; }
+  .side-panel { width: 260px; border: 1px solid #1a1a1a; padding: 15px; background: #050505; font-size: 11px; position: sticky; top: 15px; height: fit-content; }
+  .side-header { color: var(--bs-blue); font-size: 11px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px solid #111; padding-bottom: 5px; }
+
+  .matrix-input, .matrix-select, .matrix-textarea { background: #000; border: 1px solid #1a1a1a; color: #ccc; padding: 8px; font-family: monospace; font-size: 12px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+  .label { font-size: 8px; color: #444; text-transform: uppercase; margin-bottom: 3px; display: block; }
+  
+  .v-btn-submit { 
+    width: 100%; padding: 10px; font-size: 10px; font-weight: bold; cursor: pointer; 
+    border: 1px solid var(--bs-yellow); background: transparent; color: var(--bs-yellow);
+    text-transform: uppercase; transition: 0.3s; 
+  }
+  .v-btn-submit:hover { background: var(--bs-yellow); color: #000; box-shadow: 0 0 20px rgba(255, 204, 0, 0.5); }
+
+  .matrix-connect-btn {
+    position: absolute; top: 15px; right: 15px;
+    background: transparent; color: #666; border: 1px solid #333;
+    padding: 6px 12px; font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: bold; cursor: pointer;
+    text-transform: uppercase; z-index: 10;
+  }
+  .matrix-connect-btn:hover { border-color: var(--bs-blue); color: var(--bs-blue); }
+
+  .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; }
+  .event-card { background: #000; border: 1px solid #151515; padding: 12px; border-top: 2px solid var(--bs-blue); display: flex; flex-direction: column; min-height: 220px; transition: 0.3s; }
+  .event-card:hover { border-color: var(--bs-blue); background: #030303; }
+  
+  .yield-badge { font-size: 14px; font-weight: bold; color: var(--bs-green); }
+  
+  .v-btn { flex: 1; padding: 8px; font-size: 10px; font-weight: bold; cursor: pointer; border: 1px solid #222; background: transparent; transition: 0.3s; }
+  .v-yes { color: var(--bs-green); border-color: var(--bs-green); }
+  .v-yes:hover { background: var(--bs-green); color: #000; box-shadow: 0 0 15px var(--bs-green); }
+  .v-no { color: var(--bs-red); border-color: var(--bs-red); }
+  .v-no:hover { background: var(--bs-red); color: #fff; box-shadow: 0 0 15px var(--bs-red); }
+  
+  .deadline-tag { font-size: 9px; color: var(--bs-yellow); margin-bottom: 5px; display: block; }
+  .stat-row { display: flex; justify-content: flex-start; font-size: 9px; margin-bottom: 10px; color: #666; font-weight: bold; }
+  
+  .card-footer { font-size: 8px; color: #444; margin-top: auto; padding-top: 10px; border-top: 1px solid #111; display: flex; justify-content: space-between; align-items: center; }
+  .liquid-val { color: var(--bs-blue); font-weight: bold; font-size: 10px; }
+</style>
+
+<script type="text/babel">
+  const { useState } = React;
+
+  const EVENTS = [
+    { market: 'NAT GAS', region: 'UKRAINE', desc: 'Will Russia destroy the world’s largest underground gas storage facility in Ukraine?', stake: '1,240,000', votes: '1,420', yield: '740%', deadline: '30.06.2026' },
+    { market: 'POWER', region: 'EU', desc: 'Will day-ahead electricity prices (RDN) in any EU member state exceed 300 EUR/MWh?', stake: '845,200', votes: '890', yield: '290%', deadline: '30.07.2026' },
+    { market: 'NAT GAS', region: 'TTF', desc: 'Will the TTF Natural Gas Front-Month contract price exceed 50 EUR/MWh?', stake: '2,105,000', votes: '3,110', yield: '165%', deadline: '31.05.2026' },
+    { market: 'CRUDE OIL', region: 'RUSSIA', desc: 'Will a strike on Novorossiysk port disable RU crude oil exports for more than 7 consecutive days?', stake: '3,450,000', votes: '5,102', yield: '820%', deadline: '31.03.2026' },
+    { market: 'NUCLEAR', region: 'FRANCE', desc: 'Will a major unplanned outage occur at any French nuclear power plant?', stake: '155,000', votes: '420', yield: '420%', deadline: '31.07.2026' },
+    { market: 'NAT GAS', region: 'NORWAY', desc: 'Will a force majeure event halt gas production at the Troll field in Norway?', stake: '612,400', votes: '1,140', yield: '315%', deadline: '31.07.2026' },
+    { market: 'REGULATION', region: 'POLAND', desc: 'Will Poland fully implement the EU Buildings Directive by the end of May?', stake: '45,000', votes: '215', yield: '210%', deadline: '31.05.2026' },
+    { market: 'NUCLEAR', region: 'GERMANY', desc: 'Will Germany formally decide to return to nuclear power generation?', stake: '12,500', votes: '112', yield: '1250%', deadline: '31.12.2026' },
+    { market: 'SOLAR PV', region: 'GERMANY', desc: 'Will Germany install more than 15 GW of new solar PV capacity in 2026?', stake: '89,400', votes: '345', yield: '185%', deadline: '31.12.2026' }
+  ];
+
+  function MatrixApp() {
+    const [connected, setConnected] = useState(false);
+
+    return (
+      <div>
+        {/* SYMBOL - POJEDYNCZA CIENKA RAMKA */}
+        <a href="index.html" className="protocol-home-link">
+          <div className="logo-symbol"></div>
+        </a>
+
+        <div className="matrix-layout">
+          <div className="side-panel">
+            <div className="side-header">Put Your Own BlackSlon Event</div>
+            <label className="label">Target Market</label>
+            <select className="matrix-select"><option>POWER</option><option>NAT GAS</option><option>NUCLEAR</option><option>CRUDE OIL</option><option>REGULATION</option><option>WEATHER EXTREMES</option></select>
+            <label className="label">Region</label>
+            <select className="matrix-select"><option>POLAND</option><option>GERMANY</option><option>FRANCE</option><option>UKRAINE</option><option>NORWAY</option><option>EU GLOBAL</option></select>
+            <label className="label">Event Definition</label>
+            <textarea className="matrix-textarea" rows="4" placeholder="Describe your BlackSlon event..."></textarea>
+            <label className="label">Stake (Min. 1 €BLSN)</label>
+            <input className="matrix-input" placeholder="Enter amount (min. 1 €BLSN)" />
+            <button className="v-btn-submit">SUBMIT EVENT</button>
+          </div>
+
+          <div className="matrix-main">
+            <button className="matrix-connect-btn" onClick={() => setConnected(!connected)}>
+              {connected ? '0x71C...4E2A' : 'CONNECT WALLET'}
+            </button>
+            <h1 style={{ margin: '0 0 15px 0', fontSize: '18px', fontWeight: 'bold', color: 'var(--bs-blue)', letterSpacing: '2px', textTransform: 'uppercase' }}>
+              Matrix of BlackSlon Events // Protocol Access
+            </h1>
+            
+            <div className="event-grid">
+              {EVENTS.map((ev, i) => (
+                <div key={i} className="event-card">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                    <span style={{fontSize: '8px', color: '#666'}}>{ev.market} // {ev.region}</span>
+                    <div className="yield-badge">{ev.yield}</div>
+                  </div>
+                  <span className="deadline-tag">DEADLINE: {ev.deadline}</span>
+                  <div className="stat-row"><span>VOTES CAST: {ev.votes}</span></div>
+                  <div style={{fontSize: '11px', color: '#ccc', margin: '5px 0 15px 0', flex: 1, lineHeight: '1.5'}}>{ev.desc}</div>
+                  <div style={{display: 'flex', gap: '6px', marginBottom: '10px'}}>
+                    <button className="v-btn v-yes">YES</button>
+                    <button className="v-btn v-no">NO</button>
+                  </div>
+                  <div className="card-footer">
+                    <span style={{textTransform: 'uppercase'}}>Liquidty:</span>
+                    <span className="liquid-val">{ev.stake} €BLSN</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('blackslon-matrix-root'));
+  root.render(<MatrixApp />);
+</script>
+
+</body>
+</html>
