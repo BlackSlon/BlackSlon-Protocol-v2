@@ -130,8 +130,48 @@ export default function TerminalPage() {
                                 <span style={{ fontSize: '7px', color: '#444', marginLeft: '3px' }}>€/100 kWh eq</span>
                             </div>
                             <div style={{ display: 'flex', gap: '4px', marginBottom: '10px' }}>
-                                <button style={{ flex: 1, background: 'transparent', color: '#00ff88', border: '1px solid #00ff88', padding: '6px 0', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer' }}>BUY</button>
-                                <button style={{ flex: 1, background: 'transparent', color: '#ff4444', border: '1px solid #ff4444', padding: '6px 0', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer' }}>SELL</button>
+                                <button 
+                                    style={{ 
+                                        flex: 1, 
+                                        background: 'transparent', 
+                                        color: '#00ff88', 
+                                        border: '1px solid #00ff88', 
+                                        padding: '6px 0', 
+                                        fontSize: '10px', 
+                                        fontWeight: 'bold', 
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseOver={(e) => {
+                                        e.currentTarget.style.background = '#00ff88';
+                                        e.currentTarget.style.color = '#000';
+                                    }}
+                                    onMouseOut={(e) => {
+                                        e.currentTarget.style.background = 'transparent';
+                                        e.currentTarget.style.color = '#00ff88';
+                                    }}
+                                >BUY</button>
+                                <button 
+                                    style={{ 
+                                        flex: 1, 
+                                        background: 'transparent', 
+                                        color: '#ff4444', 
+                                        border: '1px solid #ff4444', 
+                                        padding: '6px 0', 
+                                        fontSize: '10px', 
+                                        fontWeight: 'bold', 
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseOver={(e) => {
+                                        e.currentTarget.style.background = '#ff4444';
+                                        e.currentTarget.style.color = '#fff';
+                                    }}
+                                    onMouseOut={(e) => {
+                                        e.currentTarget.style.background = 'transparent';
+                                        e.currentTarget.style.color = '#ff4444';
+                                    }}
+                                >SELL</button>
                             </div>
                             <div style={{ borderTop: '1px solid #111', paddingTop: '8px' }}>
                                 <div style={{ fontSize: '7px', color: '#444' }}>OPEN INTEREST</div>
