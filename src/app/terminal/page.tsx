@@ -1,113 +1,79 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 export default function TerminalPage() {
-  // Parametry BlackSlon do kalibracji [cite: 2026-02-06]
-  const a = 120.50; // Base Price (Cena bazowa)
-  const b = 0.045;  // Volatility/Sensitivity (Wrażliwość)
-  const S = 15.2;   // Stress Factor / Supply (Współczynnik stresu)
+  const [activeTab, setActiveTab] = useState('power');
 
-  // Obliczanie ceny według Twojej formuły: P = a * e^(b * S)
-  const currentPrice = (a * Math.exp(b * S)).toFixed(2);
+  // Dane przeniesione bezpośrednio z Twojego trading.html
+  const powerMarkets = [
+    { country: 'DE', index: 'BS-D-DE', price: '762.50', role: 'Logistics' },
+    { country: 'PL', index: 'BS-D-PL', price: '735.80', role: 'Import Base' },
+    { country: 'FR', index: 'BS-D-FR', price: '768.40', role: 'Refinery' },
+    { country: 'IT', index: 'BS-D-IT', price: '772.10', role: 'Med Supply' },
+  ];
 
-  const [logs, setLogs] = useState<string[]>([]);
+  const gasMarkets = [
+    { country: 'ARA', index: 'BS-GS-ARA', price: '720.00', role: 'Global Hub' },
+    { country: 'DE', index: 'BS-GS-DE', price: '742.30', role: 'Consumption' },
+    { country: 'PL', index: 'BS-GS-PL', price: '715.40', role: 'Storage' },
+  ];
 
-  // Symulacja logów systemowych protocol
-  useEffect(() => {
-    const messages = [
-      "Initializing BlackSlon Protocol...",
-      "Analyzing Energy Market Liquidty...",
-      "Connecting to Arbitrage Mechanism...",
-      "Calibration parameters: a=" + a + ", b=" + b + ", S=" + S,
-      "Price stabilized at: $" + currentPrice
-    ];
-
-    messages.forEach((msg, i) => {
-      setTimeout(() => {
-        setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
-      }, i * 1000);
-    });
-  }, []);
+  const currentMarkets = activeTab === 'power' ? powerMarkets : gasMarkets;
 
   return (
-    <main style={{ backgroundColor: '#000', minHeight: '100vh', color: '#00ff00', fontFamily: 'monospace', padding: '20px' }}>
+    <main style={{ backgroundColor: '#000', minHeight: '100vh', color: '#fff', fontFamily: 'monospace', padding: '30px' }}>
       
-      {/* HEADER */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #004400', paddingBottom: '10px', marginBottom: '20px' }}>
-        <h1 style={{ color: '#FFD700', margin: 0, fontSize: '24px' }}>BLACKSLON TERMINAL v1.0</h1>
-        <Link href="/" style={{ color: '#888', textDecoration: 'none', fontSize: '14px', border: '1px solid #444', padding: '5px 10px' }}>
-          EXIT_TERMINAL
-        </Link>
+      {/* NAGŁÓWEK Z LOGO */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <Link href="/">
+            <img src="/BS_image.jpg" alt="Logo" style={{ width: '50px', height: '50px', border: '1px solid #333' }} />
+          </Link>
+          <h2 style={{ letterSpacing: '2px' }}>BlackSlon Energy Indexes</h2>
+        </div>
+        <button style={{ backgroundColor: '#fff', color: '#000', border: 'none', padding: '10px 20px', fontWeight: 'bold', cursor: 'pointer' }}>
+          CONNECT WALLET
+        </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '20px' }}>
-        
-        {/* LEWA KOLUMNA: DANE I FORMUŁA */}
-        <div>
-          <div style={{ border: '1px solid #00ff00', padding: '20px', backgroundColor: '#050505', marginBottom: '20px' }}>
-            <h2 style={{ color: '#00ff00', marginTop: 0 }}>Mathematical Model</h2>
-            <p style={{ fontSize: '28px', color: '#fff', textAlign: 'center', margin: '20px 0' }}>
-              P = a · e<sup>(b · S)</sup>
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', textAlign: 'center' }}>
-              <div style={{ border: '1px solid #222', padding: '10px' }}>
-                <span style={{ color: '#888' }}>Base (a)</span><br />
-                <span style={{ fontSize: '20px' }}>{a}</span>
-              </div>
-              <div style={{ border: '1px solid #222', padding: '10px' }}>
-                <span style={{ color: '#888' }}>Sens. (b)</span><br />
-                <span style={{ fontSize: '20px' }}>{b}</span>
-              </div>
-              <div style={{ border: '1px solid #222', padding: '10px' }}>
-                <span style={{ color: '#888' }}>Stress (S)</span><br />
-                <span style={{ fontSize: '20px' }}>{S}</span>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ border: '1px solid #00ff00', padding: '15px', height: '300px', overflowY: 'auto', backgroundColor: '#050505' }}>
-            {logs.map((log, i) => (
-              <div key={i} style={{ marginBottom: '5px' }}>{log}</div>
-            ))}
-            <div style={{ animation: 'blink 1s infinite' }}>_</div>
-          </div>
-        </div>
-
-        {/* PRAWA KOLUMNA: STATUS I LIQUIDTY */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ border: '1px solid #FFD700', padding: '20px', textAlign: 'center' }}>
-            <h3 style={{ margin: 0, color: '#FFD700' }}>CURRENT PRICE</h3>
-            <div style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', margin: '10px 0' }}>
-              ${currentPrice}
-            </div>
-            <div style={{ color: '#2ECC40', fontSize: '12px' }}>● MARKET OPEN</div>
-          </div>
-
-          <div style={{ border: '1px solid #0074D9', padding: '15px' }}>
-            <h4 style={{ margin: '0 0 10px 0', color: '#0074D9' }}>Liquidty Protocol</h4>
-            <div style={{ height: '10px', backgroundColor: '#111', width: '100%', marginBottom: '10px' }}>
-              <div style={{ height: '100%', backgroundColor: '#0074D9', width: '75%' }}></div>
-            </div>
-            <span style={{ fontSize: '12px' }}>POOL STATUS: 75% LOADED</span>
-          </div>
-
-          <div style={{ border: '1px solid #FF4136', padding: '15px' }}>
-            <h4 style={{ margin: '0 0 10px 0', color: '#FF4136' }}>Arbitrage Alert</h4>
-            <p style={{ fontSize: '11px', color: '#888' }}>Monitoring price gaps between Bonded Curve and External Indexes...</p>
-          </div>
-        </div>
-
+      {/* PRZEŁĄCZNIKI */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
+        <button 
+          onClick={() => setActiveTab('power')}
+          style={{ backgroundColor: activeTab === 'power' ? '#FFD700' : '#111', color: activeTab === 'power' ? '#000' : '#FFD700', border: '1px solid #FFD700', padding: '10px 20px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          POWER INDEXES
+        </button>
+        <button 
+          onClick={() => setActiveTab('gas')}
+          style={{ backgroundColor: activeTab === 'gas' ? '#00FFFF' : '#111', color: activeTab === 'gas' ? '#000' : '#00FFFF', border: '1px solid #00FFFF', padding: '10px 20px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          GASOLINE INDEXES
+        </button>
       </div>
 
-      <style jsx>{`
-        @keyframes blink {
-          0% { opacity: 0; }
-          50% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-      `}</style>
+      {/* SIATKA KAFELKÓW Z TRADING.HTML */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
+        {currentMarkets.map((m) => (
+          <div key={m.index} style={{ border: '1px solid #222', padding: '20px', backgroundColor: '#050505' }}>
+            <div style={{ fontSize: '10px', color: '#666' }}>{m.country} // {m.role}</div>
+            <div style={{ color: activeTab === 'power' ? '#FFD700' : '#00FFFF', fontWeight: 'bold', margin: '10px 0' }}>{m.index}</div>
+            <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '15px' }}>{m.price} <span style={{ fontSize: '12px' }}>USD/t</span></div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button style={{ flex: 1, backgroundColor: 'transparent', border: '1px solid #2ECC40', color: '#2ECC40', padding: '5px', fontSize: '10px', cursor: 'pointer' }}>BUY</button>
+              <button style={{ flex: 1, backgroundColor: 'transparent', border: '1px solid #FF4136', color: '#FF4136', padding: '5px', fontSize: '10px', cursor: 'pointer' }}>SELL</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* TWOJA FORMUŁA W STOPCE */}
+      <div style={{ marginTop: '50px', borderTop: '1px solid #222', paddingTop: '20px' }}>
+        <p style={{ color: '#444' }}>Liquidty Protocol Active // Formula Calibration Mode</p>
+        <h3 style={{ margin: '10px 0' }}>P = a · e<sup>(b · S)</sup></h3>
+      </div>
+
     </main>
   );
 }
