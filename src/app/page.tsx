@@ -1,46 +1,42 @@
 'use client';
-
 import React from 'react';
-import Image from 'next/image';
 
 export default function Home() {
   return (
     <main style={{ backgroundColor: '#000', minHeight: '100vh', color: '#fff', fontFamily: 'monospace' }}>
       
-      {/* SEKCJA GŁÓWNA */}
       <div style={{ 
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center', 
         justifyContent: 'center',
-        minHeight: '70vh',
-        gap: '30px',
+        minHeight: '85vh',
+        gap: '25px',
         padding: '20px' 
       }}>
         
-        {/* LOGO Z GITHUBA */}
-        <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+        {/* LOGO BLACKSLON - Ścieżka musi pasować do pliku w folderze public */}
+        <div style={{ width: '130px', height: '130px' }}>
           <img 
-            src="/bs_image.jpg" 
+            src="/BS_image.jpg" 
             alt="BlackSlon Logo" 
             style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
           />
         </div>
 
-        <h1 style={{ fontSize: '48px', fontWeight: 'bold', letterSpacing: '12px', margin: 0 }}>
+        <h1 style={{ fontSize: '42px', fontWeight: 'bold', letterSpacing: '12px', margin: '0' }}>
           BLACKSLON
         </h1>
 
-        {/* SIATKA MNIEJSZYCH KWADRATÓW */}
+        {/* SIATKA 5 MNIEJSZYCH KWADRATÓW (115px) */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
-          gap: '15px', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(115px, 1fr))', 
+          gap: '12px', 
           width: '100%', 
-          maxWidth: '850px' 
+          maxWidth: '750px' 
         }}>
           
-          {/* ŻÓŁTY - Poprawiona nazwa */}
           <div 
             onClick={() => document.getElementById('indexes-section')?.scrollIntoView({ behavior: 'smooth' })} 
             style={squareStyle('#FFD700', '#000')}
@@ -50,8 +46,7 @@ export default function Home() {
 
           <div style={squareStyle('#FF4136', '#fff')}>Broken Market Architecture</div>
           <div style={squareStyle('#2ECC40', '#fff')}>Manifesto</div>
-
-          {/* NIEBIESKI - Poprawiona nazwa */}
+          
           <div style={squareStyle('#0074D9', '#fff')}>
             Matrix of BlackSlon Events
           </div>
@@ -60,20 +55,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* SEKCJA INDEKSÓW (Terminal Liquidty) */}
-      <div id="indexes-section" style={{ paddingTop: '50px' }}>
-         {/* Tutaj zostaje Twój kod z wykresami i formułą BlackSlon */}
+      {/* SEKCJA Z TERMINALEM */}
+      <div id="indexes-section" style={{ paddingTop: '80px' }}>
+         {/* Tu zostaje Twój dotychczasowy kod z Liquidty protocol */}
       </div>
 
     </main>
   );
 }
 
-// STYL MNIEJSZYCH KWADRATÓW
 const squareStyle = (bgColor: string, textColor: string) => ({
   backgroundColor: bgColor,
   color: textColor,
-  height: '130px', // Zmniejszone
+  height: '115px', // Zmniejszony rozmiar zgodnie z prośbą
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -81,9 +75,9 @@ const squareStyle = (bgColor: string, textColor: string) => ({
   cursor: 'pointer',
   textAlign: 'center' as 'center',
   fontWeight: 'bold' as 'bold',
-  fontSize: '12px', // Mniejszy font do dłuższych nazw
+  fontSize: '10px',
   padding: '10px',
-  transition: 'transform 0.2s',
-  boxShadow: '0 4px 10px rgba(0,0,0,0.5)',
-  border: 'none'
+  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+  border: 'none',
+  transition: 'transform 0.2s'
 });
