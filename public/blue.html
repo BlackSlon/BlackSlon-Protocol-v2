@@ -7,7 +7,15 @@
 </head>
 <body>
 
+<!-- Back to Home Button -->
+<div style="position: absolute; top: 10px; left: 10px; z-index: 9999;">
+  <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; background: #333; border: 1px solid #666; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 4px;">Back to Home</a>
+</div>
+
 <div id="blackslon-matrix-root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <style>
   body { background-color: #000; margin: 0; padding: 20px; padding-top: 100px; font-family: 'Courier New', monospace; color: #fff; }
@@ -89,98 +97,96 @@
   .liquid-val { color: var(--bs-blue); font-weight: bold; font-size: 10px; }
 </style>
 
-<!-- Logo Navigation -->
-<a href="/" className="protocol-home-link">
-  <div className="logo-symbol">
-    <img src="/BS_image.jpg" alt="BlackSlon Logo" style="width: 100%; height: 100%; object-fit: contain;" />
-  </div>
-</a>
+<script type="text/babel">
+  console.log('Matrix Loading...');
+  
+  const { useState } = React;
 
-<!-- Matrix Content -->
-<div className="matrix-layout">
-  <div className="side-panel">
-    <div className="side-header">Put Your Own BlackSlon Event</div>
-    <label className="label">Target Market</label>
-    <select className="matrix-select">
-      <option>POWER</option><option>NAT GAS</option><option>NUCLEAR</option><option>CRUDE OIL</option><option>REGULATION</option><option>WEATHER EXTREMES</option>
-    </select>
-    <label className="label">Region</label>
-    <select className="matrix-select">
-      <option>POLAND</option><option>GERMANY</option><option>FRANCE</option><option>UKRAINE</option><option>NORWAY</option><option>EU GLOBAL</option>
-    </select>
-    <label className="label">Event Definition</label>
-    <textarea className="matrix-textarea" rows="4" placeholder="Describe your BlackSlon event..."></textarea>
-    <label className="label">Stake (Min. 1 €BLSN)</label>
-    <input className="matrix-input" placeholder="Enter amount (min. 1 €BLSN)" />
-    <button className="v-btn-submit">SUBMIT EVENT</button>
-  </div>
+  const EVENTS = [
+    { market: 'NAT GAS', region: 'UKRAINE', desc: 'Will Russia destroy the world’s largest underground gas storage facility in Ukraine?', stake: '1,240,000', votes: '1,420', yield: '740%', deadline: '30.06.2026' },
+    { market: 'POWER', region: 'EU', desc: 'Will day-ahead electricity prices (RDN) in any EU member state exceed 300 EUR/MWh?', stake: '845,200', votes: '890', yield: '290%', deadline: '30.07.2026' },
+    { market: 'NAT GAS', region: 'TTF', desc: 'Will the TTF Natural Gas Front-Month contract price exceed 50 EUR/MWh?', stake: '2,105,000', votes: '3,110', yield: '165%', deadline: '31.05.2026' },
+    { market: 'CRUDE OIL', region: 'RUSSIA', desc: 'Will a strike on Novorossiysk port disable RU crude oil exports for more than 7 consecutive days?', stake: '3,450,000', votes: '5,102', yield: '820%', deadline: '31.03.2026' },
+    { market: 'NUCLEAR', region: 'FRANCE', desc: 'Will a major unplanned outage occur at any French nuclear power plant?', stake: '155,000', votes: '420', yield: '420%', deadline: '31.07.2026' },
+    { market: 'NAT GAS', region: 'NORWAY', desc: 'Will a force majeure event halt gas production at the Troll field in Norway?', stake: '612,400', votes: '1,140', yield: '315%', deadline: '31.07.2026' },
+    { market: 'REGULATION', region: 'POLAND', desc: 'Will Poland fully implement the EU Buildings Directive by the end of May?', stake: '45,000', votes: '215', yield: '210%', deadline: '31.05.2026' },
+    { market: 'NUCLEAR', region: 'GERMANY', desc: 'Will Germany formally decide to return to nuclear power generation?', stake: '12,500', votes: '112', yield: '1250%', deadline: '31.12.2026' },
+    { market: 'SOLAR PV', region: 'GERMANY', desc: 'Will Germany install more than 15 GW of new solar PV capacity in 2026?', stake: '89,400', votes: '345', yield: '185%', deadline: '31.12.2026' }
+  ];
 
-  <div className="matrix-main">
-    <button className="matrix-connect-btn">CONNECT WALLET</button>
-    <h1 style={{ margin: '0 0 15px 0', fontSize: '18px', fontWeight: 'bold', color: 'var(--bs-blue)', letterSpacing: '2px', textTransform: 'uppercase' }}>
-      Matrix of BlackSlon Events // Protocol Access
-    </h1>
-    
-    <div className="event-grid">
-      <!-- Event 1 -->
-      <div className="event-card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-          <span style={{fontSize: '8px', color: '#666'}}>NAT GAS // UKRAINE</span>
-          <div className="yield-badge">740%</div>
-        </div>
-        <span className="deadline-tag">DEADLINE: 30.06.2026</span>
-        <div className="stat-row"><span>VOTES CAST: 1,420</span></div>
-        <div style={{fontSize: '11px', color: '#ccc', margin: '5px 0 15px 0', flex: 1, lineHeight: '1.5'}}>Will Russia destroy the world's largest underground gas storage facility in Ukraine?</div>
-        <div style={{display: 'flex', gap: '6px', marginBottom: '10px'}}>
-          <button className="v-btn v-yes">YES</button>
-          <button className="v-btn v-no">NO</button>
-        </div>
-        <div className="card-footer">
-          <span style={{textTransform: 'uppercase'}}>Liquidty:</span>
-          <span className="liquid-val">1,240,000 €BLSN</span>
+  function MatrixApp() {
+    const [connected, setConnected] = useState(false);
+
+    return (
+      <div>
+        {/* SYMBOL - POJEDYNCZA CIENKA RAMKA */}
+        <a href="/" className="protocol-home-link">
+          <div className="logo-symbol">
+            <img src="/BS_image.jpg" alt="BlackSlon Logo" style="width: 100%; height: 100%; object-fit: contain;" />
+          </div>
+        </a>
+
+        <div className="matrix-layout">
+          <div className="side-panel">
+            <div className="side-header">Put Your Own BlackSlon Event</div>
+            <label className="label">Target Market</label>
+            <select className="matrix-select"><option>POWER</option><option>NAT GAS</option><option>NUCLEAR</option><option>CRUDE OIL</option><option>REGULATION</option><option>WEATHER EXTREMES</option></select>
+            <label className="label">Region</label>
+            <select className="matrix-select"><option>POLAND</option><option>GERMANY</option><option>FRANCE</option><option>UKRAINE</option><option>NORWAY</option><option>EU GLOBAL</option></select>
+            <label className="label">Event Definition</label>
+            <textarea className="matrix-textarea" rows="4" placeholder="Describe your BlackSlon event..."></textarea>
+            <label className="label">Stake (Min. 1 €BLSN)</label>
+            <input className="matrix-input" placeholder="Enter amount (min. 1 €BLSN)" />
+            <button className="v-btn-submit">SUBMIT EVENT</button>
+          </div>
+
+          <div className="matrix-main">
+            <button className="matrix-connect-btn" onClick={() => setConnected(!connected)}>
+              {connected ? '0x71C...4E2A' : 'CONNECT WALLET'}
+            </button>
+            <h1 style={{ margin: '0 0 15px 0', fontSize: '18px', fontWeight: 'bold', color: 'var(--bs-blue)', letterSpacing: '2px', textTransform: 'uppercase' }}>
+              Matrix of BlackSlon Events // Protocol Access
+            </h1>
+            
+            <div className="event-grid">
+              {EVENTS.map((ev, i) => (
+                <div key={i} className="event-card">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                    <span style={{fontSize: '8px', color: '#666'}}>{ev.market} // {ev.region}</span>
+                    <div className="yield-badge">{ev.yield}</div>
+                  </div>
+                  <span className="deadline-tag">DEADLINE: {ev.deadline}</span>
+                  <div className="stat-row"><span>VOTES CAST: {ev.votes}</span></div>
+                  <div style={{fontSize: '11px', color: '#ccc', margin: '5px 0 15px 0', flex: 1, lineHeight: '1.5'}}>{ev.desc}</div>
+                  <div style={{display: 'flex', gap: '6px', marginBottom: '10px'}}>
+                    <button className="v-btn v-yes">YES</button>
+                    <button className="v-btn v-no">NO</button>
+                  </div>
+                  <div className="card-footer">
+                    <span style={{textTransform: 'uppercase'}}>Liquidty:</span>
+                    <span className="liquid-val">{ev.stake} €BLSN</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
+    );
+  }
 
-      <!-- Event 2 -->
-      <div className="event-card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-          <span style={{fontSize: '8px', color: '#666'}}>POWER // EU</span>
-          <div className="yield-badge">290%</div>
-        </div>
-        <span className="deadline-tag">DEADLINE: 30.07.2026</span>
-        <div className="stat-row"><span>VOTES CAST: 890</span></div>
-        <div style={{fontSize: '11px', color: '#ccc', margin: '5px 0 15px 0', flex: 1, lineHeight: '1.5'}}>Will day-ahead electricity prices (RDN) in any EU member state exceed 300 EUR/MWh?</div>
-        <div style={{display: 'flex', gap: '6px', marginBottom: '10px'}}>
-          <button className="v-btn v-yes">YES</button>
-          <button className="v-btn v-no">NO</button>
-        </div>
-        <div className="card-footer">
-          <span style={{textTransform: 'uppercase'}}>Liquidty:</span>
-          <span className="liquid-val">845,200 €BLSN</span>
-        </div>
-      </div>
-
-      <!-- Event 3 -->
-      <div className="event-card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-          <span style={{fontSize: '8px', color: '#666'}}>NAT GAS // TTF</span>
-          <div className="yield-badge">165%</div>
-        </div>
-        <span className="deadline-tag">DEADLINE: 31.05.2026</span>
-        <div className="stat-row"><span>VOTES CAST: 3,110</span></div>
-        <div style={{fontSize: '11px', color: '#ccc', margin: '5px 0 15px 0', flex: 1, lineHeight: '1.5'}}>Will the TTF Natural Gas Front-Month contract price exceed 50 EUR/MWh?</div>
-        <div style={{display: 'flex', gap: '6px', marginBottom: '10px'}}>
-          <button className="v-btn v-yes">YES</button>
-          <button className="v-btn v-no">NO</button>
-        </div>
-        <div className="card-footer">
-          <span style={{textTransform: 'uppercase'}}>Liquidty:</span>
-          <span className="liquid-val">2,105,000 €BLSN</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  const container = document.getElementById('blackslon-matrix-root');
+  console.log('Container found:', container);
+  
+  if (container) {
+    const root = ReactDOM.createRoot(container);
+    console.log('Root created, rendering MatrixApp...');
+    root.render(<MatrixApp />);
+    console.log('MatrixApp rendered successfully!');
+  } else {
+    console.error('Container blackslon-matrix-root not found!');
+  }
+</script>
 
 </body>
 </html>
