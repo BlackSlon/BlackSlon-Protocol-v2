@@ -90,7 +90,7 @@ export default function TerminalPage() {
     return (
         <main style={{ backgroundColor: '#000', minHeight: '100vh', padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-                <Link href="/" style={{ width: '32px', height: '32px', border: '2px solid #fff', backgroundColor: '#000', display: 'block' }}>
+                <Link href="/" style={{ width: '64px', height: '64px', border: '2px solid #fff', backgroundColor: '#000', display: 'block' }}>
                     <img src="/BS_image.jpg" alt="BlackSlon Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </Link>
             </div>
