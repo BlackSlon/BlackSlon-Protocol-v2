@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', width: '100%', maxWidth: '600px' }}>
-          <Link href="/trading.html" style={{ textDecoration: 'none' }}>
+          <Link href="/terminal" style={{ textDecoration: 'none' }}>
             <div style={squareStyle('#FFD700', '#000')}>BlackSlon Energy Indexes</div>
           </Link>
           <Link href="/red.html" style={{ textDecoration: 'none' }}>
