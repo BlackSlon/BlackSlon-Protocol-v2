@@ -9,7 +9,7 @@ export default function Home() {
         
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '64px', fontWeight: '200', letterSpacing: '6px', margin: 0 }}>BlackSlon</h1>
-          <p style={{ color: '#888', fontSize: '20px', letterSpacing: '4px', margin: '5px 0 20px 0', fontWeight: '200' }}>Energy Indexes</p>
+          <p style={{ color: '#888', fontSize: '20px', letterSpacing: '4px', margin: '5px 0 20px 0', fontWeight: '200' }}>Energy Hedge</p>
         </div>
 
         <div style={{ width: '300px', height: '300px', marginBottom: '40px' }}>
