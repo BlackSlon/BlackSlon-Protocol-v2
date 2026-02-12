@@ -10,6 +10,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: 'BlackSlon Protocol',
   description: 'Energy Trading Terminal & Protocol Access',
+  robots: 'noindex, nofollow',
 }
 
 export default function RootLayout({
