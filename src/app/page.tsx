@@ -29,7 +29,7 @@ export default function Home() {
           <Link href="/blue.html" style={{ textDecoration: 'none' }}>
             <div style={squareStyle('#0074D9', '#fff')}>Matrix of BlackSlon Events</div>
           </Link>
-          <Link href="/white-paper.html" style={{ textDecoration: 'none' }}>
+          <Link href="/white-paper.html" style={{ textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); alert('White Paper jest tymczasowo niedostępny - aktualizacja w toku'); }}>
             <div style={squareStyle('#FFFFFF', '#000')}>White Paper</div>
           </Link>
         </div>
