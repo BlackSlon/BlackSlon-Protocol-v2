@@ -1,0 +1,3 @@
+The European Energy Exchange (EEX) is the central arena for major industrial giants and sophisticated financial players. While the official registry lists between 800 and 1,000 members, the market is more concentrated than the raw numbers suggest. After consolidating subsidiaries into their parent organizations, the landscape narrows to approximately 700 to 800 unique holding groups.
+
+A significant portion of this ecosystem—roughly 30%—is comprised of financial institutions. This institutional dominance ensures that direction and stability are primarily driven by these heavyweight financial and energy conglomerates.

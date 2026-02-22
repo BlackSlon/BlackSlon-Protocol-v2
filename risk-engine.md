@@ -1,0 +1,1 @@
+Mamy już kompletny silnik matematyczny i zasady bezpieczeństwa. Wszystkie te wzory są gotowe do wdrożenia w module RiskEngine w Windsurf.
