@@ -71,8 +71,10 @@ function MarketTile({ market }: { market: any }) {
   const mockPrice = 104.55 
   const mockChange = "+1.24%"
 
+  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-500'
+
   return (
-    <div className="bg-[#050505] border border-yellow-500/30 p-8 hover:border-white transition-all group relative">
+    <div className={`bg-[#050505] border ${borderColor} p-8 hover:border-white transition-all group relative`}>
       <div className="flex justify-between items-start mb-6">
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
         <span className="text-green-500 text-[10px] font-bold">{mockChange}</span>
@@ -82,7 +84,7 @@ function MarketTile({ market }: { market: any }) {
         <h3 className="text-xs font-normal text-gray-400 group-hover:text-white transition-colors tracking-widest mb-1">
           BlackSlon {market.type} Index
         </h3>
-        <h4 className="text-white font-normal text-xl tracking-tighter uppercase">
+        <h4 className="text-white font-normal text-base tracking-tighter uppercase">
           {market.name.split(' ')[1]}
         </h4>
       </div>
