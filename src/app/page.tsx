@@ -17,7 +17,9 @@ export default function Home() {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', width: '100%', maxWidth: '600px' }}>
-          <div style={squareStyle('#FFD700', '#000')} onClick={(e) => { e.preventDefault(); alert('BlackSlon Energy Indexes - coming soon!'); }}>BlackSlon Energy Indexes</div>
+          <Link href="/terminal" style={{ textDecoration: 'none' }}>
+            <div style={squareStyle('#FFD700', '#000')}>BlackSlon Energy Indexes</div>
+          </Link>
           <div style={squareStyle('#FF4136', '#fff')} onClick={(e) => { e.preventDefault(); alert('Broken Market Architecture - coming soon!'); }}>Broken Market Architecture</div>
           <div style={squareStyle('#2ECC40', '#fff')} onClick={(e) => { e.preventDefault(); alert('Manifesto - coming soon!'); }}>Manifesto</div>
           <div style={squareStyle('#0074D9', '#fff')} onClick={(e) => { e.preventDefault(); alert('Matrix of BlackSlon Events - coming soon!'); }}>Matrix of BlackSlon Events</div>
