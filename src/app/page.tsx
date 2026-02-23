@@ -34,13 +34,13 @@ export default function Dashboard() {
         <div className="flex bg-[#0a0a0a] border border-gray-800 p-1 w-full max-w-2xl">
           <button 
             onClick={() => setActiveTab('Power')}
-            className={`flex-1 py-3 text-[9px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+            className={`flex-1 py-3 text-[9px] tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-white text-black font-normal' : 'text-gray-500 hover:text-white'}`}
           >
             BlackSlon Power Indexes
           </button>
           <button 
             onClick={() => setActiveTab('Gas')}
-            className={`flex-1 py-3 text-[9px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+            className={`flex-1 py-3 text-[9px] tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-white text-black font-normal' : 'text-gray-500 hover:text-white'}`}
           >
             BlackSlon Gas Indexes
           </button>
@@ -79,10 +79,10 @@ function MarketTile({ market }: { market: any }) {
       </div>
       
       <div className="mb-10">
-        <h3 className="text-xs font-normal text-gray-400 group-hover:text-white transition-colors uppercase tracking-widest mb-1">
+        <h3 className="text-xs font-normal text-gray-400 group-hover:text-white transition-colors tracking-widest mb-1">
           BlackSlon {market.type} Index
         </h3>
-        <h4 className="text-white font-bold text-xl tracking-tighter uppercase">
+        <h4 className="text-white font-normal text-xl tracking-tighter uppercase">
           {market.name.split(' ')[1]}
         </h4>
       </div>
@@ -90,7 +90,7 @@ function MarketTile({ market }: { market: any }) {
       {/* CENA */}
       <div className="mb-8 p-6 bg-black border border-gray-900 text-center group-hover:border-white/20 transition-all">
         <div className="text-[8px] text-gray-600 uppercase tracking-[0.3em] mb-2">Current Index Price</div>
-        <div className="text-3xl font-bold text-white font-mono tracking-tighter">
+        <div className="text-3xl font-normal text-white font-mono tracking-tighter">
           {mockPrice.toFixed(2)} <span className="text-[10px] text-gray-500 ml-1">€BSR</span>
         </div>
       </div>
@@ -99,16 +99,16 @@ function MarketTile({ market }: { market: any }) {
       <div className="grid grid-cols-2 gap-2 mb-10 text-center">
         <div className="border border-gray-900 py-4 group-hover:border-white/10">
             <div className="text-[7px] text-gray-600 uppercase mb-1 tracking-widest">Open Long</div>
-            <div className="text-[11px] text-green-500 font-bold">1.2M</div>
+            <div className="text-[11px] text-green-500 font-normal">1.2M</div>
         </div>
         <div className="border border-gray-900 py-4 group-hover:border-white/10">
             <div className="text-[7px] text-gray-600 uppercase mb-1 tracking-widest">Open Short</div>
-            <div className="text-[11px] text-red-500 font-bold">0.8M</div>
+            <div className="text-[11px] text-red-500 font-normal">0.8M</div>
         </div>
       </div>
 
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-4 bg-white text-black font-bold text-[10px] hover:bg-gray-200 transition-all uppercase tracking-[0.3em]">
+        <button className="w-full py-4 bg-white text-black font-normal text-[10px] hover:bg-gray-200 transition-all uppercase tracking-[0.3em]">
           Open Index
         </button>
       </Link>
