@@ -23,9 +23,7 @@ export default function Dashboard() {
       <header className="max-w-7xl mx-auto mb-16 flex flex-col items-center">
         {/* LOGO BOX */}
         <div className="mb-12 border-4 border-white p-4">
-          <div className="w-16 h-16 bg-black flex items-center justify-center">
-             <span className="text-white text-4xl font-bold italic">BS</span>
-          </div>
+          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-16 h-16" />
         </div>
 
         <h1 className="text-4xl tracking-tighter mb-12 font-normal">
