@@ -20,12 +20,14 @@ export default function Dashboard() {
       `}</style>
 
       {/* NAGŁÓWEK */}
-      <header className="max-w-7xl mx-auto mb-16 border-b border-gray-900 pb-10 flex justify-between items-center">
+      <header className="max-w-7xl mx-auto mb-16 border-b border-gray-900 pb-10">
         <div className="flex items-center justify-center w-full">
           <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-20 h-20" />
         </div>
-        
-        {/* PRZEŁĄCZNIK */}
+      </header>
+
+      {/* PRZEŁĄCZNIK */}
+      <div className="max-w-7xl mx-auto mb-16">
         <div className="flex bg-[#0a0a0a] border border-gray-800 p-1">
           <button 
             onClick={() => setActiveTab('Power')}
@@ -40,7 +42,7 @@ export default function Dashboard() {
             BlackSlon Gas indexes
           </button>
         </div>
-      </header>
+      </div>
 
       {/* GŁÓWNA TREŚĆ */}
       <main className="max-w-7xl mx-auto">
