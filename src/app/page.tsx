@@ -74,7 +74,7 @@ function MarketTile({ market }: { market: any }) {
       </div>
       
       <div className="mb-10">
-        <h3 className="text-[10px] font-normal text-gray-500 group-hover:text-white transition-colors tracking-widest mb-1">
+        <h3 className="text-2xl font-normal text-gray-500 group-hover:text-white transition-colors tracking-widest mb-1">
           BlackSlon {market.type} Index
         </h3>
         <h4 className="text-white text-xl tracking-tighter font-normal">
