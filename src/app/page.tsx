@@ -22,7 +22,7 @@ export default function Dashboard() {
       {/* NAGŁÓWEK */}
       <header className="max-w-7xl mx-auto mb-16 border-b border-gray-900 pb-10 flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-white"></div>
+          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-10 h-10" />
           <h1 className="text-4xl tracking-tighter font-normal text-white">
             BlackSlon
           </h1>
@@ -74,8 +74,10 @@ function MarketTile({ market }: { market: any }) {
   const mockLong = "1.2M"
   const mockShort = "0.8M"
 
+  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-500'
+
   return (
-    <div className="bg-[#050505] border border-gray-900 p-8 hover:border-white/50 transition-all group relative">
+    <div className={`bg-[#050505] border ${borderColor} p-8 hover:border-white/50 transition-all group relative`}>
       <div className="flex justify-between items-start mb-6">
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
         <span className="text-green-500 text-[9px] font-bold uppercase">{mockChange}</span>
@@ -105,7 +107,7 @@ function MarketTile({ market }: { market: any }) {
       </div>
 
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-4 bg-white text-black font-bold text-[10px] hover:bg-gray-200 transition-all uppercase tracking-[0.2em]">
+        <button className="w-full py-4 bg-red-600 text-white font-bold text-[10px] hover:bg-red-700 transition-all uppercase tracking-[0.2em]">
           Open Index
         </button>
       </Link>
