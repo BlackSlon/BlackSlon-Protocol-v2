@@ -21,11 +21,8 @@ export default function Dashboard() {
 
       {/* NAGŁÓWEK */}
       <header className="max-w-7xl mx-auto mb-16 border-b border-gray-900 pb-10 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-10 h-10" />
-          <h1 className="text-4xl tracking-tighter font-normal text-white">
-            BlackSlon
-          </h1>
+        <div className="flex items-center justify-center w-full">
+          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-20 h-20" />
         </div>
         
         {/* PRZEŁĄCZNIK */}
@@ -34,13 +31,13 @@ export default function Dashboard() {
             onClick={() => setActiveTab('Power')}
             className={`px-8 py-2 text-[10px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
           >
-            BlackSlon Power Indexes
+            BlackSlon Power indexes
           </button>
           <button 
             onClick={() => setActiveTab('Gas')}
             className={`px-8 py-2 text-[10px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
           >
-            BlackSlon Gas Indexes
+            BlackSlon Gas indexes
           </button>
         </div>
       </header>
@@ -49,7 +46,7 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto">
         <div className="flex items-center gap-4 mb-12">
            <h2 className="text-white/40 text-[10px] font-bold tracking-[0.5em] uppercase">
-             {activeTab === 'Power' ? 'BlackSlon Power Indexes' : 'BlackSlon Gas Indexes'}
+             {activeTab === 'Power' ? 'BlackSlon Power indexes' : 'BlackSlon Gas indexes'}
            </h2>
            <div className="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
         </div>
@@ -77,7 +74,7 @@ function MarketTile({ market }: { market: any }) {
   const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-500'
 
   return (
-    <div className={`bg-[#050505] border ${borderColor} p-8 hover:border-white/50 transition-all group relative`}>
+    <div className={`bg-[#050505] border ${borderColor} p-8 hover:bg-[#0a0a0a] transition-all group relative`}>
       <div className="flex justify-between items-start mb-6">
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
         <span className="text-green-500 text-[9px] font-bold uppercase">{mockChange}</span>
@@ -86,7 +83,7 @@ function MarketTile({ market }: { market: any }) {
       <div className="mb-8">
         <h3 className="text-sm font-normal text-gray-400 group-hover:text-white transition-colors uppercase leading-tight">
           BlackSlon {market.type} Index <br/>
-          <span className="text-white font-bold text-lg tracking-tighter">{market.name.split(' ')[1]}</span>
+          <span className="text-white font-bold text-base tracking-tighter">{market.name.split(' ')[1]}</span>
         </h3>
       </div>
 
