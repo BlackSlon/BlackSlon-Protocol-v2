@@ -21,8 +21,8 @@ export default function Dashboard() {
 
       {/* NAGŁÓWEK Z LOGO I PRZEŁĄCZNIKIEM */}
       <header className="max-w-7xl mx-auto mb-16 flex flex-col items-center">
-        {/* LOGO BOX */}
-        <div className="mb-12 border-4 border-white p-4">
+        {/* LOGO */}
+        <div className="mb-12">
           <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-16 h-16" />
         </div>
 
