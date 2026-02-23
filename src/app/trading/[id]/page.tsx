@@ -67,7 +67,7 @@ export default function TradingPage() {
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[10px] text-gray-600 mb-2 tracking-widest uppercase">Current Price</div>
+              <div className="text-[10px] text-gray-600 mb-2 tracking-widest">Current Price</div>
               <div className="text-6xl font-normal leading-none tracking-tighter">
                 {displayPrice.toFixed(4)} <span className="text-xl text-gray-500 ml-2">EUR/100kWh</span>
               </div>
@@ -101,12 +101,12 @@ export default function TradingPage() {
         </div>
 
         <div className="bg-[#080808] border border-gray-900 p-8 h-fit">
-          <h2 className="text-[10px] text-gray-600 uppercase mb-10 tracking-[0.4em] border-b border-gray-900 pb-4 text-center">
+          <h2 className="text-[10px] text-gray-600 mb-10 tracking-[0.4em] border-b border-gray-900 pb-4 text-center">
             Execution Panel
           </h2>
           <div className="space-y-6">
             <div>
-              <label className="text-[9px] text-gray-600 uppercase mb-2 block tracking-widest text-center">Order Amount (IPT)</label>
+              <label className="text-[9px] text-gray-600 mb-2 block tracking-widest text-center">Order Amount (IPT)</label>
               <input 
                 type="number" 
                 value={orderAmount}
@@ -114,10 +114,10 @@ export default function TradingPage() {
                 className="w-full bg-black border border-gray-800 p-5 text-2xl outline-none focus:border-white transition-all text-white text-center font-normal"
               />
             </div>
-            <button onClick={() => setS(s + orderAmount)} className="w-full py-6 bg-white text-black font-normal text-[10px] hover:bg-gray-200 transition-all tracking-[0.2em] uppercase">Buy IPT (Long)</button>
-            <button onClick={() => setS(s - orderAmount)} className="w-full py-6 border border-gray-800 text-gray-400 font-normal text-[10px] hover:border-white hover:text-white transition-all tracking-[0.2em] uppercase">Sell IPT (Short)</button>
+            <button onClick={() => setS(s + orderAmount)} className="w-full py-6 bg-white text-black font-normal text-[10px] hover:bg-gray-200 transition-all tracking-[0.2em]">Buy IPT (Long)</button>
+            <button onClick={() => setS(s - orderAmount)} className="w-full py-6 border border-gray-800 text-gray-400 font-normal text-[10px] hover:border-white hover:text-white transition-all tracking-[0.2em]">Sell IPT (Short)</button>
           </div>
-          <div className="mt-8 text-[8px] text-gray-700 text-center tracking-widest uppercase">
+          <div className="mt-8 text-[8px] text-gray-700 text-center tracking-widest">
             Unit Settlement: EUR per 100 kWh
           </div>
         </div>

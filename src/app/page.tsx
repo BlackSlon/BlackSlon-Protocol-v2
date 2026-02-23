@@ -54,7 +54,7 @@ export default function Dashboard() {
       </main>
 
       <footer className="max-w-7xl mx-auto py-12 border-t border-gray-900 text-center mt-20 opacity-20">
-        <p className="text-[9px] uppercase tracking-[0.4em]">BlackSlon Reserve Protocol // 2026</p>
+        <p className="text-[9px] tracking-[0.4em]">BlackSlon Reserve Protocol // 2026</p>
       </footer>
     </div>
   )
@@ -74,7 +74,7 @@ function MarketTile({ market }: { market: any }) {
       </div>
       
       <div className="mb-10">
-        <h3 className="text-[10px] font-normal text-gray-500 group-hover:text-white transition-colors uppercase tracking-widest mb-1">
+        <h3 className="text-[10px] font-normal text-gray-500 group-hover:text-white transition-colors tracking-widest mb-1">
           BlackSlon {market.type} Index
         </h3>
         <h4 className="text-white text-xl tracking-tighter font-normal">
@@ -103,7 +103,7 @@ function MarketTile({ market }: { market: any }) {
       </div>
 
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-4 bg-white text-black text-[10px] hover:bg-gray-200 transition-all uppercase tracking-[0.3em] font-normal">
+        <button className="w-full py-4 bg-white text-black text-[10px] hover:bg-gray-200 transition-all tracking-[0.3em] font-normal">
           Open Index
         </button>
       </Link>
