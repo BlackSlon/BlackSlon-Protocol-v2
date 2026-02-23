@@ -110,7 +110,7 @@ function MarketTile({ market }: { market: any }) {
       </div>
 
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-4 bg-white text-black font-normal text-[10px] hover:bg-gray-200 transition-all uppercase tracking-[0.3em]">
+        <button className={`w-full py-4 bg-red-600 text-white font-normal text-[10px] hover:bg-red-700 transition-all uppercase tracking-[0.3em] ${market.type === 'Power' ? 'hover:bg-yellow-500 hover:text-black' : 'hover:bg-blue-500 hover:text-black'}`}>
           Open Index
         </button>
       </Link>
