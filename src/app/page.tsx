@@ -23,10 +23,10 @@ export default function Dashboard() {
       <header className="max-w-7xl mx-auto mb-16 flex flex-col items-center">
         {/* LOGO */}
         <div className="mb-12">
-          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-16 h-16" />
+          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-32 h-32" />
         </div>
 
-        <h1 className="text-4xl tracking-tighter mb-12 font-normal">
+        <h1 className="text-2xl tracking-tighter mb-12 font-normal" style={montserratStyle}>
           BlackSlon
         </h1>
         
@@ -34,13 +34,13 @@ export default function Dashboard() {
         <div className="flex bg-[#0a0a0a] border border-gray-800 p-1 w-full max-w-2xl">
           <button 
             onClick={() => setActiveTab('Power')}
-            className={`flex-1 py-3 text-[11px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+            className={`flex-1 py-3 text-[9px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
           >
             BlackSlon Power Indexes
           </button>
           <button 
             onClick={() => setActiveTab('Gas')}
-            className={`flex-1 py-3 text-[11px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+            className={`flex-1 py-3 text-[9px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-white text-black font-bold' : 'text-gray-500 hover:text-white'}`}
           >
             BlackSlon Gas Indexes
           </button>
