@@ -4,16 +4,16 @@ The BlackSlon Trading Zone is hard-capped corridor for all trading and settlemen
 
 The BSTZ acts as a rigid systemic constraint. The BlackSlon protocol only permits, validates, and settles transactions that occur strictly within this predefined zone. Outside this corridor, the system has no operational capacity — trading is technically impossible and settlement is blocked.
 
-### 1. The Core Anchor (a)
-Every BSTZ is anchored by Point $a$ (The Dynamic Anchor), derived from external parameters. Point $a$ serves as the unbreakable foundation that keeps the BSTZ tethered to the physical energy market.
+### 1. The Raw Anchor ($\hat{a}$)
+Every BSTZ is anchored by Point $\hat{a}$ (The Raw Anchor), derived from external parameters. Point $\hat{a}$ serves as the unbreakable foundation that keeps the BSTZ tethered to the physical energy market.
 
-$a$ represents the Weighted Aggregation of external energy market data. This value is the absolute origin for all internal calculations.
+$\hat{a}$ represents the Weighted Aggregation of external energy market data. This value is the absolute origin for all internal calculations.
 
-**The Anchor Formula:**
-$$a = \sum_{i=1}^{n} (Weight_i \times AssetPrice_i)$$
+**The Row Anchor Formula:**
+$$\hat{a} = \sum_{i=1}^{n} (Weight_i \times AssetPrice_i)$$
 
 Component Definitions:
-* $a$ (The Anchor): The single, calculated reference point. It is the result of the aggregation process and serves as the center of the trading zone for a specific market.
+* $\hat{a}$ (The Raw Anchor): The single, calculated reference point. It is the result of the aggregation process and serves as the center of the trading zone for a specific market.
 * $\sum_{i=1}^{n}$ (The Active Basket) The Weighted Aggregator across $n$ market segments. The operation that assembles $n$ distinct Market Segments (where $n=4$). It is an "Active" process because the underlying components are dynamically managed via rebalancing protocols.
 * $Weight_i$ (Segment Allocation & Weights): Fixed coefficients defining the influence of each time-horizon, balancing immediate volatility with long-term stability:
   * $W_{Spot} = 10\%$: Represents the immediate "Day-Ahead" price.
