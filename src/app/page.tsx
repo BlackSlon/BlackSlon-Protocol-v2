@@ -62,8 +62,8 @@ function MarketTile({ market }: { market: any }) {
   const iptPrice = wholesalePrice / 10
   const mockChange = "+1.24%"
 
-  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-500'
-  const priceColor = market.type === 'Power' ? 'text-yellow-500' : 'text-blue-500'
+  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-400'
+  const priceColor = market.type === 'Power' ? 'text-yellow-500' : 'text-blue-400'
 
   return (
     <div className={`bg-[#050505] border ${borderColor} p-6 hover:border-white/60 transition-all group relative`}>
@@ -102,8 +102,8 @@ function MarketTile({ market }: { market: any }) {
       </div>
 
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-4 bg-white text-black text-[10px] hover:bg-gray-200 transition-all tracking-[0.3em] font-normal">
-          Open Index
+        <button className="w-full py-4 bg-white text-black text-[10px] hover:bg-red-600 hover:text-white transition-all tracking-[0.3em] font-normal">
+          Enter the Market
         </button>
       </Link>
     </div>
