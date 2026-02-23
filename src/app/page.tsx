@@ -2,63 +2,119 @@
 
 import Link from 'next/link'
 import { BSR_MARKETS } from './markets_config'
+import { useState } from 'react'
+
+// Import Montserrat wewnątrz pliku (możesz też dodać w layout.tsx)
+const montserratStyle = {
+  fontFamily: "'Montserrat', sans-serif",
+}
 
 export default function Dashboard() {
-  const powerMarkets = BSR_MARKETS.filter(m => m.type === 'Power')
-  const gasMarkets = BSR_MARKETS.filter(m => m.type === 'Gas')
+  const [activeTab, setActiveTab] = useState<'Power' | 'Gas'>('Power')
+  
+  const filteredMarkets = BSR_MARKETS.filter(m => m.type === activeTab)
 
   return (
-    <div className="min-h-screen bg-black text-white p-8 font-sans">
-      <header className="max-w-7xl mx-auto mb-16 flex justify-between items-end border-b border-gray-800 pb-8">
-        <div>
-          <h1 className="text-6xl font-black tracking-tighter italic">
+    <div className="min-h-screen bg-black text-white p-10" style={montserratStyle}>
+      {/* GOOGLE FONTS IMPORT */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+      `}</style>
+
+      {/* NAGŁÓWEK Z LOGO */}
+      <header className="max-w-7xl mx-auto mb-16 border-b border-gray-900 pb-10 flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-white" title="BlackSlon Square"></div> {/* CZARNY KWADRAT (BIAŁY NA CZARNYM TLE) */}
+          <h1 className="text-4xl tracking-tighter uppercase font-normal">
             BLACK<span className="text-yellow-500">SLON</span>
           </h1>
-          <p className="text-gray-500 font-mono text-sm mt-2 uppercase tracking-widest">
-            Autonomous Settlement Zone // €BSR Mainnet
-          </p>
         </div>
-        <div className="text-right font-mono text-[10px] text-gray-600 uppercase">
-          Status: <span className="text-green-500">Optimal</span><br/>
-          Protocol: active
+        
+        {/* PRZEŁĄCZNIK POWER / GAS */}
+        <div className="flex bg-[#0a0a0a] border border-gray-800 p-1">
+          <button 
+            onClick={() => setActiveTab('Power')}
+            className={`px-8 py-2 text-[10px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Power' ? 'bg-yellow-500 text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+          >
+            Power Electrons
+          </button>
+          <button 
+            onClick={() => setActiveTab('Gas')}
+            className={`px-8 py-2 text-[10px] uppercase tracking-[0.2em] transition-all ${activeTab === 'Gas' ? 'bg-yellow-500 text-black font-bold' : 'text-gray-500 hover:text-white'}`}
+          >
+            Gas Molecules
+          </button>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto space-y-16">
-        <section>
-          <h2 className="text-yellow-500/50 text-xs font-bold mb-6 tracking-[0.3em] uppercase">Energy Electrons // Power</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {powerMarkets.map(m => <MarketCard key={m.id} market={m} />)}
-          </div>
-        </section>
+      {/* SIATKA INDEKSÓW */}
+      <main className="max-w-7xl mx-auto">
+        <div className="flex items-center gap-4 mb-12">
+           <h2 className="text-yellow-500/40 text-[10px] font-bold tracking-[0.5em] uppercase">
+             {activeTab} Settlement Hubs
+           </h2>
+           <div className="h-[1px] flex-1 bg-gradient-to-r from-yellow-500/10 to-transparent"></div>
+        </div>
 
-        <section>
-          <h2 className="text-yellow-500/50 text-xs font-bold mb-6 tracking-[0.3em] uppercase">Energy Molecules // Gas</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {gasMarkets.map(m => <MarketCard key={m.id} market={m} />)}
-          </div>
-        </section>
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredMarkets.map(m => (
+            <MarketTile key={m.id} market={m} />
+          ))}
+        </div>
+      </main>
+
+      <footer className="max-w-7xl mx-auto py-12 border-t border-gray-900 text-center mt-20 opacity-20">
+        <p className="text-[9px] uppercase tracking-[0.4em]">BlackSlon Reserve (BSR) Protocol // 2026</p>
+      </footer>
     </div>
   )
 }
 
-function MarketCard({ market }: { market: any }) {
+function MarketTile({ market }: { market: any }) {
+  // Symulacja danych (później podepniemy pod API)
+  const mockPrice = 104.55 
+  const mockChange = "+1.24%"
+  const mockLong = "1.2M"
+  const mockShort = "0.8M"
+
   return (
-    <div className="bg-[#0a0a0a] border border-gray-900 p-6 hover:border-yellow-500 transition-all group">
-      <div className="flex justify-between items-start mb-8">
-        <code className="text-[10px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
-        <div className="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></div>
+    <div className="bg-[#050505] border border-gray-900 p-8 hover:border-yellow-500/50 transition-all group relative">
+      {/* Nagłówek karty */}
+      <div className="flex justify-between items-start mb-6">
+        <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
+        <span className="text-green-500 text-[9px] font-bold uppercase">{mockChange}</span>
       </div>
-      <h3 className="text-xl font-bold mb-1 text-gray-200 group-hover:text-white transition-colors">
-        {market.name}
-      </h3>
-      <p className="text-gray-600 text-[10px] mb-8 uppercase tracking-widest">Inertia: {market.b_base}</p>
       
-      {/* ŻÓŁTY PRZYCISK PRZEKIEROWUJĄCY */}
+      {/* Nazwa Indeksu */}
+      <div className="mb-8">
+        <h3 className="text-sm font-normal text-gray-400 group-hover:text-white transition-colors uppercase leading-tight">
+          BlackSlon {market.type} Index <br/>
+          <span className="text-white font-bold text-lg tracking-tighter">{market.name.split(' ')[1]}</span>
+        </h3>
+      </div>
+
+      {/* CENA INDEKSU */}
+      <div className="mb-8 p-4 bg-black border border-gray-900 text-center">
+        <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">Current Index Price</div>
+        <div className="text-2xl font-bold text-yellow-500 font-mono">{mockPrice.toFixed(2)} <span className="text-[10px] text-gray-500">€BSR</span></div>
+      </div>
+
+      {/* OPEN POSITIONS */}
+      <div className="grid grid-cols-2 gap-2 mb-10 text-center">
+        <div className="border border-gray-900 py-3">
+            <div className="text-[7px] text-gray-600 uppercase mb-1">Open Long</div>
+            <div className="text-[10px] text-green-500 font-bold">{mockLong}</div>
+        </div>
+        <div className="border border-gray-900 py-3">
+            <div className="text-[7px] text-gray-600 uppercase mb-1">Open Short</div>
+            <div className="text-[10px] text-red-500 font-bold">{mockShort}</div>
+        </div>
+      </div>
+
+      {/* PRZYCISK */}
       <Link href={`/trading/${market.id}`}>
-        <button className="w-full py-3 bg-yellow-500 text-black font-black text-[10px] hover:bg-yellow-400 transition-all uppercase tracking-[0.2em]">
-          Open the Index
+        <button className="w-full py-4 bg-yellow-500 text-black font-bold text-[10px] hover:bg-yellow-400 transition-all uppercase tracking-[0.2em]">
+          Open Index
         </button>
       </Link>
     </div>
