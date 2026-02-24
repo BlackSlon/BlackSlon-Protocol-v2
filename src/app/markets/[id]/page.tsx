@@ -368,7 +368,7 @@ export default function MarketPage() {
                   <div className="text-center">
                     <div className="text-gray-400 text-xs mb-1">€BSR REQUIRED</div>
                     <div className="text-green-400 text-lg font-mono">
-                      €{calculateMarginRequired().bsrRequired.toFixed(2)} BSR
+                      {calculateMarginRequired().bsrRequired.toFixed(2)} €BSR
                     </div>
                   </div>
                   <div className="text-center">
@@ -507,7 +507,7 @@ export default function MarketPage() {
             <div className="mb-6">
               <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">€BSR PRICE</div>
               <div className="text-2xl font-mono text-green-400" style={monoStyle}>
-                €{bsrPrice.toFixed(3)}
+                {bsrPrice.toFixed(3)} €BSR
               </div>
             </div>
             
@@ -524,7 +524,7 @@ export default function MarketPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-[8px] text-gray-500">€BSR DEPOSIT</span>
                   <span className="text-sm font-mono text-green-400" style={monoStyle}>
-                    {bsrDeposit.toLocaleString()}
+                    {bsrDeposit.toLocaleString()} €BSR
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -543,7 +543,7 @@ export default function MarketPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-[8px] text-gray-500">AVAILABLE</span>
                   <span className="text-sm font-mono text-green-400" style={monoStyle}>
-                    €{(bsrDeposit + euroDeposit - lockedFunds).toLocaleString()}
+                    {(bsrDeposit + euroDeposit - lockedFunds).toLocaleString()} €BSR
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
