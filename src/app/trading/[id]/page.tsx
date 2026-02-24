@@ -3,7 +3,8 @@
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { BSR_MARKETS } from '../../markets_config'
-import { useState, useMemo } from 'react'
+import { MARKET_HISTORY } from '../../../lib/market_history'
+import { useState, useEffect, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts'
 
 const montserratStyle = {
@@ -14,19 +15,88 @@ export default function TradingPage() {
   const params = useParams()
   const marketId = params.id as string
   const market = BSR_MARKETS.find(m => m.id === marketId)
-
-  // Standard hurtowy rynku to MWh (1000 kWh) [cite: 2026-02-15]
-  const anchorMWh = 104.55 
+  const [marketData, setMarketData] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const [s, setS] = useState(0)
   const [orderAmount, setOrderAmount] = useState(1)
 
-  // Obliczanie ceny hurtowej BSEI [cite: 2026-01-20]
-  const currentPriceMWh = useMemo(() => {
-    return anchorMWh * Math.exp(market ? market.b_base * s : 0)
-  }, [s, market, anchorMWh])
+  // Pobieranie danych z API
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      try {
+        const response = await fetch('/api/market-data?t=' + new Date().getTime())
+        const data = await response.json()
+        const dataObject = data?.reduce((acc: any, item: any) => ({ ...acc, [item.id]: item }), {})
+        setMarketData(dataObject)
+        setLoading(false)
+      } catch (error) {
+        console.error('Failed to fetch market data:', error)
+        setLoading(false)
+      }
+    }
 
-  // Cena jednostkowa = cena MWh / 10 (ponieważ 100kWh to 1/10 MWh)
-  const displayPrice = currentPriceMWh / 10
+    fetchMarketData()
+    const interval = setInterval(fetchMarketData, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Pobranie aktualnej ceny z API lub domyślnej wartości
+  const anchorMWh = useMemo(() => {
+    if (marketData && marketData[marketId]) {
+      console.log('API price:', marketData[marketId].wholesalePrice)
+      return parseFloat(marketData[marketId].wholesalePrice)
+    }
+    console.log('Using fallback price: 104.55')
+    return 104.55 // fallback
+  }, [marketData, marketId])
+
+  // Cena jednostkowa - używaj ceny z API, gdy dostępna, inaczej oblicz
+  const displayPrice = useMemo(() => {
+    if (marketData && marketData[marketId]) {
+      const apiPrice = parseFloat(marketData[marketId].currentBSEI)
+      console.log('Using API currentBSEI:', apiPrice)
+      return apiPrice
+    }
+    
+    const calculatedPrice = anchorMWh * Math.exp(market ? market.b_base * s : 0) / 10
+    console.log('Using calculated price:', calculatedPrice)
+    return calculatedPrice
+  }, [marketData, marketId, anchorMWh, s])
+
+  // Dane historyczne z MARKET_HISTORY
+  const historyData = useMemo(() => {
+    const history = MARKET_HISTORY[marketId] || []
+    return history.map((entry, index) => {
+      const calculateRaw = (e: any) => 
+        (e.spot * 0.10) + (e.fm * 0.40) + (e.fq * 0.25) + (e.cal * 0.25)
+      
+      // Dla ostatnich 3 dni używamy filtru BSTZ
+      let price
+      if (index >= history.length - 3) {
+        const currentIndex = index
+        const aT = calculateRaw(history[history.length - 1])   // ostatni dzień
+        const aT1 = calculateRaw(history[history.length - 2])  // przedostatni dzień
+        const aT2 = calculateRaw(history[history.length - 3])  // 3. dzień od końca
+        
+        if (currentIndex === history.length - 1) {
+          price = (0.50 * aT) + (0.25 * aT1) + (0.25 * aT2)
+        } else if (currentIndex === history.length - 2) {
+          price = (0.50 * aT1) + (0.25 * aT2) + (0.25 * calculateRaw(history[history.length - 4] || aT2))
+        } else {
+          price = calculateRaw(entry)
+        }
+      } else {
+        price = calculateRaw(entry)
+      }
+      
+      return {
+        date: entry.date,
+        price: price / 10, // konwersja na EUR/100kWh
+        anchor: anchorMWh / 10
+      }
+    })
+  }, [marketId, anchorMWh])
 
   const chartData = useMemo(() => {
     const data = []
@@ -76,9 +146,9 @@ export default function TradingPage() {
 
           <div className="h-[400px] bg-[#050505] border border-gray-900 p-4 relative">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
+              <LineChart data={historyData}>
                 <CartesianGrid stroke="#111" vertical={false} />
-                <XAxis dataKey="name" hide />
+                <XAxis dataKey="date" stroke="#333" fontSize={9} tickLine={false} axisLine={false} />
                 <YAxis 
                   domain={[(anchorMWh / 10 * 0.8), (anchorMWh / 10 * 1.2)]} 
                   orientation="right" 
@@ -86,7 +156,7 @@ export default function TradingPage() {
                   fontSize={10} 
                   tickLine={false} 
                   axisLine={false} 
-                  tickFormatter={(val) => val.toFixed(2)}
+                  tickFormatter={(val: any) => val.toFixed(2)}
                 />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#000', border: '1px solid #333', fontSize: '10px' }}

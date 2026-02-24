@@ -135,7 +135,7 @@ function MarketTile({ market, liveData }: { market: any; liveData: any }) {
         </div>
       </div>
 
-      <Link href={`/trading/${market.id}`}>
+      <Link href={`/markets/${market.id}`}>
         <button className="w-full py-4 bg-white text-black text-[10px] hover:bg-red-600 hover:text-white transition-all tracking-[0.3em] font-normal">
           Enter the Market
         </button>
