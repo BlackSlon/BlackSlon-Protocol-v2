@@ -32,6 +32,16 @@ export default function MarketPage() {
   const [quantity, setQuantity] = useState<number>(100)
   const [bsrCollateral, setBsrCollateral] = useState<number>(50)
   const [euroCollateral, setEuroCollateral] = useState<number>(50)
+  const [tradeType, setTradeType] = useState<'LONG' | 'SHORT'>('LONG')
+
+  // Risk Management Table
+  const riskTable = {
+    10: { longLev: '1:2.0', shortLev: '1:1.0', fee: 1.00 },
+    25: { longLev: '1:2.2', shortLev: '1:1.1', fee: 0.85 },
+    50: { longLev: '1:2.5', shortLev: '1:1.2', fee: 0.60 },
+    75: { longLev: '1:3.3', shortLev: '1:1.6', fee: 0.35 },
+    100: { longLev: '1:4.0', shortLev: '1:2.0', fee: 0.20 }
+  }
 
   // Portfolio State
   const [bsrPrice, setBsrPrice] = useState<number>(1.05)
@@ -60,11 +70,36 @@ export default function MarketPage() {
     setBsrCollateral(100 - value)
   }
 
-  // Calculate leverage
+  // Calculate leverage and margin requirements
   const calculateLeverage = () => {
     const totalCollateral = (bsrCollateral / 100) * bsrDeposit + (euroCollateral / 100) * euroDeposit
     const positionValue = quantity * currentPrice
     return totalCollateral > 0 ? (positionValue / totalCollateral).toFixed(2) : '1.00'
+  }
+
+  const getRiskData = () => {
+    const bsrKey = Math.floor(bsrCollateral / 10) * 10 as keyof typeof riskTable
+    const closestKey = Object.keys(riskTable).map(Number).find(key => key >= bsrCollateral) || 100
+    return riskTable[closestKey as keyof typeof riskTable]
+  }
+
+  const calculateMarginRequired = () => {
+    const riskData = getRiskData()
+    const positionValue = quantity * currentPrice
+    
+    if (tradeType === 'LONG') {
+      const marginRate = parseFloat(riskData.longLev.split(':')[1]) / parseFloat(riskData.longLev.split(':')[0])
+      const requiredMargin = positionValue / marginRate
+      const bsrRequired = (requiredMargin * bsrCollateral) / 100
+      const euroRequired = (requiredMargin * euroCollateral) / 100
+      return { leverage: riskData.longLev, bsrRequired, euroRequired, fee: riskData.fee }
+    } else {
+      const marginRate = parseFloat(riskData.shortLev.split(':')[1]) / parseFloat(riskData.shortLev.split(':')[0])
+      const requiredMargin = positionValue / marginRate
+      const bsrRequired = (requiredMargin * bsrCollateral) / 100
+      const euroRequired = (requiredMargin * euroCollateral) / 100
+      return { leverage: riskData.shortLev, bsrRequired, euroRequired, fee: riskData.fee }
+    }
   }
 
   useEffect(() => {
@@ -193,40 +228,67 @@ export default function MarketPage() {
             
             {/* Current IPT Price */}
             <div className="mb-6">
-              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">IPT CURRENT PRICE</div>
-              <div className={`text-3xl font-normal font-mono tracking-tighter ${priceColor}`} style={monoStyle}>
-                {currentPrice.toFixed(2)} <span className="text-[10px] text-gray-500 ml-2">EUR</span>
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2 text-center">IPT - P - PL</div>
+              <div className={`text-6xl font-normal font-mono tracking-tighter text-center ${priceColor}`} style={monoStyle}>
+                {currentPrice.toFixed(2)} <span className="text-[16px] text-gray-500 ml-2">EUR/vkWh</span>
               </div>
             </div>
             
             {/* Quantity Stepper */}
             <div className="mb-6">
               <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-3">QUANTITY (IPT)</div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-1">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 10))}
-                  className="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
+                  className="w-8 h-8 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
                 >
                   -
                 </button>
-                <div className="flex-1 text-center">
+                <div className="flex-1 text-center mx-1">
                   <div className="text-xl font-mono" style={monoStyle}>{quantity}</div>
                 </div>
                 <button 
                   onClick={() => setQuantity(Math.min(1000, quantity + 10))}
-                  className="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
+                  className="w-8 h-8 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
                 >
                   +
                 </button>
               </div>
             </div>
             
+            {/* Trade Type Selector */}
+            <div className="mb-4">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">TRADE TYPE</div>
+              <div className="grid grid-cols-2 gap-2">
+                <button 
+                  onClick={() => setTradeType('LONG')}
+                  className={`py-2 text-xs font-bold tracking-wider transition-all ${
+                    tradeType === 'LONG' 
+                      ? 'bg-green-500 text-black' 
+                      : 'bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-black'
+                  }`}
+                >
+                  LONG
+                </button>
+                <button 
+                  onClick={() => setTradeType('SHORT')}
+                  className={`py-2 text-xs font-bold tracking-wider transition-all ${
+                    tradeType === 'SHORT' 
+                      ? 'bg-red-500 text-black' 
+                      : 'bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-black'
+                  }`}
+                >
+                  SHORT
+                </button>
+              </div>
+            </div>
+            
             {/* Trade Buttons */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <button className="bg-green-500 hover:bg-green-400 text-black py-4 rounded font-bold text-sm tracking-wider transition-all">
+            <div className="grid grid-cols-2 gap-2 mb-6">
+              <button className="bg-transparent border-2 border-green-500 text-green-500 py-3 rounded font-bold text-sm tracking-wider transition-all hover:bg-green-500 hover:text-black">
                 BUY
               </button>
-              <button className="bg-red-500 hover:bg-red-400 text-black py-4 rounded font-bold text-sm tracking-wider transition-all">
+              <button className="bg-transparent border-2 border-red-500 text-red-500 py-3 rounded font-bold text-sm tracking-wider transition-all hover:bg-red-500 hover:text-black">
                 SELL
               </button>
             </div>
@@ -236,7 +298,7 @@ export default function MarketPage() {
               <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-4">COLLATERAL ALLOCATION</div>
               
               {/* €BSR Slider */}
-              <div className="mb-4">
+              <div className="mb-4 mx-4">
                 <div className="flex justify-between text-[8px] text-gray-600 mb-1">
                   <span>€BSR</span>
                   <span>{bsrCollateral}%</span>
@@ -252,7 +314,7 @@ export default function MarketPage() {
               </div>
               
               {/* eEURO Slider */}
-              <div className="mb-4">
+              <div className="mb-4 mx-4">
                 <div className="flex justify-between text-[8px] text-gray-600 mb-1">
                   <span>eEURO</span>
                   <span>{euroCollateral}%</span>
@@ -265,6 +327,39 @@ export default function MarketPage() {
                   onChange={(e) => handleEuroChange(parseInt(e.target.value))}
                   className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
                 />
+              </div>
+            </div>
+            
+            {/* Estimated Margin Required */}
+            <div className="mb-4">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-3">ESTIMATED MARGIN REQUIRED</div>
+              <div className="bg-gray-900 p-3 rounded">
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <div className="text-gray-600 mb-1">Leverage ({tradeType})</div>
+                    <div className="font-mono text-yellow-400" style={monoStyle}>
+                      {calculateMarginRequired().leverage}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-gray-600 mb-1">Trading Fee</div>
+                    <div className="font-mono text-blue-400" style={monoStyle}>
+                      {calculateMarginRequired().fee}%
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-gray-600 mb-1">€BSR Required</div>
+                    <div className="font-mono text-green-400" style={monoStyle}>
+                      €{calculateMarginRequired().bsrRequired.toFixed(2)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-gray-600 mb-1">eEURO Required</div>
+                    <div className="font-mono text-blue-400" style={monoStyle}>
+                      €{calculateMarginRequired().euroRequired.toFixed(2)}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             
