@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top mx-4`}>
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top`}>
             {/* Header */}
             <div className="mb-6">
               <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
