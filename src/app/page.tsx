@@ -95,7 +95,15 @@ function MarketTile({ market, liveData }: { market: any; liveData: any }) {
     <div className={`bg-[#050505] border ${borderColor} p-6 hover:border-white/60 transition-all group relative`}>
       <div className="flex justify-between items-start mb-4">
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
-        <span className="text-green-500 text-[10px]">{mockChange}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-green-500 text-[10px]">{mockChange}</span>
+          {market.id.includes('DE') && <span>🇩🇪</span>}
+          {market.id.includes('NO') && <span>🇳🇴</span>}
+          {market.id.includes('PL') && <span>🇵🇱</span>}
+          {market.id.includes('FR') && <span>🇫🇷</span>}
+          {market.id.includes('NL') && <span>🇳🇱</span>}
+          {market.id.includes('BG') && <span>🇧🇬</span>}
+        </div>
       </div>
       
       <div className="mb-6">
@@ -107,22 +115,22 @@ function MarketTile({ market, liveData }: { market: any; liveData: any }) {
         </h4>
       </div>
 
-      {/* CENA W EUR/100kWh */}
+      {/* CENA W EUR/100vkWh */}
       <div className="mb-6 p-4 bg-black border border-gray-900 text-center">
         <div className="text-[8px] text-gray-600 tracking-[0.3em] mb-2">Current Index Price</div>
         <div className={`text-2xl font-normal font-mono tracking-tighter ${priceColor}`}>
-          {iptPrice.toFixed(2)} <span className="text-[10px] text-gray-500 ml-1">EUR/100kWh</span>
+          {iptPrice.toFixed(2)} <span className="text-[10px] text-gray-500 ml-1">EUR/100vkWh</span>
         </div>
       </div>
 
       {/* POZYCJE */}
       <div className="grid grid-cols-2 gap-2 mb-6 text-center">
         <div className="border border-gray-900 py-3">
-            <div className="text-[7px] text-gray-600 mb-1 tracking-widest font-normal">Open Long</div>
+            <div className="text-[7px] text-gray-600 mb-1 tracking-widest font-normal">Long (vkWh)</div>
             <div className="text-[10px] text-green-500 font-normal">1.2M</div>
         </div>
         <div className="border border-gray-900 py-3">
-            <div className="text-[7px] text-gray-600 mb-1 tracking-widest font-normal">Open Short</div>
+            <div className="text-[7px] text-gray-600 mb-1 tracking-widest font-normal">Short (vkWh)</div>
             <div className="text-[10px] text-red-500 font-normal">0.8M</div>
         </div>
       </div>
