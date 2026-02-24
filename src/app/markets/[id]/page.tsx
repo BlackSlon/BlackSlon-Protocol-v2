@@ -25,6 +25,9 @@ export default function MarketPage() {
   const [marketData, setMarketData] = useState<any>(null)
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
   const [currentPrice, setCurrentPrice] = useState<number>(10.09)
+  const [previousPrice, setPreviousPrice] = useState<number>(9.95)
+  const [longPosition, setLongPosition] = useState<number>(272836)
+  const [shortPosition, setShortPosition] = useState<number>(86300)
 
   const market = BSR_MARKETS.find(m => m.id === marketId)
 
@@ -36,7 +39,14 @@ export default function MarketPage() {
         const marketInfo = data.find((item: any) => item.id === marketId)
         if (marketInfo) {
           setMarketData(marketInfo)
-          setCurrentPrice(parseFloat(marketInfo.currentBSEI))
+          const newPrice = parseFloat(marketInfo.currentBSEI)
+          setCurrentPrice(newPrice)
+          // Calculate 24h change based on historical data
+          const history = MARKET_HISTORY[marketId]
+          if (history && history.length > 0) {
+            const yesterdayPrice = (history[0].spot * 0.10 + history[0].fm * 0.40 + history[0].fq * 0.25 + history[0].cal * 0.25) / 10
+            setPreviousPrice(yesterdayPrice)
+          }
         }
       } catch (error) {
         console.error('Failed to fetch market data:', error)
@@ -78,20 +88,19 @@ export default function MarketPage() {
       }
     })
 
-    // Generate live data (last 24 hours)
+    // Generate live data based on last historical price (no fake oscillation)
     const liveData: ChartDataPoint[] = []
     const now = new Date()
+    const lastHistoricalPrice = historicalData[historicalData.length - 1]?.anchor || currentPrice
+    
     for (let i = 23; i >= 0; i--) {
       const hour = new Date(now.getTime() - i * 60 * 60 * 1000)
       const hourString = hour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
       
-      // Oscillate around current price (10.09)
-      const oscillation = (Math.sin(i * 0.5) * 0.3) + (Math.random() * 0.2 - 0.1)
-      const livePrice = currentPrice + oscillation
-      
+      // Use current price from API for live data
       liveData.push({
         date: hourString,
-        rawSpot: parseFloat(livePrice.toFixed(2)),
+        rawSpot: parseFloat(currentPrice.toFixed(2)),
         anchor: parseFloat(currentPrice.toFixed(2)),
         corridorLow: parseFloat((currentPrice * 0.9).toFixed(2)),
         corridorHigh: parseFloat((currentPrice * 1.1).toFixed(2)),
@@ -146,25 +155,97 @@ export default function MarketPage() {
         </div>
       </header>
 
-      {/* CHART */}
+      {/* MAIN DATA BOXES */}
       <main className="max-w-7xl mx-auto">
-        <div className="bg-[#050505] border border-gray-900 p-6">
-          <h3 className="text-lg font-normal text-gray-400 mb-6 tracking-wider">Price History & Live Data</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Box 1: Trading Stats */}
+          <div className={`bg-[#050505] border ${borderColor} p-8`}>
+            <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-6">TRADING STATS</h3>
+            
+            {/* IPT Current Price */}
+            <div className="mb-8">
+              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-2">IPT Current Price</div>
+              <div className={`text-5xl font-normal font-mono tracking-tighter ${priceColor}`}>
+                {currentPrice.toFixed(2)} <span className="text-[14px] text-gray-500 ml-2">EUR / vkWh</span>
+              </div>
+            </div>
+            
+            {/* Price Change % */}
+            <div className="mb-8">
+              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-2">Price Change 24h</div>
+              <div className={`text-2xl font-normal font-mono ${
+                currentPrice > previousPrice ? 'text-green-500' : 'text-red-500'
+              }`}>
+                {currentPrice > previousPrice ? '+' : ''}{((currentPrice - previousPrice) / previousPrice * 100).toFixed(2)}%
+              </div>
+            </div>
+            
+            {/* Open Virtual Position */}
+            <div>
+              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-4">Open Virtual Position</div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-black border border-gray-900">
+                  <div className="text-[8px] text-gray-600 mb-1 tracking-widest">LONG</div>
+                  <div className="text-xl font-normal text-green-500 font-mono">
+                    {longPosition.toLocaleString('pl-PL')}
+                  </div>
+                  <div className="text-[8px] text-gray-500 mt-1">vkWh</div>
+                </div>
+                <div className="text-center p-4 bg-black border border-gray-900">
+                  <div className="text-[8px] text-gray-600 mb-1 tracking-widest">SHORT</div>
+                  <div className="text-xl font-normal text-red-500 font-mono">
+                    {shortPosition.toLocaleString('pl-PL')}
+                  </div>
+                  <div className="text-[8px] text-gray-500 mt-1">vkWh</div>
+                </div>
+              </div>
+            </div>
+          </div>
           
-          <ResponsiveContainer width="100%" height={400}>
+          {/* Box 2: Market Intel */}
+          <div className={`bg-[#050505] border ${borderColor} p-8`}>
+            <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-6">MARKET INTEL</h3>
+            
+            <div className="mb-6">
+              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-3">Market Characteristics</div>
+              <div className="text-2xl font-normal text-white mb-4">
+                {market.name.split(' ')[1]}
+              </div>
+              <div className="text-gray-300 leading-relaxed">
+                Coal Base market, high EUA exposure. Premium market
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="border border-gray-900 p-4">
+                <div className="text-[8px] text-gray-600 mb-1 tracking-widest">MARKET TYPE</div>
+                <div className="text-sm text-white">{market.type}</div>
+              </div>
+              <div className="border border-gray-900 p-4">
+                <div className="text-[8px] text-gray-600 mb-1 tracking-widest">BASE RATE</div>
+                <div className="text-sm text-white">{(market.b_base * 100).toFixed(1)}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* CHART - Visual Addition */}
+        <div className="bg-[#050505] border border-gray-900 p-6">
+          <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-4">PRICE VISUALIZATION</h3>
+          
+          <ResponsiveContainer width="100%" height={280}>
             <ComposedChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#333" />
               <XAxis 
                 dataKey="date" 
                 stroke="#666"
-                tick={{ fill: '#666', fontSize: 10 }}
+                tick={{ fill: '#666', fontSize: 9 }}
                 angle={-45}
                 textAnchor="end"
-                height={60}
+                height={50}
               />
               <YAxis 
                 stroke="#666"
-                tick={{ fill: '#666', fontSize: 10 }}
+                tick={{ fill: '#666', fontSize: 9 }}
                 domain={['dataMin - 2', 'dataMax + 2']}
               />
               <Tooltip 
@@ -173,7 +254,7 @@ export default function MarketPage() {
                 itemStyle={{ color: '#fff' }}
               />
               
-              {/* Corridor Area */}
+              {/* BSTZ Corridor */}
               <Area
                 type="monotone"
                 dataKey="corridorHigh"
@@ -189,67 +270,46 @@ export default function MarketPage() {
                 fillOpacity={1}
               />
               
-              {/* Anchor Line (Green) */}
+              {/* IPT_P_PL Price (Green) */}
               <Line
                 type="monotone"
                 dataKey="anchor"
                 stroke="#10b981"
-                strokeWidth={2}
+                strokeWidth={3}
                 dot={false}
-                name="Anchor"
+                name="IPT_P_PL Price"
               />
               
-              {/* Raw Spot Line (Red) */}
+              {/* Raw Spot (Thin Red Background) */}
               <Line
                 type="monotone"
                 dataKey="rawSpot"
                 stroke="#ef4444"
-                strokeWidth={2}
+                strokeWidth={1}
                 dot={false}
+                strokeOpacity={0.6}
                 name="Raw Spot"
               />
             </ComposedChart>
           </ResponsiveContainer>
 
-          {/* Legend */}
-          <div className="flex justify-center gap-8 mt-6">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-1 bg-red-500"></div>
-              <span className="text-[10px] text-gray-400">Raw Spot</span>
-            </div>
+          {/* Updated Legend */}
+          <div className="flex justify-center gap-8 mt-4">
             <div className="flex items-center gap-2">
               <div className="w-4 h-1 bg-green-500"></div>
-              <span className="text-[10px] text-gray-400">Anchor (Smoothed)</span>
+              <span className="text-[9px] text-gray-400">IPT_P_PL Price</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-0.5 bg-red-500 opacity-60"></div>
+              <span className="text-[9px] text-gray-400">Raw Spot</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-2 bg-green-500 opacity-20"></div>
-              <span className="text-[10px] text-gray-400">±10% Corridor</span>
+              <span className="text-[9px] text-gray-400">BSTZ max/min</span>
             </div>
           </div>
         </div>
 
-        {/* MARKET INFO */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-[#050505] border border-gray-900 p-6">
-            <h4 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">MARKET STATUS</h4>
-            <div className="text-2xl font-normal text-green-500">Active</div>
-            <div className="text-[10px] text-gray-500 mt-2">Last Update: {new Date().toLocaleTimeString()}</div>
-          </div>
-          
-          <div className="bg-[#050505] border border-gray-900 p-6">
-            <h4 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">PRICE CORRIDOR</h4>
-            <div className="text-lg font-normal">
-              <div className="text-red-400">{(currentPrice * 0.9).toFixed(2)} - {(currentPrice * 1.1).toFixed(2)}</div>
-              <div className="text-[10px] text-gray-500 mt-1">EUR/100vkWh</div>
-            </div>
-          </div>
-          
-          <div className="bg-[#050505] border border-gray-900 p-6">
-            <h4 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">24H VOLUME</h4>
-            <div className="text-2xl font-normal">2.4M</div>
-            <div className="text-[10px] text-gray-500 mt-1">vkWh Traded</div>
-          </div>
-        </div>
       </main>
     </div>
   )
