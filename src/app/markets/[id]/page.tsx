@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top`}>
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top mx-4`}>
             {/* Header */}
             <div className="mb-6">
               <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
@@ -231,19 +231,19 @@ export default function MarketPage() {
             </div>
             
             {/* TRADING Section */}
-            <div className="mb-8">
+            <div className="mb-10">
               {/* Current IPT Price */}
               <div className="mb-6">
                 <div className="flex items-center justify-center">
+                  <span className="text-[14px] text-white mr-4">EUR/vkWh</span>
                   <span className={`text-5xl font-bold tracking-[0.15em] text-yellow-400`}>
                     {currentPrice.toFixed(2)}
                   </span>
-                  <span className="text-[14px] text-white ml-4">EUR/vkWh</span>
                 </div>
               </div>
               
               {/* Quantity Stepper */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <div className="text-[10px] text-white tracking-[0.2em] mb-3 text-center font-bold">QUANTITY</div>
                 <div className="flex items-center justify-center gap-3">
                   <button 
@@ -332,7 +332,7 @@ export default function MarketPage() {
                     max="100"
                     value={bsrCollateral}
                     onChange={(e) => handleBsrChange(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer mx-4"
+                    className="w-4/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
                 
@@ -348,7 +348,7 @@ export default function MarketPage() {
                     max="90"
                     value={euroCollateral}
                     onChange={(e) => handleEuroChange(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer mx-4"
+                    className="w-4/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
               </div>
