@@ -6,14 +6,14 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   // Konfiguracja 8 rynków z kalibracją b_base (Systemic Inertia)
   const MARKETS = {
-    "BLSN-E-DE": { name: "Power DE", b_base: 0.005 },
-    "BLSN-E-NO": { name: "Power Nordic", b_base: 0.008 },
-    "BLSN-E-PL": { name: "Power PL", b_base: 0.015 },
-    "BLSN-E-FR": { name: "Power FR", b_base: 0.012 },
-    "BLSN-G-NL": { name: "Gas NL", b_base: 0.010 },
-    "BLSN-G-DE": { name: "Gas DE", b_base: 0.012 },
-    "BLSN-G-PL": { name: "Gas PL", b_base: 0.030 },
-    "BLSN-G-BG": { name: "Gas BG", b_base: 0.045 },
+    "IPT-E-DE": { name: "Power DE", b_base: 0.005 },
+    "IPT-E-NO": { name: "Power Nordic", b_base: 0.008 },
+    "IPT-E-PL": { name: "Power PL", b_base: 0.015 },
+    "IPT-E-FR": { name: "Power FR", b_base: 0.012 },
+    "IPT-G-NL": { name: "Gas NL", b_base: 0.010 },
+    "IPT-G-DE": { name: "Gas DE", b_base: 0.012 },
+    "IPT-G-PL": { name: "Gas PL", b_base: 0.030 },
+    "IPT-G-BG": { name: "Gas BG", b_base: 0.045 },
   };
 
   // Symulowane dane z Wyroczni (Oracles) - do późniejszego podpięcia pod realne API giełd

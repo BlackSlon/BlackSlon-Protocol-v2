@@ -18,6 +18,7 @@ export default function Dashboard() {
       try {
         const response = await fetch('/api/market-data?t=' + new Date().getTime())
         const data = await response.json()
+        console.log('API Response:', data)
         setMarketData(data)
       } catch (error) {
         console.error('Failed to fetch market data:', error)
