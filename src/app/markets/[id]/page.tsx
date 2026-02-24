@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.8618] origin-top`}>
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top`}>
             {/* Header */}
             <div className="mb-6">
               <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
@@ -234,8 +234,11 @@ export default function MarketPage() {
             <div className="mb-8">
               {/* Current IPT Price */}
               <div className="mb-6">
-                <div className={`text-5xl font-bold tracking-[0.15em] text-center text-yellow-400`}>
-                  {currentPrice.toFixed(2)} <span className="text-[14px] text-white ml-2">EUR/vkWh</span>
+                <div className="flex items-center justify-center">
+                  <span className={`text-5xl font-bold tracking-[0.15em] text-yellow-400`}>
+                    {currentPrice.toFixed(2)}
+                  </span>
+                  <span className="text-[14px] text-white ml-4">EUR/vkWh</span>
                 </div>
               </div>
               
@@ -289,15 +292,15 @@ export default function MarketPage() {
               <div className="mb-6">
                 <div className="text-[11px] text-white tracking-[0.2em] mb-3 text-center font-bold">DEPOSIT</div>
                 <div className="flex items-center justify-center">
-                  <div className="relative w-32 h-8 bg-gray-700 rounded-full p-1">
+                  <div className="relative w-36 h-8 bg-gray-700 rounded-full p-1">
                     <div 
-                      className={`absolute top-1 w-14 h-6 bg-white rounded-full transition-transform duration-200 ease-in-out ${
-                        depositDirection === 'BUY' ? 'translate-x-0' : 'translate-x-14'
+                      className={`absolute top-1 w-16 h-6 bg-white rounded-full transition-transform duration-200 ease-in-out ${
+                        depositDirection === 'BUY' ? 'translate-x-0' : 'translate-x-16'
                       }`}
                     ></div>
                     <button 
                       onClick={() => setDepositDirection('BUY')}
-                      className={`absolute left-1 top-1 z-10 px-2 py-1 text-xs font-bold transition-colors duration-200 ${
+                      className={`absolute left-1 top-1 z-10 px-3 py-1 text-[10px] font-bold transition-colors duration-200 ${
                         depositDirection === 'BUY' ? 'text-black' : 'text-white'
                       }`}
                     >
@@ -305,7 +308,7 @@ export default function MarketPage() {
                     </button>
                     <button 
                       onClick={() => setDepositDirection('SELL')}
-                      className={`absolute right-1 top-1 z-10 px-2 py-1 text-xs font-bold transition-colors duration-200 ${
+                      className={`absolute right-1 top-1 z-10 px-2 py-1 text-[10px] font-bold transition-colors duration-200 ${
                         depositDirection === 'SELL' ? 'text-black' : 'text-white'
                       }`}
                     >
@@ -320,7 +323,7 @@ export default function MarketPage() {
                 {/* €BSR Slider */}
                 <div className="mb-4">
                   <div className="flex justify-between text-[11px] text-white mb-2 font-bold">
-                    <span>BSR</span>
+                    <span>€BSR</span>
                     <span>{bsrCollateral}%</span>
                   </div>
                   <input
@@ -363,9 +366,9 @@ export default function MarketPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <div className="text-gray-400 text-xs mb-1">BSR REQUIRED</div>
+                    <div className="text-gray-400 text-xs mb-1">€BSR REQUIRED</div>
                     <div className="text-green-400 text-lg font-mono">
-                      {calculateMarginRequired().bsrRequired.toFixed(2)} BSR
+                      €{calculateMarginRequired().bsrRequired.toFixed(2)} BSR
                     </div>
                   </div>
                   <div className="text-center">
