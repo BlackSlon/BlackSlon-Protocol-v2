@@ -14,7 +14,7 @@ export async function GET() {
   };
 
   // Symulowane dane z Wyroczni (Oracles) - do późniejszego podpięcia pod realne API giełd
-  const mock_raw = { spot: 100, fm: 102, fq: 105, cal: 110 };
+  const mock_raw = { spot: 500, fm: 102, fq: 105, cal: 110 };
   
   const results: Record<string, any> = {};
 
