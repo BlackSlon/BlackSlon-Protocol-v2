@@ -16,7 +16,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchMarketData = async () => {
       try {
-        const response = await fetch('/api/market-data')
+        const response = await fetch('/api/market-data?t=' + new Date().getTime())
         const data = await response.json()
         setMarketData(data)
       } catch (error) {
