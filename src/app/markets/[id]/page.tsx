@@ -235,10 +235,10 @@ export default function MarketPage() {
               {/* Current IPT Price */}
               <div className="mb-6">
                 <div className="flex items-center justify-center">
-                  <span className="text-[14px] text-white mr-4">EUR/vkWh</span>
                   <span className={`text-5xl font-bold tracking-[0.15em] text-yellow-400`}>
                     {currentPrice.toFixed(2)}
                   </span>
+                  <span className="text-[14px] text-white ml-4">EUR/vkWh</span>
                 </div>
               </div>
               
@@ -332,7 +332,7 @@ export default function MarketPage() {
                     max="100"
                     value={bsrCollateral}
                     onChange={(e) => handleBsrChange(parseInt(e.target.value))}
-                    className="w-4/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
                 
@@ -348,7 +348,7 @@ export default function MarketPage() {
                     max="90"
                     value={euroCollateral}
                     onChange={(e) => handleEuroChange(parseInt(e.target.value))}
-                    className="w-4/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
               </div>
