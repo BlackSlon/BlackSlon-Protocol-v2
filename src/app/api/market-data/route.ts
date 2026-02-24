@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   // Konfiguracja 8 rynków z kalibracją b_base (Systemic Inertia)
