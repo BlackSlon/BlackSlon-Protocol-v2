@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+// Wymuszenie dynamicznego API - wyłącza cache Vercela
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
