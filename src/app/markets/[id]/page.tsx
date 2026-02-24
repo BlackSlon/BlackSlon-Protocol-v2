@@ -381,7 +381,7 @@ export default function MarketPage() {
           </div>
           
           {/* BOX 2: MARKET PANEL */}
-          <div className={`bg-black border ${borderColor} p-4 flex flex-col`} style={montserratStyle}>
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col lg:col-span-2`} style={montserratStyle}>
             <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-4">MARKET PANEL</h3>
             
             {/* PHYSICAL DIMENSION */}
