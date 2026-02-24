@@ -97,12 +97,12 @@ function MarketTile({ market, liveData }: { market: any; liveData: any }) {
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
         <div className="flex items-center gap-2">
           <span className="text-green-500 text-[10px]">{mockChange}</span>
-          {market.id.includes('DE') && <span>🇩🇪</span>}
-          {market.id.includes('NO') && <span>🇳🇴</span>}
-          {market.id.includes('PL') && <span>🇵🇱</span>}
-          {market.id.includes('FR') && <span>🇫🇷</span>}
-          {market.id.includes('NL') && <span>🇳🇱</span>}
-          {market.id.includes('BG') && <span>🇧🇬</span>}
+          {market.id.includes('DE') && <span className="text-sm">🇩🇪</span>}
+          {market.id.includes('NO') && <span className="text-sm">🇳🇴</span>}
+          {market.id.includes('PL') && <span className="text-sm">🇵🇱</span>}
+          {market.id.includes('FR') && <span className="text-sm">🇫🇷</span>}
+          {market.id.includes('NL') && <span className="text-sm">🇳🇱</span>}
+          {market.id.includes('BG') && <span className="text-sm">🇧🇬</span>}
         </div>
       </div>
       
