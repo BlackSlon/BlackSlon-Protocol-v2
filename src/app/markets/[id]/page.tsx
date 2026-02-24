@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.9576] origin-top`}>
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.8618] origin-top`}>
             {/* Header */}
             <div className="mb-6">
               <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
@@ -231,7 +231,7 @@ export default function MarketPage() {
             </div>
             
             {/* TRADING Section */}
-            <div className="mb-6">
+            <div className="mb-8">
               {/* Current IPT Price */}
               <div className="mb-6">
                 <div className={`text-5xl font-bold tracking-[0.15em] text-center text-yellow-400`}>
@@ -281,13 +281,13 @@ export default function MarketPage() {
             </div>
             
             {/* Divider */}
-            <div className="border-t border-gray-700 my-4"></div>
+            <div className="border-t border-gray-700 my-6"></div>
             
             {/* DEPOSIT Section */}
             <div className="mb-6">
               {/* Light Switch Toggle */}
               <div className="mb-6">
-                <div className="text-[11px] text-white tracking-[0.2em] mb-3 text-center font-bold">DEPOSIT DIRECTION</div>
+                <div className="text-[11px] text-white tracking-[0.2em] mb-3 text-center font-bold">DEPOSIT</div>
                 <div className="flex items-center justify-center">
                   <div className="relative w-32 h-8 bg-gray-700 rounded-full p-1">
                     <div 
@@ -320,7 +320,7 @@ export default function MarketPage() {
                 {/* €BSR Slider */}
                 <div className="mb-4">
                   <div className="flex justify-between text-[11px] text-white mb-2 font-bold">
-                    <span>€BSR</span>
+                    <span>BSR</span>
                     <span>{bsrCollateral}%</span>
                   </div>
                   <input
@@ -361,10 +361,18 @@ export default function MarketPage() {
                     {depositDirection === 'BUY' ? calculateMarginRequired().buyMargin : calculateMarginRequired().sellMargin}%
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-gray-400 text-xs mb-1">REQUIRED</div>
-                  <div className="text-green-400 text-lg font-mono">
-                    {calculateMarginRequired().bsrRequired.toFixed(2)} BSR
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <div className="text-gray-400 text-xs mb-1">BSR REQUIRED</div>
+                    <div className="text-green-400 text-lg font-mono">
+                      {calculateMarginRequired().bsrRequired.toFixed(2)} BSR
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-gray-400 text-xs mb-1">eEURO REQUIRED</div>
+                    <div className="text-blue-400 text-lg font-mono">
+                      €{calculateMarginRequired().euroRequired.toFixed(2)}
+                    </div>
                   </div>
                 </div>
               </div>
