@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { MARKET_HISTORY } from '@/lib/market_history';
 
 export async function GET() {
-  const history = MARKET_HISTORY['IPT-E-PL'];
+  const history = MARKET_HISTORY['IPT-P-PL'];
   
   if (!history || history.length < 20) {
     return NextResponse.json({ error: 'Dane niedostępne' }, { status: 500 });
@@ -20,7 +20,7 @@ export async function GET() {
   const finalAnchor = (0.50 * aT) + (0.25 * aT1) + (0.25 * aT2);
 
   return NextResponse.json([{
-    id: 'IPT-E-PL',
+    id: 'IPT-P-PL',
     name: 'Power Poland',
     wholesalePrice: finalAnchor.toFixed(2),
     currentBSEI: (finalAnchor / 10).toFixed(2), // Cena w EUR / vkWh

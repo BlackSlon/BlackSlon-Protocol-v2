@@ -2,10 +2,10 @@
 
 export const BSR_MARKETS = [
   // Electrons (Power) - IPTs
-  { id: 'IPT-E-DE', name: 'Power Germany', type: 'Power', b_base: 0.005 },
-  { id: 'IPT-E-NO', name: 'Power Nordic', type: 'Power', b_base: 0.008 },
-  { id: 'IPT-E-FR', name: 'Power France', type: 'Power', b_base: 0.012 },
-  { id: 'IPT-E-PL', name: 'Power Poland', type: 'Power', b_base: 0.015 },
+  { id: 'IPT-P-DE', name: 'Power Germany', type: 'Power', b_base: 0.005 },
+  { id: 'IPT-P-NO', name: 'Power Nordic', type: 'Power', b_base: 0.008 },
+  { id: 'IPT-P-FR', name: 'Power France', type: 'Power', b_base: 0.012 },
+  { id: 'IPT-P-PL', name: 'Power Poland', type: 'Power', b_base: 0.015 },
   
   // Molecules (Gas) - IPTs
   { id: 'IPT-G-NL', name: 'Gas Netherlands', type: 'Gas', b_base: 0.010 },

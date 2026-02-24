@@ -9,7 +9,7 @@ export interface BSTZHistoryEntry {
 }
 
 export const MARKET_HISTORY: Record<string, BSTZHistoryEntry[]> = {
-  'IPT-E-PL': [
+  'IPT-P-PL': [
     { date: "2026-01-26", spot: 189.81, fm: 109.48, fq: 101.61, cal: 105.98 },
     { date: "2026-01-27", spot: 242.18, fm: 110.59, fq: 102.06, cal: 105.73 },
     { date: "2026-01-28", spot: 186.21, fm: 108.77, fq: 101.10, cal: 104.98 },
