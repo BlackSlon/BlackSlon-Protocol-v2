@@ -1,13 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart, ComposedChart } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, ComposedChart } from 'recharts'
 import { MARKET_HISTORY } from '@/lib/market_history'
 import { BSR_MARKETS } from '@/app/markets_config'
 import { useParams } from 'next/navigation'
 
 const montserratStyle = {
   fontFamily: "'Montserrat', sans-serif",
+}
+
+const monoStyle = {
+  fontFamily: "'Courier New', monospace",
 }
 
 interface ChartDataPoint {
@@ -24,12 +28,44 @@ export default function MarketPage() {
   const marketId = params.id as string
   const [marketData, setMarketData] = useState<any>(null)
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
+  // Order Panel State
+  const [quantity, setQuantity] = useState<number>(100)
+  const [bsrCollateral, setBsrCollateral] = useState<number>(50)
+  const [euroCollateral, setEuroCollateral] = useState<number>(50)
+
+  // Portfolio State
+  const [bsrPrice, setBsrPrice] = useState<number>(1.05)
+  const [openPosition, setOpenPosition] = useState<number>(272836)
+  const [bsrDeposit, setBsrDeposit] = useState<number>(1000)
+  const [euroDeposit, setEuroDeposit] = useState<number>(500)
+  const [lockedFunds, setLockedFunds] = useState<number>(200)
+
+  // Sentiment Data
+  const [longPercentage, setLongPercentage] = useState<number>(76)
+  const [shortPercentage, setShortPercentage] = useState<number>(24)
+
   const [currentPrice, setCurrentPrice] = useState<number>(10.09)
   const [previousPrice, setPreviousPrice] = useState<number>(9.95)
-  const [longPosition, setLongPosition] = useState<number>(272836)
-  const [shortPosition, setShortPosition] = useState<number>(86300)
 
   const market = BSR_MARKETS.find(m => m.id === marketId)
+
+  // Collateral sliders logic
+  const handleBsrChange = (value: number) => {
+    setBsrCollateral(value)
+    setEuroCollateral(100 - value)
+  }
+
+  const handleEuroChange = (value: number) => {
+    setEuroCollateral(value)
+    setBsrCollateral(100 - value)
+  }
+
+  // Calculate leverage
+  const calculateLeverage = () => {
+    const totalCollateral = (bsrCollateral / 100) * bsrDeposit + (euroCollateral / 100) * euroDeposit
+    const positionValue = quantity * currentPrice
+    return totalCollateral > 0 ? (positionValue / totalCollateral).toFixed(2) : '1.00'
+  }
 
   useEffect(() => {
     const fetchMarketData = async () => {
@@ -37,6 +73,7 @@ export default function MarketPage() {
         const response = await fetch('/api/market-data?t=' + new Date().getTime())
         const data = await response.json()
         const marketInfo = data.find((item: any) => item.id === marketId)
+
         if (marketInfo) {
           setMarketData(marketInfo)
           const newPrice = parseFloat(marketInfo.currentBSEI)
@@ -126,190 +163,294 @@ export default function MarketPage() {
   const priceColor = market.type === 'Power' ? 'text-yellow-500' : 'text-blue-400'
 
   return (
-    <div className="min-h-screen bg-black text-white p-10 font-normal" style={montserratStyle}>
+    <div className="min-h-screen bg-[#0a0a0a] text-white p-4 font-normal" style={montserratStyle}>
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
       `}</style>
 
       {/* HEADER */}
-      <header className="max-w-7xl mx-auto mb-8">
-        <div className="flex items-center justify-between mb-6">
+      <header className="max-w-full mx-auto mb-6">
+        <div className="flex items-center justify-between px-4">
           <div>
-            <h1 className="text-4xl font-normal tracking-wider mb-2">
+            <h1 className="text-2xl font-normal tracking-wider mb-1">
               BlackSlon {market.type} Index
             </h1>
-            <h2 className="text-2xl text-gray-400 tracking-tighter font-normal">
+            <h2 className="text-lg text-gray-400 tracking-tighter font-normal">
               {market.name.split(' ')[1]}
             </h2>
-            <code className="text-[10px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
-          </div>
-          
-          {/* CURRENT PRICE DISPLAY */}
-          <div className={`text-right p-6 bg-[#050505] border ${borderColor}`}>
-            <div className="text-[10px] text-gray-600 tracking-[0.3em] mb-2">Current Index Price</div>
-            <div className={`text-4xl font-normal font-mono tracking-tighter ${priceColor}`}>
-              {currentPrice.toFixed(2)} <span className="text-[12px] text-gray-500 ml-2">EUR/100vkWh</span>
-            </div>
-            <div className="text-[10px] text-green-500 mt-2">+1.24%</div>
+            <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
           </div>
         </div>
       </header>
 
-      {/* MAIN DATA BOXES */}
-      <main className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Box 1: Trading Stats */}
-          <div className={`bg-[#050505] border ${borderColor} p-8`}>
-            <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-6">TRADING STATS</h3>
+      {/* TRADING TERMINAL GRID */}
+      <main className="max-w-full mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
+          
+          {/* BOX 1: ORDER PANEL */}
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col`}>
+            <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">ORDER PANEL</h3>
             
-            {/* IPT Current Price */}
-            <div className="mb-8">
-              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-2">IPT Current Price</div>
-              <div className={`text-5xl font-normal font-mono tracking-tighter ${priceColor}`}>
-                {currentPrice.toFixed(2)} <span className="text-[14px] text-gray-500 ml-2">EUR / vkWh</span>
+            {/* Current IPT Price */}
+            <div className="mb-6">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">IPT CURRENT PRICE</div>
+              <div className={`text-3xl font-normal font-mono tracking-tighter ${priceColor}`} style={monoStyle}>
+                {currentPrice.toFixed(2)} <span className="text-[10px] text-gray-500 ml-2">EUR</span>
               </div>
             </div>
             
-            {/* Price Change % */}
-            <div className="mb-8">
-              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-2">Price Change 24h</div>
-              <div className={`text-2xl font-normal font-mono ${
-                currentPrice > previousPrice ? 'text-green-500' : 'text-red-500'
-              }`}>
-                {currentPrice > previousPrice ? '+' : ''}{((currentPrice - previousPrice) / previousPrice * 100).toFixed(2)}%
+            {/* Quantity Stepper */}
+            <div className="mb-6">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-3">QUANTITY (IPT)</div>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 10))}
+                  className="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
+                >
+                  -
+                </button>
+                <div className="flex-1 text-center">
+                  <div className="text-xl font-mono" style={monoStyle}>{quantity}</div>
+                </div>
+                <button 
+                  onClick={() => setQuantity(Math.min(1000, quantity + 10))}
+                  className="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-lg"
+                >
+                  +
+                </button>
               </div>
             </div>
             
-            {/* Open Virtual Position */}
-            <div>
-              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-4">Open Virtual Position</div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-black border border-gray-900">
-                  <div className="text-[8px] text-gray-600 mb-1 tracking-widest">LONG</div>
-                  <div className="text-xl font-normal text-green-500 font-mono">
-                    {longPosition.toLocaleString('pl-PL')}
-                  </div>
-                  <div className="text-[8px] text-gray-500 mt-1">vkWh</div>
+            {/* Trade Buttons */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <button className="bg-green-500 hover:bg-green-400 text-black py-4 rounded font-bold text-sm tracking-wider transition-all">
+                BUY
+              </button>
+              <button className="bg-red-500 hover:bg-red-400 text-black py-4 rounded font-bold text-sm tracking-wider transition-all">
+                SELL
+              </button>
+            </div>
+            
+            {/* Collateral Sliders */}
+            <div className="mb-6">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-4">COLLATERAL ALLOCATION</div>
+              
+              {/* €BSR Slider */}
+              <div className="mb-4">
+                <div className="flex justify-between text-[8px] text-gray-600 mb-1">
+                  <span>€BSR</span>
+                  <span>{bsrCollateral}%</span>
                 </div>
-                <div className="text-center p-4 bg-black border border-gray-900">
-                  <div className="text-[8px] text-gray-600 mb-1 tracking-widest">SHORT</div>
-                  <div className="text-xl font-normal text-red-500 font-mono">
-                    {shortPosition.toLocaleString('pl-PL')}
-                  </div>
-                  <div className="text-[8px] text-gray-500 mt-1">vkWh</div>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  value={bsrCollateral}
+                  onChange={(e) => handleBsrChange(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+              
+              {/* eEURO Slider */}
+              <div className="mb-4">
+                <div className="flex justify-between text-[8px] text-gray-600 mb-1">
+                  <span>eEURO</span>
+                  <span>{euroCollateral}%</span>
                 </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="90"
+                  value={euroCollateral}
+                  onChange={(e) => handleEuroChange(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+            </div>
+            
+            {/* Leverage Info */}
+            <div className="mt-auto">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">CURRENT LEVERAGE</div>
+              <div className="text-xl font-mono text-yellow-400" style={monoStyle}>
+                {calculateLeverage()}x
               </div>
             </div>
           </div>
-          
-          {/* Box 2: Market Intel */}
-          <div className={`bg-[#050505] border ${borderColor} p-8`}>
-            <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-6">MARKET INTEL</h3>
+          {/* BOX 2: MARKET VIEW */}
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col`}>
+            <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">MARKET VIEW</h3>
             
-            <div className="mb-6">
-              <div className="text-[10px] text-gray-500 tracking-[0.2em] mb-3">Market Characteristics</div>
-              <div className="text-2xl font-normal text-white mb-4">
-                {market.name.split(' ')[1]}
+            {/* TradeChart */}
+            <div className="mb-4">
+              <ResponsiveContainer width="100%" height={200}>
+                <ComposedChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#666"
+                    tick={{ fill: '#666', fontSize: 8 }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={40}
+                  />
+                  <YAxis 
+                    stroke="#666"
+                    tick={{ fill: '#666', fontSize: 8 }}
+                    domain={['dataMin - 2', 'dataMax + 2']}
+                  />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#000', border: '1px solid #333', borderRadius: '4px' }}
+                    labelStyle={{ color: '#fff' }}
+                    itemStyle={{ color: '#fff' }}
+                  />
+                  
+                  {/* BSTZ Corridor */}
+                  <Area
+                    type="monotone"
+                    dataKey="corridorHigh"
+                    stroke="none"
+                    fill="#10b981"
+                    fillOpacity={0.1}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="corridorLow"
+                    stroke="none"
+                    fill="#000"
+                    fillOpacity={1}
+                  />
+                  
+                  {/* IPT_P_PL Price */}
+                  <Line
+                    type="monotone"
+                    dataKey="anchor"
+                    stroke="#10b981"
+                    strokeWidth={2}
+                    dot={false}
+                    name="IPT_P_PL Price"
+                  />
+                  
+                  {/* Raw Spot */}
+                  <Line
+                    type="monotone"
+                    dataKey="rawSpot"
+                    stroke="#ef4444"
+                    strokeWidth={1}
+                    dot={false}
+                    strokeOpacity={0.6}
+                    name="Raw Spot"
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+              
+              {/* Legend */}
+              <div className="flex justify-center gap-4 mt-2">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-1 bg-green-500"></div>
+                  <span className="text-[8px] text-gray-400">IPT_P_PL</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-0.5 bg-red-500 opacity-60"></div>
+                  <span className="text-[8px] text-gray-400">Raw Spot</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-1 bg-green-500 opacity-20"></div>
+                  <span className="text-[8px] text-gray-400">BSTZ max/min</span>
+                </div>
               </div>
-              <div className="text-gray-300 leading-relaxed">
+            </div>
+            
+            {/* Sentiment Widget */}
+            <div className="mb-4">
+              <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">OPEN VIRTUAL POSITIONS</div>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="bg-gray-900 p-2">
+                  <div className="text-[7px] text-gray-600 mb-1">1H</div>
+                  <div className={`text-sm font-mono ${longPercentage > 50 ? 'text-green-400' : 'text-red-400'}`} style={monoStyle}>
+                    {longPercentage}% / {shortPercentage}%
+                  </div>
+                </div>
+                <div className="bg-gray-900 p-2">
+                  <div className="text-[7px] text-gray-600 mb-1">4H</div>
+                  <div className={`text-sm font-mono ${longPercentage > 50 ? 'text-green-400' : 'text-red-400'}`} style={monoStyle}>
+                    {longPercentage}% / {shortPercentage}%
+                  </div>
+                </div>
+                <div className="bg-gray-900 p-2">
+                  <div className="text-[7px] text-gray-600 mb-1">24H</div>
+                  <div className={`text-sm font-mono ${longPercentage > 50 ? 'text-green-400' : 'text-red-400'}`} style={monoStyle}>
+                    {longPercentage}% / {shortPercentage}%
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Market Intel */}
+            <div className="mt-auto">
+              <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-2">MARKET INTEL</div>
+              <div className="text-xs text-gray-300 leading-relaxed">
                 Coal Base market, high EUA exposure. Premium market
               </div>
             </div>
+          </div>
+
+          {/* BOX 3: PORTFOLIO */}
+          <div className={`bg-black border ${borderColor} p-4 flex flex-col`}>
+            <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">PORTFOLIO</h3>
             
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <div className="border border-gray-900 p-4">
-                <div className="text-[8px] text-gray-600 mb-1 tracking-widest">MARKET TYPE</div>
-                <div className="text-sm text-white">{market.type}</div>
+            {/* €BSR Price Ticker */}
+            <div className="mb-6">
+              <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">€BSR PRICE</div>
+              <div className="text-2xl font-mono text-green-400" style={monoStyle}>
+                €{bsrPrice.toFixed(3)}
               </div>
-              <div className="border border-gray-900 p-4">
-                <div className="text-[8px] text-gray-600 mb-1 tracking-widest">BASE RATE</div>
-                <div className="text-sm text-white">{(market.b_base * 100).toFixed(1)}%</div>
+            </div>
+            
+            {/* User Stats */}
+            <div className="mb-6">
+              <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">USER STATS</div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] text-gray-500">OPEN POSITION</span>
+                  <span className="text-sm font-mono text-white" style={monoStyle}>
+                    {openPosition.toLocaleString()} vkWh
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] text-gray-500">€BSR DEPOSIT</span>
+                  <span className="text-sm font-mono text-green-400" style={monoStyle}>
+                    {bsrDeposit.toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] text-gray-500">eEURO DEPOSIT</span>
+                  <span className="text-sm font-mono text-blue-400" style={monoStyle}>
+                    {euroDeposit.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Funds */}
+            <div className="mt-auto">
+              <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">FUNDS</div>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] text-gray-500">AVAILABLE</span>
+                  <span className="text-sm font-mono text-green-400" style={monoStyle}>
+                    €{(bsrDeposit + euroDeposit - lockedFunds).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] text-gray-500">LOCKED</span>
+                  <span className="text-sm font-mono text-red-400" style={monoStyle}>
+                    €{lockedFunds.toLocaleString()}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* CHART - Visual Addition */}
-        <div className="bg-[#050505] border border-gray-900 p-6">
-          <h3 className="text-[12px] text-gray-600 tracking-[0.3em] mb-4">PRICE VISUALIZATION</h3>
-          
-          <ResponsiveContainer width="100%" height={280}>
-            <ComposedChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-              <XAxis 
-                dataKey="date" 
-                stroke="#666"
-                tick={{ fill: '#666', fontSize: 9 }}
-                angle={-45}
-                textAnchor="end"
-                height={50}
-              />
-              <YAxis 
-                stroke="#666"
-                tick={{ fill: '#666', fontSize: 9 }}
-                domain={['dataMin - 2', 'dataMax + 2']}
-              />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#000', border: '1px solid #333', borderRadius: '4px' }}
-                labelStyle={{ color: '#fff' }}
-                itemStyle={{ color: '#fff' }}
-              />
-              
-              {/* BSTZ Corridor */}
-              <Area
-                type="monotone"
-                dataKey="corridorHigh"
-                stroke="none"
-                fill="#10b981"
-                fillOpacity={0.1}
-              />
-              <Area
-                type="monotone"
-                dataKey="corridorLow"
-                stroke="none"
-                fill="#000"
-                fillOpacity={1}
-              />
-              
-              {/* IPT_P_PL Price (Green) */}
-              <Line
-                type="monotone"
-                dataKey="anchor"
-                stroke="#10b981"
-                strokeWidth={3}
-                dot={false}
-                name="IPT_P_PL Price"
-              />
-              
-              {/* Raw Spot (Thin Red Background) */}
-              <Line
-                type="monotone"
-                dataKey="rawSpot"
-                stroke="#ef4444"
-                strokeWidth={1}
-                dot={false}
-                strokeOpacity={0.6}
-                name="Raw Spot"
-              />
-            </ComposedChart>
-          </ResponsiveContainer>
-
-          {/* Updated Legend */}
-          <div className="flex justify-center gap-8 mt-4">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-1 bg-green-500"></div>
-              <span className="text-[9px] text-gray-400">IPT_P_PL Price</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-0.5 bg-red-500 opacity-60"></div>
-              <span className="text-[9px] text-gray-400">Raw Spot</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-2 bg-green-500 opacity-20"></div>
-              <span className="text-[9px] text-gray-400">BSTZ max/min</span>
-            </div>
-          </div>
-        </div>
-
       </main>
     </div>
   )
