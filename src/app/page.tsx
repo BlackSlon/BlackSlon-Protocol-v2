@@ -63,7 +63,7 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredMarkets.map(m => (
-            <MarketTile key={m.id} market={m} liveData={marketData} />
+            <MarketTile key={m.id} market={m} liveData={marketData?.reduce((acc: any, item: any) => ({ ...acc, [item.id]: item }), {})} />
           ))}
         </div>
       </main>
