@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-3 flex flex-col scale-[1.008] origin-top`}>
+          <div className={`bg-black border ${borderColor} p-3 flex flex-col scale-[0.9576] origin-top`}>
             <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-3">ORDER PANEL</h3>
             
             {/* Instrument Header */}
@@ -241,16 +241,24 @@ export default function MarketPage() {
             {/* Quantity Stepper */}
             <div className="mb-4">
               <div className="text-[9px] text-white tracking-[0.2em] mb-2">QUANTITY (IPT)</div>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center gap-2.5">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-6 h-6 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-sm"
                 >
                   -
                 </button>
-                <div className="text-xl mx-2 text-white font-mono">
-                  {quantity}
-                </div>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Math.max(1, Math.min(1000, parseInt(e.target.value) || 1)))}
+                  className="w-16 text-center bg-gray-800 text-white font-mono text-lg rounded border border-gray-700 focus:outline-none focus:border-gray-600"
+                  style={{
+                    appearance: 'textfield',
+                    MozAppearance: 'textfield',
+                    WebkitAppearance: 'none'
+                  }}
+                />
                 <button 
                   onClick={() => setQuantity(Math.min(1000, quantity + 1))}
                   className="w-6 h-6 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-sm"
@@ -261,11 +269,11 @@ export default function MarketPage() {
             </div>
             
             {/* Trade Buttons */}
-            <div className="grid grid-cols-2 gap-1 mb-4">
-              <button className="bg-transparent border-2 border-green-500 text-green-500 py-2 px-0.5 rounded font-bold text-xs tracking-wider transition-all hover:bg-green-500 hover:text-black">
+            <div className="flex justify-center gap-2 mb-4">
+              <button className="bg-transparent border-2 border-green-500 text-green-500 py-2 px-3 rounded font-bold text-xs tracking-wider transition-all hover:bg-green-500 hover:text-black max-w-[120px]">
                 BUY
               </button>
-              <button className="bg-transparent border-2 border-red-500 text-red-500 py-2 px-0.5 rounded font-bold text-xs tracking-wider transition-all hover:bg-red-500 hover:text-black">
+              <button className="bg-transparent border-2 border-red-500 text-red-500 py-2 px-3 rounded font-bold text-xs tracking-wider transition-all hover:bg-red-500 hover:text-black max-w-[120px]">
                 SELL
               </button>
             </div>
@@ -294,6 +302,11 @@ export default function MarketPage() {
                 >
                   TO SELL
                 </button>
+              </div>
+              <div className="text-center mt-2">
+                <span className="text-xs text-yellow-400 font-mono">
+                  {depositDirection === 'BUY' ? calculateMarginRequired().buyMargin : calculateMarginRequired().sellMargin}%
+                </span>
               </div>
             </div>
             
@@ -353,9 +366,9 @@ export default function MarketPage() {
                 )}
                 <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
                   <div>
-                    <div className="text-gray-400 mb-1">Amount (€BSR)</div>
+                    <div className="text-gray-400 mb-1">Amount (BSR)</div>
                     <div className="font-mono text-green-400">
-                      {calculateMarginRequired().bsrRequired.toFixed(2)} €BSR
+                      {calculateMarginRequired().bsrRequired.toFixed(2)} BSR
                     </div>
                   </div>
                   <div>
