@@ -139,7 +139,23 @@ export default function TerminalPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '8px' }}>
                     {(prices[activeTab] || []).map(m => (
                         <div key={m.index} style={{ background: '#050505', padding: '12px', border: '1px solid #1a1a1a' }}>
-                            <div style={{ fontSize: '8px', color: '#444' }}>{m.country} // {m.role}</div>
+                            <div style={{ fontSize: '8px', color: '#444' }}>
+                                <span style={{ marginRight: '4px' }}>
+                                    {m.country === 'DE' && '🇩🇪'}
+                                    {m.country === 'PL' && '🇵🇱'}
+                                    {m.country === 'FR' && '🇫🇷'}
+                                    {m.country === 'RO' && '🇷🇴'}
+                                    {m.country === 'NO' && '🇳🇴'}
+                                    {m.country === 'BG' && '🇧🇬'}
+                                    {m.country === 'GB' && '🇬🇧'}
+                                    {m.country === 'HU' && '🇭🇺'}
+                                    {m.country === 'IT' && '🇮🇹'}
+                                    {m.country === 'NL' && '🇳🇱'}
+                                    {m.country === 'UK' && '🇬🇧'}
+                                    {m.country === 'AT' && '🇦🇹'}
+                                </span>
+                                {m.country} // {m.role}
+                            </div>
                             <div style={{ fontWeight: 'bold', fontSize: '11px' }}>{m.index}</div>
                             <div style={{ margin: '8px 0' }}>
                                 <span style={{ fontSize: '20px', fontWeight: 'bold', color: getAccent() }}>

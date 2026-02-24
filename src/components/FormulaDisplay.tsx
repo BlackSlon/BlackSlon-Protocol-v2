@@ -101,7 +101,25 @@ export default function FormulaDisplay({ a = 0, b = 0, s = 0, activeMarket }: Fo
       {/* BlackSlon Index */}
       <div className="mt-4 pt-4 border-t border-gray-800">
         <div className="text-center">
-          <div className="text-gray-500 mb-2">BlackSlon Energy Index {activeMarket ? activeMarket.country : 'DE'}</div>
+          <div className="text-gray-500 mb-2">
+            BlackSlon Energy Index {activeMarket ? activeMarket.country : 'DE'} 
+            <span className="ml-2">
+              {activeMarket ? (
+                activeMarket.country === 'DE' ? '🇩🇪' :
+                activeMarket.country === 'PL' ? '🇵🇱' :
+                activeMarket.country === 'FR' ? '🇫🇷' :
+                activeMarket.country === 'RO' ? '🇷🇴' :
+                activeMarket.country === 'NO' ? '🇳🇴' :
+                activeMarket.country === 'BG' ? '🇧🇬' :
+                activeMarket.country === 'GB' ? '🇬🇧' :
+                activeMarket.country === 'HU' ? '🇭🇺' :
+                activeMarket.country === 'IT' ? '🇮🇹' :
+                activeMarket.country === 'NL' ? '🇳🇱' :
+                activeMarket.country === 'UK' ? '🇬🇧' :
+                activeMarket.country === 'AT' ? '🇦🇹' : ''
+              ) : '🇩🇪'}
+            </span>
+          </div>
           <div className="text-2xl font-mono font-bold text-white">
             {p.toFixed(2)}
           </div>
