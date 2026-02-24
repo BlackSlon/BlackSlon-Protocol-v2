@@ -223,7 +223,7 @@ export default function MarketPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
           
           {/* BOX 1: ORDER PANEL */}
-          <div className={`bg-black border ${borderColor} p-3 flex flex-col scale-[0.84] origin-top`}>
+          <div className={`bg-black border ${borderColor} p-3 flex flex-col scale-[1.008] origin-top`}>
             <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-3">ORDER PANEL</h3>
             
             {/* Instrument Header */}
@@ -248,7 +248,7 @@ export default function MarketPage() {
                 >
                   -
                 </button>
-                <div className="text-xl mx-2 text-white">
+                <div className="text-xl mx-2 text-white font-mono">
                   {quantity}
                 </div>
                 <button 
@@ -270,29 +270,30 @@ export default function MarketPage() {
               </button>
             </div>
             
-            {/* DEPOSIT Section */}
+            {/* DEPOSIT Binary Switch */}
             <div className="mb-5">
               <div className="text-[11px] text-white tracking-[0.2em] mb-3">DEPOSIT</div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-white">TO BUY</span>
-                <span className="text-xs text-white">TO SELL</span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={depositDirection === 'BUY' ? 0 : 1}
-                onChange={(e) => setDepositDirection(parseFloat(e.target.value) < 0.5 ? 'BUY' : 'SELL')}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-              />
-              <div className="flex justify-between mt-2">
-                <span className="text-xs text-yellow-400 font-mono">
-                  {calculateMarginRequired().buyMargin}%
-                </span>
-                <span className="text-xs text-yellow-400 font-mono">
-                  {calculateMarginRequired().sellMargin}%
-                </span>
+              <div className="flex items-center justify-center">
+                <button 
+                  onClick={() => setDepositDirection('BUY')}
+                  className={`px-4 py-2 text-xs font-bold rounded-l transition-all ${
+                    depositDirection === 'BUY' 
+                      ? 'bg-green-500 text-black' 
+                      : 'bg-gray-700 text-white hover:bg-gray-600'
+                  }`}
+                >
+                  TO BUY
+                </button>
+                <button 
+                  onClick={() => setDepositDirection('SELL')}
+                  className={`px-4 py-2 text-xs font-bold rounded-r transition-all ${
+                    depositDirection === 'SELL' 
+                      ? 'bg-red-500 text-black' 
+                      : 'bg-gray-700 text-white hover:bg-gray-600'
+                  }`}
+                >
+                  TO SELL
+                </button>
               </div>
             </div>
             
@@ -331,19 +332,34 @@ export default function MarketPage() {
               </div>
             </div>
             
-            {/* Estimated Margin Required */}
-            <div className="mb-4">
-              <div className="text-[9px] text-white tracking-[0.2em] mb-2">ESTIMATED MARGIN REQUIRED</div>
-              <div className="bg-gray-900 p-2 rounded">
-                <div className="grid grid-cols-2 gap-2 text-xs">
+            {/* ESTIMATED MARGIN REQUIREMENT */}
+            <div className="mt-auto">
+              <div className="text-[9px] text-white tracking-[0.2em] mb-2">ESTIMATED MARGIN REQUIREMENT</div>
+              <div className="bg-gray-900 p-3 rounded">
+                {depositDirection === 'BUY' ? (
+                  <div className="text-center">
+                    <div className="text-gray-400 text-xs mb-1">LEVERAGE TO BUY</div>
+                    <div className="text-yellow-400 text-lg font-mono">
+                      {calculateMarginRequired().buyMargin}%
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <div className="text-gray-400 text-xs mb-1">LEVERAGE TO SELL</div>
+                    <div className="text-yellow-400 text-lg font-mono">
+                      {calculateMarginRequired().sellMargin}%
+                    </div>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
                   <div>
-                    <div className="text-gray-400 mb-1">€BSR Required</div>
+                    <div className="text-gray-400 mb-1">Amount (€BSR)</div>
                     <div className="font-mono text-green-400">
-                      €{calculateMarginRequired().bsrRequired.toFixed(2)}
+                      {calculateMarginRequired().bsrRequired.toFixed(2)} €BSR
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-400 mb-1">eEURO Required</div>
+                    <div className="text-gray-400 mb-1">Amount (eEURO)</div>
                     <div className="font-mono text-blue-400">
                       €{calculateMarginRequired().euroRequired.toFixed(2)}
                     </div>
