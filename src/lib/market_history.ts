@@ -20,7 +20,7 @@ export const MARKET_HISTORY: Record<string, BSTZHistoryEntry[]> = {
     { date: "2026-02-04", spot: 138.84, fm: 103.08, fq: 98.63, cal: 104.27 },
     { date: "2026-02-05", spot: 129.57, fm: 104.06, fq: 99.08, cal: 104.62 },
     { date: "2026-02-06", spot: 145.44, fm: 101.61, fq: 96.71, cal: 102.35 },
-    { date: "2026-02-09", spot: 140.59, fm: 100.95, fq: 97.39, cal: 102.62 }, // Poprawiona linia!
+    { date: "2026-02-09", spot: 140.59, fm: 100.95, fq: 97.39, cal: 102.62 },
     { date: "2026-02-10", spot: 143.36, fm: 100.14, fq: 97.27, cal: 103.32 },
     { date: "2026-02-11", spot: 125.13, fm: 98.70, fq: 95.62, cal: 101.79 },
     { date: "2026-02-12", spot: 121.46, fm: 96.99, fq: 93.70, cal: 98.74 },
