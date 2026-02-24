@@ -1,8 +1,180 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, ComposedChart } from 'recharts'
+import { useParams } from 'next/navigation'
+import { ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import OrderPanel from '@/components/OrderPanel'
+import MarketPanel from '@/components/MarketPanel'
+import PortfolioPanel from '@/components/PortfolioPanel'
+import { BSR_MARKETS } from '@/app/markets_config'
 import { MARKET_HISTORY } from '@/lib/market_history'
+
+interface ChartDataPoint {
+  date: string
+  rawSpot: number
+  anchor: number
+  corridorLow: number
+  corridorHigh: number
+  isLive?: boolean
+}
+
+export default function MarketPage() {
+  const params = useParams()
+  const marketId = params.id as string
+  const [marketData, setMarketData] = useState<any>(null)
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([])
+  const [currentPrice, setCurrentPrice] = useState<number>(10.09)
+  const [previousPrice, setPreviousPrice] = useState<number>(9.95)
+
+  const market = BSR_MARKETS.find(m => m.id === marketId)
+
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      try {
+        const response = await fetch('/api/market-data?t=' + new Date().getTime())
+        const data = await response.json()
+        const marketInfo = data.find((item: any) => item.id === marketId)
+        if (marketInfo) {
+          setMarketData(marketInfo)
+          const newPrice = parseFloat(marketInfo.currentBSEI)
+          setCurrentPrice(newPrice)
+          // Calculate 24h change based on historical data
+          const history = MARKET_HISTORY[marketId]
+          if (history && history.length > 0) {
+            const yesterdayPrice = (history[0].spot * 0.10 + history[0].fm * 0.40 + history[0].fq * 0.25 + history[0].cal * 0.25) / 10
+            setPreviousPrice(yesterdayPrice)
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch market data:', error)
+      }
+    }
+
+    fetchMarketData()
+    const interval = setInterval(fetchMarketData, 5000)
+
+    return () => clearInterval(interval)
+  }, [marketId])
+
+  useEffect(() => {
+    if (!MARKET_HISTORY[marketId]) return
+
+    const history = MARKET_HISTORY[marketId]
+    const calculateRaw = (e: any) => 
+      (e.spot * 0.10) + (e.fm * 0.40) + (e.fq * 0.25) + (e.cal * 0.25)
+
+    // Process historical data (first 20 days)
+    const historicalData: ChartDataPoint[] = history.slice(0, 20).map((entry, index) => {
+      const rawSpot = calculateRaw(entry) / 10 // Convert to EUR/vkWh
+      let anchor = rawSpot
+
+      // Apply BSTZ 50/25/25 Historical Recursive Filter for anchor values
+      if (index >= 2) {
+        const aT = calculateRaw(history[index]) / 10
+        const aT1 = calculateRaw(history[index - 1]) / 10
+        const aT2 = calculateRaw(history[index - 2]) / 10
+        anchor = (0.50 * aT) + (0.25 * aT1) + (0.25 * aT2)
+      }
+
+      return {
+        date: new Date(entry.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+        rawSpot: parseFloat(rawSpot.toFixed(2)),
+        anchor: parseFloat(anchor.toFixed(2)),
+        corridorLow: parseFloat((anchor * 0.9).toFixed(2)),
+        corridorHigh: parseFloat((anchor * 1.1).toFixed(2)),
+      }
+    })
+
+    // Generate live data based on last historical price (no fake oscillation)
+    const liveData: ChartDataPoint[] = []
+    const now = new Date()
+    
+    for (let i = 23; i >= 0; i--) {
+      const hour = new Date(now.getTime() - i * 60 * 60 * 1000)
+      const hourString = hour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+      
+      // Use current price from API for live data
+      liveData.push({
+        date: hourString,
+        rawSpot: parseFloat(currentPrice.toFixed(2)),
+        anchor: parseFloat(currentPrice.toFixed(2)),
+        corridorLow: parseFloat((currentPrice * 0.9).toFixed(2)),
+        corridorHigh: parseFloat((currentPrice * 1.1).toFixed(2)),
+        isLive: true
+      })
+    }
+
+    setChartData([...historicalData, ...liveData])
+  }, [marketId, currentPrice])
+
+  if (!market) {
+    return (
+      <div className="min-h-screen bg-black text-white p-10" style={montserratStyle}>
+        <div className="text-center">
+          <h1 className="text-2xl mb-4">Market not found</h1>
+          <p className="text-gray-400">The market {marketId} does not exist.</p>
+        </div>
+      </div>
+    )
+  }
+
+  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-400'
+  const priceColor = market.type === 'Power' ? 'text-yellow-500' : 'text-blue-400'
+
+  const montserratStyle = {
+    fontFamily: 'Montserrat, sans-serif'
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-white p-4 font-normal" style={montserratStyle}>
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+      `}</style>
+
+      {/* HEADER */}
+      <header className="max-w-full mx-auto mb-6">
+        <div className="flex items-center justify-between px-4">
+          <div>
+            <h1 className="text-2xl font-normal tracking-wider mb-1">
+              BlackSlon {market.type} Index
+            </h1>
+            <h2 className="text-lg text-gray-400 tracking-tighter font-normal">
+              {market.name.split(' ')[1]}
+            </h2>
+            <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
+          </div>
+        </div>
+      </header>
+
+      {/* TRADING TERMINAL GRID */}
+      <main className="max-w-full mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-[calc(100vh-120px)]">
+          
+          {/* BOX 1: ORDER PANEL */}
+          <OrderPanel 
+            currentPrice={currentPrice}
+            borderColor={borderColor}
+            montserratStyle={montserratStyle}
+          />
+
+          {/* BOX 2: MARKET PANEL (BSTZ Synthesis) */}
+          <MarketPanel 
+            currentPrice={currentPrice}
+            borderColor={borderColor}
+            montserratStyle={montserratStyle}
+          />
+
+          {/* BOX 3: PORTFOLIO */}
+          <PortfolioPanel 
+            borderColor={borderColor}
+            montserratStyle={montserratStyle}
+          />
+
+        </div>
+      </main>
+    </div>
+  )
+}
 import { BSR_MARKETS } from '@/app/markets_config'
 import { useParams } from 'next/navigation'
 
