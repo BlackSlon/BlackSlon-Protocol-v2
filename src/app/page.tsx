@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { BSR_MARKETS } from './markets_config'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const montserratStyle = {
   fontFamily: "'Montserrat', sans-serif",
@@ -10,7 +10,25 @@ const montserratStyle = {
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<'Power' | 'Gas'>('Power')
+  const [marketData, setMarketData] = useState<any>(null)
   const filteredMarkets = BSR_MARKETS.filter(m => m.type === activeTab)
+
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      try {
+        const response = await fetch('/api/market-data')
+        const data = await response.json()
+        setMarketData(data)
+      } catch (error) {
+        console.error('Failed to fetch market data:', error)
+      }
+    }
+
+    fetchMarketData()
+    const interval = setInterval(fetchMarketData, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="min-h-screen bg-black text-white p-10 font-normal" style={montserratStyle}>
@@ -44,7 +62,7 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredMarkets.map(m => (
-            <MarketTile key={m.id} market={m} />
+            <MarketTile key={m.id} market={m} liveData={marketData} />
           ))}
         </div>
       </main>
@@ -56,9 +74,16 @@ export default function Dashboard() {
   )
 }
 
-function MarketTile({ market }: { market: any }) {
+function MarketTile({ market, liveData }: { market: any; liveData: any }) {
   // Cena hurtowa MWh to 104.55. Dla 100kWh (IPT) dzielimy przez 10.
-  const wholesalePrice = 104.55 
+  const defaultWholesalePrice = 104.55 
+  let wholesalePrice = defaultWholesalePrice
+  
+  // Jeśli liveData istnieje dla danego rynku, użyj tej wartości
+  if (liveData && liveData[market.id]) {
+    wholesalePrice = liveData[market.id].wholesalePrice || defaultWholesalePrice
+  }
+  
   const iptPrice = wholesalePrice / 10
   const mockChange = "+1.24%"
 

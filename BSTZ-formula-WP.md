@@ -24,7 +24,7 @@ Component Definitions:
 
 ### 2. Asymptotic Daily Rebalancing (ADR): The Stability Engine
 
-To ensure the Anchor ($a$) remains stable and doesn't suffer from "Price Cliffs" when energy contracts expire, we implement ADR (Asymptotic Daily Rebalancing).ADR is the "Smoothing Engine" of the protocol. It ensures that the transition between an expiring contract and a new one is seamless, preventing artificial/sudden jumps in the BSTZ corridor.
+To ensure the Anchor ($a$) remains stable and doesn't suffer from "Price Cliffs" when energy contracts expire, we implement ADR (Asymptotic Daily Rebalancing). ADR is the "Smoothing Engine" of the protocol. It ensures that the transition between an expiring contract and a new one is seamless, preventing artificial/sudden jumps in the BSTZ corridor.
 
 The ADR is a mathematical protocol designed to manage the transition of Weights ($W_i$) within the Weighted Aggregator. Its primary purpose is to eliminate "Expiration Shocks" — sudden price movements caused by the rollover of underlying physical energy contracts.
 
