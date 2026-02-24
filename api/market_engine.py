@@ -34,9 +34,7 @@ class handler(BaseHTTPRequestHandler):
             low, high = round(weighted_a * 0.9, 2), round(weighted_a * 1.1, 2)
             
             results[mid] = {
-                "name": cfg["name"],
-                "weighted_anchor": weighted_a,
-                "bsei_price": weighted_a, # Startujemy od ceny kotwicy
+                "wholesalePrice": weighted_a,
                 "b_base": cfg["b_base"],
                 "corridor": {"low": low, "high": high}
             }

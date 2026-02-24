@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import path from 'path';
 
 const execPromise = promisify(exec);
 
 export async function GET() {
   try {
-    // Wywołanie Twojego silnika w Pythonie
-    const { stdout } = await execPromise('python3 path/to/market_engine.py');
+    // Dynamiczna ścieżka do skryptu Pythona
+    const scriptPath = path.join(process.cwd(), 'api', 'market_engine.py');
+    
+    // Wywołanie skryptu Pythona
+    const { stdout } = await execPromise(`python3 ${scriptPath}`);
     const data = JSON.parse(stdout);
     
     return NextResponse.json(data);
