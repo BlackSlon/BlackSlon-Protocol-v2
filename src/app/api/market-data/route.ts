@@ -1,48 +1,40 @@
 import { NextResponse } from 'next/server';
-
-// Wymuszenie dynamicznego API - wyłącza cache Vercela
-export const dynamic = 'force-dynamic';
+import { MARKET_HISTORY } from '@/lib/market_history';
 
 export async function GET() {
-  // Konfiguracja 8 rynków z kalibracją b_base (Systemic Inertia)
-  const MARKETS = {
-    "IPT-E-DE": { name: "Power DE", b_base: 0.005 },
-    "IPT-E-NO": { name: "Power Nordic", b_base: 0.008 },
-    "IPT-E-PL": { name: "Power PL", b_base: 0.015 },
-    "IPT-E-FR": { name: "Power FR", b_base: 0.012 },
-    "IPT-G-NL": { name: "Gas NL", b_base: 0.010 },
-    "IPT-G-DE": { name: "Gas DE", b_base: 0.012 },
-    "IPT-G-PL": { name: "Gas PL", b_base: 0.030 },
-    "IPT-G-BG": { name: "Gas BG", b_base: 0.045 },
-  };
-
-  // Symulowane dane z Wyroczni (Oracles) - do późniejszego podpięcia pod realne API giełd
-  const mock_raw = { spot: 500, fm: 102, fq: 105, cal: 110 };
+  const history = MARKET_HISTORY['IPT-E-PL'];
   
-  const results: Record<string, any> = {};
-
-  for (const [mid, cfg] of Object.entries(MARKETS)) {
-    // 1. Raw Anchor (Wagi: Spot 10%, FM 40%, FQ 25%, Cal 25%)
-    const raw_a = (mock_raw.spot * 0.10) + (mock_raw.fm * 0.40) + (mock_raw.fq * 0.25) + (mock_raw.cal * 0.25);
-    
-    // 2. Weighted Anchor (zaokrąglenie do 2 miejsc po przecinku)
-    const weighted_a = Math.round(raw_a * 100) / 100;
-    
-    // 3. Korytarz BSTZ (+/- 10% od kotwicy)
-    const low = Math.round(weighted_a * 0.9 * 100) / 100;
-    const high = Math.round(weighted_a * 1.1 * 100) / 100;
-
-    // 4. Skalowanie do standardu 100kWh dla BSEI
-    const currentBSEI = weighted_a / 10;
-
-    results[mid] = {
-      wholesalePrice: weighted_a,
-      currentBSEI: currentBSEI,
-      b_base: cfg.b_base,
-      corridor: { low, high }
-    };
+  if (!history || history.length < 20) {
+    return NextResponse.json({ error: 'Dane historyczne niedostępne' }, { status: 500 });
   }
 
-  // Zwracamy czysty format JSON, z którym Dashboard poradzi sobie bez problemu
-  return NextResponse.json(results);
+  // Funkcja obliczająca Raw Anchor (â) dla jednej sesji
+  // Wagi: Spot 10%, FM 40%, FQ 25%, Cal 25%
+  const calculateRaw = (entry: any) => {
+    return (entry.spot * 0.10) + (entry.fm * 0.40) + (entry.fq * 0.25) + (entry.cal * 0.25);
+  };
+
+  // Pobieramy 3 ostatnie sesje z Twoich danych (20.02, 19.02, 18.02)
+  const aT = calculateRaw(history[19]);   // Sesja T
+  const aT1 = calculateRaw(history[18]);  // Sesja T-1
+  const aT2 = calculateRaw(history[17]);  // Sesja T-2
+
+  // Formuła Rekurencyjna 50/25/25 (Inercja systemu)
+  const finalAnchor = (0.50 * aT) + (0.25 * aT1) + (0.25 * aT2);
+
+  // Zwracamy dane w formacie, który rozumie Twój Dashboard
+  return NextResponse.json([{
+    id: 'IPT-E-PL',
+    name: 'Power Poland',
+    wholesalePrice: finalAnchor.toFixed(2),
+    currentBSEI: (finalAnchor / 10).toFixed(2), // Przeliczenie na EUR / vkWh
+    unit: 'EUR / vkWh',
+    change: "+1.24%", // Tutaj możesz później dodać realną zmianę %
+    corridor: {
+      low: (finalAnchor * 0.9).toFixed(2),
+      high: (finalAnchor * 1.1).toFixed(2)
+    },
+    status: 'Active',
+    lastUpdate: history[19].date
+  }]);
 }
