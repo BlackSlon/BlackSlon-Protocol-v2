@@ -26,14 +26,14 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
         <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-bold">Market Panel</span>
       </div>
 
-      {/* PODTYTUŁ */}
+      {/* PODTYTUŁ - Czerwony, styl instrumentu */}
       <div className="text-center mb-1">
         <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">PHYSICAL DIMENSION</span>
       </div>
 
-      {/* TYTUŁ KORYTARZA */}
-      <div className="text-center mb-3">
-        <span className="text-[14px] text-white font-bold tracking-[0.1em] uppercase">BlackSlon Trading Zone</span>
+      {/* TYTUŁ KORYTARZA - Poprawna wielkość liter i czcionka powiększona o 2 poziomy */}
+      <div className="text-center mb-4">
+        <span className="text-[18px] text-white font-bold tracking-tight">BlackSlon Trading Zone</span>
       </div>
 
       {/* BSTZ CORRIDOR TABLE */}
@@ -60,11 +60,9 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
                   <div className="flex-grow h-[3px] bg-gray-800 relative rounded-full mx-2">
                      <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/20"></div>
                      
-                     {/* INTERAKTYWNA KROPA */}
+                     {/* KROPA ANCHOR Z TOOLTIPEM */}
                      <div className="group absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer">
                         <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_8px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
-                        
-                        {/* TOOLTIP */}
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                           <div className="bg-black border border-gray-700 text-[9px] text-white px-2 py-1 rounded whitespace-nowrap shadow-xl">
                             Anchor: <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
