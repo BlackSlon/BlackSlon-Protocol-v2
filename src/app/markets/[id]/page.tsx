@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import MarketPanel from '@/components/MarketPanel' 
-import TradingPanel from '@/components/OrderPanel' 
+import TradingPanel from '@/components/TradingPanel' 
 import AccountPanel from '@/components/PortfolioPanel' 
 import { BSR_MARKETS } from '@/app/markets_config'
 
@@ -34,59 +34,31 @@ export default function MarketPage() {
     return () => clearInterval(interval)
   }, [marketId])
 
-  if (!market) return <div className="text-white p-10 font-sans">Market not found</div>
+  if (!market) return <div className="text-white p-10 text-center uppercase tracking-widest">Market not found</div>
 
   const borderColor = "border-yellow-500/50" 
   const montserratStyle = { fontFamily: 'Montserrat, sans-serif' }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white p-4" style={montserratStyle}>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-      `}</style>
-
-      {/* HEADER - Czysty: BlackSlon Power Index + Poland */}
       <header className="max-w-[1200px] mx-auto mb-10 mt-6 px-4">
         <div className="flex flex-col">
-          <h1 className="text-3xl font-light tracking-[0.15em] text-white">
-            BlackSlon Power Index
-          </h1>
-          <h2 className="text-gray-500 text-sm tracking-widest mt-1">
-            Poland
-          </h2>
+          <h1 className="text-3xl font-light tracking-[0.15em] text-white">BlackSlon Power Index</h1>
+          <h2 className="text-gray-500 text-sm tracking-widest mt-1">Poland</h2>
         </div>
       </header>
 
-      {/* TERMINAL GRID - 1200px Szerokości */}
       <main className="max-w-[1200px] mx-auto pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch min-h-[700px]">
-          
-          {/* BOX 1: MARKET PANEL (BSTZ Synthesis) */}
           <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
-            <MarketPanel 
-              currentPrice={currentPrice}
-              borderColor={borderColor}
-              montserratStyle={montserratStyle}
-            />
+            <MarketPanel currentPrice={currentPrice} borderColor={borderColor} montserratStyle={montserratStyle} />
           </div>
-
-          {/* BOX 2: TRADING PANEL (O 30% mniejszy) */}
           <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
-            <TradingPanel 
-              currentPrice={currentPrice}
-              borderColor={borderColor}
-              montserratStyle={montserratStyle}
-            />
+            <TradingPanel currentPrice={currentPrice} borderColor={borderColor} montserratStyle={montserratStyle} />
           </div>
-
-          {/* BOX 3: ACCOUNT PANEL */}
           <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
-            <AccountPanel 
-              borderColor={borderColor}
-              montserratStyle={montserratStyle}
-            />
+            <AccountPanel borderColor={borderColor} montserratStyle={montserratStyle} />
           </div>
-
         </div>
       </main>
     </div>
