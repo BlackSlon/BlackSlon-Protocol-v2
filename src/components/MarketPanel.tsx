@@ -8,7 +8,7 @@ interface MarketPanelProps {
 
 export default function MarketPanel({ currentPrice, borderColor, montserratStyle }: MarketPanelProps) {
   return (
-    <div className={`bg-black border ${borderColor} p-6 flex flex-col`} style={montserratStyle}>
+    <div className={`bg-transparent border-0 flex flex-col h-full`} style={montserratStyle}>
       <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-4">BSTZ SYNTHESIS</h3>
       
       {/* PHYSICAL DIMENSION */}
