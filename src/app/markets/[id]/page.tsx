@@ -1,118 +1,94 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import MarketPanel from '@/components/MarketPanel' 
+import TradingPanel from '@/components/OrderPanel' 
+import AccountPanel from '@/components/PortfolioPanel' 
+import { BSR_MARKETS } from '@/app/markets_config'
 
-interface OrderPanelProps {
-  currentPrice: number
-  borderColor: string
-  montserratStyle: any
-}
+export default function MarketPage() {
+  const params = useParams()
+  const marketId = params.id as string
+  const [currentPrice, setCurrentPrice] = useState<number>(10.09)
 
-export default function OrderPanel({ currentPrice, borderColor, montserratStyle }: OrderPanelProps) {
-  const [isBuy, setIsBuy] = useState(true)
-  const [bsrRatio, setBsrRatio] = useState(1) // 1 = 100% BSR, 0 = 0% BSR
-  const [quantity, setQuantity] = useState(100)
+  const market = BSR_MARKETS.find(m => m.id === marketId)
 
-  // Logika Marginu: 25%/50% przy 100% BSR, 100% przy 0% BSR
-  const baseMargin = isBuy ? 0.75 : 0.50
-  const currentMarginPercent = 100 - (baseMargin * bsrRatio * 100)
-  
-  const totalNotional = quantity * currentPrice
-  const totalMarginRequired = totalNotional * (currentMarginPercent / 100)
-  
-  const requiredBSR = totalMarginRequired * bsrRatio
-  const requiredEuro = totalMarginRequired * (1 - bsrRatio)
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      try {
+        const response = await fetch('/api/market-data?t=' + new Date().getTime())
+        const data = await response.json()
+        const marketInfo = data.find((item: any) => item.id === marketId)
+        if (marketInfo) {
+          const newPrice = parseFloat(marketInfo.currentBSEI)
+          setCurrentPrice(newPrice)
+        }
+      } catch (error) {
+        console.error('Failed to fetch market data:', error)
+      }
+    }
 
-  const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
+    fetchMarketData()
+    const interval = setInterval(fetchMarketData, 5000)
+    return () => clearInterval(interval)
+  }, [marketId])
+
+  if (!market) return <div className="text-white p-10 font-sans">Market not found</div>
+
+  const borderColor = "border-yellow-500/50" 
+  const montserratStyle = { fontFamily: 'Montserrat, sans-serif' }
 
   return (
-    <div className="flex flex-col h-full p-4 select-none" style={montserratStyle}>
-      {/* HEADER PANELU */}
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-[10px] tracking-[0.3em] text-gray-500 uppercase">Trading Panel</span>
-        <span className="text-[9px] text-red-500/80 font-bold tracking-tighter">INSTRUMENT: IPT-P-PL</span>
-      </div>
+    <div className="min-h-screen bg-[#050505] text-white p-4" style={montserratStyle}>
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+      `}</style>
 
-      {/* PRICE SECTION */}
-      <div className="text-center mb-6">
-        <div className="text-2xl font-bold text-yellow-500 tracking-tight" style={monoStyle}>
-          {currentPrice.toFixed(2)}
+      {/* HEADER - Czysty: BlackSlon Power Index + Poland */}
+      <header className="max-w-[1200px] mx-auto mb-10 mt-6 px-4">
+        <div className="flex flex-col">
+          <h1 className="text-3xl font-light tracking-[0.15em] text-white">
+            BlackSlon Power Index
+          </h1>
+          <h2 className="text-gray-500 text-sm tracking-widest mt-1">
+            Poland
+          </h2>
         </div>
-        <div className="text-[9px] text-gray-600 tracking-widest uppercase">Live BSEI Quote</div>
-      </div>
+      </header>
 
-      {/* BUY/SELL TOGGLE */}
-      <div className="flex gap-2 mb-6">
-        <button 
-          onClick={() => setIsBuy(true)}
-          className={`flex-1 py-2 text-[11px] font-bold transition-all border ${isBuy ? 'bg-green-500/10 border-green-500 text-green-500' : 'border-gray-800 text-gray-600'}`}
-        >
-          BUY
-        </button>
-        <button 
-          onClick={() => setIsBuy(false)}
-          className={`flex-1 py-2 text-[11px] font-bold transition-all border ${!isBuy ? 'bg-red-500/10 border-red-500 text-red-500' : 'border-gray-800 text-gray-600'}`}
-        >
-          SELL
-        </button>
-      </div>
-
-      {/* QUANTITY INPUT */}
-      <div className="mb-6">
-        <div className="flex justify-between text-[9px] text-gray-500 mb-2 tracking-widest uppercase">
-          <span>Quantity</span>
-          <span className="text-gray-400">{quantity} vkWh</span>
-        </div>
-        <input 
-          type="range" min="10" max="1000" step="10"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-yellow-500"
-        />
-      </div>
-
-      {/* BSR RATIO SLIDER */}
-      <div className="mb-6">
-        <div className="flex justify-between text-[9px] text-gray-500 mb-2 tracking-widest uppercase">
-          <span>€BSR Ratio</span>
-          <span className="text-yellow-500">{(bsrRatio * 100).toFixed(0)}%</span>
-        </div>
-        <input 
-          type="range" min="0" max="1" step="0.01"
-          value={bsrRatio}
-          onChange={(e) => setBsrRatio(Number(e.target.value))}
-          className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-yellow-500"
-        />
-        <div className="flex justify-between text-[8px] text-gray-600 mt-1 uppercase">
-          <span>100% eEURO</span>
-          <span>100% €BSR</span>
-        </div>
-      </div>
-
-      <div className="flex-grow" />
-
-      {/* CALCULATION DRAWER */}
-      <div className="border-t border-gray-900 pt-4 space-y-3">
-        <div className="flex justify-between items-center">
-          <span className="text-[9px] text-gray-500 uppercase tracking-widest">Margin Requirement</span>
-          <span className="text-xs font-bold text-white" style={monoStyle}>{currentMarginPercent.toFixed(1)}%</span>
-        </div>
-
-        <div className="space-y-1">
-          <div className="flex justify-between text-[10px]">
-            <span className="text-gray-600">Required €BSR:</span>
-            <span className="text-yellow-500/90 font-mono">{requiredBSR.toFixed(2)}</span>
+      {/* TERMINAL GRID - 1200px Szerokości */}
+      <main className="max-w-[1200px] mx-auto pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch min-h-[700px]">
+          
+          {/* BOX 1: MARKET PANEL (BSTZ Synthesis) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
+            <MarketPanel 
+              currentPrice={currentPrice}
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
           </div>
-          <div className="flex justify-between text-[10px]">
-            <span className="text-gray-600">Required eEURO:</span>
-            <span className="text-blue-400/90 font-mono">{requiredEuro.toFixed(2)}</span>
-          </div>
-        </div>
 
-        <button className="w-full py-3 bg-yellow-500 text-black font-bold text-[10px] tracking-[0.2em] hover:bg-yellow-400 transition-colors uppercase">
-          Place {isBuy ? 'Buy' : 'Sell'} Order
-        </button>
-      </div>
+          {/* BOX 2: TRADING PANEL (O 30% mniejszy) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
+            <TradingPanel 
+              currentPrice={currentPrice}
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
+
+          {/* BOX 3: ACCOUNT PANEL */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
+            <AccountPanel 
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
+
+        </div>
+      </main>
     </div>
   )
 }
