@@ -10,7 +10,7 @@ interface TradingPanelProps {
 
 export default function TradingPanel({ currentPrice, borderColor, montserratStyle }: TradingPanelProps) {
   const [isBuy, setIsBuy] = useState(true) 
-  const [depositMode, setDepositMode] = useState(true) // true = BUY, false = SELL
+  const [depositMode, setDepositMode] = useState(true) 
   const [bsrRatio, setBsrRatio] = useState(0.25) 
   const [quantity, setQuantity] = useState(100)
 
@@ -48,7 +48,7 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* 1) QUANTITY Z WPISYWANIEM Z PALCA */}
+      {/* QUANTITY */}
       <div className="flex flex-col items-center mb-3">
         <span className="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Quantity</span>
         <div className="flex items-center gap-3">
@@ -63,25 +63,25 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* 4) PRZYCISKI Z EFEKTEM HOVER */}
+      {/* PRZYCISKI BUY/SELL Z TWOIM EFEKTEM */}
       <div className="flex gap-3 mb-4">
         <button 
           onClick={() => setIsBuy(true)}
-          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 ${
+          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 border-green-600/80 ${
             isBuy 
-            ? 'border-green-600 text-green-500 bg-green-950/20 hover:bg-green-600 hover:text-black' 
-            : 'border-gray-800 text-gray-700 hover:border-gray-600'
-          }`}
+            ? 'text-green-500 bg-green-950/20 shadow-[0_0_10px_rgba(22,163,74,0.2)]' 
+            : 'text-green-900 bg-transparent'
+          } hover:bg-green-600 hover:text-black hover:shadow-[0_0_15px_rgba(22,163,74,0.4)]`}
         >
           BUY
         </button>
         <button 
           onClick={() => setIsBuy(false)}
-          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 ${
+          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 border-red-600/80 ${
             !isBuy 
-            ? 'border-red-600 text-red-500 bg-red-950/20 hover:bg-red-600 hover:text-black' 
-            : 'border-gray-800 text-gray-700 hover:border-gray-600'
-          }`}
+            ? 'text-red-500 bg-red-950/20 shadow-[0_0_10px_rgba(220,38,38,0.2)]' 
+            : 'text-red-900 bg-transparent'
+          } hover:bg-red-600 hover:text-black hover:shadow-[0_0_15px_rgba(220,38,38,0.4)]`}
         >
           SELL
         </button>
@@ -92,7 +92,6 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         <div className="text-center mb-2 text-[9px] text-gray-400 uppercase tracking-widest font-bold">Deposit</div>
         <div className="flex justify-center mb-3">
           <div className="bg-gray-900 p-0.5 rounded-full flex gap-1 border border-gray-800">
-            {/* 2) ZMIANA NA TO BUY / TO SELL */}
             <button 
               onClick={() => setDepositMode(true)}
               className={`px-3 py-0.5 rounded-full text-[7px] font-bold transition-all ${depositMode ? 'bg-white text-black' : 'text-gray-500'}`}
@@ -125,7 +124,6 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
       <div className="bg-[#0d1117] border border-gray-800/50 p-3 rounded-sm">
         <div className="text-center mb-2">
           <span className="text-[8px] text-gray-400 uppercase tracking-widest font-bold">Margin Requirement</span>
-          {/* 3) ZMIANA MODE NA BUY / SELL */}
           <div className="text-[8px] text-gray-600 uppercase">Mode: {depositMode ? 'BUY' : 'SELL'}</div>
           <div className="text-lg font-bold text-yellow-500 mt-0.5" style={monoStyle}>{currentMarginPercent}%</div>
         </div>
