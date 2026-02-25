@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import OrderPanel from '@/components/OrderPanel'
-import MarketPanel from '@/components/MarketPanel'
-import PortfolioPanel from '@/components/PortfolioPanel'
+// Zmieniamy nazwy importów, żeby pasowały do nowej logiki
+import MarketPanel from '@/components/MarketPanel' 
+import TradingPanel from '@/components/OrderPanel' // wcześniej OrderPanel
+import AccountPanel from '@/components/PortfolioPanel' // wcześniej PortfolioPanel
 import { BSR_MARKETS } from '@/app/markets_config'
-import { MARKET_HISTORY } from '@/lib/market_history'
 
 export default function MarketPage() {
   const params = useParams()
@@ -34,62 +34,37 @@ export default function MarketPage() {
 
     fetchMarketData()
     const interval = setInterval(fetchMarketData, 5000)
-
     return () => clearInterval(interval)
   }, [marketId])
 
-  if (!market) {
-    return (
-      <div className="min-h-screen bg-black text-white p-10">
-        <div className="text-center">
-          <h1 className="text-2xl mb-4">Market not found</h1>
-          <p className="text-gray-400">The market {marketId} does not exist.</p>
-        </div>
-      </div>
-    )
-  }
+  if (!market) return <div className="text-white p-10">Market not found</div>
 
-  const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-400'
-  const montserratStyle = {
-    fontFamily: 'Montserrat, sans-serif'
-  }
+  // Wymuszamy żółty kolor dla energii, niebieski dla innych, ale Ty chciałeś żółte ramki dla wszystkich
+  const borderColor = "border-yellow-500/50" 
+  const montserratStyle = { fontFamily: 'Montserrat, sans-serif' }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white p-4 font-normal" style={montserratStyle}>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
-      `}</style>
-
-      {/* HEADER */}
-      <header className="max-w-full mx-auto mb-6">
-        <div className="flex items-center justify-between px-4">
-          <div>
-            <h1 className="text-2xl font-normal tracking-wider mb-1">
-              BlackSlon {market.type} Index
-            </h1>
-            <h2 className="text-lg text-gray-400 tracking-tighter font-normal">
-              {market.name.split(' ')[1]}
-            </h2>
-            <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
+    <div className="min-h-screen bg-[#050505] text-white p-4" style={montserratStyle}>
+      {/* HEADER - Czysty i profesjonalny */}
+      <header className="max-w-[1600px] mx-auto mb-8 px-6">
+        <div className="flex flex-col">
+          <h1 className="text-3xl font-light tracking-[0.2em] uppercase">
+            BlackSlon <span className="text-yellow-500 font-bold">{market.type}</span> Index
+          </h1>
+          <div className="flex items-center gap-4 mt-2">
+            <span className="text-red-500 font-bold tracking-widest text-sm">INSTRUMENT: {market.id}</span>
+            <span className="text-gray-600">|</span>
+            <span className="text-gray-400 text-sm uppercase">{market.name}</span>
           </div>
         </div>
       </header>
 
-      {/* TRADING TERMINAL GRID - TRZY FILARY */}
-      <main>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 min-h-[calc(100vh-100px)] items-stretch w-full max-w-[1600px] mx-auto">
+      {/* TERMINAL GRID - TRZY RÓWNE FILARY */}
+      <main className="max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch min-h-[750px]">
           
-          {/* BOX 1: ORDER PANEL - Instrument, cena, panel transakcyjny */}
-          <div className="flex flex-col h-full">
-            <OrderPanel 
-              currentPrice={currentPrice}
-              borderColor={borderColor}
-              montserratStyle={montserratStyle}
-            />
-          </div>
-
-          {/* BOX 2: MARKET PANEL / SYNTHESIS - Oddzielny komponent */}
-          <div className="flex flex-col h-full">
+          {/* BOX 1: MARKET PANEL (Analiza BSTZ) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl`}>
             <MarketPanel 
               currentPrice={currentPrice}
               borderColor={borderColor}
@@ -97,9 +72,18 @@ export default function MarketPage() {
             />
           </div>
 
-          {/* BOX 3: PORTFOLIO - Prawa kolumna z danymi o środkach */}
-          <div className="flex flex-col h-full">
-            <PortfolioPanel 
+          {/* BOX 2: TRADING PANEL (Serce operacyjne) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl scale-[1.02] z-10`}>
+            <TradingPanel 
+              currentPrice={currentPrice}
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
+
+          {/* BOX 3: ACCOUNT PANEL (Kapitał i Ryzyko) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl`}>
+            <AccountPanel 
               borderColor={borderColor}
               montserratStyle={montserratStyle}
             />
