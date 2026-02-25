@@ -26,12 +26,12 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
 
   return (
     <div className="flex flex-col h-full p-4 select-none" style={montserratStyle}>
-      {/* HEADER PANELU - Ściśnięty margines */}
+      {/* HEADER */}
       <div className="text-center mb-2 border-b border-gray-900 pb-1">
         <span className="text-[9px] tracking-[0.3em] text-gray-500 uppercase font-bold">Trading Panel</span>
       </div>
 
-      <div className="text-center mb-4">
+      <div className="text-center mb-3">
         <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">Instrument: IPT-P-PL</span>
         <div className="flex items-center justify-center gap-2 mt-1">
           <span className="text-3xl font-bold text-yellow-500" style={monoStyle}>{currentPrice.toFixed(2)}</span>
@@ -39,8 +39,8 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* QUANTITY - Bardziej kompaktowe */}
-      <div className="flex flex-col items-center mb-4">
+      {/* QUANTITY */}
+      <div className="flex flex-col items-center mb-3">
         <span className="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Quantity</span>
         <div className="flex items-center gap-3">
           <button onClick={() => setQuantity(q => Math.max(0, q - 1))} className="w-6 h-6 border border-gray-700 rounded flex items-center justify-center bg-gray-900 text-gray-400 text-xs">-</button>
@@ -49,8 +49,8 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* PRZYCISKI BUY/SELL - Nieco niższe */}
-      <div className="flex gap-3 mb-6">
+      {/* BUY/SELL BUTTONS */}
+      <div className="flex gap-3 mb-4">
         <button 
           onClick={() => setIsBuy(true)}
           className={`flex-1 py-3 border-2 font-bold text-xs transition-all ${isBuy ? 'border-green-600 text-green-500 bg-green-950/20' : 'border-gray-800 text-gray-700'}`}
@@ -65,22 +65,24 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </button>
       </div>
 
-      <div className="border-t border-gray-900 pt-4 mb-2">
-        <div className="text-center mb-3 text-[9px] text-gray-400 uppercase tracking-widest font-bold">Deposit</div>
-        <div className="flex justify-center mb-4">
+      {/* DEPOSIT SECTION - ZACIEŚNIONA */}
+      <div className="border-t border-gray-900 pt-3 mb-1">
+        <div className="text-center mb-2 text-[9px] text-gray-400 uppercase tracking-widest font-bold">Deposit</div>
+        <div className="flex justify-center mb-3">
           <div className="bg-gray-900 p-0.5 rounded-full flex gap-1 border border-gray-800">
             <button className={`px-3 py-0.5 rounded-full text-[7px] font-bold ${isBuy ? 'bg-white text-black' : 'text-gray-500'}`}>BUY</button>
             <button className={`px-3 py-0.5 rounded-full text-[7px] font-bold ${!isBuy ? 'bg-white text-black' : 'text-gray-500'}`}>SELL</button>
           </div>
         </div>
 
-        <div className="space-y-4 px-2">
+        {/* SUWAKI - MNIEJSZE ODSTĘPY (space-y-2 zamiast space-y-6) */}
+        <div className="space-y-2 px-2">
           <div>
-            <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-1"><span>€BSR</span><span>{(bsrRatio * 100).toFixed(0)}%</span></div>
+            <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-0.5"><span>€BSR</span><span>{(bsrRatio * 100).toFixed(0)}%</span></div>
             <input type="range" min="0" max="1" step="0.01" value={bsrRatio} onChange={(e) => setBsrRatio(Number(e.target.value))} className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600" />
           </div>
           <div>
-            <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-1"><span>eEURO</span><span>{((1 - bsrRatio) * 100).toFixed(0)}%</span></div>
+            <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-0.5"><span>eEURO</span><span>{((1 - bsrRatio) * 100).toFixed(0)}%</span></div>
             <input type="range" min="0" max="1" step="0.01" value={1 - bsrRatio} onChange={(e) => setBsrRatio(1 - Number(e.target.value))} className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600" />
           </div>
         </div>
@@ -88,8 +90,8 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
 
       <div className="flex-grow" />
 
-      {/* CIEMNY MODUŁ - Skondensowany */}
-      <div className="bg-[#0d1117] border border-gray-800/50 p-4 rounded-sm">
+      {/* EST. MARGIN REQUIREMENT - ZACIEŚNIONY BOKS */}
+      <div className="bg-[#0d1117] border border-gray-800/50 p-3 rounded-sm">
         <div className="text-center mb-2">
           <span className="text-[8px] text-gray-400 uppercase tracking-widest font-bold">Estimated Margin Requirement</span>
           <div className="text-[8px] text-gray-600 uppercase">Margin (To {isBuy ? 'Buy' : 'Sell'})</div>
