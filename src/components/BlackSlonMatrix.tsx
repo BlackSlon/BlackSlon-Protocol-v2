@@ -46,7 +46,7 @@ export default function BlackSlonMatrix() {
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-      const data = payload[0]
+      const data = payload[0].payload
       return (
         <div className="bg-black border border-gray-600 p-2 rounded shadow-lg">
           <p className="text-yellow-400 font-mono text-xs">
