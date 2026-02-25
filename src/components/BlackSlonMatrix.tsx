@@ -111,7 +111,6 @@ export default function BlackSlonMatrix() {
                     type="number"
                     dataKey="volume"
                     range={[0, 1000]}
-                    hide
                   />
                   <Scatter
                     dataKey="volume"
