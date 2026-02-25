@@ -14,17 +14,17 @@ export default function BlackSlonMatrix() {
   const [price, setPrice] = useState('')
   const [volume, setVolume] = useState('')
   const [orders, setOrders] = useState<OrderData[]>([
-    // Mock aggregated data
-    { id: '1', price: 9.85, volume: 500, side: 'bid' },
-    { id: '2', price: 9.90, volume: 750, side: 'bid' },
-    { id: '3', price: 10.05, volume: 300, side: 'ask' },
-    { id: '4', price: 10.15, volume: 450, side: 'ask' },
-    { id: '5', price: 9.75, volume: 200, side: 'bid' },
-    { id: '6', price: 10.25, volume: 600, side: 'ask' },
-    { id: '7', price: 10.40, volume: 150, side: 'bid' },
-    { id: '8', price: 10.55, volume: 800, side: 'ask' },
-    { id: '9', price: 9.95, volume: 400, side: 'ask' },
-    { id: '10', price: 10.20, volume: 250, side: 'bid' },
+    // Mock aggregated data - realistic order book spread
+    { id: '1', price: 9.75, volume: 500, side: 'bid' },
+    { id: '2', price: 9.80, volume: 750, side: 'bid' },
+    { id: '3', price: 9.85, volume: 300, side: 'bid' },
+    { id: '4', price: 9.90, volume: 450, side: 'bid' },
+    { id: '5', price: 9.95, volume: 200, side: 'bid' },
+    { id: '6', price: 10.05, volume: 600, side: 'ask' },
+    { id: '7', price: 10.10, volume: 150, side: 'ask' },
+    { id: '8', price: 10.15, volume: 800, side: 'ask' },
+    { id: '9', price: 10.20, volume: 400, side: 'ask' },
+    { id: '10', price: 10.25, volume: 250, side: 'ask' },
     { id: 'user', price: 10.09, volume: 350, side: 'user' }
   ])
 
