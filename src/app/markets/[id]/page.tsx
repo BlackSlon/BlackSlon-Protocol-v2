@@ -47,26 +47,24 @@ export default function MarketPage() {
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
       `}</style>
 
-      {/* HEADER - BlackSlon pisany poprawnie! */}
-      <header className="max-w-[1600px] mx-auto mb-8 px-6">
+      {/* HEADER - BlackSlon Power Index + Poland */}
+      <header className="max-w-[1200px] mx-auto mb-10 mt-6 px-4">
         <div className="flex flex-col">
-          <h1 className="text-3xl font-light tracking-widest">
-            BlackSlon <span className="text-yellow-500 font-bold">{market.type}</span> Index
+          <h1 className="text-3xl font-light tracking-[0.15em] text-white">
+            BlackSlon Power Index
           </h1>
-          <div className="flex items-center gap-4 mt-2">
-            <span className="text-red-500 font-bold tracking-widest text-sm">INSTRUMENT: {market.id}</span>
-            <span className="text-gray-600">|</span>
-            <span className="text-gray-400 text-xs tracking-tight uppercase">{market.name}</span>
-          </div>
+          <h2 className="text-gray-500 text-sm tracking-widest mt-1">
+            Poland
+          </h2>
         </div>
       </header>
 
-      {/* TERMINAL GRID - TRZY FILARY */}
-      <main className="max-w-[1600px] mx-auto pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch min-h-[750px]">
+      {/* TERMINAL GRID - Mniejszy i wyśrodkowany */}
+      <main className="max-w-[1200px] mx-auto pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch min-h-[700px]">
           
-          {/* BOX 1: MARKET PANEL */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl`}>
+          {/* BOX 1: MARKET PANEL (Lewo) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
             <MarketPanel 
               currentPrice={currentPrice}
               borderColor={borderColor}
@@ -74,8 +72,8 @@ export default function MarketPage() {
             />
           </div>
 
-          {/* BOX 2: TRADING PANEL */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl scale-[1.01] z-10`}>
+          {/* BOX 2: TRADING PANEL (Środek) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
             <TradingPanel 
               currentPrice={currentPrice}
               borderColor={borderColor}
@@ -83,8 +81,8 @@ export default function MarketPage() {
             />
           </div>
 
-          {/* BOX 3: ACCOUNT PANEL */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl`}>
+          {/* BOX 3: ACCOUNT PANEL (Prawo) */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl overflow-hidden`}>
             <AccountPanel 
               borderColor={borderColor}
               montserratStyle={montserratStyle}

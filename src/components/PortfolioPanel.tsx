@@ -25,52 +25,56 @@ export default function PortfolioPanel({ borderColor, montserratStyle }: Portfol
   }
 
   return (
-    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-gray-800/40 rounded-xl p-6`} style={montserratStyle}>
-      <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">PORTFOLIO</h3>
+    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-yellow-500/50 rounded-xl p-6`} style={montserratStyle}>
+      <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">ACCOUNT PANEL</h3>
       
-      {/* €BSR Price Ticker */}
+      {/* PORTFOLIO Section */}
       <div className="mb-6">
-        <div className="text-[9px] text-gray-500 tracking-[0.2em] mb-2">€BSR PRICE</div>
-        <div className="text-2xl font-mono text-green-400" style={monoStyle}>
-          {bsrPrice.toFixed(3)} €BSR
+        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3 border-b border-gray-700 pb-1">PORTFOLIO</div>
+        
+        {/* €BSR Price Ticker */}
+        <div className="mb-4">
+          <div className="text-[8px] text-gray-500 tracking-[0.1em] mb-1">€BSR PRICE</div>
+          <div className="text-xl font-mono text-green-400" style={monoStyle}>
+            {bsrPrice.toFixed(3)} €BSR
+          </div>
         </div>
-      </div>
-      
-      {/* User Stats */}
-      <div className="mb-6">
-        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">USER STATS</div>
-        <div className="space-y-3">
+        
+        {/* User Stats */}
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">OPEN POSITION</span>
-            <span className="text-sm font-mono text-white" style={monoStyle}>
+            <span className="text-[7px] text-gray-500">OPEN POSITION</span>
+            <span className="text-xs font-mono text-white" style={monoStyle}>
               {openPosition.toLocaleString()}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">€BSR DEPOSIT</span>
-            <span className="text-sm font-mono text-green-400" style={monoStyle}>
+            <span className="text-[7px] text-gray-500">€BSR DEPOSIT</span>
+            <span className="text-xs font-mono text-green-400" style={monoStyle}>
               {bsrDeposit.toLocaleString()} €BSR
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">eEURO DEPOSIT</span>
-            <span className="text-sm font-mono text-blue-400" style={monoStyle}>
+            <span className="text-[7px] text-gray-500">eEURO DEPOSIT</span>
+            <span className="text-xs font-mono text-blue-400" style={monoStyle}>
               {euroDeposit.toLocaleString()}
             </span>
           </div>
         </div>
       </div>
       
-      {/* Market Sentiment */}
+      {/* EQUITY Section */}
       <div className="mb-6">
-        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">MARKET SENTIMENT</div>
-        <div className="space-y-3">
+        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3 border-b border-gray-700 pb-1">EQUITY</div>
+        
+        {/* Market Sentiment */}
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">LONG</span>
+            <span className="text-[7px] text-gray-500">LONG SENTIMENT</span>
             <div className="flex items-center gap-2">
-              <div className="w-16 bg-gray-700 rounded-full h-2">
+              <div className="w-12 bg-gray-700 rounded-full h-1.5">
                 <div 
-                  className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-green-500 h-1.5 rounded-full transition-all duration-300"
                   style={{ width: `${longSentiment}%` }}
                 ></div>
               </div>
@@ -78,11 +82,11 @@ export default function PortfolioPanel({ borderColor, montserratStyle }: Portfol
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">SHORT</span>
+            <span className="text-[7px] text-gray-500">SHORT SENTIMENT</span>
             <div className="flex items-center gap-2">
-              <div className="w-16 bg-gray-700 rounded-full h-2">
+              <div className="w-12 bg-gray-700 rounded-full h-1.5">
                 <div 
-                  className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-red-500 h-1.5 rounded-full transition-all duration-300"
                   style={{ width: `${shortSentiment}%` }}
                 ></div>
               </div>
@@ -94,19 +98,27 @@ export default function PortfolioPanel({ borderColor, montserratStyle }: Portfol
       
       <div className="flex-grow"></div>
       
-      {/* Funds */}
-      <div className="mt-6">
-        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">FUNDS</div>
+      {/* RISK MANAGEMENT Section */}
+      <div className="mb-6">
+        <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3 border-b border-gray-700 pb-1">RISK MANAGEMENT</div>
+        
+        {/* Risk Metrics */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">AVAILABLE</span>
-            <span className="text-sm font-mono text-green-400" style={monoStyle}>
+            <span className="text-[7px] text-gray-500">MARGIN LEVEL</span>
+            <span className="text-xs font-mono text-yellow-400" style={monoStyle}>
+              {((bsrDeposit + euroDeposit - lockedFunds) / lockedFunds * 100).toFixed(1)}%
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-[7px] text-gray-500">AVAILABLE FUNDS</span>
+            <span className="text-xs font-mono text-green-400" style={monoStyle}>
               {(bsrDeposit + euroDeposit - lockedFunds).toLocaleString()} €BSR
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[8px] text-gray-500">LOCKED</span>
-            <span className="text-sm font-mono text-red-400" style={monoStyle}>
+            <span className="text-[7px] text-gray-500">LOCKED FUNDS</span>
+            <span className="text-xs font-mono text-red-400" style={monoStyle}>
               €{lockedFunds.toLocaleString()}
             </span>
           </div>
