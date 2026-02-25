@@ -1,7 +1,5 @@
 'use client'
 
-import { BSR_MARKETS } from '@/app/markets_config' // Zakładam, że tam masz dostęp do historii lub configu
-
 interface MarketPanelProps {
   currentPrice: number
   borderColor: string
@@ -11,16 +9,15 @@ interface MarketPanelProps {
 export default function MarketPanel({ currentPrice, borderColor, montserratStyle }: MarketPanelProps) {
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
 
-  // Przykładowe dane z Twojej historii (ostatnie 7 dni)
-  // W realnym kodzie zmapuj tutaj dane z market_history.ts
+  // Dane historyczne z rokiem 2026
   const history = [
-    { date: '24.02', min: 9.85, max: 10.95 },
-    { date: '23.02', min: 9.90, max: 11.05 },
-    { date: '22.02', min: 9.75, max: 10.80 },
-    { date: '21.02', min: 9.80, max: 10.85 },
-    { date: '20.02', min: 10.05, max: 11.20 },
-    { date: '19.02', min: 9.95, max: 11.10 },
-    { date: '18.02', min: 9.88, max: 11.02 },
+    { date: '25.02.2026', min: 9.85, max: 10.95, anchor: 10.40 },
+    { date: '24.02.2026', min: 9.90, max: 11.05, anchor: 10.47 },
+    { date: '23.02.2026', min: 9.75, max: 10.80, anchor: 10.27 },
+    { date: '22.02.2026', min: 9.80, max: 10.85, anchor: 10.32 },
+    { date: '21.02.2026', min: 10.05, max: 11.20, anchor: 10.62 },
+    { date: '20.02.2026', min: 9.95, max: 11.10, anchor: 10.52 },
+    { date: '19.02.2026', min: 9.88, max: 11.02, anchor: 10.45 },
   ]
 
   return (
@@ -30,34 +27,45 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
         <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-bold">Market Panel</span>
       </div>
 
-      {/* PODTYTUŁ */}
+      {/* PODTYTUŁ - Styl jak Instrument w Trading Panel */}
       <div className="text-center mb-1">
         <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">PHYSICAL DIMENSION</span>
       </div>
 
-      {/* BLACKSLON TRADING ZONE - OSTATNIE 7 DNI */}
-      <div className="mb-4">
+      {/* TYTUŁ KORYTARZA - ZWIĘKSZONY O 2 POZIOMY */}
+      <div className="text-center mb-3">
+        <span className="text-[14px] text-white font-bold tracking-[0.1em] uppercase">BLACKSLON TRADING ZONE</span>
+      </div>
+
+      {/* BSTZ CORRIDOR TABLE */}
+      <div className="mb-6">
         <div className="flex justify-between items-center px-1 mb-1">
-          <span className="text-[8px] text-gray-500 uppercase font-bold tracking-tighter">BSTZ (7D Corridor)</span>
-          <span className="text-[7px] text-gray-600 font-mono">EUR/vkWh</span>
+          <span className="text-[9px] text-gray-500 uppercase font-bold">7D Corridor History</span>
+          <span className="text-[8px] text-gray-600 font-mono">EUR/vkWh</span>
         </div>
         
-        <div className="bg-gray-950/30 rounded-sm border border-gray-900/50 overflow-hidden">
-          <div className="grid grid-cols-7 text-[7px] text-gray-600 uppercase border-b border-gray-900 py-1 px-2 font-bold bg-black">
-            <div className="col-span-2">Date</div>
-            <div className="col-span-5 text-right uppercase tracking-tighter">Zone Range (Min — Max)</div>
+        <div className="bg-gray-950/40 rounded-sm border border-gray-900 overflow-hidden">
+          <div className="grid grid-cols-12 text-[8px] text-gray-600 uppercase border-b border-gray-900 py-1.5 px-3 font-bold bg-black">
+            <div className="col-span-3">Date</div>
+            <div className="col-span-9 text-center uppercase tracking-tighter">Zone Range & Anchor (●)</div>
           </div>
           
           <div className="divide-y divide-gray-900/50">
             {history.map((day, i) => (
-              <div key={i} className="grid grid-cols-7 py-1 px-2 items-center hover:bg-gray-900/40 transition-colors">
-                <div className="col-span-2 text-[9px] text-gray-400 font-mono" style={monoStyle}>{day.date}</div>
-                <div className="col-span-5 flex justify-end gap-2 items-baseline">
-                  <span className="text-[10px] text-green-500/60 font-mono" style={monoStyle}>{day.min.toFixed(2)}</span>
-                  <div className="w-12 h-[2px] bg-gray-800 relative rounded-full overflow-hidden">
-                     <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/30"></div>
+              <div key={i} className="grid grid-cols-12 py-2 px-3 items-center hover:bg-gray-900/40 transition-colors">
+                <div className="col-span-3 text-[10px] text-gray-400 font-mono" style={monoStyle}>{day.date}</div>
+                
+                <div className="col-span-9 flex justify-between items-center gap-3">
+                  <span className="text-[11px] text-green-500/60 font-mono w-10 text-right" style={monoStyle}>{day.min.toFixed(2)}</span>
+                  
+                  {/* ROZSZERZONY PASEK Z CZERWONĄ KROPĄ (ANCHOR) */}
+                  <div className="flex-grow h-[3px] bg-gray-800 relative rounded-full mx-2">
+                     <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/20"></div>
+                     {/* CZERWONA KROPA ANCHOR NA ŚRODKU */}
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rounded-full border border-black shadow-[0_0_5px_rgba(220,38,38,0.8)]"></div>
                   </div>
-                  <span className="text-[10px] text-green-500 font-mono" style={monoStyle}>{day.max.toFixed(2)}</span>
+
+                  <span className="text-[11px] text-green-500 font-mono w-10 text-left" style={monoStyle}>{day.max.toFixed(2)}</span>
                 </div>
               </div>
             ))}
@@ -65,21 +73,21 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
         </div>
       </div>
 
-      {/* BSTZ FORMULA SYNTHESIS - Teraz pod korytarzem */}
+      {/* BSTZ FORMULA SYNTHESIS */}
       <div className="mb-4 px-1">
-        <div className="text-[8px] text-blue-500 font-bold tracking-[0.2em] uppercase text-center mb-2">
-          Formula: 10/40/25/25
+        <div className="text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase text-center mb-2">
+          Synthesis Formula: 10/40/25/25
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           {[
-            { label: 'SPOT', w: 10, v: currentPrice, c: 'text-yellow-500' },
-            { label: 'FM', w: 40, v: currentPrice + 0.36, c: 'text-white' },
-            { label: 'FQ', w: 25, v: currentPrice + 0.73, c: 'text-gray-400' },
-            { label: 'CAL', w: 25, v: currentPrice + 1.06, c: 'text-gray-400' }
+            { label: 'SPOT (BSEI)', w: 10, v: currentPrice, c: 'text-yellow-500' },
+            { label: 'FRONT MONTH (FM)', w: 40, v: currentPrice + 0.36, c: 'text-white' },
+            { label: 'FRONT QUARTER (FQ)', w: 25, v: currentPrice + 0.73, c: 'text-gray-400' },
+            { label: 'CALENDAR (CAL)', w: 25, v: currentPrice + 1.06, c: 'text-gray-400' }
           ].map((comp, i) => (
-            <div key={i} className="flex justify-between items-center border-b border-gray-900/30 pb-0.5">
-              <span className="text-[7px] text-gray-600 uppercase font-bold">{comp.label} <span className="text-[6px] ml-1 opacity-50">({comp.w}%)</span></span>
-              <span className={`text-[10px] font-mono font-bold ${comp.c}`} style={monoStyle}>{comp.v.toFixed(2)}</span>
+            <div key={i} className="flex justify-between items-center border-b border-gray-900/40 pb-1">
+              <span className="text-[8px] text-gray-500 uppercase font-bold">{comp.label} <span className="text-[7px] ml-1 opacity-40">({comp.w}%)</span></span>
+              <span className={`text-[11px] font-mono font-bold ${comp.c}`} style={monoStyle}>{comp.v.toFixed(2)}</span>
             </div>
           ))}
         </div>
@@ -87,15 +95,15 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
 
       <div className="flex-grow" />
 
-      {/* SYNTHESIS OUTPUT */}
-      <div className="bg-[#0d1117] border border-gray-800/50 p-3 rounded-sm">
+      {/* SYNTHESIS OUTPUT - Boks jak w Trading Panel */}
+      <div className="bg-[#0d1117] border border-gray-800/50 p-4 rounded-sm">
         <div className="flex justify-between items-center mb-1">
-          <span className="text-[8px] text-gray-400 uppercase font-bold tracking-widest">Synthesis Output</span>
-          <span className="text-[7px] text-blue-500 font-mono animate-pulse uppercase tracking-tighter">ADR Active</span>
+          <span className="text-[9px] text-gray-400 uppercase font-bold tracking-widest">Synthesis Output</span>
+          <span className="text-[8px] text-blue-500 font-mono animate-pulse uppercase">ADR Active</span>
         </div>
         <div className="flex justify-between items-baseline">
-          <span className="text-[9px] text-gray-500 uppercase">BSTZ Index</span>
-          <span className="text-xl font-bold text-yellow-500 font-mono" style={monoStyle}>10.59</span>
+          <span className="text-[10px] text-gray-500 uppercase">BSTZ Index</span>
+          <span className="text-2xl font-bold text-yellow-500 font-mono" style={monoStyle}>10.59</span>
         </div>
       </div>
     </div>
