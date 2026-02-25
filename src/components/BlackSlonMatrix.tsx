@@ -112,14 +112,18 @@ export default function BlackSlonMatrix() {
                     dataKey="volume"
                     range={[0, 1000]}
                   />
-                  <Scatter
-                    dataKey="volume"
-                    fill={(data: OrderData) => {
-                      if (data.side === 'bid') return '#10B981'
-                      if (data.side === 'ask') return '#EF4444'
-                      return '#F59E0B'
-                    }}
-                  />
+                  <Scatter dataKey="volume">
+                    {orders.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={
+                          entry.side === 'bid' ? '#10B981' : 
+                          entry.side === 'ask' ? '#EF4444' : 
+                          '#F59E0B'
+                        } 
+                      />
+                    ))}
+                  </Scatter>
                   <Tooltip content={<CustomTooltip />} />
                 </ScatterChart>
               </ResponsiveContainer>
