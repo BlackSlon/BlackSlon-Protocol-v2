@@ -25,7 +25,7 @@ export default function PortfolioPanel({ borderColor, montserratStyle }: Portfol
   }
 
   return (
-    <div className={`bg-black border ${borderColor} p-6 flex flex-col h-full`} style={montserratStyle}>
+    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-gray-800/40 rounded-xl p-6`} style={montserratStyle}>
       <h3 className="text-[10px] text-gray-600 tracking-[0.3em] mb-4">PORTFOLIO</h3>
       
       {/* €BSR Price Ticker */}

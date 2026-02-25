@@ -95,7 +95,7 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
   }
 
   return (
-    <div className={`bg-black border ${borderColor} p-6 flex flex-col scale-[0.6894] origin-top h-full`}>
+    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-gray-800/40 rounded-xl p-6 scale-[0.6894] origin-top`}>
       {/* Header */}
       <div className="mb-6">
         <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
