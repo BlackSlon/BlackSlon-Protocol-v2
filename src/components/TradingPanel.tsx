@@ -9,11 +9,14 @@ interface TradingPanelProps {
 }
 
 export default function TradingPanel({ currentPrice, borderColor, montserratStyle }: TradingPanelProps) {
-  const [isBuy, setIsBuy] = useState(true)
+  const [isBuy, setIsBuy] = useState(true) // Górny przycisk zlecenia
+  const [depositMode, setDepositMode] = useState(true) // Przełącznik w sekcji Deposit (true = Buy, false = Sell)
   const [bsrRatio, setBsrRatio] = useState(0.25) 
   const [quantity, setQuantity] = useState(100)
 
-  const baseMargin = isBuy ? 0.75 : 0.50
+  // Logika Marginu: 25% dla Buy / 50% dla Sell przy 100% BSR [cite: 2026-02-15]
+  // Obliczenia zależą od depositMode (przełącznika w sekcji Deposit)
+  const baseMargin = depositMode ? 0.75 : 0.50
   const currentMarginPercent = 100 - (baseMargin * bsrRatio * 100)
   
   const totalNotional = quantity * currentPrice
@@ -65,18 +68,28 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </button>
       </div>
 
-      {/* DEPOSIT SECTION - ZACIEŚNIONA */}
-      <div className="border-t border-gray-900 pt-3 mb-1">
+      {/* DEPOSIT SECTION */}
+      <div className="border-t border-gray-900 pt-3">
         <div className="text-center mb-2 text-[9px] text-gray-400 uppercase tracking-widest font-bold">Deposit</div>
         <div className="flex justify-center mb-3">
           <div className="bg-gray-900 p-0.5 rounded-full flex gap-1 border border-gray-800">
-            <button className={`px-3 py-0.5 rounded-full text-[7px] font-bold ${isBuy ? 'bg-white text-black' : 'text-gray-500'}`}>BUY</button>
-            <button className={`px-3 py-0.5 rounded-full text-[7px] font-bold ${!isBuy ? 'bg-white text-black' : 'text-gray-500'}`}>SELL</button>
+            <button 
+              onClick={() => setDepositMode(true)}
+              className={`px-3 py-0.5 rounded-full text-[7px] font-bold transition-all ${depositMode ? 'bg-white text-black' : 'text-gray-500'}`}
+            >
+              BUY
+            </button>
+            <button 
+              onClick={() => setDepositMode(false)}
+              className={`px-3 py-0.5 rounded-full text-[7px] font-bold transition-all ${!depositMode ? 'bg-white text-black' : 'text-gray-500'}`}
+            >
+              SELL
+            </button>
           </div>
         </div>
 
-        {/* SUWAKI - MNIEJSZE ODSTĘPY (space-y-2 zamiast space-y-6) */}
-        <div className="space-y-2 px-2">
+        {/* SUWAKI */}
+        <div className="space-y-2 px-2 mb-4">
           <div>
             <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-0.5"><span>€BSR</span><span>{(bsrRatio * 100).toFixed(0)}%</span></div>
             <input type="range" min="0" max="1" step="0.01" value={bsrRatio} onChange={(e) => setBsrRatio(Number(e.target.value))} className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600" />
@@ -88,13 +101,11 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      <div className="flex-grow" />
-
-      {/* EST. MARGIN REQUIREMENT - ZACIEŚNIONY BOKS */}
+      {/* EST. MARGIN REQUIREMENT - Podciągnięty bezpośrednio pod suwaki */}
       <div className="bg-[#0d1117] border border-gray-800/50 p-3 rounded-sm">
         <div className="text-center mb-2">
           <span className="text-[8px] text-gray-400 uppercase tracking-widest font-bold">Estimated Margin Requirement</span>
-          <div className="text-[8px] text-gray-600 uppercase">Margin (To {isBuy ? 'Buy' : 'Sell'})</div>
+          <div className="text-[8px] text-gray-600 uppercase">Margin (To {depositMode ? 'Buy' : 'Sell'})</div>
           <div className="text-lg font-bold text-yellow-500 mt-0.5" style={monoStyle}>{currentMarginPercent.toFixed(0)}%</div>
         </div>
         
