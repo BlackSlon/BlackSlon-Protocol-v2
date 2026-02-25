@@ -77,27 +77,33 @@ export default function MarketPage() {
 
       {/* TRADING TERMINAL GRID - TRZY FILARY */}
       <main className="max-w-full mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-[calc(100vh-120px)]">
+        <div className="flex flex-col lg:flex-row items-start justify-center gap-6 p-6 min-h-screen bg-[#0a0a0a]">
           
           {/* BOX 1: ORDER PANEL - Instrument, cena, panel transakcyjny */}
-          <OrderPanel 
-            currentPrice={currentPrice}
-            borderColor={borderColor}
-            montserratStyle={montserratStyle}
-          />
+          <div className="w-full lg:w-[400px] flex-shrink-0">
+            <OrderPanel 
+              currentPrice={currentPrice}
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
 
           {/* BOX 2: MARKET PANEL / SYNTHESIS - Oddzielny komponent */}
-          <MarketPanel 
-            currentPrice={currentPrice}
-            borderColor={borderColor}
-            montserratStyle={montserratStyle}
-          />
+          <div className="w-full lg:w-[400px] flex-shrink-0">
+            <MarketPanel 
+              currentPrice={currentPrice}
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
 
           {/* BOX 3: PORTFOLIO - Prawa kolumna z danymi o środkach */}
-          <PortfolioPanel 
-            borderColor={borderColor}
-            montserratStyle={montserratStyle}
-          />
+          <div className="w-full lg:w-[400px] flex-shrink-0">
+            <PortfolioPanel 
+              borderColor={borderColor}
+              montserratStyle={montserratStyle}
+            />
+          </div>
 
         </div>
       </main>

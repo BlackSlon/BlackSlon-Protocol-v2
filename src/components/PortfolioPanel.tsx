@@ -93,7 +93,7 @@ export default function PortfolioPanel({ borderColor, montserratStyle }: Portfol
       </div>
       
       {/* Funds */}
-      <div className="mt-auto">
+      <div className="mt-6">
         <div className="text-[9px] text-gray-600 tracking-[0.2em] mb-3">FUNDS</div>
         <div className="space-y-2">
           <div className="flex justify-between items-center">
