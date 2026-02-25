@@ -45,47 +45,35 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
     setBsrCollateral(100 - value)
   }
 
-  // Calculate leverage and margin requirements
-  const calculateLeverage = () => {
-    const totalCollateral = (bsrCollateral / 100) * bsrDeposit + (euroCollateral / 100) * euroDeposit
-    const positionValue = quantity * currentPrice
-    return totalCollateral > 0 ? (positionValue / totalCollateral).toFixed(2) : '1.00'
-  }
-
-  const getRiskData = () => {
-    const leverage = parseFloat(calculateLeverage())
-    if (leverage <= 1) return riskTable['0-25']
-    if (leverage <= 2) return riskTable['26-50']
-    if (leverage <= 3) return riskTable['51-75']
-    return riskTable['76-100']
+  // Calculate dynamic margin based on BSR_Ratio
+  const calculateDynamicMargin = () => {
+    const bsrRatio = (bsrCollateral / 100) // BSR_Ratio as percentage
+    
+    if (depositDirection === 'BUY') {
+      // TO BUY: Margin = 100% - (75% × BSR_Ratio)
+      const margin = 100 - (75 * bsrRatio)
+      return Math.max(25, margin) // Minimum 25%
+    } else {
+      // TO SELL: Margin = 100% - (50% × BSR_Ratio) 
+      const margin = 100 - (50 * bsrRatio)
+      return Math.max(50, margin) // Minimum 50%
+    }
   }
 
   const calculateMarginRequired = () => {
-    const riskData = getRiskData()
     const positionValue = quantity * currentPrice
+    const dynamicMargin = calculateDynamicMargin()
+    const marginRate = dynamicMargin / 100
+    const requiredMargin = positionValue * marginRate
     
-    if (depositDirection === 'BUY') {
-      const marginRate = riskData.margin / 100
-      const requiredMargin = positionValue * marginRate
-      const bsrRequired = (requiredMargin * bsrCollateral) / 100
-      const euroRequired = (requiredMargin * euroCollateral) / 100
-      return {
-        bsrRequired: bsrRequired / bsrPrice,
-        euroRequired: euroRequired,
-        buyMargin: riskData.margin,
-        sellMargin: riskData.margin
-      }
-    } else {
-      const marginRate = riskData.margin / 100
-      const requiredMargin = positionValue * marginRate
-      const bsrRequired = (requiredMargin * bsrCollateral) / 100
-      const euroRequired = (requiredMargin * euroCollateral) / 100
-      return {
-        bsrRequired: bsrRequired / bsrPrice,
-        euroRequired: euroRequired,
-        buyMargin: riskData.margin,
-        sellMargin: riskData.margin
-      }
+    const bsrRequired = (requiredMargin * bsrCollateral) / 100
+    const euroRequired = (requiredMargin * euroCollateral) / 100
+    
+    return {
+      bsrRequired: bsrRequired / bsrPrice,
+      euroRequired: euroRequired,
+      buyMargin: calculateDynamicMargin(),
+      sellMargin: calculateDynamicMargin()
     }
   }
 
@@ -95,10 +83,10 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
   }
 
   return (
-    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-gray-800/40 rounded-xl p-6 scale-[0.6894] origin-top`}>
+    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-yellow-500/50 rounded-xl p-6`} style={montserratStyle}>
       {/* Header */}
       <div className="mb-6">
-        <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
+        <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">TRADING PANEL</h3>
         <div className="text-[17px] font-bold tracking-[0.3em] text-red-500 text-center">INSTRUMENT: IPT-P-PL</div>
       </div>
       
@@ -234,7 +222,13 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
           <div className="text-center mb-3">
             <div className="text-gray-400 text-xs mb-1">MARGIN ({depositDirection === 'BUY' ? 'TO BUY' : 'TO SELL'})</div>
             <div className="text-yellow-400 text-xl font-mono font-bold">
-              {depositDirection === 'BUY' ? calculateMarginRequired().buyMargin : calculateMarginRequired().sellMargin}%
+              {calculateDynamicMargin().toFixed(1)}%
+            </div>
+            <div className="text-[7px] text-gray-500 mt-1">
+              {depositDirection === 'BUY' 
+                ? `100% - (75% × ${bsrCollateral}%) = ${calculateDynamicMargin().toFixed(1)}%`
+                : `100% - (50% × ${bsrCollateral}%) = ${calculateDynamicMargin().toFixed(1)}%`
+              }
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">

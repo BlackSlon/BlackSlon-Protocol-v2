@@ -8,8 +8,8 @@ interface MarketPanelProps {
 
 export default function MarketPanel({ currentPrice, borderColor, montserratStyle }: MarketPanelProps) {
   return (
-    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-gray-800/40 rounded-xl p-6`} style={montserratStyle}>
-      <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-4">BSTZ SYNTHESIS</h3>
+    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-yellow-500/50 rounded-xl p-6`} style={montserratStyle}>
+      <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-4">MARKET PANEL</h3>
       
       {/* PHYSICAL DIMENSION */}
       <div className="mb-6">
@@ -20,19 +20,19 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
           <div className="text-center">
             <div className="text-[8px] text-gray-400 mb-1">DAILY ANCHOR</div>
             <div className="text-green-400 text-lg font-mono">
-              {currentPrice.toFixed(2)}
+              10.09
             </div>
           </div>
           <div className="text-center">
             <div className="text-[8px] text-gray-400 mb-1">BSTZ MAX</div>
             <div className="text-green-400 text-lg font-mono">
-              {(currentPrice * 1.1).toFixed(2)}
+              11.10
             </div>
           </div>
           <div className="text-center">
             <div className="text-[8px] text-gray-400 mb-1">BSTZ MIN</div>
             <div className="text-green-400 text-lg font-mono">
-              {(currentPrice * 0.9).toFixed(2)}
+              9.08
             </div>
           </div>
         </div>
@@ -56,26 +56,18 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
         {/* OVP DELTA Table */}
         <div className="mb-4">
           <div className="text-[8px] text-gray-400 mb-2 text-center">OVP DELTA</div>
-          <div className="grid grid-cols-3 gap-2 text-[8px]">
+          <div className="grid grid-cols-5 gap-1 text-[7px]">
             <div className="text-gray-500 text-center">TIMEFRAME</div>
-            <div className="text-gray-500 text-center">LONG INCREASE</div>
-            <div className="text-gray-500 text-center">SHORT INCREASE</div>
+            <div className="text-gray-500 text-center">1h</div>
+            <div className="text-gray-500 text-center">4h</div>
+            <div className="text-gray-500 text-center">24h</div>
+            <div className="text-gray-500 text-center">7d</div>
             
-            <div className="text-center">1h</div>
+            <div className="text-center">DELTA</div>
             <div className="text-center text-green-400">+2.4%</div>
-            <div className="text-center text-gray-400">+1.2%</div>
-            
-            <div className="text-center">4h</div>
             <div className="text-center text-green-400">+3.8%</div>
-            <div className="text-center text-gray-400">+2.1%</div>
-            
-            <div className="text-center">24h</div>
             <div className="text-center text-gray-400">+5.2%</div>
-            <div className="text-center text-red-400">+6.8%</div>
-            
-            <div className="text-center">7d</div>
             <div className="text-center text-green-400">+12.4%</div>
-            <div className="text-center text-gray-400">+8.7%</div>
           </div>
         </div>
         

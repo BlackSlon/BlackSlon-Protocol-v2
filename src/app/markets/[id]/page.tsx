@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-// Zmieniamy nazwy importów, żeby pasowały do nowej logiki
 import MarketPanel from '@/components/MarketPanel' 
-import TradingPanel from '@/components/OrderPanel' // wcześniej OrderPanel
-import AccountPanel from '@/components/PortfolioPanel' // wcześniej PortfolioPanel
+import TradingPanel from '@/components/OrderPanel' 
+import AccountPanel from '@/components/PortfolioPanel' 
 import { BSR_MARKETS } from '@/app/markets_config'
 
 export default function MarketPage() {
@@ -37,34 +36,37 @@ export default function MarketPage() {
     return () => clearInterval(interval)
   }, [marketId])
 
-  if (!market) return <div className="text-white p-10">Market not found</div>
+  if (!market) return <div className="text-white p-10 font-sans">Market not found</div>
 
-  // Wymuszamy żółty kolor dla energii, niebieski dla innych, ale Ty chciałeś żółte ramki dla wszystkich
   const borderColor = "border-yellow-500/50" 
   const montserratStyle = { fontFamily: 'Montserrat, sans-serif' }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white p-4" style={montserratStyle}>
-      {/* HEADER - Czysty i profesjonalny */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+      `}</style>
+
+      {/* HEADER - BlackSlon pisany poprawnie! */}
       <header className="max-w-[1600px] mx-auto mb-8 px-6">
         <div className="flex flex-col">
-          <h1 className="text-3xl font-light tracking-[0.2em] uppercase">
+          <h1 className="text-3xl font-light tracking-widest">
             BlackSlon <span className="text-yellow-500 font-bold">{market.type}</span> Index
           </h1>
           <div className="flex items-center gap-4 mt-2">
             <span className="text-red-500 font-bold tracking-widest text-sm">INSTRUMENT: {market.id}</span>
             <span className="text-gray-600">|</span>
-            <span className="text-gray-400 text-sm uppercase">{market.name}</span>
+            <span className="text-gray-400 text-xs tracking-tight uppercase">{market.name}</span>
           </div>
         </div>
       </header>
 
-      {/* TERMINAL GRID - TRZY RÓWNE FILARY */}
-      <main className="max-w-[1600px] mx-auto">
+      {/* TERMINAL GRID - TRZY FILARY */}
+      <main className="max-w-[1600px] mx-auto pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch min-h-[750px]">
           
-          {/* BOX 1: MARKET PANEL (Analiza BSTZ) */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl`}>
+          {/* BOX 1: MARKET PANEL */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl`}>
             <MarketPanel 
               currentPrice={currentPrice}
               borderColor={borderColor}
@@ -72,8 +74,8 @@ export default function MarketPage() {
             />
           </div>
 
-          {/* BOX 2: TRADING PANEL (Serce operacyjne) */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl scale-[1.02] z-10`}>
+          {/* BOX 2: TRADING PANEL */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl scale-[1.01] z-10`}>
             <TradingPanel 
               currentPrice={currentPrice}
               borderColor={borderColor}
@@ -81,8 +83,8 @@ export default function MarketPage() {
             />
           </div>
 
-          {/* BOX 3: ACCOUNT PANEL (Kapitał i Ryzyko) */}
-          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl overflow-hidden shadow-2xl`}>
+          {/* BOX 3: ACCOUNT PANEL */}
+          <div className={`flex flex-col h-full bg-[#0a0a0a] border ${borderColor} rounded-xl shadow-2xl`}>
             <AccountPanel 
               borderColor={borderColor}
               montserratStyle={montserratStyle}
