@@ -60,6 +60,18 @@ export default function EuropeEnergyMap() {
         <h1 className="text-[10px] tracking-[0.3em] text-red-600 uppercase font-bold">
           EUROPEAN ENERGY MARKETS
         </h1>
+        
+        {/* Legend */}
+        <div className="flex justify-center items-center gap-8 mt-6">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-red-600 rounded"></div>
+            <span className="text-sm text-gray-300">SELL (West)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-600 rounded"></div>
+            <span className="text-sm text-gray-300">BUY (East)</span>
+          </div>
+        </div>
       </div>
 
       {/* Map Container */}
@@ -79,6 +91,11 @@ export default function EuropeEnergyMap() {
                 const isSelected = selectedCountry === countryCode
                 const isHovered = hoveredCountry === countryCode
                 const hasMarket = countryData[countryCode]
+                
+                // Determine if country is on the "SELL" side (left/west) or "BUY" side (right/east)
+                // Using longitude approximation - countries west of 15°E are SELL (red), east are BUY (green)
+                const centroid = geo.properties?.centroid || [0, 0]
+                const isSellSide = centroid[0] < 15
 
                 return (
                   <Geography
@@ -89,21 +106,21 @@ export default function EuropeEnergyMap() {
                     onMouseLeave={() => setHoveredCountry(null)}
                     style={{
                       default: {
-                        fill: hasMarket ? '#1e293b' : '#0f172a',
+                        fill: hasMarket ? (isSellSide ? '#dc2626' : '#16a34a') : '#0f172a',
                         stroke: '#334155',
                         strokeWidth: 0.5,
                         outline: 'none',
                         cursor: hasMarket ? 'pointer' : 'default'
                       },
                       hover: {
-                        fill: hasMarket ? '#334155' : '#1e293b',
+                        fill: hasMarket ? (isSellSide ? '#ef4444' : '#22c55e') : '#1e293b',
                         stroke: '#475569',
                         strokeWidth: 1,
                         outline: 'none',
                         cursor: hasMarket ? 'pointer' : 'default'
                       },
                       pressed: {
-                        fill: '#475569',
+                        fill: hasMarket ? (isSellSide ? '#b91c1c' : '#15803d') : '#475569',
                         stroke: '#64748b',
                         strokeWidth: 1,
                         outline: 'none'
