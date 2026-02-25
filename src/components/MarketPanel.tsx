@@ -9,7 +9,7 @@ interface MarketPanelProps {
 export default function MarketPanel({ currentPrice, borderColor, montserratStyle }: MarketPanelProps) {
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
 
-  // Dane historyczne z rokiem 2026
+  // Dane historyczne z rokiem 2026 i Anchorami
   const history = [
     { date: '25.02.2026', min: 9.85, max: 10.95, anchor: 10.40 },
     { date: '24.02.2026', min: 9.90, max: 11.05, anchor: 10.47 },
@@ -22,19 +22,19 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
 
   return (
     <div className="flex flex-col h-full p-4 select-none" style={montserratStyle}>
-      {/* NAGŁÓWEK */}
+      {/* HEADER */}
       <div className="text-center mb-2 border-b border-gray-900 pb-1">
         <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-bold">Market Panel</span>
       </div>
 
-      {/* PODTYTUŁ - Styl jak Instrument w Trading Panel */}
+      {/* PODTYTUŁ */}
       <div className="text-center mb-1">
         <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">PHYSICAL DIMENSION</span>
       </div>
 
-      {/* TYTUŁ KORYTARZA - ZWIĘKSZONY O 2 POZIOMY */}
+      {/* TYTUŁ KORYTARZA - BlackSlon przez S */}
       <div className="text-center mb-3">
-        <span className="text-[14px] text-white font-bold tracking-[0.1em] uppercase">BLACKSLON TRADING ZONE</span>
+        <span className="text-[14px] text-white font-bold tracking-[0.1em] uppercase">BlackSlon Trading Zone</span>
       </div>
 
       {/* BSTZ CORRIDOR TABLE */}
@@ -58,54 +58,24 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
                 <div className="col-span-9 flex justify-between items-center gap-3">
                   <span className="text-[11px] text-green-500/60 font-mono w-10 text-right" style={monoStyle}>{day.min.toFixed(2)}</span>
                   
-                  {/* ROZSZERZONY PASEK Z CZERWONĄ KROPĄ (ANCHOR) */}
+                  {/* PASEK Z INTERAKTYWNĄ KROPĄ */}
                   <div className="flex-grow h-[3px] bg-gray-800 relative rounded-full mx-2">
                      <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/20"></div>
-                     {/* CZERWONA KROPA ANCHOR NA ŚRODKU */}
-                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rounded-full border border-black shadow-[0_0_5px_rgba(220,38,38,0.8)]"></div>
+                     
+                     {/* CZERWONA KROPA Z TOOLTIPEM */}
+                     <div className="group absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer">
+                        <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_8px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
+                        
+                        {/* TOOLTIP WYŚWIETLANY PO NAJECHANIU */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
+                          <div className="bg-black border border-gray-700 text-[9px] text-white px-2 py-1 rounded whitespace-nowrap shadow-xl">
+                            Anchor: <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
+                          </div>
+                          <div className="w-2 h-2 bg-black border-r border-b border-gray-700 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                        </div>
+                     </div>
                   </div>
 
                   <span className="text-[11px] text-green-500 font-mono w-10 text-left" style={monoStyle}>{day.max.toFixed(2)}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* BSTZ FORMULA SYNTHESIS */}
-      <div className="mb-4 px-1">
-        <div className="text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase text-center mb-2">
-          Synthesis Formula: 10/40/25/25
-        </div>
-        <div className="space-y-2">
-          {[
-            { label: 'SPOT (BSEI)', w: 10, v: currentPrice, c: 'text-yellow-500' },
-            { label: 'FRONT MONTH (FM)', w: 40, v: currentPrice + 0.36, c: 'text-white' },
-            { label: 'FRONT QUARTER (FQ)', w: 25, v: currentPrice + 0.73, c: 'text-gray-400' },
-            { label: 'CALENDAR (CAL)', w: 25, v: currentPrice + 1.06, c: 'text-gray-400' }
-          ].map((comp, i) => (
-            <div key={i} className="flex justify-between items-center border-b border-gray-900/40 pb-1">
-              <span className="text-[8px] text-gray-500 uppercase font-bold">{comp.label} <span className="text-[7px] ml-1 opacity-40">({comp.w}%)</span></span>
-              <span className={`text-[11px] font-mono font-bold ${comp.c}`} style={monoStyle}>{comp.v.toFixed(2)}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex-grow" />
-
-      {/* SYNTHESIS OUTPUT - Boks jak w Trading Panel */}
-      <div className="bg-[#0d1117] border border-gray-800/50 p-4 rounded-sm">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-[9px] text-gray-400 uppercase font-bold tracking-widest">Synthesis Output</span>
-          <span className="text-[8px] text-blue-500 font-mono animate-pulse uppercase">ADR Active</span>
-        </div>
-        <div className="flex justify-between items-baseline">
-          <span className="text-[10px] text-gray-500 uppercase">BSTZ Index</span>
-          <span className="text-2xl font-bold text-yellow-500 font-mono" style={monoStyle}>10.59</span>
-        </div>
-      </div>
-    </div>
-  )
-}
