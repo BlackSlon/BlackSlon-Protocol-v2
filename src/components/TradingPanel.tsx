@@ -10,18 +10,17 @@ interface TradingPanelProps {
 
 export default function TradingPanel({ currentPrice, borderColor, montserratStyle }: TradingPanelProps) {
   const [isBuy, setIsBuy] = useState(true) 
-  const [depositMode, setDepositMode] = useState(true) // true = LONG, false = SHORT
+  const [depositMode, setDepositMode] = useState(true) // true = BUY, false = SELL
   const [bsrRatio, setBsrRatio] = useState(0.25) 
   const [quantity, setQuantity] = useState(100)
 
-  // LOGIKA ZGODNA Z TWOJĄ TABELĄ
   const getMarginPercent = (ratio: number, isLong: boolean) => {
     const r = ratio * 100
     if (r <= 10) return isLong ? 50 : 100
     if (r <= 25) return isLong ? 45 : 90
     if (r <= 50) return isLong ? 40 : 80
     if (r <= 75) return isLong ? 30 : 60
-    return isLong ? 25 : 50 // Dla 100% (Max)
+    return isLong ? 25 : 50 
   }
 
   const currentMarginPercent = getMarginPercent(bsrRatio, depositMode)
@@ -49,27 +48,40 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* QUANTITY */}
+      {/* 1) QUANTITY Z WPISYWANIEM Z PALCA */}
       <div className="flex flex-col items-center mb-3">
         <span className="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Quantity</span>
         <div className="flex items-center gap-3">
-          <button onClick={() => setQuantity(q => Math.max(0, q - 1))} className="w-6 h-6 border border-gray-700 rounded flex items-center justify-center bg-gray-900 text-gray-400 text-xs">-</button>
-          <div className="w-12 h-6 border border-gray-700 rounded flex items-center justify-center font-mono text-xs bg-black">{quantity}</div>
-          <button onClick={() => setQuantity(q => q + 1)} className="w-6 h-6 border border-gray-700 rounded flex items-center justify-center bg-gray-900 text-gray-400 text-xs">+</button>
+          <button onClick={() => setQuantity(q => Math.max(0, q - 1))} className="w-6 h-6 border border-gray-700 rounded flex items-center justify-center bg-gray-900 text-gray-400 text-xs hover:text-white transition-colors">-</button>
+          <input 
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-16 h-6 border border-gray-700 rounded text-center font-mono text-xs bg-black text-white focus:outline-none focus:border-yellow-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          />
+          <button onClick={() => setQuantity(q => q + 1)} className="w-6 h-6 border border-gray-700 rounded flex items-center justify-center bg-gray-900 text-gray-400 text-xs hover:text-white transition-colors">+</button>
         </div>
       </div>
 
-      {/* BUY/SELL BUTTONS */}
+      {/* 4) PRZYCISKI Z EFEKTEM HOVER */}
       <div className="flex gap-3 mb-4">
         <button 
           onClick={() => setIsBuy(true)}
-          className={`flex-1 py-3 border-2 font-bold text-xs transition-all ${isBuy ? 'border-green-600 text-green-500 bg-green-950/20' : 'border-gray-800 text-gray-700'}`}
+          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 ${
+            isBuy 
+            ? 'border-green-600 text-green-500 bg-green-950/20 hover:bg-green-600 hover:text-black' 
+            : 'border-gray-800 text-gray-700 hover:border-gray-600'
+          }`}
         >
           BUY
         </button>
         <button 
           onClick={() => setIsBuy(false)}
-          className={`flex-1 py-3 border-2 font-bold text-xs transition-all ${!isBuy ? 'border-red-600 text-red-500 bg-red-950/20' : 'border-gray-800 text-gray-700'}`}
+          className={`flex-1 py-3 border-2 font-bold text-xs transition-all duration-200 ${
+            !isBuy 
+            ? 'border-red-600 text-red-500 bg-red-950/20 hover:bg-red-600 hover:text-black' 
+            : 'border-gray-800 text-gray-700 hover:border-gray-600'
+          }`}
         >
           SELL
         </button>
@@ -80,22 +92,23 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         <div className="text-center mb-2 text-[9px] text-gray-400 uppercase tracking-widest font-bold">Deposit</div>
         <div className="flex justify-center mb-3">
           <div className="bg-gray-900 p-0.5 rounded-full flex gap-1 border border-gray-800">
+            {/* 2) ZMIANA NA TO BUY / TO SELL */}
             <button 
               onClick={() => setDepositMode(true)}
               className={`px-3 py-0.5 rounded-full text-[7px] font-bold transition-all ${depositMode ? 'bg-white text-black' : 'text-gray-500'}`}
             >
-              LONG
+              TO BUY
             </button>
             <button 
               onClick={() => setDepositMode(false)}
               className={`px-3 py-0.5 rounded-full text-[7px] font-bold transition-all ${!depositMode ? 'bg-white text-black' : 'text-gray-500'}`}
             >
-              SHORT
+              TO SELL
             </button>
           </div>
         </div>
 
-        {/* SUWAKI - ŚCIŚNIĘTE */}
+        {/* SUWAKI */}
         <div className="space-y-2 px-2 mb-4">
           <div>
             <div className="flex justify-between text-[8px] text-gray-500 uppercase mb-0.5"><span>€BSR STAKE</span><span>{(bsrRatio * 100).toFixed(0)}%</span></div>
@@ -108,11 +121,12 @@ export default function TradingPanel({ currentPrice, borderColor, montserratStyl
         </div>
       </div>
 
-      {/* EST. MARGIN REQUIREMENT - PRZYKLEJONY WYŻEJ */}
+      {/* EST. MARGIN REQUIREMENT */}
       <div className="bg-[#0d1117] border border-gray-800/50 p-3 rounded-sm">
         <div className="text-center mb-2">
           <span className="text-[8px] text-gray-400 uppercase tracking-widest font-bold">Margin Requirement</span>
-          <div className="text-[8px] text-gray-600 uppercase">Mode: {depositMode ? 'LONG' : 'SHORT'}</div>
+          {/* 3) ZMIANA MODE NA BUY / SELL */}
+          <div className="text-[8px] text-gray-600 uppercase">Mode: {depositMode ? 'BUY' : 'SELL'}</div>
           <div className="text-lg font-bold text-yellow-500 mt-0.5" style={monoStyle}>{currentMarginPercent}%</div>
         </div>
         
