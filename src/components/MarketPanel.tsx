@@ -1,5 +1,8 @@
 'use client'
 
+import { MARKET_HISTORY, BSTZHistoryEntry } from '@/lib/market_history'
+import { useParams } from 'next/navigation'
+
 interface MarketPanelProps {
   currentPrice: number
   borderColor: string
@@ -8,16 +11,33 @@ interface MarketPanelProps {
 
 export default function MarketPanel({ currentPrice, borderColor, montserratStyle }: MarketPanelProps) {
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
-
-  const history = [
-    { date: '25.02.2026', min: 9.85, max: 10.95, anchor: 10.40 },
-    { date: '24.02.2026', min: 9.90, max: 11.05, anchor: 10.47 },
-    { date: '23.02.2026', min: 9.75, max: 10.80, anchor: 10.27 },
-    { date: '22.02.2026', min: 9.80, max: 10.85, anchor: 10.32 },
-    { date: '21.02.2026', min: 10.05, max: 11.20, anchor: 10.62 },
-    { date: '20.02.2026', min: 9.95, max: 11.10, anchor: 10.52 },
-    { date: '19.02.2026', min: 9.88, max: 11.02, anchor: 10.45 }
-  ]
+  
+  const params = useParams()
+  const marketId = params.id as string
+  
+  // Get last 7 days from market history
+  const marketHistory = MARKET_HISTORY[marketId] || []
+  const last7Days = marketHistory.slice(-7).reverse()
+  
+  // Calculate dual-stage anchors for each day
+  const processedHistory = last7Days.map((day: BSTZHistoryEntry) => {
+    // Step 1: Raw calculation using weights 10/40/25/25
+    const raw = (day.spot * 0.10) + (day.fm * 0.40) + (day.fq * 0.25) + (day.cal * 0.25)
+    
+    // Step 2: Weighted Anchor (50/25/25 logic)
+    const weightedAnchor = (raw * 0.50) + (day.spot * 0.25) + (day.fm * 0.25)
+    
+    // Step 3: BSTZ Corridor (Anchor +/- 10%)
+    const corridorMin = weightedAnchor * 0.90
+    const corridorMax = weightedAnchor * 1.10
+    
+    return {
+      date: new Date(day.date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' }).replace(/\./g, '.'),
+      min: corridorMin,
+      max: corridorMax,
+      anchor: weightedAnchor
+    }
+  })
 
   return (
     <div className="flex flex-col h-full p-4 select-none" style={montserratStyle}>
@@ -50,7 +70,7 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
           </div>
           
           <div className="divide-y divide-gray-900/50">
-            {history.map((day, i) => (
+            {processedHistory.map((day, i: number) => (
               <div key={i} className="grid grid-cols-12 py-2 px-3 items-center hover:bg-gray-900/40 transition-colors">
                 <div className="col-span-3 text-[10px] text-gray-400 font-mono" style={monoStyle}>{day.date}</div>
                 
@@ -65,7 +85,7 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
                         <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_8px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                           <div className="bg-black border border-gray-700 text-[9px] text-white px-2 py-1 rounded whitespace-nowrap shadow-xl">
-                            Anchor: <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
+                            Anchor (Weighted): <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
                           </div>
                           <div className="w-2 h-2 bg-black border-r border-b border-gray-700 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
                         </div>
