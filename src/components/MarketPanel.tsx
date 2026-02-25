@@ -21,21 +21,24 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
   
   // Calculate dual-stage anchors for each day
   const processedHistory = last7Days.map((day: BSTZHistoryEntry) => {
-    // Step 1: Raw calculation using weights 10/40/25/25
-    const raw = (day.spot * 0.10) + (day.fm * 0.40) + (day.fq * 0.25) + (day.cal * 0.25)
+    // Unit Conversion: MWh to kWh (divide by 10)
+    const spotKwh = day.spot / 10
+    const fmKwh = day.fm / 10
+    const fqKwh = day.fq / 10
+    const calKwh = day.cal / 10
     
-    // Step 2: Weighted Anchor (50/25/25 logic)
-    const weightedAnchor = (raw * 0.50) + (day.spot * 0.25) + (day.fm * 0.25)
+    // Step 1: Raw Anchor calculation using weights 10/40/25/25
+    const rawAnchor = (spotKwh * 0.10) + (fmKwh * 0.40) + (fqKwh * 0.25) + (calKwh * 0.25)
     
-    // Step 3: BSTZ Corridor (Anchor +/- 10%)
-    const corridorMin = weightedAnchor * 0.90
-    const corridorMax = weightedAnchor * 1.10
+    // Step 2: BSTZ Corridor (Anchor +/- 10%)
+    const corridorMin = rawAnchor * 0.90
+    const corridorMax = rawAnchor * 1.10
     
     return {
-      date: new Date(day.date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' }).replace(/\./g, '.'),
+      date: new Date(day.date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\./g, '.'),
       min: corridorMin,
       max: corridorMax,
-      anchor: weightedAnchor
+      anchor: rawAnchor
     }
   })
 
@@ -85,7 +88,7 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
                         <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_8px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                           <div className="bg-black border border-gray-700 text-[9px] text-white px-2 py-1 rounded whitespace-nowrap shadow-xl">
-                            Anchor (Weighted): <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
+                            Anchor (Raw): <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
                           </div>
                           <div className="w-2 h-2 bg-black border-r border-b border-gray-700 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
                         </div>
