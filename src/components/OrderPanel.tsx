@@ -95,7 +95,7 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
   }
 
   return (
-    <div className={`bg-black border ${borderColor} p-4 flex flex-col scale-[0.6894] origin-top`}>
+    <div className={`bg-black border ${borderColor} p-6 flex flex-col scale-[0.6894] origin-top`}>
       {/* Header */}
       <div className="mb-6">
         <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">ORDER PANEL</h3>
@@ -227,6 +227,7 @@ export default function OrderPanel({ currentPrice, borderColor, montserratStyle 
       </div>
       
       {/* ESTIMATED MARGIN REQUIREMENT */}
+      <div className="flex-grow"></div>
       <div className="mt-auto">
         <div className="text-[10px] text-white tracking-[0.2em] mb-3 text-center font-bold">ESTIMATED MARGIN REQUIREMENT</div>
         <div className="bg-gray-900 p-4 rounded">
