@@ -5,247 +5,109 @@ import { useState } from 'react'
 interface OrderPanelProps {
   currentPrice: number
   borderColor: string
-  montserratStyle: React.CSSProperties
+  montserratStyle: any
 }
 
 export default function OrderPanel({ currentPrice, borderColor, montserratStyle }: OrderPanelProps) {
-  // Order Panel State
-  const [quantity, setQuantity] = useState<number>(100)
-  const [bsrCollateral, setBsrCollateral] = useState<number>(50)
-  const [euroCollateral, setEuroCollateral] = useState<number>(50)
-  const [depositDirection, setDepositDirection] = useState<'BUY' | 'SELL'>('BUY')
+  const [isBuy, setIsBuy] = useState(true)
+  const [bsrRatio, setBsrRatio] = useState(1) 
+  const [quantity, setQuantity] = useState(100)
 
-  // Risk Management Table
-  const riskTable = {
-    '0-25': { margin: 100, leverage: '1.00x' },
-    '26-50': { margin: 50, leverage: '2.00x' },
-    '51-75': { margin: 33, leverage: '3.00x' },
-    '76-100': { margin: 25, leverage: '4.00x' }
-  }
+  // Logika Marginu: 25%/50% przy 100% BSR, 100% przy 0% BSR [cite: 2026-02-15]
+  const baseMargin = isBuy ? 0.75 : 0.50
+  const currentMarginPercent = 100 - (baseMargin * bsrRatio * 100)
+  
+  const totalNotional = quantity * currentPrice
+  const totalMarginRequired = totalNotional * (currentMarginPercent / 100)
+  
+  const requiredBSR = totalMarginRequired * bsrRatio
+  const requiredEuro = totalMarginRequired * (1 - bsrRatio)
 
-  // Portfolio State
-  const [bsrPrice, setBsrPrice] = useState<number>(1.05)
-  const [openPosition, setOpenPosition] = useState<number>(272836)
-  const [bsrDeposit, setBsrDeposit] = useState<number>(1000)
-  const [euroDeposit, setEuroDeposit] = useState<number>(500)
-  const [lockedFunds, setLockedFunds] = useState<number>(200)
-
-  // Sentiment Data
-  const [longSentiment, setLongSentiment] = useState<number>(65)
-  const [shortSentiment, setShortSentiment] = useState<number>(35)
-
-  // Collateral sliders logic
-  const handleBsrChange = (value: number) => {
-    setBsrCollateral(value)
-    setEuroCollateral(100 - value)
-  }
-
-  const handleEuroChange = (value: number) => {
-    setEuroCollateral(value)
-    setBsrCollateral(100 - value)
-  }
-
-  // Calculate dynamic margin based on BSR_Ratio
-  const calculateDynamicMargin = () => {
-    const bsrRatio = (bsrCollateral / 100) // BSR_Ratio as percentage
-    
-    if (depositDirection === 'BUY') {
-      // TO BUY: Margin = 100% - (75% × BSR_Ratio)
-      const margin = 100 - (75 * bsrRatio)
-      return Math.max(25, margin) // Minimum 25%
-    } else {
-      // TO SELL: Margin = 100% - (50% × BSR_Ratio) 
-      const margin = 100 - (50 * bsrRatio)
-      return Math.max(50, margin) // Minimum 50%
-    }
-  }
-
-  const calculateMarginRequired = () => {
-    const positionValue = quantity * currentPrice
-    const dynamicMargin = calculateDynamicMargin()
-    const marginRate = dynamicMargin / 100
-    const requiredMargin = positionValue * marginRate
-    
-    const bsrRequired = (requiredMargin * bsrCollateral) / 100
-    const euroRequired = (requiredMargin * euroCollateral) / 100
-    
-    return {
-      bsrRequired: bsrRequired / bsrPrice,
-      euroRequired: euroRequired,
-      buyMargin: calculateDynamicMargin(),
-      sellMargin: calculateDynamicMargin()
-    }
-  }
-
-  const monoStyle = {
-    fontFamily: 'monospace',
-    fontSize: '12px'
-  }
+  const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
 
   return (
-    <div className={`flex flex-col flex-1 bg-[#0a0a0a] border border-yellow-500/50 rounded-xl p-6`} style={montserratStyle}>
-      {/* Header */}
-      <div className="mb-6">
-        <h3 className="text-[12px] text-white font-bold tracking-[0.3em] mb-2 border-b border-gray-600 pb-2 text-center">TRADING PANEL</h3>
-        <div className="text-[17px] font-bold tracking-[0.3em] text-red-500 text-center">INSTRUMENT: IPT-P-PL</div>
+    <div className="flex flex-col h-full p-3 select-none" style={montserratStyle}>
+      {/* HEADER - Zredukowany do skali Market Panelu */}
+      <div className="flex justify-between items-center mb-3">
+        <span className="text-[9px] tracking-[0.2em] text-gray-500 uppercase">Trading Panel</span>
+        <span className="text-[8px] text-red-500/60 font-bold tracking-tighter uppercase">Inst: IPT-P-PL</span>
       </div>
-      
-      {/* TRADING Section */}
-      <div className="mb-10">
-        {/* Current IPT Price */}
-        <div className="mb-6">
-          <div className="flex items-center justify-center">
-            <span className={`text-5xl font-bold tracking-[0.15em] text-yellow-400`}>
-              {currentPrice.toFixed(2)}
-            </span>
-            <span className="text-[14px] text-white ml-4">EUR/vkWh</span>
-          </div>
+
+      {/* PRICE SECTION - Zmniejszona, by pasowała do skali cyfr w Box 1 */}
+      <div className="text-center mb-4">
+        <div className="text-xl font-bold text-yellow-500 tracking-tight" style={monoStyle}>
+          {currentPrice.toFixed(2)}
         </div>
-        
-        {/* Quantity Stepper */}
-        <div className="mb-8">
-          <div className="text-[10px] text-white tracking-[0.2em] mb-3 text-center font-bold">QUANTITY</div>
-          <div className="flex items-center justify-center gap-3">
-            <button 
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-8 h-8 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-sm font-bold"
-            >
-              -
-            </button>
-            <input
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(Math.max(1, Math.min(1000, parseInt(e.target.value) || 1)))}
-              className="w-20 text-center bg-gray-800 text-white font-mono text-xl rounded border border-gray-700 focus:outline-none focus:border-gray-600"
-              style={{
-                appearance: 'textfield',
-                MozAppearance: 'textfield',
-                WebkitAppearance: 'none'
-              }}
-            />
-            <button 
-              onClick={() => setQuantity(Math.min(1000, quantity + 1))}
-              className="w-8 h-8 bg-gray-800 hover:bg-gray-700 text-white rounded flex items-center justify-center text-sm font-bold"
-            >
-              +
-            </button>
-          </div>
-        </div>
-        
-        {/* Trade Buttons */}
-        <div className="flex justify-center gap-4">
-          <button className="bg-transparent border-2 border-green-500 text-green-500 py-4 px-6 rounded font-bold text-sm tracking-wider transition-all hover:bg-green-500 hover:text-black">
-            BUY
-          </button>
-          <button className="bg-transparent border-2 border-red-500 text-red-500 py-4 px-6 rounded font-bold text-sm tracking-wider transition-all hover:bg-red-500 hover:text-black">
-            SELL
-          </button>
-        </div>
+        <div className="text-[8px] text-gray-600 tracking-[0.1em] uppercase">BSEI Real-Time Quote</div>
       </div>
-      
-      {/* Divider */}
-      <div className="border-t border-gray-700 my-6"></div>
-      
-      {/* DEPOSIT Section */}
-      <div className="mb-6">
-        {/* Light Switch Toggle */}
-        <div className="mb-6">
-          <div className="text-[11px] text-white tracking-[0.2em] mb-3 text-center font-bold">DEPOSIT</div>
-          <div className="flex items-center justify-center">
-            <div className="relative w-36 h-8 bg-gray-700 rounded-full p-1">
-              <div 
-                className={`absolute top-1 w-16 h-6 bg-white rounded-full transition-transform duration-200 ease-in-out ${
-                  depositDirection === 'BUY' ? 'translate-x-0' : 'translate-x-16'
-                }`}
-              ></div>
-              <button 
-                onClick={() => setDepositDirection('BUY')}
-                className={`absolute left-1 top-1 z-10 px-3 py-1 text-[10px] font-bold transition-colors duration-200 ${
-                  depositDirection === 'BUY' ? 'text-black' : 'text-white'
-                }`}
-              >
-                BUY
-              </button>
-              <button 
-                onClick={() => setDepositDirection('SELL')}
-                className={`absolute right-1 top-1 z-10 px-2 py-1 text-[10px] font-bold transition-colors duration-200 ${
-                  depositDirection === 'SELL' ? 'text-black' : 'text-white'
-                }`}
-              >
-                SELL
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Collateral Sliders */}
-        <div className="mb-6">
-          {/* €BSR Slider */}
-          <div className="mb-4">
-            <div className="flex justify-between text-[11px] text-white mb-2 font-bold">
-              <span>€BSR</span>
-              <span>{bsrCollateral}%</span>
-            </div>
-            <input
-              type="range"
-              min="10"
-              max="100"
-              value={bsrCollateral}
-              onChange={(e) => handleBsrChange(parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-          
-          {/* eEURO Slider */}
-          <div className="mb-4">
-            <div className="flex justify-between text-[11px] text-white mb-2 font-bold">
-              <span>eEURO</span>
-              <span>{euroCollateral}%</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="90"
-              value={euroCollateral}
-              onChange={(e) => handleEuroChange(parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-        </div>
+
+      {/* BUY/SELL TOGGLE - Bardziej kompaktowy */}
+      <div className="flex gap-1.5 mb-4">
+        <button 
+          onClick={() => setIsBuy(true)}
+          className={`flex-1 py-1.5 text-[9px] font-bold transition-all border ${isBuy ? 'bg-green-500/10 border-green-500/50 text-green-500' : 'border-gray-900 text-gray-700'}`}
+        >
+          BUY
+        </button>
+        <button 
+          onClick={() => setIsBuy(false)}
+          className={`flex-1 py-1.5 text-[9px] font-bold transition-all border ${!isBuy ? 'bg-red-500/10 border-red-500/50 text-red-500' : 'border-gray-900 text-gray-700'}`}
+        >
+          SELL
+        </button>
       </div>
-      
-      {/* ESTIMATED MARGIN REQUIREMENT */}
-      <div className="flex-grow"></div>
-      <div className="mt-auto">
-        <div className="text-[10px] text-white tracking-[0.2em] mb-3 text-center font-bold">ESTIMATED MARGIN REQUIREMENT</div>
-        <div className="bg-gray-900 p-4 rounded">
-          <div className="text-center mb-3">
-            <div className="text-gray-400 text-xs mb-1">MARGIN ({depositDirection === 'BUY' ? 'TO BUY' : 'TO SELL'})</div>
-            <div className="text-yellow-400 text-xl font-mono font-bold">
-              {calculateDynamicMargin().toFixed(1)}%
-            </div>
-            <div className="text-[7px] text-gray-500 mt-1">
-              {depositDirection === 'BUY' 
-                ? `100% - (75% × ${bsrCollateral}%) = ${calculateDynamicMargin().toFixed(1)}%`
-                : `100% - (50% × ${bsrCollateral}%) = ${calculateDynamicMargin().toFixed(1)}%`
-              }
-            </div>
+
+      {/* QUANTITY SECTION */}
+      <div className="mb-4">
+        <div className="flex justify-between text-[8px] text-gray-600 mb-1.5 tracking-widest uppercase">
+          <span>Order Size</span>
+          <span className="text-gray-400 font-mono">{quantity} vkWh</span>
+        </div>
+        <input 
+          type="range" min="10" max="1000" step="10"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="w-full h-1 bg-gray-900 rounded-lg appearance-none cursor-pointer accent-yellow-600"
+        />
+      </div>
+
+      {/* BSR RATIO SLIDER */}
+      <div className="mb-4">
+        <div className="flex justify-between text-[8px] text-gray-600 mb-1.5 tracking-widest uppercase">
+          <span>€BSR / eEURO Allocation</span>
+          <span className="text-yellow-500 font-mono">{(bsrRatio * 100).toFixed(0)}% BSR</span>
+        </div>
+        <input 
+          type="range" min="0" max="1" step="0.01"
+          value={bsrRatio}
+          onChange={(e) => setBsrRatio(Number(e.target.value))}
+          className="w-full h-1 bg-gray-900 rounded-lg appearance-none cursor-pointer accent-yellow-600"
+        />
+      </div>
+
+      <div className="flex-grow" />
+
+      {/* FOOTER - Wyliczenia w skali mikroskopijnej */}
+      <div className="border-t border-gray-900/50 pt-3 space-y-2">
+        <div className="flex justify-between items-center px-1">
+          <span className="text-[8px] text-gray-600 uppercase tracking-widest">Est. Margin</span>
+          <span className="text-[10px] font-bold text-white font-mono">{currentMarginPercent.toFixed(1)}%</span>
+        </div>
+
+        <div className="bg-gray-900/10 p-2 rounded space-y-1">
+          <div className="flex justify-between text-[9px]">
+            <span className="text-gray-600 uppercase tracking-tighter">Req. €BSR</span>
+            <span className="text-yellow-500/80 font-mono">{requiredBSR.toFixed(2)}</span>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center">
-              <div className="text-gray-400 text-xs mb-1">€BSR REQUIRED</div>
-              <div className="text-green-400 text-lg font-mono">
-                {calculateMarginRequired().bsrRequired.toFixed(2)} €BSR
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-gray-400 text-xs mb-1">eEURO REQUIRED</div>
-              <div className="text-blue-400 text-lg font-mono">
-                €{calculateMarginRequired().euroRequired.toFixed(2)}
-              </div>
-            </div>
+          <div className="flex justify-between text-[9px]">
+            <span className="text-gray-600 uppercase tracking-tighter">Req. eEURO</span>
+            <span className="text-blue-500/80 font-mono">{requiredEuro.toFixed(2)}</span>
           </div>
         </div>
+
+        <button className="w-full py-2 bg-yellow-600 text-black font-bold text-[9px] tracking-[0.2em] hover:bg-yellow-500 transition-colors uppercase">
+          Execute {isBuy ? 'Buy' : 'Sell'}
+        </button>
       </div>
     </div>
   )
