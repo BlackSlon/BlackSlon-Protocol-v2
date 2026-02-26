@@ -1,208 +1,90 @@
 'use client'
 
-import { useState } from 'react'
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts'
-
-interface OrderData {
-  price: number
-  volume: number
-  side: 'bid' | 'ask' | 'user'
-  id?: string
+interface Order {
+  price: number;
+  amount: number;
+  total: number;
 }
 
 export default function BlackSlonMatrix() {
-  const [price, setPrice] = useState('')
-  const [volume, setVolume] = useState('')
-  const [orders, setOrders] = useState<OrderData[]>([
-    // Mock aggregated data - realistic order book spread
-    { id: '1', price: 9.75, volume: 500, side: 'bid' },
-    { id: '2', price: 9.80, volume: 750, side: 'bid' },
-    { id: '3', price: 9.85, volume: 300, side: 'bid' },
-    { id: '4', price: 9.90, volume: 450, side: 'bid' },
-    { id: '5', price: 9.95, volume: 200, side: 'bid' },
-    { id: '6', price: 10.05, volume: 600, side: 'ask' },
-    { id: '7', price: 10.10, volume: 150, side: 'ask' },
-    { id: '8', price: 10.15, volume: 800, side: 'ask' },
-    { id: '9', price: 10.20, volume: 400, side: 'ask' },
-    { id: '10', price: 10.25, volume: 250, side: 'ask' },
-    { id: 'user', price: 10.09, volume: 350, side: 'user' }
-  ])
+  const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!price || !volume) return
-    
-    const newOrder: OrderData = {
-      id: Date.now().toString(),
-      price: parseFloat(price),
-      volume: parseInt(volume),
-      side: 'user'
-    }
-    
-    setOrders([...orders, newOrder])
-    setPrice('')
-    setVolume('')
-  }
+  // Symulacja danych Orderbook (Bids & Asks)
+  const asks: Order[] = [
+    { price: 10.95, amount: 150, total: 1642.50 },
+    { price: 10.82, amount: 200, total: 2164.00 },
+    { price: 10.70, amount: 80, total: 856.00 },
+  ];
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload
-      return (
-        <div className="bg-black border border-gray-600 p-2 rounded shadow-lg">
-          <p className="text-yellow-400 font-mono text-xs">
-            {data.price.toFixed(2)} EUR
-          </p>
-          <p className="text-gray-400 font-mono text-xs">
-            {data.volume} BLSN-E-PL
-          </p>
-          <p className={`text-xs font-bold ${
-            data.side === 'bid' ? 'text-green-400' : 
-            data.side === 'ask' ? 'text-red-400' : 'text-yellow-400'
-          }`}>
-            {data.side === 'bid' ? 'KUPNO' : 
-             data.side === 'ask' ? 'SPRZEDAŻ' : 'USER'}
-          </p>
-        </div>
-      )
-    }
-    return null
-  }
+  const bids: Order[] = [
+    { price: 10.45, amount: 120, total: 1254.00 },
+    { price: 10.30, amount: 300, total: 3090.00 },
+    { price: 10.15, amount: 450, total: 4567.50 },
+  ];
 
   return (
-    <div className="min-h-screen bg-black text-white p-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-yellow-400 tracking-wider mb-2">
-            BlackSlon Matrix
-          </h1>
-          <p className="text-gray-500 text-sm">
-            BLSN-E-PL Order Book • Live Market
-          </p>
+    <div className="flex flex-col h-full select-none text-white">
+      {/* SUBTITLE */}
+      <div className="text-center mb-4">
+        <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">Order Book & Liquidity</span>
+      </div>
+
+      {/* SPREAD INDICATOR */}
+      <div className="bg-gray-900/40 border-y border-gray-900 py-1 mb-4 flex justify-between px-4">
+        <span className="text-[8px] text-gray-500 uppercase font-bold">Market Spread</span>
+        <span className="text-[10px] text-yellow-500 font-mono" style={monoStyle}>0.14 EUR</span>
+      </div>
+
+      {/* ORDERBOOK TABLE */}
+      <div className="flex-grow overflow-hidden flex flex-col">
+        {/* TABLE HEADER */}
+        <div className="grid grid-cols-3 px-2 mb-2 text-[8px] text-gray-600 uppercase font-bold">
+          <span>Price (EUR)</span>
+          <span className="text-right">Amount (MW)</span>
+          <span className="text-right">Total (€BSR)</span>
         </div>
 
-        <div className="flex gap-6">
-          {/* Chart Section - 75% */}
-          <div className="flex-1">
-            <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-              <h2 className="text-lg font-bold text-gray-300 mb-4">Market Depth</h2>
-              
-              <ResponsiveContainer width="100%" height={500}>
-                <ScatterChart
-                  data={orders}
-                  margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-                >
-                  <XAxis 
-                    type="number"
-                    dataKey="price"
-                    domain={[9.00, 11.00]}
-                    range={[9.00, 11.00]}
-                    tick={{ fill: '#4B5563', fontSize: 10 }}
-                    axisLine={{ stroke: '#374151', strokeWidth: 1 }}
-                    hide
-                  />
-                  <YAxis 
-                    type="number"
-                    dataKey="volume"
-                    tick={{ fill: '#4B5563', fontSize: 10 }}
-                    axisLine={{ stroke: '#374151', strokeWidth: 1 }}
-                    hide
-                  />
-                  <ZAxis 
-                    type="number"
-                    dataKey="volume"
-                    range={[0, 1000]}
-                  />
-                  <Scatter dataKey="volume">
-                    {orders.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={
-                          entry.side === 'bid' ? '#10B981' : 
-                          entry.side === 'ask' ? '#EF4444' : 
-                          '#F59E0B'
-                        } 
-                      />
-                    ))}
-                  </Scatter>
-                  <Tooltip content={<CustomTooltip />} />
-                </ScatterChart>
-              </ResponsiveContainer>
+        {/* ASKS (SELL ORDERS) */}
+        <div className="space-y-[1px] mb-4">
+          {asks.map((order, i) => (
+            <div key={i} className="grid grid-cols-3 px-2 py-1.5 hover:bg-red-500/5 transition-colors group relative">
+              <div className="absolute inset-y-0 right-0 bg-red-600/10" style={{ width: `${(order.amount / 500) * 100}%` }} />
+              <span className="text-[11px] text-red-500 font-mono z-10" style={monoStyle}>{order.price.toFixed(2)}</span>
+              <span className="text-[11px] text-gray-300 text-right font-mono z-10" style={monoStyle}>{order.amount}</span>
+              <span className="text-[11px] text-gray-500 text-right font-mono z-10" style={monoStyle}>{order.total.toFixed(0)}</span>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Order Form - 25% */}
-          <div className="w-80">
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <h2 className="text-lg font-bold text-gray-300 mb-6">Złóż Ofertę</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
-                    Cena (EUR)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    className="w-full px-3 py-2 bg-black border border-gray-700 rounded text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/20"
-                    placeholder="10.09"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
-                    Wolumen (BLSN-E-PL)
-                  </label>
-                  <input
-                    type="number"
-                    value={volume}
-                    onChange={(e) => setVolume(e.target.value)}
-                    className="w-full px-3 py-2 bg-black border border-gray-700 rounded text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/20"
-                    placeholder="100"
-                  />
-                </div>
-                
-                <div className="flex gap-3">
-                  <button
-                    type="submit"
-                    className="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded transition-colors"
-                  >
-                    KUP
-                  </button>
-                  <button
-                    type="button"
-                    className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-4 rounded transition-colors"
-                  >
-                    SPRZEDAJ
-                  </button>
-                </div>
-              </form>
-              
-              {/* Market Summary */}
-              <div className="mt-6 pt-6 border-t border-gray-800">
-                <h3 className="text-sm font-bold text-gray-400 mb-3">Statystyki Rynku</h3>
-                <div className="grid grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <p className="text-gray-500">Najwyższa Kupno</p>
-                    <p className="text-green-400 font-mono">10.15 EUR</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Najniższa Sprzedaż</p>
-                    <p className="text-red-400 font-mono">9.75 EUR</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Wolumen</p>
-                    <p className="text-gray-400 font-mono">4,550 BLSN-E-PL</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Rozpiętość</p>
-                    <p className="text-yellow-400 font-mono">0.40 EUR</p>
-                  </div>
-                </div>
-              </div>
+        {/* CURRENT PRICE DIVIDER */}
+        <div className="border-y border-gray-800 py-2 my-2 bg-black flex justify-center items-center gap-4">
+          <span className="text-xl font-bold text-white font-mono" style={monoStyle}>10.59</span>
+          <span className="text-[9px] text-green-500 font-bold uppercase tracking-tighter">▲ 0.4%</span>
+        </div>
+
+        {/* BIDS (BUY ORDERS) */}
+        <div className="space-y-[1px]">
+          {bids.map((order, i) => (
+            <div key={i} className="grid grid-cols-3 px-2 py-1.5 hover:bg-green-500/5 transition-colors group relative">
+              <div className="absolute inset-y-0 right-0 bg-green-600/10" style={{ width: `${(order.amount / 500) * 100}%` }} />
+              <span className="text-[11px] text-green-500 font-mono z-10" style={monoStyle}>{order.price.toFixed(2)}</span>
+              <span className="text-[11px] text-gray-300 text-right font-mono z-10" style={monoStyle}>{order.amount}</span>
+              <span className="text-[11px] text-gray-500 text-right font-mono z-10" style={monoStyle}>{order.total.toFixed(0)}</span>
             </div>
-          </div>
+          ))}
+        </div>
+      </div>
+
+      {/* DEPTH VISUALIZATION AREA */}
+      <div className="mt-6 pt-4 border-t border-gray-900">
+        <div className="text-[8px] text-gray-600 uppercase font-bold mb-2 px-1 text-center">Market Depth (MWh)</div>
+        <div className="flex h-1 bg-gray-900 rounded-full overflow-hidden mx-2">
+          <div className="bg-green-600 h-full shadow-[0_0_8px_rgba(22,163,74,0.5)]" style={{ width: '55%' }} />
+          <div className="bg-red-600 h-full shadow-[0_0_8px_rgba(220,38,38,0.5)]" style={{ width: '45%' }} />
+        </div>
+        <div className="flex justify-between px-2 mt-1 text-[7px] font-mono text-gray-700">
+          <span>870 MW</span>
+          <span>430 MW</span>
         </div>
       </div>
     </div>
