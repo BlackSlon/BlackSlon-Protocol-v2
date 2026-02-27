@@ -31,7 +31,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
     { label: '365 Days Ago', data: calcBSTZ(history.find(e => e.date === "2025-02-20")) }
   ];
 
-  const renderSuwak = (day: any, isMainTable: boolean) => {
+  const renderSuwak = (day: any, isMainTable: boolean, isLatest: boolean = false) => {
     if (!day) return null;
     const isPos = day.change > 0 || isMainTable === false; // Dla historycznych zakładamy wzrost do dziś
     const color = isPos ? 'text-green-500' : 'text-red-500';
@@ -39,8 +39,8 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
 
     return (
       <div className="flex items-center gap-2 relative h-12 w-full">
-        {/* MIN - zawsze zielony */}
-        <span className="text-[14px] text-green-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
+        {/* MIN - niebieski */}
+        <span className="text-[7px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
         
         <div className="flex-grow flex flex-col items-center">
           {/* WARTOŚĆ ANCHOR NAD KROPKĄ */}
@@ -51,14 +51,15 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           </div>
 
           {/* STRZAŁKA I % POD SUWAKIEM */}
-          <div className={`flex items-center gap-1 text-[14px] font-bold mt-0.5 ${color}`}>
+          <div className={`flex items-center gap-1 text-[7px] font-bold mt-0.5 ${color}`}>
             <span>{isPos ? '↑' : '↓'}</span>
             <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
+            {isMainTable && isLatest && <span className="text-blue-400 font-bold ml-2">ACTIVE NOW</span>}
           </div>
         </div>
 
-        {/* MAX - zawsze zielony */}
-        <span className="text-[14px] text-green-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
+        {/* MAX - niebieski */}
+        <span className="text-[7px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
       </div>
     );
   };
@@ -87,13 +88,12 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           {last7Days.map((day, i) => {
             const isLatest = i === 0;
             return (
-              <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-yellow-500/10' : ''}`}>
-                <div className={`col-span-3 text-[12px] font-mono ${isLatest ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
+              <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-blue-500/5' : ''}`}>
+                <div className={`col-span-3 text-[12px] font-mono ${isLatest ? 'text-blue-400 font-bold' : 'text-gray-500'}`}>
                   {day.date}
-                  {isLatest && <div className="text-[8px] text-yellow-400 font-bold mt-1">ACTIVE NOW</div>}
                 </div>
                 <div className="col-span-9">
-                  {renderSuwak(day, true)}
+                  {renderSuwak(day, true, isLatest)}
                 </div>
               </div>
             );
