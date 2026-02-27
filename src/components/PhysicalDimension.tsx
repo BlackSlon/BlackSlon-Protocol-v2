@@ -48,24 +48,6 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
             ))}
           </div>
         </div>
-
-        {/* PRAWA STRONA: SYNTHESIS FORMULA */}
-        <div className="flex-1 space-y-3 pt-1">
-          <span className="text-[9px] text-blue-500 font-bold uppercase tracking-widest block border-b border-gray-900 pb-2">Synthesis Formula: 10/40/25/25</span>
-          <div className="space-y-2">
-            {[
-              { label: 'SPOT (BSEI)', w: 10, v: currentPrice },
-              { label: 'FRONT MONTH', w: 40, v: currentPrice + 0.36 },
-              { label: 'QUARTER (FQ)', w: 25, v: currentPrice + 0.73 },
-              { label: 'CALENDAR (CAL)', w: 25, v: currentPrice + 1.06 }
-            ].map((item, i) => (
-              <div key={i} className="flex justify-between items-center text-[10px] border-b border-gray-900/30 pb-1.5 text-white">
-                <span className="text-gray-500 font-bold uppercase">{item.label} <span className="text-[8px] font-normal">({item.w}%)</span></span>
-                <span className="font-mono">{item.v.toFixed(2)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   )
