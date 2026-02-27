@@ -6,22 +6,22 @@ import PortfolioPanel from "@/components/PortfolioPanel"
 
 export default function MarketPage({ params }: { params: { id: string } }) {
   return (
-    <main className="min-h-screen bg-[#050505] text-white overflow-hidden flex flex-col items-center py-6 px-12">
-      {/* KONTENER Z MARGINESAMI BOCZNYMI - NIE NA 100% SZEROKOŚCI */}
-      <div className="w-full max-w-[1600px] grid grid-cols-[50%_30%_20%] gap-6 h-[calc(100vh-60px)]">
+    <main className="min-h-screen bg-[#050505] text-white overflow-hidden flex flex-col items-center py-8">
+      {/* KONTENER Z DUŻYM ODSTEPEM OD KRAWĘDZI EKRANU */}
+      <div className="w-full max-w-[1550px] px-10 grid grid-cols-[50%_30%_20%] gap-6 h-[calc(100vh-80px)]">
         
-        {/* PANEL LEWY (50%): MARKET */}
-        <section className="border border-yellow-600/40 bg-black/60 rounded-lg overflow-y-auto scrollbar-hide shadow-[0_0_20px_rgba(202,138,4,0.05)]">
+        {/* KOLUMNA 1: MARKET (50%) */}
+        <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-y-auto scrollbar-hide shadow-[0_0_20px_rgba(0,0,0,0.5)]">
           <MarketPanel currentPrice={10.59} borderColor="border-transparent" montserratStyle={{}} />
         </section>
 
-        {/* PANEL ŚRODKOWY (30%): TRADING (ŻÓŁTA RAMKA) */}
-        <section className="border border-yellow-600/60 bg-black/80 rounded-lg overflow-y-auto scrollbar-hide shadow-[0_0_30px_rgba(202,138,4,0.15)]">
+        {/* KOLUMNA 2: TRADING (30%) - MOCNIEJSZA RAMKA */}
+        <section className="border border-yellow-600/60 bg-black/80 rounded-sm overflow-y-auto scrollbar-hide shadow-[0_0_30px_rgba(202,138,4,0.1)]">
           <TradingPanel />
         </section>
 
-        {/* PANEL PRAWY (20%): ACCOUNT */}
-        <section className="border border-yellow-600/40 bg-black/60 rounded-lg overflow-y-auto scrollbar-hide">
+        {/* KOLUMNA 3: ACCOUNT (20%) */}
+        <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-y-auto scrollbar-hide">
           <PortfolioPanel />
         </section>
 
