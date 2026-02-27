@@ -12,15 +12,15 @@ export default function MarketPage({ params }: { params: { id: string } }) {
         <img src="/BS_image.jpg" alt="BlackSlon Logo" className="h-12 w-auto" />
       </header>
 
-      {/* Grid: 24% / 36% / 20% / 20% - 4 separate panels */}
-      <div className="w-full max-w-[1600px] mx-auto px-10 grid grid-cols-[24%_36%_20%_20%] gap-6 h-[calc(100vh-100px)] mb-4">
+      {/* Grid: 22% / 34% / 20% / 20% - 4 separate panels */}
+      <div className="w-full max-w-[1600px] mx-auto px-10 grid grid-cols-[22%_34%_20%_20%] gap-6 h-[calc(100vh-100px)] mb-4">
         
-        {/* PANEL 1: PHYSICAL MARKET DIMENSION (24%) */}
+        {/* PANEL 1: PHYSICAL MARKET DIMENSION (22%) */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
           <PhysicalDimension marketId={params.id} currentPrice={10.59} />
         </section>
 
-        {/* PANEL 2: VIRTUAL MARKET DIMENSION (36%) */}
+        {/* PANEL 2: VIRTUAL MARKET DIMENSION (34%) */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
           <VirtualDimension marketId={params.id} />
         </section>
