@@ -43,23 +43,23 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
                   <div className={`col-span-3 ${i === 0 ? 'text-yellow-500 font-bold' : 'text-gray-500'}`}>{day.date}</div>
                   <div className="col-span-9 flex items-center justify-between">
                     <span className="text-[10px] font-mono font-bold text-green-500 w-8">{day.min.toFixed(2)}</span>
-                    <div className="flex-grow h-[4px] bg-gray-900 relative mx-3 rounded-full border border-gray-800">
-                       <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/10 border-x border-yellow-500/30"></div>
-                       <div className="group relative">
-                         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 ${anchorChange !== null ? (isPositive ? 'bg-green-600' : 'bg-red-600') : 'bg-red-600'} rounded-full shadow-[0_0_12px_rgba(34,197,94,0.9)] cursor-pointer`} />
-                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-gray-700 rounded text-[8px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                           Anchor: {day.anchor.toFixed(2)}
+                    <div className="flex flex-col items-center flex-grow">
+                      <div className="w-full h-[4px] bg-gray-900 relative mx-3 rounded-full border border-gray-800 mb-2">
+                         <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/10 border-x border-yellow-500/30"></div>
+                         <div className="group relative">
+                           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 ${anchorChange !== null ? (isPositive ? 'bg-green-600' : 'bg-red-600') : 'bg-red-600'} rounded-full shadow-[0_0_12px_rgba(34,197,94,0.9)] cursor-pointer`} />
+                           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-gray-700 rounded text-[8px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                             Anchor: {day.anchor.toFixed(2)}
+                           </div>
                          </div>
-                       </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono font-bold text-green-500 w-8 text-right">{day.max.toFixed(2)}</span>
+                      </div>
                       {anchorChange !== null && (
                         <div className={`text-[10px] font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
                           {isPositive ? '↑' : '↓'}{Math.abs(anchorChange).toFixed(1)}%
                         </div>
                       )}
                     </div>
+                    <span className="text-[10px] font-mono font-bold text-green-500 w-8 text-right">{day.max.toFixed(2)}</span>
                   </div>
                 </div>
               );
