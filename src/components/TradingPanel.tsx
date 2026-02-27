@@ -15,7 +15,7 @@ export default function TradingPanel() {
   return (
     <div className="flex flex-col h-full p-8 select-none font-sans">
       <div className="text-center mb-6 border-b border-gray-900 pb-3">
-        <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">Trading Terminal</span>
+        <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">Trading Panel</span>
       </div>
 
       <div className="text-center mb-6">

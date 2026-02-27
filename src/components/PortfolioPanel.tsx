@@ -6,11 +6,11 @@ export default function PortfolioPanel() {
   return (
     <div className="flex flex-col h-full select-none">
       <div className="text-center mb-2 border-b border-gray-900 pb-1">
-        <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-bold">Accounts</span>
+        <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">User's Account</span>
       </div>
 
       <div className="text-center mb-4">
-        <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">User Inventory</span>
+        <span className="text-[13px] text-red-600 font-bold tracking-[0.2em] uppercase">User Inventory</span>
       </div>
 
       <div className="space-y-4">
