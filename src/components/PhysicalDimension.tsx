@@ -51,10 +51,12 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           </div>
 
           {/* STRZAŁKA I % POD SUWAKIEM */}
-          <div className={`flex items-center gap-1 text-[7px] font-bold mt-0.5 ${color}`}>
-            <span>{isPos ? '↑' : '↓'}</span>
-            <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
-            {isMainTable && isLatest && <span className="text-blue-400 font-bold ml-2">ACTIVE NOW</span>}
+          <div className={`flex flex-col items-center gap-1 text-[7px] font-bold mt-0.5 ${color}`}>
+            <div className="flex items-center gap-1">
+              <span>{isPos ? '↑' : '↓'}</span>
+              <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
+            </div>
+            {isMainTable && isLatest && <span className="text-yellow-400 font-bold">ACTIVE NOW</span>}
           </div>
         </div>
 
