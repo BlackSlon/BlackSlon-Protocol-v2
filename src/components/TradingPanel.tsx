@@ -58,7 +58,7 @@ export default function TradingPanel() {
         <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
+      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0 bg-zinc-900/50 border border-gray-800 rounded-sm">
         <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Order Price</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
@@ -72,7 +72,7 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
+      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0 bg-zinc-900/50 border border-gray-800 rounded-sm">
         <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Quantity</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
