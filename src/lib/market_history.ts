@@ -1,5 +1,3 @@
-// src/lib/market_history.ts
-
 export interface BSTZHistoryEntry {
   date: string;
   spot: number;
@@ -10,6 +8,14 @@ export interface BSTZHistoryEntry {
 
 export const MARKET_HISTORY: Record<string, BSTZHistoryEntry[]> = {
   'IPT-P-PL': [
+    // 365 dni temu: -25% od obecnego (Anchor ~7.57)
+    { date: "2025-02-20", spot: 89.71, fm: 74.43, fq: 72.34, cal: 75.67 },
+    // 90 dni temu: -15% od obecnego (Anchor ~8.58)
+    { date: "2025-11-22", spot: 101.68, fm: 84.35, fq: 81.98, cal: 85.76 },
+    // 30 dni temu: -10% od obecnego (Anchor ~9.09)
+    { date: "2026-01-21", spot: 107.66, fm: 89.32, fq: 86.80, cal: 90.81 },
+    
+    // Twoje dotychczasowe dane
     { date: "2026-01-26", spot: 189.81, fm: 109.48, fq: 101.61, cal: 105.98 },
     { date: "2026-01-27", spot: 242.18, fm: 110.59, fq: 102.06, cal: 105.73 },
     { date: "2026-01-28", spot: 186.21, fm: 108.77, fq: 101.10, cal: 104.98 },
