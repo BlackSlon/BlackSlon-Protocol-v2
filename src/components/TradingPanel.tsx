@@ -90,11 +90,11 @@ export default function TradingPanel() {
       <div className="space-y-3 mb-4 shrink-0 px-1">
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] mb-2 text-green-400 uppercase"><span>€BSR Stake</span><span>{bsrStake}%</span></div>
+          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase mb-2"><span>€BSR Stake</span><span>{bsrStake}%</span></div>
           <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-green-500 cursor-pointer" />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] mb-2 text-green-800 uppercase"><span>eEURO Stake</span><span>{euroStake}%</span></div>
+          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase mb-2"><span>eEURO Stake</span><span>{euroStake}%</span></div>
           <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-green-900" />
         </div>
       </div>
@@ -112,11 +112,11 @@ export default function TradingPanel() {
         <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
           <div className="flex flex-col border-r border-gray-900/50 pr-2">
             <span className="text-[11px] text-gray-600 uppercase font-bold mb-1">€BSR Deposit Value:</span>
-            <span className="text-[22px] text-green-400">{bsrReq} BSR</span>
+            <span className="text-[11px] font-mono font-bold text-yellow-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
             <span className="text-[11px] text-gray-600 uppercase font-bold mb-1">eEURO Deposit Value:</span>
-            <span className="text-[22px] text-green-400">{euroReq} EUR</span>
+            <span className="text-[11px] font-mono font-bold text-yellow-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
           </div>
         </div>
       </div>
