@@ -33,98 +33,103 @@ export default function TradingPanel() {
   const euroReq = (totalValue * (marginValue / 100) * (euroStake / 100)).toFixed(2)
 
   return (
-    <div className="flex flex-col h-full w-full p-3 select-none font-sans bg-transparent scale-[0.75] origin-top">
+    <div className="flex flex-col h-full w-full p-4 select-none font-sans bg-transparent scale-[0.75] origin-top">
       
-      <div className="text-center mb-4 border-b border-gray-900 pb-1">
-        <span className="text-[8px] text-gray-500 uppercase tracking-[0.4em] font-bold">Trading Terminal</span>
+      {/* TRADING TERMINAL - 2x Większy i wyraźny */}
+      <div className="text-center mb-6 border-b border-gray-900 pb-2">
+        <span className="text-[18px] text-gray-400 uppercase tracking-[0.6em] font-black">
+          Trading Terminal
+        </span>
       </div>
 
-      <div className="text-left mb-4">
-        <span className="text-[11px] text-yellow-500 font-bold tracking-[0.2em] uppercase">
+      {/* INSTRUMENT - Żółty, do lewej */}
+      <div className="text-left mb-6">
+        <span className="text-[14px] text-yellow-500 font-bold tracking-[0.2em] uppercase">
           INSTRUMENT: {marketId}
         </span>
       </div>
 
-      <div className="flex justify-center gap-1.5 mb-5">
-        <button onClick={() => setSide('BUY')} className={`flex-1 py-1.5 border-2 font-bold uppercase tracking-widest text-[8px] transition-all rounded-sm ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
-        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border-2 font-bold uppercase tracking-widest text-[8px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
+      <div className="flex justify-center gap-2 mb-8">
+        <button onClick={() => setSide('BUY')} className={`flex-1 py-2.5 border-2 font-bold uppercase tracking-widest text-[10px] transition-all rounded-sm ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
+        <button onClick={() => setSide('SELL')} className={`flex-1 py-2.5 border-2 font-bold uppercase tracking-widest text-[10px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      {/* PRICE */}
-      <div className="flex flex-col items-center mb-4">
-        <div className="flex items-center gap-2">
-          <button onClick={() => setPrice(p => Math.max(0, parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
-          <div className="text-center">
-            <input type="text" value={price} onChange={(e) => setPrice(e.target.value.replace(',', '.'))} className="bg-transparent text-4xl font-bold font-mono w-32 text-center outline-none text-white" style={monoStyle} />
-            <div className="text-[9px] text-white font-bold font-mono mt-0.5" style={monoStyle}>
-              EUR / 100kWh <span className="opacity-60 text-[7px] ml-1">(1 TOKEN {marketId})</span>
+      {/* --- BLOK 1: SET ORDER PRICE --- */}
+      <div className="bg-gray-900/30 p-4 rounded-sm border border-gray-900 mb-4 shadow-inner">
+        <div className="text-[13px] text-white font-bold tracking-[0.2em] uppercase mb-4 border-l-2 border-yellow-600 pl-2">
+          Set Order Price
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <button onClick={() => setPrice(p => Math.max(0, parseFloat(p) - 0.01).toFixed(2))} className="text-4xl text-gray-600 hover:text-white">-</button>
+          <div className="text-center flex-grow">
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value.replace(',', '.'))} className="bg-transparent text-5xl font-bold font-mono w-full text-center outline-none text-white" style={monoStyle} />
+            <div className="text-[10px] text-gray-400 font-bold font-mono mt-1" style={monoStyle}>
+              EUR / 100kWh <span className="text-yellow-600/50 ml-1 text-[8px]">(1 TOKEN {marketId})</span>
             </div>
           </div>
-          <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">+</button>
+          <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-4xl text-gray-600 hover:text-white">+</button>
         </div>
-        <span className="text-[10px] text-white uppercase font-black mt-1 tracking-widest">SET ORDER PRICE</span>
       </div>
 
-      {/* QUANTITY */}
-      <div className="flex flex-col items-center mb-6">
-        <div className="flex items-center gap-2">
-          <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
-          <div className="text-center">
-            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-4xl font-bold font-mono w-32 text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={monoStyle} />
-            <div className="text-[9px] text-white font-bold font-mono mt-0.5" style={monoStyle}>
-              1 TOKEN <span className="opacity-60 text-[7px] ml-1">(100kWh)</span>
+      {/* --- BLOK 2: SET QUANTITY --- */}
+      <div className="bg-gray-900/30 p-4 rounded-sm border border-gray-900 mb-8 shadow-inner">
+        <div className="text-[13px] text-white font-bold tracking-[0.2em] uppercase mb-4 border-l-2 border-blue-600 pl-2">
+          Set Quantity
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-4xl text-gray-600 hover:text-white">-</button>
+          <div className="text-center flex-grow">
+            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-5xl font-bold font-mono w-full text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={monoStyle} />
+            <div className="text-[10px] text-gray-400 font-bold font-mono mt-1" style={monoStyle}>
+              1 TOKEN <span className="text-blue-600/50 ml-1 text-[8px]">(100kWh UNITS)</span>
             </div>
           </div>
-          <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white">+</button>
+          <button onClick={() => setQuantity(q => q + 1)} className="text-4xl text-gray-600 hover:text-white">+</button>
         </div>
-        <span className="text-[10px] text-white uppercase font-black mt-1 tracking-widest">SET QUANTITY</span>
       </div>
 
-      <div className="flex justify-center mb-6">
-        <button className={`w-full py-3 border-2 font-black uppercase tracking-[0.3em] text-[11px] transition-all duration-300 rounded-sm
+      {/* EXECUTE - Z poświatą energetyczną */}
+      <div className="flex justify-center mb-10">
+        <button className={`w-full py-5 border-2 font-black uppercase tracking-[0.5em] text-[16px] transition-all duration-500 rounded-sm
           ${side === 'BUY' 
-            ? 'border-green-500 text-green-500 hover:bg-green-500 hover:text-black hover:shadow-[0_0_20px_rgba(34,197,94,0.5)]' 
-            : 'border-red-600 text-red-600 hover:bg-red-600 hover:text-white hover:shadow-[0_0_20px_rgba(239,68,68,0.5)]'}`}>
-          EXECUTE
+            ? 'border-green-500 text-green-500 hover:bg-green-500 hover:text-black hover:shadow-[0_0_35px_rgba(34,197,94,0.4)]' 
+            : 'border-red-600 text-red-600 hover:bg-red-600 hover:text-white hover:shadow-[0_0_35px_rgba(239,68,68,0.4)]'}`}>
+          EXECUTE {side}
         </button>
       </div>
 
       {/* DEPOSITS SLIDERS */}
-      <div className="bg-black/60 border border-gray-900 p-3 rounded-sm mb-5">
-        <div className="space-y-3">
+      <div className="bg-gray-900/20 border border-gray-900 p-4 rounded-sm mb-6">
+        <div className="space-y-5">
           <div>
-            <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-400 font-bold" style={monoStyle}><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
-            <input type="range" min="10" max="100" step="5" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-blue-500 cursor-pointer" />
+            <div className="flex justify-between text-[11px] font-mono mb-2 text-blue-400 font-bold uppercase tracking-widest" style={monoStyle}><span>€BSR Stake</span><span>{bsrStake}%</span></div>
+            <input type="range" min="10" max="100" step="5" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1.5 bg-gray-800 accent-blue-500 cursor-pointer" />
           </div>
           <div>
-            <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-600 font-bold" style={monoStyle}><span>eEURO STAKE</span><span>{euroStake}%</span></div>
-            <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-900 accent-blue-900" />
+            <div className="flex justify-between text-[11px] font-mono mb-2 text-blue-800 font-bold uppercase tracking-widest" style={monoStyle}><span>eEURO Stake</span><span>{euroStake}%</span></div>
+            <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1.5 bg-gray-950 accent-blue-900" />
           </div>
         </div>
       </div>
 
-      {/* BOTTOM SECTION */}
-      <div className="mt-auto border-t border-gray-900 pt-4">
-        <div className="text-center mb-1">
-          <span className="text-[9px] text-blue-700 uppercase font-bold tracking-[0.1em]">DEPOSIT VALUE / LEVERAGE</span>
+      {/* BOTTOM SECTION - WARTOŚCI DEPOZYTÓW */}
+      <div className="mt-auto border-t border-gray-900 pt-6">
+        <div className="text-center mb-2">
+          <span className="text-[11px] text-blue-600 uppercase font-bold tracking-[0.3em]">Deposit Value / Leverage</span>
         </div>
-        <div className="text-center mb-4">
-          <span className="text-3xl font-bold font-mono text-blue-500 leading-none" style={monoStyle}>{marginValue}%</span>
+        <div className="text-center mb-8">
+          <span className="text-6xl font-bold font-mono text-blue-500 leading-none" style={monoStyle}>{marginValue}%</span>
         </div>
         
-        <div className="grid grid-cols-2 gap-2 border-t border-gray-800/50 pt-3">
+        <div className="grid grid-cols-2 gap-6 pt-4 border-t border-gray-900/50">
           <div className="flex flex-col">
-            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tighter">€BSR Deposit Value:</span>
-            <span className="text-[13px] font-mono text-blue-400 font-bold" style={monoStyle}>{bsrReq} BSR</span>
+            <span className="text-[10px] text-gray-500 uppercase font-bold mb-2 tracking-tight">€BSR Deposit Value:</span>
+            <span className="text-[18px] font-mono text-blue-400 font-bold" style={monoStyle}>{bsrReq}</span>
           </div>
           <div className="flex flex-col text-right">
-            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tighter">eEURO Deposit Value:</span>
-            <span className="text-[13px] font-mono text-blue-500 font-bold" style={monoStyle}>{euroReq} EUR</span>
+            <span className="text-[10px] text-gray-500 uppercase font-bold mb-2 tracking-tight">eEURO Deposit Value:</span>
+            <span className="text-[18px] font-mono text-blue-500 font-bold" style={monoStyle}>{euroReq}</span>
           </div>
-        </div>
-
-        <div className="text-center mt-3 opacity-60">
-           <span className="text-[8px] text-gray-500 uppercase font-bold">FEE: {currentRisk.fee.toFixed(2)}%</span>
         </div>
       </div>
     </div>
