@@ -34,13 +34,18 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
           </div>
           <div className="divide-y divide-gray-900/50">
             {last7Days.map((day, i) => (
-              <div key={i} className="grid grid-cols-12 py-2.5 px-3 items-center hover:bg-gray-900/40 font-mono text-[10px]">
-                <div className="col-span-3 text-gray-500">{day.date}</div>
+              <div key={i} className={`grid grid-cols-12 py-2.5 px-3 items-center hover:bg-gray-900/40 font-mono text-[10px] ${i === 0 ? 'bg-yellow-500/5 border-l-2 border-yellow-500' : ''}`}>
+                <div className={`col-span-3 ${i === 0 ? 'text-yellow-500 font-bold' : 'text-gray-500'}`}>{day.date}</div>
                 <div className="col-span-9 flex items-center justify-between">
                   <span className="text-green-500/60 w-8">{day.min.toFixed(2)}</span>
                   <div className="flex-grow h-[4px] bg-gray-900 relative mx-3 rounded-full border border-gray-800">
                      <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/10 border-x border-yellow-500/30"></div>
-                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rounded-full shadow-[0_0_12px_rgba(220,38,38,0.9)]" />
+                     <div className="group relative">
+                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rounded-full shadow-[0_0_12px_rgba(220,38,38,0.9)] cursor-pointer" />
+                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-gray-700 rounded text-[8px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                         Anchor: {day.anchor.toFixed(2)}
+                       </div>
+                     </div>
                   </div>
                   <span className="text-green-500 w-8 text-right">{day.max.toFixed(2)}</span>
                 </div>
