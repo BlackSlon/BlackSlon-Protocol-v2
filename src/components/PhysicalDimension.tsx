@@ -46,16 +46,16 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
                     <div className="flex-grow h-[4px] bg-gray-900 relative mx-3 rounded-full border border-gray-800">
                        <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/10 border-x border-yellow-500/30"></div>
                        <div className="group relative">
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rounded-full shadow-[0_0_12px_rgba(220,38,38,0.9)] cursor-pointer" />
+                         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 ${anchorChange !== null ? (isPositive ? 'bg-green-600' : 'bg-red-600') : 'bg-red-600'} rounded-full shadow-[0_0_12px_rgba(34,197,94,0.9)] cursor-pointer`} />
                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-gray-700 rounded text-[8px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                            Anchor: {day.anchor.toFixed(2)}
                          </div>
                        </div>
                     </div>
-                    <div className="flex items-center gap-1 w-8 text-right">
+                    <div className="flex flex-col items-end w-8">
                       <span className="text-green-500">{day.max.toFixed(2)}</span>
                       {anchorChange !== null && (
-                        <div className={`flex items-center text-[8px] font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                        <div className={`flex items-center text-[8px] font-bold mt-1 ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
                           {isPositive ? '↑' : '↓'}{Math.abs(anchorChange).toFixed(1)}%
                         </div>
                       )}
