@@ -88,7 +88,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             const isLatest = i === 0;
             return (
               <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-yellow-500/10' : ''}`}>
-                <div className={`col-span-3 text-[16px] font-mono ${isLatest ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
+                <div className={`col-span-3 text-[12px] font-mono ${isLatest ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
                   {day.date}
                   {isLatest && <div className="text-[8px] text-yellow-400 font-bold mt-1">ACTIVE NOW</div>}
                 </div>
