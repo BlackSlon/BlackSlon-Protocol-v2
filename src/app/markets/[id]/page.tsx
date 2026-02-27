@@ -13,7 +13,7 @@ export default function MarketPage({ params }: { params: { id: string } }) {
       </header>
 
       {/* KONTENER Z WIĘKSZYM ODSTEPEM I MARGINESAMI */}
-      <div className="w-full max-w-[1400px] px-20 grid grid-cols-[50%_30%_20%] gap-8 h-[calc(100vh-120px)]">
+      <div className="w-full max-w-[1600px] mx-auto px-12 grid grid-cols-[50%_30%_20%] gap-8 h-[calc(100vh-120px)]">
         
         {/* KOLUMNA 1: MARKET (50%) */}
         <section className="border border-yellow-600/40 bg-black/40 rounded-sm overflow-hidden">
