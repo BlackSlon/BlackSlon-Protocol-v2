@@ -10,7 +10,7 @@ export default function PortfolioPanel() {
       </div>
 
       <div className="text-center mb-4">
-        <div className="text-[11px] font-black tracking-widest uppercase mb-1 text-red-600">USER INVENTORY</div>
+        <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600 text-center">USER INVENTORY</div>
       </div>
 
       <div className="space-y-4">

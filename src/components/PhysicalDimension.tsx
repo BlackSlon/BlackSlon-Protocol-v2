@@ -43,7 +43,9 @@ export default function PhysicalDimension({ currentPrice }: PhysicalDimensionPro
   return (
     <div className="flex flex-col h-full">
       {/* PODTYTUŁ - Czerwony, styl instrumentu */}
-      <div className="text-[11px] font-black tracking-widest uppercase mb-1 text-red-600">PHYSICAL DIMENSION</div>
+      <div className="text-center mb-1">
+        <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">PHYSICAL DIMENSION</div>
+      </div>
 
       {/* TYTUŁ KORYTARZA */}
       <div className="text-center mb-4">
