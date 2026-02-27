@@ -42,7 +42,7 @@ export default function TradingPanel() {
   }, [price, quantity, marginValue, bsrStake, euroStake])
 
   return (
-    <div className="flex flex-col h-full p-2 select-none font-sans bg-transparent scale-[0.85] origin-top">
+    <div className="flex flex-col h-full p-4 select-none bg-transparent scale-[0.85] origin-top">
       
       <div className="text-center mb-2 border-b border-gray-900 pb-1 shrink-0">
         <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">Trading Panel</span>
