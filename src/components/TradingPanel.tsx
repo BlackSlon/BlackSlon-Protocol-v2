@@ -58,9 +58,9 @@ export default function TradingPanel() {
         <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0 bg-zinc-800/70 border border-gray-700 rounded-sm">
+      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
         <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Order Price</div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-zinc-800/70 border border-gray-700 rounded-sm p-2">
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] font-bold w-full text-center outline-none text-white" />
@@ -72,9 +72,9 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0 bg-zinc-800/70 border border-gray-700 rounded-sm">
+      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
         <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Quantity</div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-zinc-800/70 border border-gray-700 rounded-sm p-2">
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
             <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] font-bold w-full text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
