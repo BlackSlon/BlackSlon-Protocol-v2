@@ -49,12 +49,12 @@ export default function PhysicalDimension({ currentPrice }: PhysicalDimensionPro
 
       {/* TYTUŁ KORYTARZA */}
       <div className="text-center mb-4">
-        <span className="text-[18px] text-white font-bold tracking-tight">BlackSlon Trading Zone</span>
+        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">BlackSlon Trading Zone (BSTZ)</span>
       </div>
 
       {/* BSTZ CORRIDOR TABLE */}
       <div className="mb-6">
-        <div className="flex justify-between items-center px-1 mb-1">
+        <div className="flex flex-row items-start gap-6 mb-1">
           <span className="text-[9px] text-gray-500 uppercase font-bold">7D Corridor History</span>
           <span className="text-[8px] text-gray-600 font-mono">EUR/vkWh</span>
         </div>
@@ -74,11 +74,11 @@ export default function PhysicalDimension({ currentPrice }: PhysicalDimensionPro
                   <span className="text-[11px] text-green-500/60 font-mono w-10 text-right" style={monoStyle}>{day.min.toFixed(2)}</span>
                   
                   <div className="flex-grow h-[3px] bg-gray-800 relative rounded-full mx-2">
-                     <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/20"></div>
+                     <div className="absolute inset-y-0 left-1/4 right-1/4 bg-yellow-500/20 border-x border-yellow-500/30"></div>
                      
                      {/* KROPA ANCHOR Z TOOLTIPEM */}
                      <div className="group absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer">
-                        <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_8px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
+                        <div className="w-2.5 h-2.5 bg-red-600 rounded-full border border-black shadow-[0_0_10px_rgba(220,38,38,0.9)] transition-transform group-hover:scale-125"></div>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                           <div className="bg-black border border-gray-700 text-[9px] text-white px-2 py-1 rounded whitespace-nowrap shadow-xl">
                             Anchor (Raw): <span className="text-red-500 font-bold">{day.anchor.toFixed(2)}</span> EUR/vkWh
@@ -86,7 +86,6 @@ export default function PhysicalDimension({ currentPrice }: PhysicalDimensionPro
                           <div className="w-2 h-2 bg-black border-r border-b border-gray-700 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
                         </div>
                      </div>
-                  </div>
 
                   <span className="text-[11px] text-green-500 font-mono w-10 text-left" style={monoStyle}>{day.max.toFixed(2)}</span>
                 </div>
