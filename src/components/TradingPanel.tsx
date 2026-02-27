@@ -13,7 +13,7 @@ export default function TradingPanel() {
   const [bsrStake, setBsrStake] = useState(50)
   const [euroStake, setEuroStake] = useState(50)
 
-  // Risk management table
+  // Stable risk management lookup table with default values
   const riskTable = {
     10: { marginLong: 50, marginShort: 100, leverageLong: '1:2.0', leverageShort: '1:1.0', fee: 1.00 },
     25: { marginLong: 45, marginShort: 90, leverageLong: '1:2.2', leverageShort: '1:1.1', fee: 0.85 },
@@ -22,9 +22,13 @@ export default function TradingPanel() {
     100: { marginLong: 25, marginShort: 50, leverageLong: '1:4.0', leverageShort: '1:2.0', fee: 0.20 }
   }
 
-  const currentRisk = riskTable[bsrStake as keyof typeof riskTable]
+  // Safe lookup with fallback to prevent crashes
+  const currentRisk = riskTable[bsrStake as keyof typeof riskTable] || riskTable[50]
   const marginRequired = side === 'BUY' ? currentRisk.marginLong : currentRisk.marginShort
   const leverage = side === 'BUY' ? currentRisk.leverageLong : currentRisk.leverageShort
+  
+  // Safe calculation with fallback
+  const bsrRequired = price && marginRequired ? (parseFloat(price) * marginRequired / 100).toFixed(2) : '0.00'
 
   return (
     <div className="flex flex-col h-full p-8 select-none font-sans border border-yellow-600/40">
@@ -39,11 +43,11 @@ export default function TradingPanel() {
         </span>
       </div>
 
-      {/* SIDE SELECTION - 50% smaller width */}
-      <div className="grid grid-cols-2 gap-2 mb-8">
+      {/* SIDE SELECTION - Compact with max width */}
+      <div className="flex justify-center gap-2 mb-8">
         <button 
           onClick={() => setSide('BUY')}
-          className={`py-2 border-2 font-bold uppercase tracking-widest text-[8px] transition-all ${
+          className={`max-w-[120px] py-2 border-2 font-bold uppercase tracking-widest text-[8px] transition-all ${
             side === 'BUY' 
               ? 'border-green-600 bg-green-600/5 text-green-500 hover:bg-green-600/10' 
               : 'border-gray-900 text-gray-700 hover:border-green-600/40 hover:text-green-400'
@@ -53,7 +57,7 @@ export default function TradingPanel() {
         </button>
         <button 
           onClick={() => setSide('SELL')}
-          className={`py-2 border-2 font-bold uppercase tracking-widest text-[8px] transition-all ${
+          className={`max-w-[120px] py-2 border-2 font-bold uppercase tracking-widest text-[8px] transition-all ${
             side === 'SELL' 
               ? 'border-red-600 bg-red-600/5 text-red-500 hover:bg-red-600/10' 
               : 'border-gray-900 text-gray-700 hover:border-red-600/40 hover:text-red-400'
@@ -63,11 +67,11 @@ export default function TradingPanel() {
         </button>
       </div>
 
-      {/* PRICE INPUT WITH +/- BUTTONS - Dynamic color, no white artifacts */}
+      {/* PRICE INPUT WITH +/- BUTTONS - Clean, no artifacts */}
       <div className="flex flex-col items-center mb-8">
         <div className="flex items-center gap-4">
           <button 
-            onClick={() => setPrice((parseFloat(price) - 0.01).toFixed(2))}
+            onClick={() => setPrice((parseFloat(price || '0') - 0.01).toFixed(2))}
             className={`w-12 h-12 border rounded hover:bg-opacity-10 transition-all text-xl font-bold ${
               side === 'BUY' 
                 ? 'border-green-600/40 text-green-500 hover:bg-green-600' 
@@ -80,8 +84,8 @@ export default function TradingPanel() {
             <input 
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className={`bg-transparent text-5xl font-bold font-mono w-48 text-center outline-none transition-all ${
+              onChange={(e) => setPrice(e.target.value || '0')}
+              className={`bg-transparent text-5xl font-bold font-mono w-48 text-center outline-none transition-all appearance-none ${
                 side === 'BUY' ? 'text-green-500' : 'text-red-500'
               }`}
               style={monoStyle}
@@ -89,7 +93,7 @@ export default function TradingPanel() {
             <div className="text-[10px] text-gray-500 font-mono mt-1" style={monoStyle}>EUR/100kWh</div>
           </div>
           <button 
-            onClick={() => setPrice((parseFloat(price) + 0.01).toFixed(2))}
+            onClick={() => setPrice((parseFloat(price || '0') + 0.01).toFixed(2))}
             className={`w-12 h-12 border rounded hover:bg-opacity-10 transition-all text-xl font-bold ${
               side === 'BUY' 
                 ? 'border-green-600/40 text-green-500 hover:bg-green-600' 
@@ -102,7 +106,7 @@ export default function TradingPanel() {
         <span className="text-[8px] text-gray-700 uppercase font-bold mt-4 tracking-widest">SET ORDER PRICE</span>
       </div>
 
-      {/* EXECUTE BUTTON - Smaller, yellow */}
+      {/* EXECUTE BUTTON - Yellow solid */}
       <div className="mb-8">
         <button className="w-full py-2 bg-yellow-600 text-black font-bold uppercase tracking-widest text-sm transition-all hover:bg-yellow-500">
           EXECUTE
@@ -129,7 +133,7 @@ export default function TradingPanel() {
               max="100"
               step="15"
               value={bsrStake}
-              onChange={(e) => setBsrStake(parseInt(e.target.value))}
+              onChange={(e) => setBsrStake(parseInt(e.target.value) || 50)}
               className="flex-1 h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
             />
             <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>100%</span>
@@ -150,7 +154,7 @@ export default function TradingPanel() {
               max="100"
               step="5"
               value={euroStake}
-              onChange={(e) => setEuroStake(parseInt(e.target.value))}
+              onChange={(e) => setEuroStake(parseInt(e.target.value) || 50)}
               className="flex-1 h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
             />
             <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>100%</span>
@@ -158,7 +162,7 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      {/* MARGIN REQUIREMENTS - Dynamic based on BSR stake and side */}
+      {/* MARGIN REQUIREMENTS - Safe calculations */}
       <div className="mt-auto">
         <div className="text-center mb-4">
           <span className="text-[9px] text-gray-600 uppercase font-bold tracking-widest">MARGIN REQUIREMENTS</span>
@@ -179,9 +183,7 @@ export default function TradingPanel() {
           </div>
           <div>
             <span className="text-[7px] text-gray-600 uppercase font-bold block mb-1">€BSR REQ</span>
-            <span className="text-sm font-mono text-green-500 font-bold" style={monoStyle}>
-              {(parseFloat(price) * marginRequired / 100).toFixed(2)}
-            </span>
+            <span className="text-sm font-mono text-green-500 font-bold" style={monoStyle}>{bsrRequired}</span>
           </div>
         </div>
       </div>
