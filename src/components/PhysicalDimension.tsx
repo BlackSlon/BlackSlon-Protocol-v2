@@ -16,10 +16,13 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
   })
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-col mb-4">
-        <span className="text-[11px] text-red-600 font-black tracking-widest uppercase mb-1">PHYSICAL DIMENSION</span>
-        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">BLACKSLON TRADING ZONE (BSTZ)</span>
+    <div className="flex flex-col h-full p-4 select-none bg-transparent space-y-4">
+      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
+        <span>PHYSICAL MARKET DIMENSION</span>
+      </div>
+
+      <div className="text-center mb-4">
+        <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">BLACKSLON TRADING ZONE (BSTZ)</div>
       </div>
 
       <div className="flex flex-row items-start gap-6">

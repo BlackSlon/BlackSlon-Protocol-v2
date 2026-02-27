@@ -6,10 +6,13 @@ interface VirtualDimensionProps {
 
 export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col">
-        <span className="text-[11px] text-red-600 font-black tracking-widest uppercase mb-1">VIRTUAL DIMENSION</span>
-        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">BLACKSLON POWER INDEX (BSPI)</span>
+    <div className="flex flex-col h-full p-4 select-none bg-transparent space-y-6">
+      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
+        <span>VIRTUAL MARKET DIMENSION</span>
+      </div>
+
+      <div className="text-center mb-4">
+        <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">BLACKSLON POWER INDEX (BSPI)</div>
       </div>
 
       <div className="bg-black border border-gray-900 p-4 rounded-sm relative overflow-hidden shrink-0">
