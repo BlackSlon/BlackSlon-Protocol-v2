@@ -5,16 +5,13 @@ interface VirtualDimensionProps {
 }
 
 export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
-  const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col">
         <span className="text-[11px] text-red-600 font-black tracking-widest uppercase mb-1">VIRTUAL DIMENSION</span>
-        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">BlackSlon Power Index (BSPI)</span>
+        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">BLACKSLON POWER INDEX (BSPI)</span>
       </div>
 
-      {/* POWER METER */}
       <div className="bg-black border border-gray-900 p-4 rounded-sm relative overflow-hidden shrink-0">
         <div className="text-center mb-4 text-[8px] text-gray-600 uppercase tracking-[0.3em]">System Power Pressure</div>
         <div className="flex items-center justify-center gap-4 py-4">
@@ -25,21 +22,20 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
            </div>
            <div className="flex flex-col items-start">
               <span className="text-[10px] text-gray-500 font-bold uppercase tracking-tighter">Current BSPI</span>
-              <span className="text-3xl font-bold text-white font-mono" style={monoStyle}>+4.12</span>
-              <span className="text-[8px] text-green-500 font-bold italic uppercase">Bullish Bias</span>
+              <span className="text-3xl font-bold text-white font-mono">+4.12</span>
+              <span className="text-[8px] text-green-500 font-bold italic">BULLISH BIAS</span>
            </div>
         </div>
       </div>
 
-      {/* DELTAS */}
       <div className="grid grid-cols-2 gap-2">
         <div className="bg-gray-950/40 p-2 border border-gray-900 rounded-sm">
            <span className="text-[8px] text-gray-600 uppercase block mb-1 tracking-widest leading-none">LVOP Delta (Longs)</span>
-           <span className="text-lg font-bold text-green-500 font-mono" style={monoStyle}>+2.34</span>
+           <span className="text-lg font-bold text-green-500 font-mono">+2.34</span>
         </div>
         <div className="bg-gray-950/40 p-2 border border-gray-900 rounded-sm">
            <span className="text-[8px] text-gray-600 uppercase block mb-1 tracking-widest leading-none">SVOP Delta (Shorts)</span>
-           <span className="text-lg font-bold text-red-500 font-mono" style={monoStyle}>-1.87</span>
+           <span className="text-lg font-bold text-red-500 font-mono">-1.87</span>
         </div>
       </div>
     </div>
