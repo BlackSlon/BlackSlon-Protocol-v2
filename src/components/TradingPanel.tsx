@@ -11,6 +11,7 @@ export default function TradingPanel() {
   const [price, setPrice] = useState('10.59')
   const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
   const [bsrStake, setBsrStake] = useState(50)
+  const [euroStake, setEuroStake] = useState(50)
 
   // Risk management table
   const riskTable = {
@@ -38,8 +39,8 @@ export default function TradingPanel() {
         </span>
       </div>
 
-      {/* SIDE SELECTION - 50% smaller */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      {/* SIDE SELECTION - 50% smaller width */}
+      <div className="grid grid-cols-2 gap-2 mb-8">
         <button 
           onClick={() => setSide('BUY')}
           className={`py-2 border-2 font-bold uppercase tracking-widest text-[8px] transition-all ${
@@ -62,7 +63,7 @@ export default function TradingPanel() {
         </button>
       </div>
 
-      {/* PRICE INPUT WITH +/- BUTTONS - Dynamic color */}
+      {/* PRICE INPUT WITH +/- BUTTONS - Dynamic color, no white artifacts */}
       <div className="flex flex-col items-center mb-8">
         <div className="flex items-center gap-4">
           <button 
@@ -80,8 +81,8 @@ export default function TradingPanel() {
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className={`bg-transparent text-5xl font-bold font-mono w-48 text-center outline-none border-b-2 border-transparent transition-all ${
-                side === 'BUY' ? 'text-green-500 focus:border-green-500/20' : 'text-red-500 focus:border-red-500/20'
+              className={`bg-transparent text-5xl font-bold font-mono w-48 text-center outline-none transition-all ${
+                side === 'BUY' ? 'text-green-500' : 'text-red-500'
               }`}
               style={monoStyle}
             />
@@ -101,39 +102,63 @@ export default function TradingPanel() {
         <span className="text-[8px] text-gray-700 uppercase font-bold mt-4 tracking-widest">SET ORDER PRICE</span>
       </div>
 
-      {/* EXECUTE BUTTON - Smaller, solid red */}
+      {/* EXECUTE BUTTON - Smaller, yellow */}
       <div className="mb-8">
-        <button className="w-full py-3 bg-red-600 text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-red-700 border-2 border-red-600">
+        <button className="w-full py-2 bg-yellow-600 text-black font-bold uppercase tracking-widest text-sm transition-all hover:bg-yellow-500">
           EXECUTE
         </button>
       </div>
 
-      {/* BSR STAKE SLIDER */}
+      {/* DEPOSITS SECTION */}
       <div className="mb-6">
-        <div className="text-center mb-3">
-          <span className="text-[9px] text-gray-600 uppercase font-bold tracking-widest">BSR STAKE (%)</span>
+        <div className="text-center mb-4">
+          <span className="text-[9px] text-gray-600 uppercase font-bold tracking-widest">DEPOSITS</span>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-[8px] text-gray-500 font-mono" style={monoStyle}>10%</span>
-          <input 
-            type="range"
-            min="10"
-            max="100"
-            step="15"
-            value={bsrStake}
-            onChange={(e) => setBsrStake(parseInt(e.target.value))}
-            className="flex-1 h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="text-[8px] text-gray-500 font-mono" style={monoStyle}>100%</span>
+        
+        {/* €BSR % Stake Slider */}
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-[8px] text-gray-500 font-mono" style={monoStyle}>€BSR % Stake</span>
+            <span className="text-[8px] text-green-500 font-mono" style={monoStyle}>{bsrStake}%</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>10%</span>
+            <input 
+              type="range"
+              min="10"
+              max="100"
+              step="15"
+              value={bsrStake}
+              onChange={(e) => setBsrStake(parseInt(e.target.value))}
+              className="flex-1 h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+            />
+            <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>100%</span>
+          </div>
         </div>
-        <div className="text-center mt-2">
-          <span className={`text-lg font-bold font-mono ${side === 'BUY' ? 'text-green-500' : 'text-red-500'}`} style={monoStyle}>
-            {bsrStake}%
-          </span>
+
+        {/* eEURO % Stake Slider */}
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-[8px] text-gray-500 font-mono" style={monoStyle}>eEURO % Stake</span>
+            <span className="text-[8px] text-blue-500 font-mono" style={monoStyle}>{euroStake}%</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>0%</span>
+            <input 
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={euroStake}
+              onChange={(e) => setEuroStake(parseInt(e.target.value))}
+              className="flex-1 h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+            />
+            <span className="text-[7px] text-gray-600 font-mono" style={monoStyle}>100%</span>
+          </div>
         </div>
       </div>
 
-      {/* MARGIN REQUIREMENTS - Dynamic based on stake and side */}
+      {/* MARGIN REQUIREMENTS - Dynamic based on BSR stake and side */}
       <div className="mt-auto">
         <div className="text-center mb-4">
           <span className="text-[9px] text-gray-600 uppercase font-bold tracking-widest">MARGIN REQUIREMENTS</span>
