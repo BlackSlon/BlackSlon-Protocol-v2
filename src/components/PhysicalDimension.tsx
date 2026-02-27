@@ -40,25 +40,25 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
     return (
       <div className="flex items-center gap-2 relative h-12 w-full">
         {/* MIN - zawsze zielony */}
-        <span className="text-[18px] text-green-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
+        <span className="text-[14px] text-green-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
         
         <div className="flex-grow flex flex-col items-center">
           {/* WARTOŚĆ ANCHOR NAD KROPKĄ */}
-          <span className={`text-[16px] font-bold mb-0.5 ${color}`}>{day.anchor.toFixed(2)}</span>
+          <span className={`text-[13px] font-bold mb-0.5 ${color}`}>{day.anchor.toFixed(2)}</span>
           
           <div className="w-full h-1 bg-gray-900 relative rounded-full border border-gray-800">
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full z-10 ${dotColor}`} />
           </div>
 
           {/* STRZAŁKA I % POD SUWAKIEM */}
-          <div className={`flex items-center gap-1 text-[18px] font-bold mt-0.5 ${color}`}>
+          <div className={`flex items-center gap-1 text-[14px] font-bold mt-0.5 ${color}`}>
             <span>{isPos ? '↑' : '↓'}</span>
             <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
           </div>
         </div>
 
         {/* MAX - zawsze zielony */}
-        <span className="text-[18px] text-green-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
+        <span className="text-[14px] text-green-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
       </div>
     );
   };
@@ -88,9 +88,9 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             const isLatest = i === 0;
             return (
               <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-yellow-500/10' : ''}`}>
-                <div className={`col-span-3 text-[20px] font-mono ${isLatest ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
+                <div className={`col-span-3 text-[16px] font-mono ${isLatest ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
                   {day.date}
-                  {isLatest && <div className="text-[10px] text-yellow-400 font-bold mt-1">ACTIVE NOW</div>}
+                  {isLatest && <div className="text-[8px] text-yellow-400 font-bold mt-1">ACTIVE NOW</div>}
                 </div>
                 <div className="col-span-9">
                   {renderSuwak(day, true)}
