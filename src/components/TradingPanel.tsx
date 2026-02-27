@@ -28,6 +28,7 @@ export default function TradingPanel() {
   const currentRisk = riskTable[bsrStake as keyof typeof riskTable] || riskTable[50]
   const marginValue = currentRisk.margin
   
+  // Naprawiona logika obliczeń - gwarantuje, że wartości depozytu się pojawią
   const parsedPrice = parseFloat(price.replace(',', '.')) || 0
   const totalValue = parsedPrice * quantity
   const bsrReq = (totalValue * (marginValue / 100) * (bsrStake / 100)).toFixed(2)
@@ -36,7 +37,7 @@ export default function TradingPanel() {
   return (
     <div className="flex flex-col h-full p-2 select-none font-sans bg-transparent scale-[0.85] origin-top overflow-hidden">
       
-      {/* 1) Nagłówek w jednej linii - styl jak w User Account */}
+      {/* NAGŁÓWEK */}
       <div className="text-center mb-2 border-b border-gray-900 pb-1 shrink-0">
         <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold whitespace-nowrap">Trading Terminal</span>
       </div>
@@ -47,36 +48,36 @@ export default function TradingPanel() {
         <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-widest">{marketId}</span>
       </div>
 
-      {/* BUY/SELL TOGGLE */}
+      {/* BUY/SELL BUTTONS */}
       <div className="flex justify-center gap-2 mb-3 shrink-0">
         <button onClick={() => setSide('BUY')} className={`flex-1 py-1 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
         <button onClick={() => setSide('SELL')} className={`flex-1 py-1 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      {/* PRICE SECTION - 2) Token na biało, brak pogrubienia */}
+      {/* SEKCJA CENY - Białe napisy, (1 TOKEN BS-P-PL) w nawiasie */}
       <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
         <div className="text-[9px] text-white uppercase font-bold mb-1 tracking-wide">Set Order Price</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow">
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-3xl font-bold font-mono w-full text-center outline-none text-white" style={monoStyle} />
-            <div className="text-[10px] text-white font-mono mt-0.5 font-normal" style={monoStyle}>
-              EUR / 100kWh <span className="ml-1">1 TOKEN {marketId}</span>
+            <div className="text-[10px] text-white font-mono mt-0.5 font-normal leading-tight" style={monoStyle}>
+              EUR / 100kWh <br /> <span className="text-[9px] opacity-90">(1 TOKEN {marketId})</span>
             </div>
           </div>
           <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">+</button>
         </div>
       </div>
 
-      {/* QUANTITY SECTION - 3) Tylko 100kWh, na biało, brak pogrubienia */}
+      {/* SEKCJA ILOŚCI - 1 TOKEN BS-P-PL i (100kWh) w nawiasie */}
       <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
         <div className="text-[9px] text-white uppercase font-bold mb-1 tracking-wide">Set Quantity</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow">
             <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-3xl font-bold font-mono w-full text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={monoStyle} />
-            <div className="text-[10px] text-white font-mono mt-0.5 font-normal" style={monoStyle}>
-              1 TOKEN <span className="ml-1">100kWh</span>
+            <div className="text-[10px] text-white font-mono mt-0.5 font-normal leading-tight" style={monoStyle}>
+              1 TOKEN {marketId} <br /> <span className="text-[9px] opacity-90">(100kWh)</span>
             </div>
           </div>
           <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white">+</button>
@@ -95,19 +96,19 @@ export default function TradingPanel() {
       <div className="space-y-3 mb-3 shrink-0">
         <div className="text-[8px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/10 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-400 font-bold uppercase" style={monoStyle}><span>€BSR Stake</span><span>{bsrStake}%</span></div>
+          <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-400 font-bold uppercase tracking-widest" style={monoStyle}><span>€BSR Stake</span><span>{bsrStake}%</span></div>
           <input type="range" min="10" max="100" step="5" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-blue-500 cursor-pointer" />
         </div>
         <div className="bg-gray-900/10 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-800 font-bold uppercase" style={monoStyle}><span>eEURO Stake</span><span>{euroStake}%</span></div>
+          <div className="flex justify-between text-[9px] font-mono mb-1 text-blue-800 font-bold uppercase tracking-widest" style={monoStyle}><span>eEURO Stake</span><span>{euroStake}%</span></div>
           <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
         </div>
       </div>
 
-      {/* WARTOŚCI DEPOZYTU - Przywrócone na sam dół */}
+      {/* DEPOSIT VALUE / LEVERAGE - Bez % na początku nagłówka */}
       <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
         <div className="text-center mb-1">
-          <span className="text-[8px] text-gray-600 uppercase font-bold tracking-widest">% DEPOSIT VALUE / LEVERAGE</span>
+          <span className="text-[8px] text-gray-600 uppercase font-bold tracking-widest">DEPOSIT VALUE / LEVERAGE</span>
         </div>
         <div className="text-center mb-2">
           <span className="text-2xl font-bold font-mono text-blue-500 leading-none" style={monoStyle}>{marginValue}%</span>
@@ -116,11 +117,11 @@ export default function TradingPanel() {
         <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2">
           <div className="flex flex-col border-r border-gray-900/50 pr-2">
             <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight">€BSR Deposit Value:</span>
-            <span className="text-[13px] font-mono text-blue-400 font-bold" style={monoStyle}>{bsrReq}</span>
+            <span className="text-[13px] font-mono text-blue-400 font-bold" style={monoStyle}>{bsrReq} BSR</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
             <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight">eEURO Deposit Value:</span>
-            <span className="text-[13px] font-mono text-blue-500 font-bold" style={monoStyle}>{euroReq}</span>
+            <span className="text-[13px] font-mono text-blue-500 font-bold" style={monoStyle}>{euroReq} EUR</span>
           </div>
         </div>
       </div>
