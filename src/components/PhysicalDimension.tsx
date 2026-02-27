@@ -30,7 +30,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
         <div className="flex-[1.5] bg-gray-950/40 rounded-sm border border-gray-900 overflow-hidden shrink-0">
           <div className="grid grid-cols-12 text-[8px] text-gray-600 uppercase border-b border-gray-900 py-2 px-3 font-bold bg-black/60">
             <div className="col-span-3">Date</div>
-            <div className="col-span-9 text-center">Zone Range & Anchor (●) [EUR/100kWh]</div>
+            <div className="col-span-9 text-center">Zone Range & Anchor (●) [EUR/kWh]</div>
           </div>
           <div className="divide-y divide-gray-900/50">
             {last7Days.map((day, i) => {
