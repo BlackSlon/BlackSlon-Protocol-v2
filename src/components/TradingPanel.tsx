@@ -28,6 +28,7 @@ export default function TradingPanel() {
   const currentRisk = riskTable[bsrStake as keyof typeof riskTable] || riskTable[50]
   const marginValue = currentRisk.margin
   
+  // Obliczenia z wymuszonym formatowaniem liczb
   const parsedPrice = parseFloat(price.replace(',', '.')) || 0
   const totalValue = parsedPrice * quantity
   const bsrReq = (totalValue * (marginValue / 100) * (bsrStake / 100)).toFixed(2)
@@ -36,12 +37,12 @@ export default function TradingPanel() {
   return (
     <div className="flex flex-col h-full p-3 select-none font-sans bg-transparent scale-[0.82] origin-top overflow-hidden">
       
-      {/* HEADER */}
+      {/* HEADER - Czysty, w jednej linii */}
       <div className="text-center mb-4 border-b border-gray-900 pb-1 shrink-0">
         <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold whitespace-nowrap">Trading Terminal</span>
       </div>
 
-      {/* INSTRUMENT */}
+      {/* INSTRUMENT - Żółty, do lewej */}
       <div className="text-left mb-4 shrink-0">
         <div className="text-[8px] text-gray-600 uppercase font-bold mb-1">Active Instrument</div>
         <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-widest">{marketId}</span>
@@ -53,39 +54,37 @@ export default function TradingPanel() {
         <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      {/* PRICE SECTION */}
+      {/* PRICE SECTION - Białe napisy, brak pogrubienia jednostek */}
       <div className="border-b border-gray-900/50 pb-3 mb-4 shrink-0">
         <div className="text-[9px] text-white uppercase font-bold mb-2 tracking-wide">Set Order Price</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow">
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-3xl font-bold font-mono w-full text-center outline-none text-white" style={monoStyle} />
-            {/* Usunięte font-bold dla lepszej czytelności */}
-            <div className="text-[10px] text-white font-mono mt-1" style={monoStyle}>
-              EUR / 100kWh <span className="ml-1 text-white opacity-90">1 TOKEN {marketId}</span>
+            <div className="text-[10px] text-white font-mono mt-1 font-normal" style={monoStyle}>
+              EUR / 100kWh <span className="ml-1 text-white">1 TOKEN {marketId}</span>
             </div>
           </div>
           <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">+</button>
         </div>
       </div>
 
-      {/* QUANTITY SECTION */}
+      {/* QUANTITY SECTION - Białe napisy, brak pogrubienia jednostek */}
       <div className="border-b border-gray-900/50 pb-3 mb-4 shrink-0">
         <div className="text-[9px] text-white uppercase font-bold mb-2 tracking-wide">Set Quantity</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow">
             <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-3xl font-bold font-mono w-full text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" style={monoStyle} />
-            {/* Usunięte font-bold dla lepszej czytelności */}
-            <div className="text-[10px] text-white font-mono mt-1" style={monoStyle}>
-              1 TOKEN <span className="ml-1 text-white opacity-90">100kWh</span>
+            <div className="text-[10px] text-white font-mono mt-1 font-normal" style={monoStyle}>
+              1 TOKEN <span className="ml-1 text-white">100kWh</span>
             </div>
           </div>
           <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white">+</button>
         </div>
       </div>
 
-      {/* EXECUTE BUTTON */}
+      {/* EXECUTE BUTTON - Odchudzony */}
       <button className={`w-full py-2 mb-5 border font-black uppercase tracking-[0.3em] text-[10px] transition-all duration-300 rounded-sm shrink-0
         ${side === 'BUY' 
           ? 'border-green-500 text-green-500 hover:bg-green-500 hover:text-black' 
@@ -106,7 +105,7 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      {/* DEPOSIT VALUE / LEVERAGE */}
+      {/* SEKCJA WARTOŚCI - Przywrócona i widoczna */}
       <div className="mt-auto border-t border-gray-900 pt-3 shrink-0">
         <div className="text-center mb-1">
           <span className="text-[8px] text-gray-600 uppercase font-bold tracking-widest">% DEPOSIT VALUE / LEVERAGE</span>
@@ -117,11 +116,11 @@ export default function TradingPanel() {
         
         <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-3">
           <div className="flex flex-col border-r border-gray-900/50 pr-2">
-            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight">€BSR Deposit Value:</span>
+            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight whitespace-nowrap">€BSR Deposit Value:</span>
             <span className="text-[14px] font-mono text-blue-400 font-bold" style={monoStyle}>{bsrReq}</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
-            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight">eEURO Deposit Value:</span>
+            <span className="text-[8px] text-white uppercase font-bold mb-1 tracking-tight whitespace-nowrap">eEURO Deposit Value:</span>
             <span className="text-[14px] font-mono text-blue-500 font-bold" style={monoStyle}>{euroReq}</span>
           </div>
         </div>
