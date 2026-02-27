@@ -1,100 +1,113 @@
 'use client'
 
 import { useState } from 'react'
+import { useParams } from 'next/navigation'
 
 export default function TradingPanel() {
-  const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
-  const [price, setPrice] = useState<string>('10.59') // Tu wpisujesz cenę zamiast żółtego BSEI
-  const [amount, setAmount] = useState<string>('100')
-
+  const params = useParams()
+  const marketId = (params.id as string) || 'BSTZ-P-PL'
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
 
-  // Mock data for the Order Book part inside this panel
-  const orderBook = {
-    asks: [ { p: 10.75, v: 250 }, { p: 10.68, v: 180 }, { p: 10.62, v: 90 } ],
-    bids: [ { p: 10.55, v: 120 }, { p: 10.48, v: 310 }, { p: 10.40, v: 450 } ]
-  }
+  const [price, setPrice] = useState('10.59')
+  const [quantity, setQuantity] = useState(100)
+  const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
 
   return (
-    <div className="flex flex-col h-full select-none text-white font-sans">
-      {/* HEADER */}
-      <div className="text-center mb-2 border-b border-gray-900 pb-1">
-        <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-bold">Trading & Order Book</span>
+    <div className="flex flex-col h-full p-6 select-none">
+      {/* TYTUŁ SEKCJII */}
+      <div className="text-center mb-6 border-b border-gray-900 pb-2">
+        <span className="text-[10px] text-gray-500 uppercase tracking-[0.4em] font-bold">Trading Terminal</span>
       </div>
 
+      {/* CZERWONY INSTRUMENT */}
       <div className="text-center mb-4">
-        <span className="text-[10px] text-red-600 font-bold tracking-widest uppercase">Execution Zone</span>
+        <span className="text-[12px] text-red-600 font-bold tracking-widest uppercase">
+          INSTRUMENT: {marketId}
+        </span>
       </div>
 
-      {/* ORDER BOOK VISUALIZER (The 35% depth part) */}
-      <div className="flex-grow flex flex-col mb-6 bg-black/20 rounded-sm border border-gray-900 overflow-hidden">
-        <div className="grid grid-cols-2 text-[8px] text-gray-600 uppercase font-bold p-2 border-b border-gray-900">
-          <span>Price (EUR)</span>
-          <span className="text-right">Volume (MW)</span>
+      {/* WIELKA ŻÓŁTA CENA (INPUT) */}
+      <div className="flex flex-col items-center mb-10">
+        <div className="flex items-baseline gap-2 group">
+          <input 
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="bg-transparent text-6xl font-bold text-yellow-500 font-mono w-64 text-center outline-none border-b-2 border-transparent focus:border-yellow-500/20 transition-all"
+            style={monoStyle}
+          />
+          <span className="text-xs text-gray-500 font-bold uppercase">EUR</span>
         </div>
-        
-        {/* ASKS */}
-        <div className="flex flex-col-reverse">
-          {orderBook.asks.map((ask, i) => (
-            <div key={i} className="grid grid-cols-2 px-3 py-1 text-[11px] font-mono hover:bg-red-500/5 transition-colors" style={monoStyle}>
-              <span className="text-red-500">{ask.p.toFixed(2)}</span>
-              <span className="text-right text-gray-400">{ask.v}</span>
-            </div>
-          ))}
-        </div>
+        <span className="text-[9px] text-gray-700 uppercase font-bold mt-2">Set Limit Price</span>
+      </div>
 
-        {/* INPUT PRICE ZONE (Replacing the old yellow BSEI) */}
-        <div className="bg-gray-950 border-y border-gray-800 p-4 my-1">
-          <div className="flex flex-col gap-2">
-            <label className="text-[9px] text-gray-500 uppercase font-bold tracking-wider">Set Your Limit Price</label>
-            <div className="flex items-center gap-4">
-               <input 
-                type="number" 
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="bg-black border border-red-900/50 text-2xl font-bold text-white font-mono w-full p-2 outline-none focus:border-red-600 transition-all"
-                style={monoStyle}
-              />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-yellow-500 font-bold">EUR</span>
-                <span className="text-[7px] text-gray-600 uppercase">Limit</span>
-              </div>
+      {/* ILOŚĆ / QUANTITY */}
+      <div className="mb-8 px-10">
+        <div className="text-center mb-3">
+          <span className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Quantity (MWh)</span>
+        </div>
+        <div className="flex justify-center items-center gap-6">
+          <button onClick={() => setQuantity(q => Math.max(0, q - 10))} className="w-12 h-12 border border-gray-800 rounded text-gray-400 hover:text-white hover:border-gray-600 transition-all text-2xl">-</button>
+          <input 
+            type="number" 
+            value={quantity} 
+            onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
+            className="bg-black border border-gray-800 text-center w-28 py-3 font-mono text-xl text-white rounded outline-none focus:border-yellow-600/50" 
+            style={monoStyle}
+          />
+          <button onClick={() => setQuantity(q => q + 10)} className="w-12 h-12 border border-gray-800 rounded text-gray-400 hover:text-white hover:border-gray-600 transition-all text-2xl">+</button>
+        </div>
+      </div>
+
+      {/* PRZYCISKI BUY/SELL */}
+      <div className="grid grid-cols-2 gap-4 mb-10">
+        <button 
+          onClick={() => setSide('BUY')}
+          className={`py-5 border-2 font-bold uppercase tracking-[0.2em] text-sm transition-all ${
+            side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500 shadow-[0_0_15px_rgba(22,163,74,0.1)]' : 'border-gray-900 text-gray-700'
+          }`}
+        >
+          Buy
+        </button>
+        <button 
+          onClick={() => setSide('SELL')}
+          className={`py-5 border-2 font-bold uppercase tracking-[0.2em] text-sm transition-all ${
+            side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500 shadow-[0_0_15px_rgba(220,38,38,0.1)]' : 'border-gray-900 text-gray-700'
+          }`}
+        >
+          Sell
+        </button>
+      </div>
+
+      {/* DEPOZYTY / MARGIN (KOSTKA Z DOŁU) */}
+      <div className="mt-auto bg-[#0a0a0a] border border-gray-900 p-6 rounded-sm">
+        <div className="space-y-6">
+          <div>
+            <div className="flex justify-between text-[9px] text-gray-600 uppercase font-bold mb-2">
+              <span>€BSR Stake</span>
+              <span className="text-blue-500">25%</span>
+            </div>
+            <input type="range" className="w-full h-1 bg-gray-800 accent-blue-600 appearance-none cursor-pointer" />
+          </div>
+          <div>
+            <div className="flex justify-between text-[9px] text-gray-600 uppercase font-bold mb-2">
+              <span>eEURO Stake</span>
+              <span className="text-blue-500">75%</span>
+            </div>
+            <input type="range" className="w-full h-1 bg-gray-800 accent-blue-600 appearance-none cursor-pointer" />
+          </div>
+          
+          <div className="pt-4 border-t border-gray-800 flex justify-between items-center">
+            <div className="flex flex-col">
+              <span className="text-[8px] text-gray-600 uppercase font-bold">Margin Required</span>
+              <span className="text-xl font-bold text-yellow-600">45%</span>
+            </div>
+            <div className="text-right">
+              <span className="text-[10px] text-green-500 font-mono block" style={monoStyle}>113.51 €BSR</span>
+              <span className="text-[10px] text-blue-500 font-mono block" style={monoStyle}>340.54 eEUR</span>
             </div>
           </div>
         </div>
-
-        {/* BIDS */}
-        <div className="flex flex-col">
-          {orderBook.bids.map((bid, i) => (
-            <div key={i} className="grid grid-cols-2 px-3 py-1 text-[11px] font-mono hover:bg-green-500/5 transition-colors" style={monoStyle}>
-              <span className="text-green-500">{bid.p.toFixed(2)}</span>
-              <span className="text-right text-gray-400">{bid.v}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* EXECUTION CONTROLS */}
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-1 bg-black p-1 border border-gray-900">
-          <button onClick={() => setSide('BUY')} className={`py-2 text-[10px] font-bold uppercase transition-all ${side === 'BUY' ? 'bg-green-600/20 text-green-500 border border-green-600/50' : 'text-gray-600'}`}>Buy</button>
-          <button onClick={() => setSide('SELL')} className={`py-2 text-[10px] font-bold uppercase transition-all ${side === 'SELL' ? 'bg-red-600/20 text-red-500 border border-red-600/50' : 'text-gray-600'}`}>Sell</button>
-        </div>
-
-        <div>
-          <label className="text-[8px] text-gray-500 uppercase font-bold mb-1 block">Volume (MWh)</label>
-          <input 
-            type="number" 
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full bg-black border border-gray-900 p-3 text-sm font-mono text-white outline-none focus:border-red-600"
-            style={monoStyle}
-          />
-        </div>
-
-        <button className={`w-full py-4 text-[11px] font-bold uppercase tracking-[0.2em] transition-all border ${side === 'BUY' ? 'bg-green-600 hover:bg-green-500 border-green-400 text-white' : 'bg-red-700 hover:bg-red-600 border-red-500 text-white'}`}>
-          Confirm {side} Order
-        </button>
       </div>
     </div>
   )
