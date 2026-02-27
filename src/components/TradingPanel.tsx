@@ -59,9 +59,9 @@ export default function TradingPanel() {
       </div>
 
       <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
-        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Order Price (EUR/100kWh)</div> 
+        <div className="text-[11px] text-gray-600 font-bold mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
         <div className="flex items-center justify-between">
-          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1">
+          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
             <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] font-bold text-center outline-none text-white px-2 w-full" />
             <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
@@ -70,9 +70,9 @@ export default function TradingPanel() {
       </div>
 
       <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
-        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Quantity (1 {marketId} TOKEN = 100kWh)</div> 
+        <div className="text-[11px] text-gray-600 font-bold mb-1">SET QUANTITY (1 {marketId} TOKEN = 100kWh)</div> 
         <div className="flex items-center justify-between">
-          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1">
+          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
             <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
             <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] font-bold text-center outline-none text-white px-2 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
             <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
@@ -90,11 +90,11 @@ export default function TradingPanel() {
       <div className="space-y-3 mb-4 shrink-0 px-1">
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase mb-2"><span>€BSR Stake</span><span>{bsrStake}%</span></div>
+          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
           <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-blue-500 cursor-pointer" />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] uppercase mb-2"><span>eEURO Stake</span><span>{euroStake}%</span></div> 
+          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
           <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function TradingPanel() {
             <span className="text-[11px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
-            <span className="text-[11px] text-gray-600 uppercase font-bold mb-1">eEURO Deposit Value:</span> 
+            <span className="text-[11px] text-gray-600 font-bold mb-1 tracking-tighter uppercase">eEURO DEPOSIT VALUE:</span> 
             <span className="text-[11px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
           </div>
         </div>
