@@ -49,7 +49,7 @@ export default function TradingPanel({ montserratStyle }: { montserratStyle: any
       </div>
 
       <div className="text-left mb-3 shrink-0">
-        <div className="text-[8px] text-gray-600 uppercase font-bold mb-1">Active Instrument</div>
+        <div className="text-[11px] text-red-600 font-bold tracking-widest uppercase mb-1">Active Instrument</div>
         <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">{marketId}</span>
       </div>
 
