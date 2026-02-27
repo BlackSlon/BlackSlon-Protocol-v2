@@ -64,8 +64,8 @@ export default function TradingPanel() {
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] font-bold w-full text-center outline-none text-white" />
-            <div className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em] mt-0.5">
-              EUR / 100kWh <br /> <span className="text-[13px]">(1 TOKEN {marketId})</span>
+            <div className="text-[8px] text-gray-600 uppercase font-bold mt-0.5">
+              EUR / 100kWh <br /> <span className="text-[8px]">(1 TOKEN {marketId})</span>
             </div>
           </div>
           <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">+</button>
@@ -78,8 +78,8 @@ export default function TradingPanel() {
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
             <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] font-bold w-full text-center outline-none text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-            <div className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em] mt-0.5">
-              1 TOKEN {marketId} <br /> <span className="text-[13px]">(100kWh)</span>
+            <div className="text-[8px] text-gray-600 uppercase font-bold mt-0.5">
+              1 TOKEN {marketId} <br /> <span className="text-[8px]">(100kWh)</span>
             </div>
           </div>
           <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white">+</button>
