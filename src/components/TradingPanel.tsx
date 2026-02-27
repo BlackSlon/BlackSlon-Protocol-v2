@@ -101,10 +101,10 @@ export default function TradingPanel() {
 
       <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
         <div className="text-center mb-1">
-          <span className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">DEPOSIT VALUE / LEVERAGE</span>
+          <span className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">REQUIRED MARGIN</span>
         </div>
         <div className="text-center mb-2">
-          <span className="text-lg font-bold text-white leading-none">
+          <span className="text-lg font-bold text-blue-500 leading-none">
             {marginValue}%
           </span>
         </div>
