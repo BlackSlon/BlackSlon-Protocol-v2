@@ -95,7 +95,7 @@ export default function TradingPanel() {
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
-          <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
+          <input type="range" min="10" max="100" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
         </div>
       </div>
 
