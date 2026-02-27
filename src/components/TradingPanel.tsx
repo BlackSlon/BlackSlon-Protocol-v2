@@ -44,12 +44,12 @@ export default function TradingPanel({ montserratStyle }: { montserratStyle: any
   return (
     <div className="flex flex-col h-full p-4 select-none bg-transparent scale-[0.85] origin-top" style={montserratStyle}>
       
-      <div className="text-center mb-2 border-b border-gray-900 pb-1 shrink-0">
-        <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">Trading Panel</span>
+      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
+        <span>TRADING TERMINAL</span>
       </div>
 
       <div className="text-left mb-3 shrink-0">
-        <div className="text-[11px] text-red-600 font-bold tracking-widest uppercase mb-1">Active Instrument</div>
+        <div className="text-[11px] font-black tracking-widest uppercase mb-1 text-red-600">ACTIVE INSTRUMENT</div>
         <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">{marketId}</span>
       </div>
 

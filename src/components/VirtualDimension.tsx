@@ -6,9 +6,7 @@ export default function VirtualDimension() {
   return (
     <div className="flex flex-col h-full bg-blue-900/5">
       {/* PODTYTUŁ - Styl jak PHYSICAL DIMENSION */}
-      <div className="text-center mb-1">
-        <span className="text-[11px] text-red-600 font-bold tracking-widest uppercase">VIRTUAL DIMENSION</span>
-      </div>
+      <div className="text-[11px] font-black tracking-widest uppercase mb-1 text-red-600">VIRTUAL DIMENSION</div>
       
       {/* TYTUŁ - BlackSlon Power Index PL */}
       <div className="text-center mb-3">
