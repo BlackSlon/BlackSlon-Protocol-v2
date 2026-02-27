@@ -90,7 +90,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           {last7Days.map((day, i) => {
             const isLatest = i === 0;
             return (
-              <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-blue-500/5' : ''}`}>
+              <div key={i} className={`grid grid-cols-12 py-1.5 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-blue-500/5' : ''}`}>
                 <div className={`col-span-3 text-[12px] font-mono ${isLatest ? 'text-blue-400 font-bold' : 'text-gray-500'}`}>
                   {day.date}
                 </div>
