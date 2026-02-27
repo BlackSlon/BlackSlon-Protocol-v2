@@ -40,7 +40,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
     return (
       <div className="flex items-center gap-2 relative h-12 w-full">
         {/* MIN - niebieski */}
-        <span className="text-[7px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
+        <span className="text-[13px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
         
         <div className="flex-grow flex flex-col items-center">
           {/* WARTOŚĆ ANCHOR NAD KROPKĄ */}
@@ -59,7 +59,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         </div>
 
         {/* MAX - niebieski */}
-        <span className="text-[7px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
+        <span className="text-[13px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
       </div>
     );
   };
