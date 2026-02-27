@@ -14,8 +14,8 @@ export default function MarketPage({ params }: { params: { id: string } }) {
       {/* Grid: 60% / 20% / 20% */}
       <div className="w-full max-w-[1600px] mx-auto px-10 grid grid-cols-[60%_20%_20%] gap-6 h-[calc(100vh-100px)] mb-4">
         
-        <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
-          <MarketPanel currentPrice={10.59} borderColor="border-transparent" montserratStyle={{}} />
+        <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
+          <MarketPanel currentPrice={10.59} borderColor="border-yellow-600/50" montserratStyle={{}} />
         </section>
 
         <section className="border border-yellow-600/50 bg-black/80 rounded-sm overflow-hidden flex flex-col min-h-0">
