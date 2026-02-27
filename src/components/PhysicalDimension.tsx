@@ -9,112 +9,97 @@ interface PhysicalDimensionProps {
 
 export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDimensionProps) {
   const history = [...(MARKET_HISTORY[marketId] || [])];
-  
-  // Helper do obliczeń BSTZ
-  const calcBSTZ = (day: any) => {
+
+  const calcBSTZ = (index: number) => {
+    const day = history[index];
     if (!day) return null;
+    
+    // Podstawowy Anchor (niezmienny)
     const anchor = (day.spot / 10 * 0.1) + (day.fm / 10 * 0.4) + (day.fq / 10 * 0.25) + (day.cal / 10 * 0.25);
-    return {
-      date: day.date,
-      anchor,
-      min: anchor * 0.9,
-      max: anchor * 1.1
-    };
+    
+    // NOWA ASYMETRYCZNA FORMUŁA: -10% / +20%
+    const min = anchor * 0.90; // Spadek max 10%
+    const max = anchor * 1.20; // Wzrost max 20%
+    
+    const prevDay = history[index - 1];
+    let change = 0;
+    if (prevDay) {
+      const prevAnchor = (prevDay.spot / 10 * 0.1) + (prevDay.fm / 10 * 0.4) + (prevDay.fq / 10 * 0.25) + (prevDay.cal / 10 * 0.25);
+      change = ((anchor - prevAnchor) / prevAnchor) * 100;
+    }
+
+    return { date: day.date, anchor, min, max, change };
   };
 
-  // Dane do tabeli 7D
-  const last7Days = history.slice(-7).reverse().map(day => calcBSTZ(day));
-  const today = last7Days[0];
-
-  // Dane historyczne do porównania trendu
-  const getHistorical = (daysBack: number) => {
-    const entry = history[history.length - 1 - daysBack] || history[0];
-    return calcBSTZ(entry);
-  };
-
-  const benchmarks = [
-    { label: '30D AGO', data: getHistorical(30) },
-    { label: '90D AGO', data: getHistorical(90) },
-    { label: '1 YEAR AGO', data: getHistorical(365) }
-  ];
+  const displayDays = [
+    ...Array.from({ length: 7 }, (_, i) => history.length - 1 - i),
+    history.length - 1 - 30,
+    history.length - 1 - 90,
+    history.length - 1 - 365
+  ].map(idx => calcBSTZ(idx)).filter(Boolean);
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-transparent space-y-6">
-      {/* HEADER PANELU */}
-      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40">
+    <div className="flex flex-col h-full select-none bg-transparent">
+      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
         <span>PHYSICAL MARKET DIMENSION</span>
       </div>
 
-      {/* TYTUŁ SEKCJI */}
-      <div className="text-center">
+      <div className="text-center mb-4">
         <div className="text-[11px] font-black tracking-widest uppercase text-red-600">
           BlackSlon Trading Zone (BSTZ)
         </div>
+        <div className="text-[8px] text-gray-500 mt-1 uppercase tracking-tighter">
+          Asymmetric Corridor Configuration: -10% / +20%
+        </div>
       </div>
 
-      {/* TABELA 7D CORRIDOR */}
-      <div className="bg-gray-950/40 rounded-sm border border-gray-900 overflow-hidden">
+      <div className="bg-gray-950/40 rounded-sm border border-gray-900 overflow-hidden flex-grow">
         <div className="grid grid-cols-12 text-[8px] text-gray-600 uppercase border-b border-gray-900 py-2 px-3 font-bold bg-black/60">
           <div className="col-span-3">Date</div>
           <div className="col-span-9 text-center">
-            {/* Ręczne wpisanie jednostki kWh bez uppercase */}
-            Zone Range & Anchor (●) [EUR/100<span className="lowercase font-bold text-[9px]">k</span>W<span className="lowercase font-bold text-[9px]">h</span>]
+            Zone Range & Anchor (●) [EUR / 100<span className="lowercase">k</span>W<span className="lowercase">h</span>]
           </div>
         </div>
 
         <div className="divide-y divide-gray-900/50">
-          {last7Days.map((day: any, i) => {
+          {displayDays.map((day: any, i) => {
             const isToday = i === 0;
+            const isPositive = day.change >= 1.0;
+            const isNegative = day.change < 0;
+            const statusColor = isPositive ? 'text-green-500' : (isNegative ? 'text-red-500' : 'text-gray-400');
+            const dotColor = isPositive ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : (isNegative ? 'bg-red-600 shadow-[0_0_10px_#dc2626]' : 'bg-yellow-500');
+
             return (
-              <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-gray-900/20 font-mono text-[10px] ${isToday ? 'bg-yellow-500/10 border-l-2 border-yellow-500' : ''}`}>
-                <div className={`col-span-3 ${isToday ? 'text-yellow-400 font-bold scale-105 origin-left' : 'text-gray-500'}`}>
-                  {day.date} {isToday && <span className="text-[8px] ml-1 opacity-70">(NOW)</span>}
+              <div key={i} className={`grid grid-cols-12 py-3 px-3 items-center hover:bg-white/5 font-mono text-[10px] ${isToday ? 'bg-yellow-500/5' : ''}`}>
+                <div className={`col-span-3 ${isToday ? 'text-yellow-400 font-bold' : 'text-gray-500'}`}>
+                  {day.date}
                 </div>
                 
-                <div className="col-span-9 flex items-center gap-3">
-                  <span className="text-[9px] font-bold text-green-600/70 w-8">{day.min.toFixed(2)}</span>
-                  
-                  {/* KORYTARZ DWUSTREFOWY */}
-                  <div className="flex-grow h-1.5 bg-gray-900 relative rounded-full border border-gray-800 flex overflow-hidden">
-                    {/* Strefa 1: Min do Anchor */}
-                    <div className="h-full w-1/2 bg-blue-500/10 border-r border-dashed border-gray-700/50"></div>
-                    {/* Strefa 2: Anchor do Max */}
-                    <div className="h-full w-1/2 bg-red-500/5"></div>
+                <div className="col-span-9 flex flex-col items-center">
+                  <div className="w-full flex items-center gap-2">
+                    <span className="text-[9px] font-bold text-gray-600 w-8">{day.min.toFixed(2)}</span>
                     
-                    {/* PUNKT A (Anchor) */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group">
-                      <div className={`w-2 h-2 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)] cursor-help ${isToday ? 'bg-yellow-500' : 'bg-red-600'}`} />
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-gray-700 rounded text-[8px] text-white opacity-0 group-hover:opacity-100 z-20">
-                        A: {day.anchor.toFixed(2)}
-                      </div>
+                    {/* KORYTARZ ASYMETRYCZNY */}
+                    <div className="flex-grow h-1.5 bg-gray-900 relative rounded-full border border-gray-800 flex overflow-hidden">
+                      {/* Strefa 1 (Downside 10%): Zajmuje 33% szerokości (10 z 30) */}
+                      <div className="h-full w-[33.3%] bg-blue-500/10 border-r border-gray-800/50"></div>
+                      {/* Strefa 2 (Upside 20%): Zajmuje 66.6% szerokości (20 z 30) */}
+                      <div className="h-full w-[66.7%] bg-green-500/5"></div>
+                      
+                      {/* KROPKA ANCHOR (A) - Ustawiona na 33.3% od lewej */}
+                      <div 
+                        className={`absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full z-10 ${dotColor}`} 
+                        style={{ left: '33.3%' }}
+                      />
                     </div>
+
+                    <span className="text-[9px] font-bold text-green-500 w-8 text-right">{day.max.toFixed(2)}</span>
                   </div>
 
-                  <span className="text-[9px] font-bold text-green-500 w-8 text-right">{day.max.toFixed(2)}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* SEKCJA TRENDU HISTORYCZNEGO */}
-      <div className="pt-2">
-        <div className="text-[9px] text-gray-500 font-bold tracking-widest mb-3 uppercase border-b border-gray-900 pb-1">
-          Historical Benchmarks & Trend
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          {benchmarks.map((bench, idx) => {
-            if (!bench.data || !today) return null;
-            const diff = ((today.anchor - bench.data.anchor) / bench.data.anchor) * 100;
-            const isUp = diff > 0;
-            
-            return (
-              <div key={idx} className="bg-black/40 border border-gray-900 p-2 rounded-sm">
-                <div className="text-[7px] text-gray-600 font-bold mb-1">{bench.label}</div>
-                <div className="text-[10px] font-mono text-white mb-1">{bench.data.anchor.toFixed(2)}</div>
-                <div className={`text-[9px] font-bold ${isUp ? 'text-red-500' : 'text-green-500'}`}>
-                  {isUp ? '↑' : '↓'}{Math.abs(diff).toFixed(1)}%
+                  <div className={`flex items-center gap-1 text-[9px] font-bold mt-1 ${statusColor}`}>
+                    <span>{isPositive ? '↑' : (isNegative ? '↓' : '→')}</span>
+                    <span>{Math.abs(day.change).toFixed(1)}%</span>
+                  </div>
                 </div>
               </div>
             );
