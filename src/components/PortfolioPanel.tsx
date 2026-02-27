@@ -4,7 +4,7 @@ export default function PortfolioPanel() {
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }
 
   return (
-    <div className="flex flex-col h-full select-none">
+    <div className="flex flex-col h-full select-none p-4">
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
         <span>USER'S ACCOUNT</span>
       </div>
