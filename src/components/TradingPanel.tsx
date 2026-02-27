@@ -67,7 +67,7 @@ export default function TradingPanel() {
 
       {/* SEKCJA CENY */}
       <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
-        <div className="text-[16px] text-gray-600 uppercase font-bold mb-1">Set Order Price</div>
+        <div className="text-[21px] text-gray-600 uppercase font-bold mb-1">Set Order Price</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
@@ -82,7 +82,7 @@ export default function TradingPanel() {
 
       {/* SEKCJA ILOŚCI */}
       <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
-        <div className="text-[16px] text-gray-600 uppercase font-bold mb-1">Set Quantity</div>
+        <div className="text-[21px] text-gray-600 uppercase font-bold mb-1">Set Quantity</div>
         <div className="flex items-center justify-between">
           <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white">-</button>
           <div className="text-center flex-grow px-2">
@@ -105,21 +105,21 @@ export default function TradingPanel() {
 
       {/* DEPOSIT CONFIGURATION */}
       <div className="space-y-3 mb-4 shrink-0 px-1">
-        <div className="text-[16px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
+        <div className="text-[21px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[18px] mb-2 text-green-400 uppercase"><span>€BSR Stake</span><span>{bsrStake}%</span></div>
+          <div className="flex justify-between text-[27px] mb-2 text-green-400 uppercase"><span>€BSR Stake</span><span>{bsrStake}%</span></div>
           <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-green-500 cursor-pointer" />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[18px] mb-2 text-blue-800 uppercase"><span>eEURO Stake</span><span>{euroStake}%</span></div>
+          <div className="flex justify-between text-[27px] mb-2 text-blue-800 uppercase"><span>eEURO Stake</span><span>{euroStake}%</span></div>
           <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
         </div>
       </div>
 
-      {/* SEKCJA WARTOŚCI - Przywrócona z poprawną logiką */}
+      {/* SEKCJA WARTOŚCI */}
       <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
         <div className="text-center mb-1">
-          <span className="text-[16px] text-gray-500 uppercase font-bold tracking-tighter">DEPOSIT VALUE / LEVERAGE</span>
+          <span className="text-[21px] text-gray-500 uppercase font-bold tracking-tighter">DEPOSIT VALUE / LEVERAGE</span>
         </div>
         <div className="text-center mb-2">
           <span className="text-lg font-bold text-white leading-none">
