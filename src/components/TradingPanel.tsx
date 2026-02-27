@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 
-export default function TradingPanel({ montserratStyle }: { montserratStyle: any }) {
+export default function TradingPanel() {
   const params = useParams()
   const rawId = (params.id as string) || 'BS-P-PL'
   const marketId = rawId.replace('IPT', 'BS') 
@@ -42,7 +42,7 @@ export default function TradingPanel({ montserratStyle }: { montserratStyle: any
   }, [price, quantity, marginValue, bsrStake, euroStake])
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-transparent scale-[0.85] origin-top" style={montserratStyle}>
+    <div className="flex flex-col h-full p-4 select-none bg-transparent scale-[0.85] origin-top">
       
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
         <span>TRADING PANEL</span>
