@@ -59,7 +59,7 @@ export default function TradingPanel() {
       </div>
 
       <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
-        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Order Price</div>
+        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Order Price (EUR/100kWh)</div>
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1">
             <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
@@ -70,7 +70,7 @@ export default function TradingPanel() {
       </div>
 
       <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
-        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Quantity</div>
+        <div className="text-[11px] text-gray-600 uppercase font-bold mb-1">Set Quantity (1 {marketId} TOKEN = 100kWh)</div>
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1">
             <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
