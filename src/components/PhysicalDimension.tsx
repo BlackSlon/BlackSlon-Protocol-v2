@@ -40,7 +40,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
     return (
       <div className="flex items-center gap-2 relative h-12 w-full">
         {/* MIN - niebieski */}
-        <span className="text-[13px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
+        <span className="text-[16px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
         
         <div className="flex-grow flex flex-col items-center">
           {/* WARTOŚĆ ANCHOR NAD KROPKĄ */}
@@ -56,12 +56,12 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
               <span>{isPos ? '↑' : '↓'}</span>
               <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
             </div>
-            {isMainTable && isLatest && <span className="text-yellow-400 font-bold">ACTIVE NOW</span>}
+            {isMainTable && isLatest && <span className="text-green-400 font-bold">ACTIVE NOW</span>}
           </div>
         </div>
 
         {/* MAX - niebieski */}
-        <span className="text-[13px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
+        <span className="text-[16px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
       </div>
     );
   };
