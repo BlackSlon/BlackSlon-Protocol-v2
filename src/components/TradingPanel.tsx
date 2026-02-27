@@ -115,7 +115,7 @@ export default function TradingPanel({ montserratStyle }: { montserratStyle: any
             <span className="text-[17px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
-            <span className="text-[11px] text-gray-600 uppercase font-bold mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
+            <span className="text-[11px] text-gray-600 font-bold mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
             <span className="text-[17px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
           </div>
         </div>
