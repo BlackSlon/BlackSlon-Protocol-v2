@@ -47,7 +47,7 @@ export default function TradingPanel() {
   }, [price, quantity, marginValue, bsrStake, euroStake])
 
   return (
-    <div className="flex flex-col h-full p-2 select-none font-sans bg-transparent scale-[0.85] origin-top overflow-hidden">
+    <div className="flex flex-col h-full p-2 select-none font-sans bg-transparent scale-[0.85] origin-top">
       
       {/* NAGŁÓWEK - Styl User's Account */}
       <div className="text-center mb-2 border-b border-gray-900 pb-1 shrink-0">
