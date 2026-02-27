@@ -94,8 +94,8 @@ export default function TradingPanel() {
           <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-green-500 cursor-pointer" />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] mb-2 text-blue-800 uppercase"><span>eEURO Stake</span><span>{euroStake}%</span></div>
-          <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-900" />
+          <div className="flex justify-between text-[9px] mb-2 text-green-800 uppercase"><span>eEURO Stake</span><span>{euroStake}%</span></div>
+          <input type="range" min="0" max="90" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-green-900" />
         </div>
       </div>
 
@@ -116,7 +116,7 @@ export default function TradingPanel() {
           </div>
           <div className="flex flex-col pl-2 text-right">
             <span className="text-[11px] text-gray-600 uppercase font-bold mb-1">eEURO Deposit Value:</span>
-            <span className="text-[22px] text-blue-400">{euroReq} EUR</span>
+            <span className="text-[22px] text-green-400">{euroReq} EUR</span>
           </div>
         </div>
       </div>
