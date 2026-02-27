@@ -47,7 +47,7 @@ export default function MarketPanel({ currentPrice, borderColor, montserratStyle
   return (
     <div className="flex flex-col h-full p-4 select-none" style={montserratStyle}>
       {/* HEADER */}
-      <div className="text-center mb-2 border-b border-gray-900 pb-1">
+      <div className="text-center mb-2 border-b border-gray-900 pb-1 shrink-0">
         <span className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">Market Panel</span>
       </div>
 

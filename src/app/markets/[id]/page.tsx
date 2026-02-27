@@ -19,7 +19,7 @@ export default function MarketPage({ params }: { params: { id: string } }) {
         </section>
 
         <section className="border border-yellow-600/50 bg-black/80 rounded-sm overflow-hidden flex flex-col min-h-0">
-          <TradingPanel />
+          <TradingPanel montserratStyle={{}} />
         </section>
 
         <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
