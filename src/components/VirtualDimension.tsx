@@ -28,6 +28,7 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
               <div className="text-gray-500 text-center">Volume</div>
               <div className="text-gray-500 text-right">Total</div>
             </div>
+            {/* 5 BUY ORDERS */}
             <div className="grid grid-cols-3 text-[10px] text-green-500 hover:bg-green-500/10 py-1">
               <div>10.45</div>
               <div className="text-center">125.3</div>
@@ -48,6 +49,11 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
               <div className="text-center">156.8</div>
               <div className="text-right font-bold">1,634.3</div>
             </div>
+            <div className="grid grid-cols-3 text-[10px] text-green-500 hover:bg-green-500/10 py-1">
+              <div>10.41</div>
+              <div className="text-center">310.5</div>
+              <div className="text-right font-bold">3,232.3</div>
+            </div>
           </div>
         </div>
 
@@ -55,13 +61,13 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
         <div className="mx-3 py-2 border-t border-b border-gray-800">
           <div className="text-center">
             <div className="text-[8px] text-gray-600 uppercase mb-1">Spread</div>
-            <div className="text-[12px] font-bold text-yellow-400">10.42 - 10.45</div>
-            <div className="text-[8px] text-gray-500">0.03 (0.29%)</div>
+            <div className="text-[12px] font-bold text-yellow-400">10.45 - 10.46</div>
+            <div className="text-[8px] text-gray-500">0.01 (0.09%)</div>
           </div>
         </div>
 
         {/* SELL ORDERS */}
-        <div className="px-3 pt-2">
+        <div className="px-3 pt-2 pb-3">
           <div className="text-[8px] text-red-500 font-bold mb-2 uppercase">SELL ORDERS</div>
           <div className="space-y-1">
             <div className="grid grid-cols-3 text-[9px] font-mono">
@@ -69,6 +75,7 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
               <div className="text-gray-500 text-center">Volume</div>
               <div className="text-gray-500 text-right">Total</div>
             </div>
+            {/* 5 SELL ORDERS */}
             <div className="grid grid-cols-3 text-[10px] text-red-500 hover:bg-red-500/10 py-1">
               <div>10.46</div>
               <div className="text-center">98.5</div>
@@ -88,6 +95,11 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
               <div>10.49</div>
               <div className="text-center">145.6</div>
               <div className="text-right font-bold">1,527.4</div>
+            </div>
+            <div className="grid grid-cols-3 text-[10px] text-red-500 hover:bg-red-500/10 py-1">
+              <div>10.50</div>
+              <div className="text-center">350.0</div>
+              <div className="text-right font-bold">3,675.0</div>
             </div>
           </div>
         </div>
