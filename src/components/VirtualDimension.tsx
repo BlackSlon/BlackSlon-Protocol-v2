@@ -2,7 +2,7 @@
 import React from 'react'
 
 export default function VirtualDimension({ marketId }: { marketId: string }) {
-  // Mock data - ceny wokół Anchora 10.59
+  // Dane rynkowe oscylujące wokół Anchora 10.59
   const buyOrders = [
     { price: 10.55, qty: 150, volume: 15000 },
     { price: 10.54, qty: 120, volume: 12000 },
@@ -26,94 +26,95 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
   ]
 
   const maxVol = Math.max(...buyOrders.map(o => o.volume), ...sellOrders.map(o => o.volume))
-  const sparklinePoints = "0,80 20,60 40,70 60,30 80,40 100,20"; // Uproszczony trend
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-gradient-to-b from-gray-900 via-black to-black font-mono text-white overflow-hidden border border-gray-800 shadow-2xl">
+    <div className="flex flex-col h-full p-5 select-none bg-gradient-to-b from-gray-900 via-black to-black font-mono text-white overflow-hidden border border-gray-800 shadow-2xl">
       
-      {/* SEKCJA GÓRNA: ADVANCED ORDER BOOK */}
-      <div className="flex-[7] flex flex-col min-h-0">
-        <div className="text-center py-1 text-[9px] text-gray-500 uppercase tracking-[0.4em] border-b border-gray-800/50 mb-3">
-          ADVANCED ORDER BOOK
-        </div>
+      {/* NAGŁÓWEK GŁÓWNY: VIRTUAL MARKET DIMENSION */}
+      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-2">
+        VIRTUAL MARKET DIMENSION
+      </div>
 
-        <div className="flex flex-1 min-h-0 gap-1">
-          {/* BUY SIDE - Lewa strona */}
+      {/* TYTUŁ RYNKU: BlackSlon Perpetual Energy Market [Czerwony] */}
+      <div className="text-center py-2">
+        <div className="text-[13px] font-black tracking-widest text-red-600 uppercase italic">
+          BlackSlon Perpetual Energy Market
+        </div>
+      </div>
+
+      {/* LAST TICKER: Cena i Wolumen [Żółty] */}
+      <div className="flex justify-center items-center gap-6 py-3 border-y border-gray-900 bg-yellow-500/5 mb-4">
+        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">LAST:</span>
+        <span className="text-2xl font-black text-yellow-500 drop-shadow-glow">10.59 <span className="text-[10px] font-normal">EUR</span></span>
+        <span className="text-2xl font-black text-yellow-500 drop-shadow-glow">1,250 <span className="text-[10px] font-normal">kWh</span></span>
+      </div>
+
+      {/* SEKCJA GÓRNA: Order Book z 2x większą czcionką */}
+      <div className="flex-[8] flex flex-col min-h-0">
+        <div className="flex flex-1 min-h-0 gap-2">
+          
+          {/* BUY SIDE */}
           <div className="flex-1 flex flex-col">
-            <div className="grid grid-cols-3 text-[7px] text-gray-600 uppercase font-bold px-2 mb-2 border-b border-gray-900 pb-1">
-              <div>Price (EUR)</div>
-              <div className="text-center">Qty (Szt)</div>
-              <div className="text-right">Volume (kWh)</div>
+            <div className="grid grid-cols-3 text-[8px] text-gray-600 uppercase font-bold px-2 mb-3 border-b border-gray-800 pb-1">
+              <div>Price</div>
+              <div className="text-center">Qty</div>
+              <div className="text-right">Vol</div>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               {buyOrders.map((o, i) => (
-                <div key={i} className="group relative grid grid-cols-3 text-[11px] py-1.5 px-2 hover:bg-green-500/5 transition-all">
-                  <div className="absolute right-0 top-0 bottom-0 bg-green-500/10 transition-all duration-500" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
-                  <div className="text-green-500 font-bold z-10">{o.price.toFixed(2)}</div>
-                  <div className="text-center text-green-200/60 z-10">{o.qty}</div>
-                  <div className="text-right text-green-400 font-black z-10">{o.volume.toLocaleString()}</div>
+                <div key={i} className="group relative grid grid-cols-3 text-[22px] py-2 px-2 hover:bg-green-500/10 transition-all">
+                  <div className="absolute right-0 top-0 bottom-0 bg-green-500/10 transition-all duration-700" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                  <div className="text-green-500 font-black z-10 tracking-tighter">{o.price.toFixed(2)}</div>
+                  <div className="text-center text-green-200/40 z-10 text-[14px] self-center">{o.qty}</div>
+                  <div className="text-right text-green-400 font-bold z-10 text-[14px] self-center">{o.volume.toLocaleString()}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* SPREAD INDICATOR */}
-          <div className="w-16 flex flex-col justify-center items-center bg-gray-900/30 border-x border-gray-800">
-            <div className="text-[10px] font-black text-yellow-500 italic drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]">
-              10.59
-            </div>
-            <div className="text-[10px] font-black text-yellow-500 italic drop-shadow-[0_0_8px_rgba(234,179,8,0.4)] border-t border-gray-800 mt-1 pt-1">
-              10.60
-            </div>
-            <div className="text-[6px] text-gray-600 uppercase mt-2 font-bold tracking-tighter">Spread 0.09%</div>
-          </div>
+          <div className="w-1 bg-gray-800/50 self-stretch my-10 rounded-full" />
 
-          {/* SELL SIDE - Prawa strona */}
+          {/* SELL SIDE */}
           <div className="flex-1 flex flex-col">
-            <div className="grid grid-cols-3 text-[7px] text-gray-600 uppercase font-bold px-2 mb-2 border-b border-gray-900 pb-1">
-              <div>Price (EUR)</div>
-              <div className="text-center">Qty (Szt)</div>
-              <div className="text-right">Volume (kWh)</div>
+            <div className="grid grid-cols-3 text-[8px] text-gray-600 uppercase font-bold px-2 mb-3 border-b border-gray-800 pb-1">
+              <div>Price</div>
+              <div className="text-center">Qty</div>
+              <div className="text-right">Vol</div>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               {sellOrders.map((o, i) => (
-                <div key={i} className="group relative grid grid-cols-3 text-[11px] py-1.5 px-2 hover:bg-red-500/5 transition-all">
-                  <div className="absolute left-0 top-0 bottom-0 bg-red-500/10 transition-all duration-500" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
-                  <div className="text-red-500 font-bold z-10">{o.price.toFixed(2)}</div>
-                  <div className="text-center text-red-200/60 z-10">{o.qty}</div>
-                  <div className="text-right text-red-400 font-black z-10">{o.volume.toLocaleString()}</div>
+                <div key={i} className="group relative grid grid-cols-3 text-[22px] py-2 px-2 hover:bg-red-500/10 transition-all">
+                  <div className="absolute left-0 top-0 bottom-0 bg-red-500/10 transition-all duration-700" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                  <div className="text-red-500 font-black z-10 tracking-tighter">{o.price.toFixed(2)}</div>
+                  <div className="text-center text-red-200/40 z-10 text-[14px] self-center">{o.qty}</div>
+                  <div className="text-right text-red-400 font-bold z-10 text-[14px] self-center">{o.volume.toLocaleString()}</div>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       </div>
 
       {/* SEKCJA ŚRODKOWA: BSEI-PL INDEX [cite: 2026-02-15] */}
-      <div className="flex-[2] flex flex-col items-center justify-center border-t border-gray-800 bg-gray-950/20 py-4 shadow-inner">
-        <div className="text-[9px] text-gray-500 uppercase tracking-[0.3em] font-bold mb-2">
-          BSEI-PL INDEX <span className="text-[7px] opacity-40">[DAILY WEIGHTED]</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <svg viewBox="0 0 100 100" className="w-12 h-6 overflow-visible opacity-50">
-            <polyline points={sparklinePoints} fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-          <div className="text-4xl font-black tracking-tighter text-gray-100 drop-shadow-glow">
-            10.59 <span className="text-[10px] text-gray-600 font-normal">EUR/100vkWh</span>
-          </div>
+      <div className="flex-[2] flex flex-col items-center justify-center border-t border-gray-900 bg-gray-950/40 py-4 shadow-2xl">
+        <div className="text-[10px] text-gray-500 uppercase tracking-[0.4em] font-bold mb-2">BSEI-PL INDEX</div>
+        <div className="text-5xl font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+          10.59 <span className="text-[12px] text-gray-600 font-normal">EUR/100vkWh</span>
         </div>
       </div>
 
       {/* SEKCJA DOLNA: MARKET TURNOVER */}
-      <div className="flex-[1.5] border-t border-gray-800 pt-3 bg-black/40">
-        <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-2 px-2">MARKET TURNOVER</div>
-        <div className="space-y-1 px-2">
+      <div className="flex-[2] border-t border-gray-900 pt-4 bg-black/60">
+        <div className="text-[9px] text-gray-600 uppercase tracking-widest mb-3 px-3">MARKET TURNOVER</div>
+        <div className="space-y-2 px-3">
           {turnoverData.map((d, i) => (
-            <div key={i} className="flex justify-between text-[10px] font-bold">
+            <div key={i} className="flex justify-between text-[11px] font-bold border-b border-gray-900/50 pb-1">
               <span className="text-gray-500">{d.period}</span>
-              <div className="flex gap-4">
-                <span className="text-yellow-600/80">{d.tokens.toLocaleString()} €BSR</span>
-                <span className="text-blue-500/80">{d.volume.toLocaleString()} kWh</span>
+              <div className="flex gap-6">
+                <span className="text-yellow-600">{d.tokens.toLocaleString()} €BSR</span>
+                <span className="text-blue-500">{d.volume.toLocaleString()} kWh</span>
               </div>
             </div>
           ))}
