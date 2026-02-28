@@ -3,12 +3,12 @@ import React from 'react'
 
 export default function PhysicalDimension({ marketId, currentPrice }: { marketId: string, currentPrice: number }) {
   const history = [
-    { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, trend: '1.50%', change: 1.50 },
-    { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, trend: '3.10%', change: 3.10 },
-    { label: 'M-1', date: '28.01.2026', min: 7.92, max: 9.68, anchor: 8.80, trend: '-11.40%', change: -11.40 },
-    { label: 'Q-1', date: '28.11.2025', min: 8.00, max: 10.00, anchor: 9.00, trend: '12.20%', change: 12.20 },
-    { label: 'H-1', date: '28.08.2025', min: 7.50, max: 9.50, anchor: 8.50, trend: '18.80%', change: 18.80 },
-    { label: 'Y-1', date: '28.02.2025', min: 7.00, max: 9.00, anchor: 8.00, trend: '26.30%', change: 26.30 },
+    { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, trend: '+6.0%', change: 6.0 },
+    { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, trend: '+7.5%', change: 7.5 },
+    { label: 'M-1', date: '28.01.2026', min: 7.92, max: 9.68, anchor: 8.80, trend: '+16.9%', change: 16.9 },
+    { label: 'Q-1', date: '28.11.2025', min: 8.00, max: 10.00, anchor: 9.00, trend: '+15.0%', change: 15.0 },
+    { label: 'H-1', date: '28.08.2025', min: 7.50, max: 9.50, anchor: 8.50, trend: '+19.7%', change: 19.7 },
+    { label: 'Y-1', date: '28.02.2025', min: 7.00, max: 9.00, anchor: 8.00, trend: '+24.5%', change: 24.5 },
   ]
 
   return (
