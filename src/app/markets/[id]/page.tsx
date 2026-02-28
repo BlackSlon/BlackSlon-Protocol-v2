@@ -6,6 +6,7 @@ import VirtualDimension from "@/components/VirtualDimension"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 
 export default function MarketPage() {
   const params = useParams()
@@ -17,7 +18,7 @@ export default function MarketPage() {
   return (
     <main className="min-h-screen bg-black text-white flex flex-col items-center font-mono overflow-hidden">
       <header className="w-full py-4 flex justify-center border-b border-gray-900 shrink-0">
-        <img src="/BS_image.jpg" alt="BlackSlon" className="h-10 w-auto" />
+        <Image src="/BS_image.jpg" alt="BlackSlon" width={40} height={40} className="h-10 w-auto" />
       </header>
 
       <div className="w-full max-w-[1600px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[22%_34%_20%_20%] gap-4 min-h-[calc(100vh-100px)] py-4">

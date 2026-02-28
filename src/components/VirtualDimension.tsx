@@ -23,62 +23,60 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white overflow-hidden border border-gray-800 shadow-2xl">
       
-      {/* 1. HEADER SEPARATOR */}
+      {/* 1. KATEGORIA RYNKU */}
       <div className="text-[10px] text-gray-600 uppercase tracking-[0.6em] font-bold text-center py-2 border-b border-gray-800 bg-black">
         VIRTUAL MARKET DIMENSION
       </div>
 
-      {/* 2. INSTRUMENT & STATUS (Thin Grid) */}
-      <div className="grid grid-cols-2 border-b border-gray-800">
-        <div className="p-4 border-r border-gray-800">
-          <div className="text-[9px] text-gray-500 uppercase mb-1">Instrument</div>
-          <div className="text-2xl font-black text-red-600 tracking-tighter italic">
-            BS-P-PL <span className="text-[10px] text-gray-400 not-italic ml-2 font-normal">PERPETUAL</span>
-          </div>
+      {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
+      <div className="p-4 border-b border-gray-800 bg-gradient-to-b from-black to-gray-950">
+        <div className="text-[12px] font-black tracking-widest text-red-600 uppercase italic mb-1">
+          BlackSlon Perpetual Energy Market (BS-P-PL)
         </div>
-        <div className="p-4 flex flex-col justify-center items-end">
-          <div className="text-[9px] text-gray-500 uppercase mb-1">Market Status</div>
-          <div className="text-[11px] text-green-500 font-bold tracking-widest flex items-center gap-2">
-            <span className="animate-pulse opacity-75">●</span> LIVE_FEED
+        <div className="flex justify-between items-center mt-2">
+          <div className="flex gap-4">
+            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Instrument: <span className="text-gray-300">BS-P-PL</span></span>
+            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
           </div>
         </div>
       </div>
 
-      {/* 3. TICKER BAR (Yellow Highlights) */}
-      <div className="grid grid-cols-3 border-b border-gray-800 bg-gray-900/10">
-        <div className="p-3 border-r border-gray-800 text-center">
-          <div className="text-[8px] text-gray-600 uppercase mb-1">Last Price</div>
-          <div className="text-2xl font-black text-yellow-500">10.59</div>
+      {/* 3. LAST TICKER (Żółty) */}
+      <div className="grid grid-cols-2 border-b border-gray-800 bg-yellow-500/5 py-4">
+        <div className="text-center border-r border-gray-800 px-4">
+          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">LAST PRICE</div>
+          <div className="text-4xl font-black text-yellow-500 tracking-tighter">
+            10.59 <span className="text-[10px] text-yellow-800 font-normal">EUR</span>
+          </div>
         </div>
-        <div className="p-3 border-r border-gray-800 text-center">
-          <div className="text-[8px] text-gray-600 uppercase mb-1">24h Vol (kWh)</div>
-          <div className="text-2xl font-black text-yellow-500">1.25M</div>
-        </div>
-        <div className="p-3 text-center">
-          <div className="text-[8px] text-gray-600 uppercase mb-1">Change</div>
-          <div className="text-2xl font-black text-green-500">+4.2%</div>
+        <div className="text-center px-4">
+          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">LAST VOLUME</div>
+          <div className="text-4xl font-black text-yellow-500 tracking-tighter">
+            1,250 <span className="text-[10px] text-yellow-800 font-normal">kWh</span>
+          </div>
         </div>
       </div>
 
-      {/* 4. MAIN ORDER BOOK (Split with Thin Center Line) */}
+      {/* 4. MAIN ORDER BOOK GRID (Thin Lines) */}
       <div className="flex-grow flex min-h-0">
         
         {/* BUY SIDE */}
         <div className="flex-1 flex flex-col border-r border-gray-800">
-          <div className="py-2 px-4 border-b border-gray-800 bg-green-950/10">
+          <div className="py-2 px-4 border-b border-gray-800 bg-green-950/20">
             <span className="text-[11px] text-green-500 font-black tracking-widest">BUY ORDERS</span>
           </div>
-          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800">
-            <div>Price <span className="text-gray-700 font-normal">/100kWh</span></div>
-            <div className="text-center">Unit <span className="text-gray-700 font-normal">/BS-P-PL</span></div>
-            <div className="text-right">Volume <span className="text-gray-700 font-normal">/kWh</span></div>
+          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
+            <div>PRICE (EUR/100kWh)</div>
+            <div className="text-center">UNIT (BS-P-PL)</div>
+            <div className="text-right">VOLUME (kWh)</div>
           </div>
           <div className="flex-grow overflow-hidden">
             {buyOrders.map((o, i) => (
-              <div key={i} className="grid grid-cols-3 text-[22px] py-2 px-4 border-b border-gray-900/50 hover:bg-green-500/5 transition-all group">
-                <div className="text-green-500 font-black tracking-tighter leading-none">{o.price.toFixed(2)}</div>
-                <div className="text-center text-gray-400 text-xs self-center">{o.unit}</div>
-                <div className="text-right text-green-400/60 font-bold text-xs self-center">{o.volume.toLocaleString()}</div>
+              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all relative group">
+                <div className="absolute right-0 top-0 bottom-0 bg-green-500/5 transition-all" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                <div className="text-3xl font-black text-green-500 tracking-tighter leading-none z-10">{o.price.toFixed(2)}</div>
+                <div className="text-center text-gray-500 text-sm self-center z-10">{o.unit}</div>
+                <div className="text-right text-green-400/70 font-bold text-sm self-center z-10">{o.volume.toLocaleString()}</div>
               </div>
             ))}
           </div>
@@ -86,37 +84,40 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
         {/* SELL SIDE */}
         <div className="flex-1 flex flex-col">
-          <div className="py-2 px-4 border-b border-gray-800 bg-red-950/10 text-right">
+          <div className="py-2 px-4 border-b border-gray-800 bg-red-950/20 text-right">
             <span className="text-[11px] text-red-500 font-black tracking-widest">SELL ORDERS</span>
           </div>
-          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800">
-            <div>Price <span className="text-gray-700 font-normal">/100kWh</span></div>
-            <div className="text-center">Unit <span className="text-gray-700 font-normal">/BS-P-PL</span></div>
-            <div className="text-right">Volume <span className="text-gray-700 font-normal">/kWh</span></div>
+          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
+            <div>PRICE (EUR/100kWh)</div>
+            <div className="text-center">UNIT (BS-P-PL)</div>
+            <div className="text-right">VOLUME (kWh)</div>
           </div>
           <div className="flex-grow overflow-hidden">
             {sellOrders.map((o, i) => (
-              <div key={i} className="grid grid-cols-3 text-[22px] py-2 px-4 border-b border-gray-900/50 hover:bg-red-500/5 transition-all group">
-                <div className="text-red-500 font-black tracking-tighter leading-none">{o.price.toFixed(2)}</div>
-                <div className="text-center text-gray-400 text-xs self-center">{o.unit}</div>
-                <div className="text-right text-red-400/60 font-bold text-xs self-center">{o.volume.toLocaleString()}</div>
+              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all relative group">
+                <div className="absolute left-0 top-0 bottom-0 bg-red-500/5 transition-all" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                <div className="text-3xl font-black text-red-500 tracking-tighter leading-none z-10">{o.price.toFixed(2)}</div>
+                <div className="text-center text-gray-500 text-sm self-center z-10">{o.unit}</div>
+                <div className="text-right text-red-400/70 font-bold text-sm self-center z-10">{o.volume.toLocaleString()}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 5. FOOTER GRID (BSEI & TURNOVER) */}
-      <div className="grid grid-cols-2 border-t border-gray-800 bg-gray-950/50">
-        <div className="p-4 border-r border-gray-800">
-          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1">BSEI-PL Index</div>
-          <div className="text-3xl font-black text-white italic tracking-tighter">10.59 <span className="text-[10px] text-gray-600 not-italic">EUR</span></div>
+      {/* 5. FOOTER: BSEI & TURNOVER */}
+      <div className="grid grid-cols-2 border-t border-gray-800 bg-black py-4 px-6">
+        <div className="flex flex-col border-r border-gray-800 pr-6">
+          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">BSEI-PL Index</div>
+          <div className="text-4xl font-black text-white italic tracking-tighter flex items-baseline gap-2">
+            10.59 <span className="text-[10px] text-gray-600 not-italic font-normal">EUR/100vkWh</span>
+          </div>
         </div>
-        <div className="p-4 flex flex-col justify-center">
-          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1">Daily Turnover</div>
+        <div className="pl-6 flex flex-col justify-center">
+          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">Daily Turnover</div>
           <div className="flex justify-between items-baseline">
-            <span className="text-yellow-600 font-bold text-sm">124,500.00 €BSR</span>
-            <span className="text-blue-500/60 text-[10px]">1,245,000 kWh</span>
+            <span className="text-yellow-600 font-black text-lg">124,500.00 €BSR</span>
+            <span className="text-blue-500/60 text-[11px] font-bold">1,245,000 kWh</span>
           </div>
         </div>
       </div>

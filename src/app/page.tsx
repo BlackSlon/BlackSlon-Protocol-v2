@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { BSR_MARKETS } from './markets_config'
 import { useState, useEffect } from 'react'
 
@@ -41,7 +42,7 @@ export default function Dashboard() {
       {/* NAGŁÓWEK Z LOGO */}
       <header className="max-w-7xl mx-auto mb-8 flex flex-col items-center">
         <div className="mb-8">
-          <img src="/BS_image.jpg" alt="BlackSlon Logo" className="w-32 h-32" />
+          <Image src="/BS_image.jpg" alt="BlackSlon Logo" width={128} height={128} className="w-32 h-32" />
         </div>
 
         {/* PRZEŁĄCZNIK */}
