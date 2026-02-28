@@ -3,12 +3,12 @@ import React from 'react'
 
 export default function PhysicalDimension({ marketId, currentPrice }: { marketId: string, currentPrice: number }) {
   const history = [
-    { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, trend: '1.50%' },
-    { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, trend: '3.10%' },
-    { label: 'M-1', date: '28.01.2026', min: 8.50, max: 10.50, anchor: 8.80, trend: '6.30%' },
-    { label: 'Q-1', date: '28.11.2025', min: 8.00, max: 10.00, anchor: 9.00, trend: '12.20%' },
-    { label: 'H-1', date: '28.08.2025', min: 7.50, max: 9.50, anchor: 8.50, trend: '18.80%' },
-    { label: 'Y-1', date: '28.02.2025', min: 7.00, max: 9.00, anchor: 8.00, trend: '26.30%' },
+    { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, trend: '1.50%', change: 1.50 },
+    { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, trend: '3.10%', change: 3.10 },
+    { label: 'M-1', date: '28.01.2026', min: 7.92, max: 9.68, anchor: 8.80, trend: '-11.40%', change: -11.40 },
+    { label: 'Q-1', date: '28.11.2025', min: 8.00, max: 10.00, anchor: 9.00, trend: '12.20%', change: 12.20 },
+    { label: 'H-1', date: '28.08.2025', min: 7.50, max: 9.50, anchor: 8.50, trend: '18.80%', change: 18.80 },
+    { label: 'Y-1', date: '28.02.2025', min: 7.00, max: 9.00, anchor: 8.00, trend: '26.30%', change: 26.30 },
   ]
 
   return (
@@ -75,8 +75,8 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
               <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.min.toFixed(2)}</div>
               <div className="col-span-2 text-[11px] text-gray-300 text-center font-bold">{row.anchor.toFixed(2)}</div>
               <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.max.toFixed(2)}</div>
-              <div className={`col-span-3 text-[11px] text-right font-black text-green-700`}>
-                ▲ {row.trend}
+              <div className={`col-span-3 text-[11px] text-right font-black ${row.change >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                {row.change >= 0 ? '▲' : '▼'} {row.trend}
               </div>
             </div>
           ))}
