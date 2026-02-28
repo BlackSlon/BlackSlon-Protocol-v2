@@ -1,108 +1,86 @@
 'use client'
 
-import { MARKET_HISTORY } from '@/lib/market_history'
+import { ArrowUp, ArrowDown } from 'lucide-react'
 
-export default function PhysicalDimension({ marketId, currentPrice }: { marketId: string, currentPrice: number }) {
-  // Używamy 'IPT-P-PL' jeśli marketId nie zostanie znalezione
-  const history = MARKET_HISTORY[marketId] || MARKET_HISTORY['IPT-P-PL'] || [];
+export default function PhysicalDimension() {
+  // Dane przykładowe (docelowo pobierane z Twojej logiki ADR)
+  const activeZone = {
+    date: '20.02.2026',
+    min: 9.09,
+    max: 11.11,
+    anchor: 10.10,
+    prevAnchor: 9.95
+  }
 
-  const calcBSTZ = (entry: any) => {
-    if (!entry) return null;
-    const anchor = (entry.spot / 10 * 0.1) + (entry.fm / 10 * 0.4) + (entry.fq / 10 * 0.25) + (entry.cal / 10 * 0.25);
-    return {
-      date: entry.date,
-      anchor,
-      min: anchor * 0.90, // -10%
-      max: anchor * 1.10  // +10%
-    };
-  };
+  const history = [
+    { label: 'D-1', date: '19.02', min: 9.05, max: 11.05, anchor: 9.95, change: 1.5 },
+    { label: 'W-1', date: '13.02', min: 8.80, max: 10.80, anchor: 9.80, change: 3.1 },
+    { label: 'M-1', date: '20.01', min: 8.50, max: 10.50, anchor: 9.50, change: 6.3 },
+    { label: 'Q-1', date: '20.11', min: 8.00, max: 10.00, anchor: 9.00, change: 12.2 },
+    { label: 'H-1', date: '20.08', min: 7.50, max: 9.50, anchor: 8.50, change: 18.8 },
+    { label: 'Y-1', date: '20.02.25', min: 7.00, max: 9.00, anchor: 8.00, change: 26.3 },
+  ]
 
-  // 1. Ostatnie 7 dni (od najnowszego)
-  const last7Days = history.slice(-7).reverse().map(e => {
-    const data = calcBSTZ(e);
-    // Przykładowa zmiana 24h dla wizualizacji strzałek
-    return { ...data, change: (Math.random() * 4 - 2) }; 
-  });
-
-  // 2. Punkty historyczne (szukamy po konkretnych datach dodanych powyżej)
-  const historical = [
-    { label: '30 Days Ago', data: calcBSTZ(history.find(e => e.date === "2026-01-21")) },
-    { label: '90 Days Ago', data: calcBSTZ(history.find(e => e.date === "2025-11-22")) },
-    { label: '365 Days Ago', data: calcBSTZ(history.find(e => e.date === "2025-02-20")) }
-  ];
-
-  const renderSuwak = (day: any, isMainTable: boolean, isLatest: boolean = false) => {
-    if (!day) return null;
-    const isPos = day.change > 0 || isMainTable === false; // Dla historycznych zakładamy wzrost do dziś
-    const color = isPos ? 'text-green-500' : 'text-red-500';
-    const dotColor = isPos ? 'bg-green-500 shadow-[0_0_8px_#22c55e]' : 'bg-red-600 shadow-[0_0_8px_#dc2626]';
-
-    return (
-      <div className="flex items-center gap-2 relative h-12 w-full">
-        {/* MIN - niebieski */}
-        <span className="text-[16px] text-blue-500 font-bold w-12 font-mono">{day.min.toFixed(2)}</span>
-        
-        <div className="flex-grow flex flex-col items-center">
-          {/* WARTOŚĆ ANCHOR NAD KROPKĄ */}
-          <span className={`text-[13px] font-bold mb-0.5 ${color}`}>{day.anchor.toFixed(2)}</span>
-          
-          <div className="w-full h-1 bg-gray-900 relative rounded-full border border-gray-800">
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full z-10 ${dotColor}`} />
-          </div>
-
-          {/* STRZAŁKA I % POD SUWAKIEM */}
-          <div className={`flex flex-col items-center gap-1 text-[7px] font-bold mt-0.5 ${color}`}>
-            <div className="flex items-center gap-1">
-              <span>{isPos ? '↑' : '↓'}</span>
-              <span>{isMainTable ? Math.abs(day.change).toFixed(1) : ((currentPrice - day.anchor)/day.anchor * 100).toFixed(1)}%</span>
-            </div>
-            {isMainTable && isLatest && <span className="text-green-400 font-bold">ACTIVE NOW</span>}
-          </div>
-        </div>
-
-        {/* MAX - niebieski */}
-        <span className="text-[16px] text-blue-500 font-bold w-12 text-right font-mono">{day.max.toFixed(2)}</span>
-      </div>
-    );
-  };
+  const isAnchorUp = activeZone.anchor >= activeZone.prevAnchor
 
   return (
-    <div className="flex flex-col h-full select-none bg-transparent pt-[9px]">
-      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
-        <span>PHYSICAL MARKET DIMENSION</span>
-      </div>
-
-      <div className="text-center mb-4">
-        <div className="text-[11px] font-black tracking-widest text-red-600">
-          BlackSlon Trading Zone (BSTZ)
+    <div className="flex flex-col h-full p-4 bg-transparent select-none font-mono">
+      {/* 1. ACTIVE ZONE - MAIN DISPLAY */}
+      <div className="border-2 border-yellow-500/50 bg-yellow-500/5 rounded-lg p-4 mb-6 shadow-[0_0_15px_rgba(234,179,8,0.1)]">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[10px] text-gray-500 tracking-[0.3em] font-bold">BSTZ PHYSICAL MARKET</span>
+          <span className="text-[10px] text-yellow-500 font-bold">{activeZone.date} ACTIVE ZONE</span>
         </div>
-      </div>
-
-      {/* GŁÓWNA TABELA 7D */}
-      <div className="bg-gray-950/40 rounded-sm border border-gray-900 overflow-hidden mb-6">
-        <div className="grid grid-cols-12 text-[8px] text-gray-600 uppercase border-b border-gray-900 py-2 px-3 font-bold bg-black/60">
-          <div className="col-span-3">Date</div>
-          <div className="col-span-9 text-center">
-            Zone Range & Anchor (●) [EUR / 100<span className="lowercase font-bold">k</span>W<span className="lowercase font-bold">h</span>]
+        
+        <div className="flex justify-between items-end">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-gray-400 uppercase">Min / Max</span>
+            <div className="text-xl font-black text-yellow-500">
+              {activeZone.min} <span className="text-gray-700 mx-1">—</span> {activeZone.max}
+            </div>
+          </div>
+          
+          <div className="text-right">
+            <span className="text-[10px] text-gray-400 uppercase italic">Anchor Point</span>
+            <div className={`text-3xl font-black ${isAnchorUp ? 'text-green-500' : 'text-red-500'}`}>
+              {activeZone.anchor}
+            </div>
           </div>
         </div>
-        <div className="divide-y divide-gray-900/50">
-          {last7Days.map((day, i) => {
-            const isLatest = i === 0;
-            return (
-              <div key={i} className={`grid grid-cols-12 py-1.5 px-3 items-center hover:bg-white/5 ${isLatest ? 'bg-blue-500/5' : ''}`}>
-                <div className={`col-span-3 text-[8px] font-mono ${isLatest ? 'text-blue-400 font-bold' : 'text-gray-500'}`}>
-                  {day.date}
-                </div>
-                <div className="col-span-9">
-                  {renderSuwak(day, true, isLatest)}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
 
+      {/* HISTORY TABLE */}
+      <div className="space-y-2">
+        <div className="grid grid-cols-6 text-[8px] text-gray-600 font-bold uppercase tracking-wider pb-1 border-b border-gray-900">
+          <div>Period</div>
+          <div>Date</div>
+          <div className="col-span-2 text-center">Min / Max Range</div>
+          <div className="text-center">Anchor</div>
+          <div className="text-right">Trend</div>
+        </div>
+
+        {history.map((row) => (
+          <div key={row.label} className="grid grid-cols-6 items-center py-2 border-b border-gray-900/50 hover:bg-white/5 transition-colors">
+            <div className="text-[10px] font-bold text-gray-400">{row.label}</div>
+            <div className="text-[9px] text-gray-600">{row.date}</div>
+            <div className="col-span-2 text-[10px] text-gray-500 text-center">
+              {row.min} <span className="text-gray-800">-</span> {row.max}
+            </div>
+            <div className="text-[10px] text-gray-500 text-center font-bold">
+              {row.anchor}
+            </div>
+            <div className={`text-[10px] flex items-center justify-end font-bold ${row.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {row.change >= 0 ? <ArrowUp size={10} className="mr-1" /> : <ArrowDown size={10} className="mr-1" />}
+              {Math.abs(row.change)}%
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* FOOTER NOTE */}
+      <div className="mt-auto pt-4 text-[8px] text-gray-700 text-center italic tracking-widest">
+        * DATA CALCULATED BASED ON ASYMPTOTIC DAILY REBALANCING (ADR)
+      </div>
+    </div>
   )
 }
