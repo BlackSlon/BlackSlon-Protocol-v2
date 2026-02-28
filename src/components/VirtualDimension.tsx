@@ -21,7 +21,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
   const maxVol = Math.max(...buyOrders.map(o => o.volume), ...sellOrders.map(o => o.volume))
 
   return (
-    <div className="flex flex-col h-full bg-black font-mono text-white overflow-hidden border border-gray-800 shadow-2xl">
+    <div className="flex flex-col h-full bg-black font-mono text-white overflow-hidden border border-gray-800">
       
       {/* 1. KATEGORIA RYNKU */}
       <div className="text-[10px] text-gray-600 uppercase tracking-[0.6em] font-bold text-center py-2 border-b border-gray-800 bg-black">
@@ -31,7 +31,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
       <div className="p-4 border-b border-gray-800 bg-gradient-to-b from-black to-gray-950">
         <div className="text-[12px] font-black tracking-widest text-red-600 uppercase italic mb-1">
-          BlackSlon Perpetual Energy Market (BS-P-PL)
+          BlackSlon Power Poland
         </div>
         <div className="flex justify-between items-center mt-2">
           <div className="flex gap-4">
@@ -72,11 +72,10 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           </div>
           <div className="flex-grow overflow-hidden">
             {buyOrders.map((o, i) => (
-              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all relative group">
-                <div className="absolute right-0 top-0 bottom-0 bg-green-500/5 transition-all" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
-                <div className="text-3xl font-black text-green-500 tracking-tighter leading-none z-10">{o.price.toFixed(2)}</div>
-                <div className="text-center text-gray-500 text-sm self-center z-10">{o.unit}</div>
-                <div className="text-right text-green-400/70 font-bold text-sm self-center z-10">{o.volume.toLocaleString()}</div>
+              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all group">
+                <div className="text-3xl font-black text-green-500 tracking-tighter leading-none">{o.price.toFixed(2)}</div>
+                <div className="text-center text-gray-500 text-sm self-center">{o.unit}</div>
+                <div className="text-right text-green-400/70 font-bold text-sm self-center">{o.volume.toLocaleString()}</div>
               </div>
             ))}
           </div>
@@ -94,11 +93,10 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           </div>
           <div className="flex-grow overflow-hidden">
             {sellOrders.map((o, i) => (
-              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all relative group">
-                <div className="absolute left-0 top-0 bottom-0 bg-red-500/5 transition-all" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
-                <div className="text-3xl font-black text-red-500 tracking-tighter leading-none z-10">{o.price.toFixed(2)}</div>
-                <div className="text-center text-gray-500 text-sm self-center z-10">{o.unit}</div>
-                <div className="text-right text-red-400/70 font-bold text-sm self-center z-10">{o.volume.toLocaleString()}</div>
+              <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all group">
+                <div className="text-3xl font-black text-red-500 tracking-tighter leading-none">{o.price.toFixed(2)}</div>
+                <div className="text-center text-gray-500 text-sm self-center">{o.unit}</div>
+                <div className="text-right text-red-400/70 font-bold text-sm self-center">{o.volume.toLocaleString()}</div>
               </div>
             ))}
           </div>
