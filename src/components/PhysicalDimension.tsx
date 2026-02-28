@@ -26,7 +26,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
       </div>
 
       {/* ACTIVE BSTZ SEKCYJA */}
-      <div className="mb-6 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+      <div className="mb-4 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
         <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3 text-center">
           ACTIVE BSTZ
         </div>
@@ -70,7 +70,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             <div key={row.label} className="grid grid-cols-12 items-center py-1 border-b border-gray-900/30">
               <div className="col-span-3 flex flex-col">
                 <span className="text-[11px] font-bold text-gray-400">{row.label}</span>
-                <span className="text-[8px] text-gray-600 leading-tight">{row.date}</span>
+                <span className="text-[8px] text-gray-200 leading-tight">{row.date}</span>
               </div>
               <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.min.toFixed(2)}</div>
               <div className="col-span-2 text-[11px] text-gray-300 text-center font-bold">{row.anchor.toFixed(2)}</div>
