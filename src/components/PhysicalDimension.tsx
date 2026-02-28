@@ -26,29 +26,29 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
       </div>
 
       {/* ACTIVE BSTZ SEKCYJA */}
-      <div className="mb-4 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
-        <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3 text-center">
+      <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+        <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-2 text-center">
           ACTIVE BSTZ
         </div>
         <div className="flex flex-col">
-          <span className="text-[8px] text-gray-600 mb-3 font-bold uppercase italic text-center">
+          <span className="text-[8px] text-gray-600 mb-2 font-bold uppercase italic text-center">
             RANGE in EUR/100kWh
           </span>
           <div className="flex items-center justify-between px-2">
             {/* Żółte wartości są teraz wyraźnie większe i ważniejsze (text-xl) */}
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0.5">Min</span>
+              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0">Min</span>
               <span className="text-xl font-black text-yellow-500">9.09</span>
             </div>
             
             {/* Zielony Anchor znacznie zmniejszony (text-sm) i schowany niżej */}
             <div className="flex flex-col items-center opacity-80">
-              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0.5">Anchor</span>
+              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0">Anchor</span>
               <span className="text-sm font-bold text-green-500">{currentPrice.toFixed(2)}</span>
             </div>
 
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0.5">Max</span>
+              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0">Max</span>
               <span className="text-xl font-black text-yellow-500">11.11</span>
             </div>
           </div>
