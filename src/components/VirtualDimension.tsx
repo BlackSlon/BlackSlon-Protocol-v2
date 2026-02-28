@@ -62,7 +62,7 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
           <div className="text-center">
             <div className="text-[8px] text-gray-600 uppercase mb-1">Spread</div>
             <div className="text-[12px] font-bold text-yellow-400">10.45 - 10.46</div>
-            <div className="text-[8px] text-gray-500">0.01 (0.09%)</div>
+            <div className="text-[8px] text-gray-500">0.01 (0.10%)</div>
           </div>
         </div>
 
