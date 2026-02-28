@@ -1,15 +1,16 @@
 'use client'
 
-import React, { use } from "react"
+import React, { useState, useEffect } from "react"
 // Importujemy Twoje komponenty - upewnij się, że nazwy plików w /components są identyczne!
 import PhysicalDimension from "@/components/PhysicalDimension"
 import VirtualDimension from "@/components/VirtualDimension"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
+import { useParams } from 'next/navigation'
 
-export default function MarketPage({ params }: { params: Promise<{ id: string }> }) {
-  // To jest "magiczna" linia, która odblokowuje nawigację w Next.js 15
-  const { id } = use(params);
+export default function MarketPage() {
+  const params = useParams()
+  const id = params.id as string
 
   return (
     <main className="min-h-screen bg-black text-white flex flex-col items-center font-mono overflow-hidden">
