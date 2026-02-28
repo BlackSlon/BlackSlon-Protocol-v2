@@ -2,108 +2,86 @@
 import React from 'react'
 
 export default function VirtualDimension({ marketId }: { marketId: string }) {
-  // Mock data for order book
+  // Mock data - ceny wokół Anchora 10.59
   const buyOrders = [
-    { price: 10.55, quantity: 150, volume: 15000 },
-    { price: 10.54, quantity: 120, volume: 12000 },
-    { price: 10.53, quantity: 180, volume: 18000 },
-    { price: 10.52, quantity: 95, volume: 9500 },
-    { price: 10.51, quantity: 200, volume: 20000 }
+    { price: 10.55, qty: 150, volume: 15000 },
+    { price: 10.54, qty: 120, volume: 12000 },
+    { price: 10.53, qty: 180, volume: 18000 },
+    { price: 10.52, qty: 95, volume: 9500 },
+    { price: 10.51, qty: 200, volume: 20000 }
   ]
 
   const sellOrders = [
-    { price: 10.60, quantity: 110, volume: 11000 },
-    { price: 10.61, quantity: 85, volume: 8500 },
-    { price: 10.62, quantity: 140, volume: 14000 },
-    { price: 10.63, quantity: 75, volume: 7500 },
-    { price: 10.64, quantity: 160, volume: 16000 }
+    { price: 10.60, qty: 110, volume: 11000 },
+    { price: 10.61, qty: 85, volume: 8500 },
+    { price: 10.62, qty: 140, volume: 14000 },
+    { price: 10.63, qty: 75, volume: 7500 },
+    { price: 10.64, qty: 160, volume: 16000 }
   ]
 
-  // Mock data for turnover
   const turnoverData = [
     { period: 'DAILY', tokens: 124500.00, volume: 1245000 },
     { period: 'MONTHLY', tokens: 3875000.00, volume: 38750000 },
     { period: 'TOTAL', tokens: 15234567.89, volume: 152345678 }
   ]
 
-  const currentPrice = 10.59
-  const spreadLow = 10.59
-  const spreadHigh = 10.60
-  const spreadValue = 0.01
-  const spreadPercent = 0.09
-
-  // Calculate max volume for progress bars
-  const maxVolume = Math.max(...buyOrders.map(o => o.volume), ...sellOrders.map(o => o.volume))
-
-  // Sparkline data for 24h trend
-  const sparklineData = [10.45, 10.48, 10.52, 10.49, 10.55, 10.58, 10.59, 10.57, 10.59]
-  const sparklinePoints = sparklineData.map((price, i) => {
-    const x = (i / (sparklineData.length - 1)) * 100
-    const y = 100 - ((price - Math.min(...sparklineData)) / (Math.max(...sparklineData) - Math.min(...sparklineData))) * 100
-    return `${x},${y}`
-  }).join(' ')
+  const maxVol = Math.max(...buyOrders.map(o => o.volume), ...sellOrders.map(o => o.volume))
+  const sparklinePoints = "0,80 20,60 40,70 60,30 80,40 100,20"; // Uproszczony trend
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-gradient-to-b from-gray-900 via-black to-black font-mono backdrop-blur-sm">
+    <div className="flex flex-col h-full p-4 select-none bg-gradient-to-b from-gray-900 via-black to-black font-mono text-white overflow-hidden border border-gray-800 shadow-2xl">
       
-      {/* SEKCJA GÓRNA: Advanced Order Book - 70% wysokości */}
-      <div className="flex-[7] flex flex-col rounded-sm border border-gray-800 overflow-hidden mb-4 shadow-inner shadow-black/50">
-        <div className="text-center py-2 text-[8px] text-gray-500 uppercase tracking-[0.3em] border-b border-gray-800 bg-black/30 backdrop-blur-sm">
+      {/* SEKCJA GÓRNA: ADVANCED ORDER BOOK */}
+      <div className="flex-[7] flex flex-col min-h-0">
+        <div className="text-center py-1 text-[9px] text-gray-500 uppercase tracking-[0.4em] border-b border-gray-800/50 mb-3">
           ADVANCED ORDER BOOK
         </div>
-        
-        <div className="flex flex-1">
-          {/* BUY ORDERS - Lewa kolumna */}
-          <div className="flex-1 border-r border-gray-800">
-            <div className="px-3 py-2 bg-black/20 backdrop-blur-sm">
-              <div className="text-[8px] text-green-400 font-bold mb-2 uppercase tracking-tighter">BUY ORDERS</div>
-              <div className="grid grid-cols-3 text-[7px] text-gray-600 mb-1">
-                <div>Price (EUR)</div>
-                <div className="text-center">Qty (BSR)</div>
-                <div className="text-right">Volume (kWh)</div>
-              </div>
+
+        <div className="flex flex-1 min-h-0 gap-1">
+          {/* BUY SIDE - Lewa strona */}
+          <div className="flex-1 flex flex-col">
+            <div className="grid grid-cols-3 text-[7px] text-gray-600 uppercase font-bold px-2 mb-2 border-b border-gray-900 pb-1">
+              <div>Price (EUR)</div>
+              <div className="text-center">Qty (Szt)</div>
+              <div className="text-right">Volume (kWh)</div>
             </div>
-            <div className="px-3 py-1 space-y-0">
-              {buyOrders.map((order, i) => (
-                <div key={i} className="grid grid-cols-3 text-[27px] text-green-300 py-1 hover:bg-green-500/10 transition-colors relative">
-                  {/* Progress bar background */}
-                  <div className="absolute inset-0 bg-green-500/5" style={{ width: `${(order.volume / maxVolume) * 100}%` }} />
-                  <div className="font-bold text-green-400 relative">{order.price.toFixed(2)}</div>
-                  <div className="text-center text-green-200 relative">{order.quantity}</div>
-                  <div className="text-right text-green-300 font-black relative">{order.volume.toLocaleString()}</div>
+            <div className="space-y-1">
+              {buyOrders.map((o, i) => (
+                <div key={i} className="group relative grid grid-cols-3 text-[11px] py-1.5 px-2 hover:bg-green-500/5 transition-all">
+                  <div className="absolute right-0 top-0 bottom-0 bg-green-500/10 transition-all duration-500" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                  <div className="text-green-500 font-bold z-10">{o.price.toFixed(2)}</div>
+                  <div className="text-center text-green-200/60 z-10">{o.qty}</div>
+                  <div className="text-right text-green-400 font-black z-10">{o.volume.toLocaleString()}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* SPREAD - Środek */}
-          <div className="w-20 flex flex-col justify-center items-center bg-black/40 backdrop-blur-sm border-l border-r border-gray-700">
-            <div className="text-[10px] font-bold text-yellow-400 italic text-center px-1 drop-shadow-glow">
-              {spreadLow.toFixed(2)} - {spreadHigh.toFixed(2)}
+          {/* SPREAD INDICATOR */}
+          <div className="w-16 flex flex-col justify-center items-center bg-gray-900/30 border-x border-gray-800">
+            <div className="text-[10px] font-black text-yellow-500 italic drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]">
+              10.59
             </div>
-            <div className="text-[6px] text-gray-500 uppercase tracking-widest text-center mt-1">
-              {spreadValue.toFixed(2)} ({spreadPercent.toFixed(2)}%)
+            <div className="text-[10px] font-black text-yellow-500 italic drop-shadow-[0_0_8px_rgba(234,179,8,0.4)] border-t border-gray-800 mt-1 pt-1">
+              10.60
             </div>
+            <div className="text-[6px] text-gray-600 uppercase mt-2 font-bold tracking-tighter">Spread 0.09%</div>
           </div>
 
-          {/* SELL ORDERS - Prawa kolumna */}
-          <div className="flex-1">
-            <div className="px-3 py-2 bg-black/20 backdrop-blur-sm">
-              <div className="text-[8px] text-red-400 font-bold mb-2 uppercase tracking-tighter">SELL ORDERS</div>
-              <div className="grid grid-cols-3 text-[7px] text-gray-600 mb-1">
-                <div>Price (EUR)</div>
-                <div className="text-center">Qty (BSR)</div>
-                <div className="text-right">Volume (kWh)</div>
-              </div>
+          {/* SELL SIDE - Prawa strona */}
+          <div className="flex-1 flex flex-col">
+            <div className="grid grid-cols-3 text-[7px] text-gray-600 uppercase font-bold px-2 mb-2 border-b border-gray-900 pb-1">
+              <div>Price (EUR)</div>
+              <div className="text-center">Qty (Szt)</div>
+              <div className="text-right">Volume (kWh)</div>
             </div>
-            <div className="px-3 py-1 space-y-0">
-              {sellOrders.map((order, i) => (
-                <div key={i} className="grid grid-cols-3 text-[27px] text-red-300 py-1 hover:bg-red-500/10 transition-colors relative">
-                  {/* Progress bar background */}
-                  <div className="absolute inset-0 bg-red-500/5" style={{ width: `${(order.volume / maxVolume) * 100}%` }} />
-                  <div className="font-bold text-red-400 relative">{order.price.toFixed(2)}</div>
-                  <div className="text-center text-red-200 relative">{order.quantity}</div>
-                  <div className="text-right text-red-300 font-black relative">{order.volume.toLocaleString()}</div>
+            <div className="space-y-1">
+              {sellOrders.map((o, i) => (
+                <div key={i} className="group relative grid grid-cols-3 text-[11px] py-1.5 px-2 hover:bg-red-500/5 transition-all">
+                  <div className="absolute left-0 top-0 bottom-0 bg-red-500/10 transition-all duration-500" style={{ width: `${(o.volume / maxVol) * 100}%` }} />
+                  <div className="text-red-500 font-bold z-10">{o.price.toFixed(2)}</div>
+                  <div className="text-center text-red-200/60 z-10">{o.qty}</div>
+                  <div className="text-right text-red-400 font-black z-10">{o.volume.toLocaleString()}</div>
                 </div>
               ))}
             </div>
@@ -111,51 +89,31 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         </div>
       </div>
 
-      {/* SEKCJA ŚRODKOWA: BSEI-PL Index - Premium ticket look */}
-      <div className="flex-[2] border-t border-gray-800 pt-3 pb-2 bg-gradient-to-r from-gray-800/20 to-gray-900/20 backdrop-blur-sm rounded-sm">
-        <div className="text-center">
-          <div className="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-1">
-            BSEI-PL INDEX <span className="text-gray-600 font-mono text-[8px]">[cite: 2026-02-15]</span>
-          </div>
-          
-          {/* Sparkline SVG */}
-          <div className="w-24 h-8 mx-auto mb-2">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <polyline
-                points={sparklinePoints}
-                fill="none"
-                stroke="rgba(34, 197, 94, 0.3)"
-                strokeWidth="1"
-              />
-              <polyline
-                points={sparklinePoints}
-                fill="none"
-                stroke="rgba(34, 197, 94, 0.8)"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          
-          <div className="text-3xl font-black text-white drop-shadow-lg">
-            {currentPrice.toFixed(2)} <span className="text-[10px] text-gray-400 ml-1 font-normal">EUR/100vkWh</span>
+      {/* SEKCJA ŚRODKOWA: BSEI-PL INDEX [cite: 2026-02-15] */}
+      <div className="flex-[2] flex flex-col items-center justify-center border-t border-gray-800 bg-gray-950/20 py-4 shadow-inner">
+        <div className="text-[9px] text-gray-500 uppercase tracking-[0.3em] font-bold mb-2">
+          BSEI-PL INDEX <span className="text-[7px] opacity-40">[DAILY WEIGHTED]</span>
+        </div>
+        <div className="flex items-center gap-6">
+          <svg viewBox="0 0 100 100" className="w-12 h-6 overflow-visible opacity-50">
+            <polyline points={sparklinePoints} fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <div className="text-4xl font-black tracking-tighter text-gray-100 drop-shadow-glow">
+            10.59 <span className="text-[10px] text-gray-600 font-normal">EUR/100vkWh</span>
           </div>
         </div>
       </div>
 
-      {/* SEKCJA DOLNA: Market Turnover */}
-      <div className="border-t border-gray-800 pt-3 pb-2 bg-black/30 backdrop-blur-sm">
-        <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-2 text-center">
-          MARKET TURNOVER
-        </div>
-        <div className="space-y-1">
-          {turnoverData.map((data, i) => (
-            <div key={i} className="flex justify-between items-center text-[9px] px-2">
-              <span className="text-gray-400 font-bold">{data.period}</span>
-              <div className="flex gap-3">
-                <span className="text-yellow-400 font-mono">{(data.tokens || 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €BSR</span>
-                <span className="text-blue-400 font-mono">{(data.volume || 0).toLocaleString('de-DE')} kWh</span>
+      {/* SEKCJA DOLNA: MARKET TURNOVER */}
+      <div className="flex-[1.5] border-t border-gray-800 pt-3 bg-black/40">
+        <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-2 px-2">MARKET TURNOVER</div>
+        <div className="space-y-1 px-2">
+          {turnoverData.map((d, i) => (
+            <div key={i} className="flex justify-between text-[10px] font-bold">
+              <span className="text-gray-500">{d.period}</span>
+              <div className="flex gap-4">
+                <span className="text-yellow-600/80">{d.tokens.toLocaleString()} €BSR</span>
+                <span className="text-blue-500/80">{d.volume.toLocaleString()} kWh</span>
               </div>
             </div>
           ))}
