@@ -104,7 +104,7 @@ export default function TradingPanel() {
           <span className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">REQUIRED MARGIN</span>
         </div>
         <div className="text-center mb-2">
-          <span className="text-lg font-bold text-blue-500 leading-none">
+          <span className="text-lg font-bold text-white leading-none">
             {marginValue}%
           </span>
         </div>
@@ -112,11 +112,11 @@ export default function TradingPanel() {
         <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
           <div className="flex flex-col border-r border-gray-900/50 pr-2">
             <span className="text-[11px] text-gray-600 uppercase font-bold mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
-            <span className="text-[17px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
+            <span className="text-[17px] font-mono font-bold text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
           </div>
           <div className="flex flex-col pl-2 text-right">
             <span className="text-[11px] text-gray-600 font-bold mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
-            <span className="text-[17px] font-mono font-bold text-blue-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
+            <span className="text-[17px] font-mono font-bold text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
           </div>
         </div>
       </div>
