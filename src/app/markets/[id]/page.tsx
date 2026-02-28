@@ -1,13 +1,15 @@
 'use client'
 
-import React, { use } from "react"
+import React from "react"
 import PhysicalDimension from "@/components/PhysicalDimension"
 import VirtualDimension from "@/components/VirtualDimension"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
+import { useParams } from 'next/navigation'
 
-export default function MarketPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function MarketPage() {
+  const params = useParams()
+  const id = params.id as string
 
   // Ujednolicamy cenę dla całego widoku rynku
   const globalAnchorPrice = 10.59;
