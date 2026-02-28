@@ -29,20 +29,18 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
         </div>
       </div>
 
-      {/* ACTIVE BSTZ - POMNIEJSZONE CZCIONKI */}
+      {/* ACTIVE BSTZ */}
       <div className="mb-6 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
         <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3">
           28.02.2026 ACTIVE BSTZ
         </div>
         
         <div className="flex flex-col">
-          <span className="text-[9px] text-gray-500 uppercase mb-1 font-bold">PRICE RANGE (MIN / ANCHOR / MAX) in eur/100kwh</span>
+          {/* ZAPIS EUR/100kWh NA SZTYWNO BEZ UPPERCASE */}
+          <span className="text-[9px] text-gray-500 mb-1 font-bold">PRICE RANGE (MIN / ANCHOR / MAX) in EUR/100kWh</span>
           <div className="flex items-baseline justify-between">
-            {/* Zmniejszone Min (text-2xl) */}
             <span className="text-2xl font-black text-yellow-500">9.09</span>
-            {/* Zmniejszony Anchor (text-lg) */}
             <span className="text-lg font-bold text-green-500 mx-2">{currentPrice.toFixed(2)}</span>
-            {/* Zmniejszone Max (text-2xl) */}
             <span className="text-2xl font-black text-yellow-500">11.11</span>
           </div>
         </div>
@@ -84,7 +82,6 @@ export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDi
         </div>
       </div>
 
-      {/* STOPKA SYSTEMOWA */}
       <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
         BSTZ Protocol · ADR Stabilization Active
       </div>
