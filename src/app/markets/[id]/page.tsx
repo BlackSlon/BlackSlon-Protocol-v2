@@ -1,11 +1,15 @@
 'use client'
 
+import React from "react"
 import PhysicalDimension from "@/components/PhysicalDimension"
 import VirtualDimension from "@/components/VirtualDimension"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
 
 export default function MarketPage({ params }: { params: { id: string } }) {
+  // Rozwiązanie problemu asynchronicznych params w Next.js
+  const unwrappedParams = React.use(params as any) as { id: string };
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-hidden flex flex-col items-center">
       <header className="w-full py-6 flex justify-center shrink-0">
@@ -17,12 +21,12 @@ export default function MarketPage({ params }: { params: { id: string } }) {
         
         {/* PANEL 1: PHYSICAL MARKET DIMENSION (22%) */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
-          <PhysicalDimension marketId={params.id} currentPrice={10.59} />
+          <PhysicalDimension marketId={unwrappedParams.id} currentPrice={10.59} />
         </section>
 
         {/* PANEL 2: VIRTUAL MARKET DIMENSION (34%) */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
-          <VirtualDimension marketId={params.id} />
+          <VirtualDimension marketId={unwrappedParams.id} />
         </section>
 
         {/* PANEL 3: TRADING TERMINAL (20%) */}
