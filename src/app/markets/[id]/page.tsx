@@ -20,25 +20,25 @@ export default function MarketPage() {
         <img src="/BS_image.jpg" alt="BlackSlon" className="h-10 w-auto" />
       </header>
 
-      <div className="w-full max-w-[1600px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[22%_34%_20%_20%] gap-4 h-[calc(100vh-100px)] py-4 overflow-auto">
+      <div className="w-full max-w-[1600px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[22%_34%_20%_20%] gap-4 min-h-[calc(100vh-100px)] py-4">
         
         {/* PANEL 1: PHYSICAL (BSTZ) - Teraz z poprawną ceną 10.59 */}
-        <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden h-[400px] md:h-auto">
+        <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden">
           <PhysicalDimension marketId={id} currentPrice={globalAnchorPrice} />
         </section>
 
         {/* PANEL 2: VIRTUAL (Order Book) */}
-        <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden h-[400px] md:h-auto">
+        <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden">
           <VirtualDimension marketId={id} />
         </section>
 
         {/* PANEL 3: TRADING */}
-        <section className="border border-yellow-600/50 bg-black/80 rounded-sm overflow-hidden text-xs h-[300px] md:h-auto">
+        <section className="border border-yellow-600/50 bg-black/80 rounded-sm overflow-hidden text-xs">
           <TradingPanel />
         </section>
 
         {/* PANEL 4: PORTFOLIO */}
-        <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-hidden text-xs h-[300px] md:h-auto">
+        <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-hidden text-xs">
           <PortfolioPanel />
         </section>
 
