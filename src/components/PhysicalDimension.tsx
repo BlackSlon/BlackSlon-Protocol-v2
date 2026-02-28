@@ -18,7 +18,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         <span>PHYSICAL MARKET DIMENSION</span>
       </div>
 
-      {/* TYTUŁ: Poprawiona wielkość liter, kolor czerwony */}
+      {/* TYTUŁ: BlackSlon Trading Zone (BSTZ) */}
       <div className="text-center mb-4">
         <div className="text-[11px] font-black tracking-[0.1em] text-red-600">
           BlackSlon Trading Zone <span className="uppercase">(BSTZ)</span>
@@ -27,23 +27,29 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
 
       {/* ACTIVE BSTZ SEKCYJA */}
       <div className="mb-6 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
-        <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3">
+        <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3 text-center">
           ACTIVE BSTZ
         </div>
         <div className="flex flex-col">
-          <span className="text-[9px] text-gray-500 mb-2 font-bold uppercase italic">
+          <span className="text-[8px] text-gray-600 mb-3 font-bold uppercase italic text-center">
             Range (Min / Anchor / Max) in EUR/100kWh
           </span>
-          <div className="flex items-baseline justify-between px-1">
-            {/* Zmniejszone żółte wartości (text-lg) */}
-            <span className="text-lg font-black text-yellow-500/80">9.09</span>
-            <span className="text-2xl font-bold text-green-500 mx-2">{currentPrice.toFixed(2)}</span>
-            <span className="text-lg font-black text-yellow-500/80">11.11</span>
+          <div className="flex items-center justify-between px-2">
+            {/* Żółte wartości są teraz wyraźnie większe i ważniejsze (text-xl) */}
+            <span className="text-xl font-black text-yellow-500">9.09</span>
+            
+            {/* Zielony Anchor znacznie zmniejszony (text-sm) i schowany niżej */}
+            <div className="flex flex-col items-center opacity-80">
+              <span className="text-[7px] text-gray-500 uppercase font-bold mb-0.5">Anchor</span>
+              <span className="text-sm font-bold text-green-500">{currentPrice.toFixed(2)}</span>
+            </div>
+
+            <span className="text-xl font-black text-yellow-500">11.11</span>
           </div>
         </div>
       </div>
 
-      {/* TABELA Z DATAMI, H-1 I Y-1 */}
+      {/* TABELA HISTORYCZNA */}
       <div className="flex-grow overflow-hidden">
         <div className="grid grid-cols-12 text-[9px] text-gray-600 font-bold uppercase pb-1 border-b border-gray-900 mb-2">
           <div className="col-span-3">Ref / Date</div>
