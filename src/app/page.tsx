@@ -14,21 +14,22 @@ export default function Dashboard() {
   const filteredMarkets = BSR_MARKETS.filter(m => m.type === activeTab)
 
   useEffect(() => {
-    const fetchMarketData = async () => {
-      try {
-        const response = await fetch('/api/market-data?t=' + new Date().getTime())
-        const data = await response.json()
-        console.log('API Response:', data)
-        setMarketData(data)
-      } catch (error) {
-        console.error('Failed to fetch market data:', error)
-      }
-    }
+    // Temporarily disabled API call - no endpoint exists
+    // const fetchMarketData = async () => {
+    //   try {
+    //     const response = await fetch('/api/market-data?t=' + new Date().getTime())
+    //     const data = await response.json()
+    //     console.log('API Response:', data)
+    //     setMarketData(data)
+    //   } catch (error) {
+    //     console.error('Failed to fetch market data:', error)
+    //   }
+    // }
 
-    fetchMarketData()
-    const interval = setInterval(fetchMarketData, 1000)
+    // fetchMarketData()
+    // const interval = setInterval(fetchMarketData, 1000)
 
-    return () => clearInterval(interval)
+    // return () => clearInterval(interval)
   }, [])
 
   return (
