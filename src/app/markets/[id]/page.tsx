@@ -7,7 +7,7 @@ import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
 
 export default function MarketPage({ params }: { params: Promise<{ id: string }> }) {
-  // Rozwiązanie problemu asynchronicznych params w Next.js 15
+  // Bezpieczne odpakowanie params dla Next.js 15
   const unwrappedParams = React.use(params);
 
   return (
@@ -17,6 +17,7 @@ export default function MarketPage({ params }: { params: Promise<{ id: string }>
       </header>
 
       <div className="w-full max-w-[1600px] mx-auto px-10 grid grid-cols-[22%_34%_20%_20%] gap-6 h-[calc(100vh-100px)] mb-4">
+        
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
           <PhysicalDimension marketId={unwrappedParams.id} currentPrice={10.59} />
         </section>
@@ -32,6 +33,7 @@ export default function MarketPage({ params }: { params: Promise<{ id: string }>
         <section className="border border-yellow-600/30 bg-black/40 rounded-sm overflow-hidden flex flex-col min-h-0">
           <PortfolioPanel />
         </section>
+
       </div>
     </main>
   )
