@@ -46,7 +46,7 @@ export default function VirtualDimension({ marketId }: VirtualDimensionProps) {
             </div>
             <div className="grid grid-cols-3 text-[10px] text-green-500 hover:bg-green-500/10 py-1">
               <div>10.42</div>
-              <div className="text-center">156.8</div>
+              <div className="text-center">157.8</div>
               <div className="text-right font-bold">1,634.3</div>
             </div>
             <div className="grid grid-cols-3 text-[10px] text-green-500 hover:bg-green-500/10 py-1">
