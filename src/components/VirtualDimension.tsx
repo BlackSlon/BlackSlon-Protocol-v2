@@ -1,11 +1,11 @@
 'use client'
 
-interface PhysicalDimensionProps {
+interface VirtualDimensionProps {
   marketId: string
   currentPrice?: number // Znak zapytania sprawia, że cena jest opcjonalna (unika błędów TS)
 }
 
-export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDimensionProps) {
+export default function VirtualDimension({ marketId, currentPrice }: VirtualDimensionProps) {
   // Zabezpieczenie: jeśli currentPrice jest undefined, użyj 10.59 jako fallback
   const safePrice = currentPrice ?? 10.59;
 
