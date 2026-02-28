@@ -1,7 +1,15 @@
 'use client'
 import React from 'react'
 
-export default function PhysicalDimension({ marketId, currentPrice }: { marketId: string, currentPrice: number }) {
+interface PhysicalDimensionProps {
+  marketId: string
+  currentPrice: number
+}
+
+export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDimensionProps) {
+  // Zabezpieczenie przed crashowaniem: jeśli currentPrice nie dotrze, używamy 14.46
+  const safePrice = currentPrice ?? 14.46;
+
   const history = [
     { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, change: 1.50 },
     { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, change: 3.10 },
@@ -17,28 +25,37 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
 
       <div className="mb-6 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
         <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3">ACTIVE BSTZ</div>
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-black text-yellow-500">9.09</span>
-          <span className="text-lg font-bold text-green-500">{currentPrice.toFixed(2)}</span>
-          <span className="text-2xl font-black text-yellow-500">11.11</span>
+        <div className="flex flex-col">
+          <span className="text-[9px] text-gray-500 mb-1 font-bold">RANGE in EUR/100kWh</span>
+          <div className="flex items-baseline justify-between">
+            <span className="text-2xl font-black text-yellow-500">9.09</span>
+            <span className="text-lg font-bold text-green-500 mx-2">{safePrice.toFixed(2)}</span>
+            <span className="text-2xl font-black text-yellow-500">11.11</span>
+          </div>
         </div>
       </div>
 
-      <div className="flex-grow overflow-hidden">
+      <div className="flex-grow">
         <div className="grid grid-cols-12 text-[9px] text-gray-600 font-bold uppercase pb-1 border-b border-gray-900 mb-2">
           <div className="col-span-3">Ref</div>
-          <div className="col-span-3 text-center">Min</div>
-          <div className="col-span-3 text-center">Anchor</div>
-          <div className="col-span-3 text-center">Max</div>
+          <div className="col-span-2 text-center">Min</div>
+          <div className="col-span-2 text-center text-gray-400">Anchor</div>
+          <div className="col-span-2 text-center">Max</div>
+          <div className="col-span-3 text-right">Trend</div>
         </div>
-        {history.map((row) => (
-          <div key={row.label} className="grid grid-cols-12 items-center py-2 border-b border-gray-900/30 text-[11px]">
-            <div className="col-span-3 font-bold text-gray-400">{row.label}</div>
-            <div className="col-span-3 text-center text-gray-500">{row.min.toFixed(2)}</div>
-            <div className="col-span-3 text-center text-gray-300 font-bold">{row.anchor.toFixed(2)}</div>
-            <div className="col-span-3 text-center text-gray-500">{row.max.toFixed(2)}</div>
-          </div>
-        ))}
+        <div className="space-y-3">
+          {history.map((row) => (
+            <div key={row.label} className="grid grid-cols-12 items-center py-1 border-b border-gray-900/30">
+              <div className="col-span-3 font-bold text-gray-400 text-[11px]">{row.label}</div>
+              <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.min.toFixed(2)}</div>
+              <div className="col-span-2 text-[11px] text-gray-300 text-center font-bold">{row.anchor.toFixed(2)}</div>
+              <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.max.toFixed(2)}</div>
+              <div className={`col-span-3 text-[11px] text-right font-black ${row.change >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                {row.change >= 0 ? '▲' : '▼'} {row.change.toFixed(2)}%
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

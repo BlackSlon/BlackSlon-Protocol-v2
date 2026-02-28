@@ -2,6 +2,7 @@
 import React from 'react'
 
 export default function VirtualDimension({ marketId }: { marketId: string }) {
+  // Dane są zamockowane, więc zmiana ID na BS-P-PL nie ma znaczenia dla renderowania
   return (
     <div className="flex flex-col h-full p-4 select-none bg-transparent font-mono">
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
@@ -21,24 +22,24 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         
         {/* BUY ORDERS */}
         <div className="px-3 py-3">
-          <div className="text-[8px] text-green-500 font-bold mb-2 uppercase">BUY ORDERS</div>
+          <div className="text-[8px] text-green-500 font-bold mb-2 uppercase tracking-tighter">BUY ORDERS</div>
           <div className="space-y-1">
-            <div className="grid grid-cols-3 text-[9px] text-gray-600 mb-1 font-bold">
+            <div className="grid grid-cols-3 text-[9px] text-gray-600 mb-1">
               <div>Price</div>
-              <div className="text-center">Vol</div>
+              <div className="text-center">Volume</div>
               <div className="text-right">Total</div>
             </div>
             {[10.45, 10.44, 10.43, 10.42, 10.41].map((p, i) => (
-              <div key={i} className="grid grid-cols-3 text-[10px] text-green-500 py-1 hover:bg-green-500/10">
+              <div key={i} className="grid grid-cols-3 text-[10px] text-green-500 py-1 hover:bg-green-500/10 transition-colors">
                 <div className="font-bold">{p.toFixed(2)}</div>
-                <div className="text-center">{(100 + i * 12).toFixed(1)}</div>
-                <div className="text-right font-black">{(p * (100 + i * 12)).toFixed(1)}</div>
+                <div className="text-center text-green-300">{(120 + i * 15).toFixed(1)}</div>
+                <div className="text-right text-green-400 font-black">{(p * (120 + i * 15)).toFixed(1)}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* SPREAD */}
+        {/* SPREAD (ŚRODEK) */}
         <div className="mx-3 py-3 border-t border-b border-gray-800 bg-black/20 text-center">
           <div className="text-[12px] font-bold text-yellow-500 italic">10.45 - 10.46</div>
           <div className="text-[8px] text-gray-500 uppercase tracking-widest">Spread: 0.01 (0.10%)</div>
@@ -46,13 +47,13 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
         {/* SELL ORDERS */}
         <div className="px-3 py-3">
-          <div className="text-[8px] text-red-500 font-bold mb-2 uppercase">SELL ORDERS</div>
+          <div className="text-[8px] text-red-500 font-bold mb-2 uppercase tracking-tighter">SELL ORDERS</div>
           <div className="space-y-1">
             {[10.46, 10.47, 10.48, 10.49, 10.50].map((p, i) => (
-              <div key={i} className="grid grid-cols-3 text-[10px] text-red-500 py-1 hover:bg-red-500/10">
+              <div key={i} className="grid grid-cols-3 text-[10px] text-red-500 py-1 hover:bg-red-500/10 transition-colors">
                 <div className="font-bold">{p.toFixed(2)}</div>
-                <div className="text-center">{(95 + i * 18).toFixed(1)}</div>
-                <div className="text-right font-black">{(p * (95 + i * 18)).toFixed(1)}</div>
+                <div className="text-center text-red-300">{(90 + i * 20).toFixed(1)}</div>
+                <div className="text-right text-red-400 font-black">{(p * (90 + i * 20)).toFixed(1)}</div>
               </div>
             ))}
           </div>
