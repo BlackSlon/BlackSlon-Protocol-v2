@@ -63,7 +63,7 @@ export default function TradingPanel() {
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
             <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
-            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] font-bold text-center outline-none text-white px-2 w-full" />
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] text-center outline-none text-white px-2 w-full" />
             <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function TradingPanel() {
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
             <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
-            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] font-bold text-center outline-none text-white px-2 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] text-center outline-none text-white px-2 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
             <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
           </div>
         </div>
@@ -90,12 +90,12 @@ export default function TradingPanel() {
       <div className="space-y-3 mb-4 shrink-0 px-1">
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
-          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-blue-500 cursor-pointer" />
+          <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
+          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 accent-blue-500 cursor-pointer" style={{ accentColor: '#3b82f6' }} />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
-          <div className="flex justify-between text-[9px] text-blue-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
-          <input type="range" min="10" max="100" value={euroStake} readOnly className="w-full h-1 bg-gray-950 accent-blue-400" />
+          <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
+          <input type="range" min="10" max="100" value={euroStake} readOnly className="w-full h-1 bg-gray-950" style={{ accentColor: '#6b7280' }} />
         </div>
       </div>
 
