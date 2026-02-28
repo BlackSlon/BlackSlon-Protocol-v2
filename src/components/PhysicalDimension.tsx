@@ -1,11 +1,17 @@
 'use client'
 
-export default function PhysicalDimension() {
+interface PhysicalDimensionProps {
+  marketId: string
+  currentPrice: number
+}
+
+export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDimensionProps) {
+  // Dane przykładowe (Anchor może teraz bazować na currentPrice)
   const activeZone = {
     date: '28.02.2026',
     min: 9.09,
     max: 11.11,
-    anchor: 10.10,
+    anchor: currentPrice || 10.10, // Używa ceny z góry lub domyślnej
     prevAnchor: 9.95
   }
 
@@ -38,9 +44,9 @@ export default function PhysicalDimension() {
           </div>
           
           <div className="text-right">
-            <span className="text-[10px] text-gray-400 uppercase italic">Anchor Point</span>
+            <span className="text-[10px] text-gray-400 uppercase italic">Anchor Point ({marketId})</span>
             <div className={`text-3xl font-black ${isAnchorUp ? 'text-green-500' : 'text-red-500'}`}>
-              {activeZone.anchor}
+              {activeZone.anchor.toFixed(2)}
             </div>
           </div>
         </div>
