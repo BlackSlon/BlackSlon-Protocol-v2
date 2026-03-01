@@ -57,16 +57,16 @@ export default function TradingPanel() {
 
       <div className="text-center mb-3 shrink-0">
         <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">ACTIVE INSTRUMENT</div>
-        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">{marketId}</span>
+        <span className="text-[13px] text-yellow-500 font-normal uppercase tracking-[0.2em]">{marketId}</span>
       </div>
 
       <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
-        <button onClick={() => { console.log('BUY button clicked!'); setSide('BUY'); }} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
-        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
+        <button onClick={() => { console.log('BUY button clicked!'); setSide('BUY'); }} className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
+        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
       <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
-        <div className="text-[11px] text-gray-600 font-bold mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
+        <div className="text-[11px] text-gray-600 font-normal mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
             <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>

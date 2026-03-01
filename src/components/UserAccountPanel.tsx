@@ -5,7 +5,7 @@ export default function UserAccountPanel() {
 
   return (
     <div className="flex flex-col h-full select-none p-4">
-      <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
+      <div className="text-[10px] text-gray-400 uppercase font-normal text-center py-2 border-b border-gray-700 bg-gray-900/30 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <span>USER'S ACCOUNT</span>
       </div>
 
@@ -16,13 +16,13 @@ export default function UserAccountPanel() {
       <div className="space-y-4">
         {/* €BSR Balance */}
         <div className="border-b border-gray-900/50 pb-2">
-          <div className="text-[8px] text-gray-600 uppercase font-bold mb-1">Balance (€BSR)</div>
+          <div className="text-[8px] text-gray-600 uppercase font-normal mb-1">Balance (€BSR)</div>
           <div className="text-lg font-bold text-yellow-500 font-mono" style={monoStyle}>42,069.12</div>
         </div>
 
         {/* Physical Assets */}
         <div className="space-y-2">
-          <div className="text-[8px] text-gray-500 uppercase font-bold tracking-tighter">Energy Portfolio</div>
+          <div className="text-[8px] text-gray-500 uppercase font-normal tracking-tighter">Energy Portfolio</div>
           <div className="flex justify-between items-center bg-gray-900/20 p-2 rounded-sm border border-gray-900">
             <span className="text-[9px] text-gray-400 uppercase">BSTZ Physical</span>
             <span className="text-[11px] font-mono text-white" style={monoStyle}>120 MWh</span>

@@ -35,8 +35,8 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         </div>
         <div className="flex justify-between items-center mt-2">
           <div className="flex gap-4">
-            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Instrument: <span className="text-gray-300">BS-P-PL</span></span>
-            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
+            <span className="text-[10px] text-gray-500 uppercase font-normal">Instrument: <span className="text-gray-300">BS-P-PL</span></span>
+            <span className="text-[10px] text-gray-500 uppercase font-normal">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="py-2 px-4 bg-green-950/20">
             <span className="text-[11px] text-green-500 tracking-widest">BUY ORDERS</span>
           </div>
-          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
+          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-normal px-4 py-2 border-b border-gray-800 bg-black">
             <div>VOLUME (kWh)</div>
             <div className="text-center">UNIT (BS-P-PL)</div>
             <div className="text-right">PRICE (Eur/100kWh)</div>
@@ -94,7 +94,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="py-2 px-4 border-b border-gray-800 bg-red-950/20 text-right">
             <span className="text-[11px] text-red-500 tracking-widest">SELL ORDERS</span>
           </div>
-          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
+          <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-normal px-4 py-2 border-b border-gray-800 bg-black">
             <div>PRICE (Eur/100kWh)</div>
             <div className="text-center">UNIT (BS-P-PL)</div>
             <div className="text-right">VOLUME (kWh)</div>
