@@ -76,16 +76,16 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
             <span className="text-[11px] text-green-500 tracking-widest">BUY ORDERS</span>
           </div>
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
-            <div>PRICE (EUR/100kWh)</div>
+            <div>VOLUME (kWh)</div>
             <div className="text-center">UNIT (BS-P-PL)</div>
-            <div className="text-right">VOLUME (kWh)</div>
+            <div className="text-right">PRICE (Eur/100kWh)</div>
           </div>
           <div className="flex-grow overflow-hidden">
             {buyOrders.map((o, i) => (
               <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all group">
-                <div className="text-xl text-green-500 tracking-tighter leading-none">{o.price.toFixed(2)}</div>
+                <div className="text-xl text-green-500 tracking-tighter leading-none">{o.volume.toLocaleString()}</div>
                 <div className="text-center text-gray-500 text-sm self-center">{o.unit}</div>
-                <div className="text-right text-green-400/70 font-bold text-sm self-center">{o.volume.toLocaleString()}</div>
+                <div className="text-right text-green-400/70 font-bold text-sm self-center">{o.price.toFixed(2)}</div>
               </div>
             ))}
           </div>
@@ -97,7 +97,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
             <span className="text-[11px] text-red-500 tracking-widest">SELL ORDERS</span>
           </div>
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
-            <div>PRICE (EUR/100kWh)</div>
+            <div>PRICE (Eur/100kWh)</div>
             <div className="text-center">UNIT (BS-P-PL)</div>
             <div className="text-right">VOLUME (kWh)</div>
           </div>
