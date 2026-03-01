@@ -65,9 +65,9 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           <div className="col-span-3 text-right">Trend</div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-1">
           {history.map((row) => (
-            <div key={row.label} className="grid grid-cols-12 items-center py-1 border-b border-gray-900/30">
+            <div key={row.label} className="grid grid-cols-12 items-center py-0.5 border-b border-gray-900/30">
               <div className="col-span-3 flex flex-col">
                 <span className="text-[11px] font-bold text-gray-400">{row.label}</span>
                 <span className="text-[8px] text-gray-200 leading-tight">{row.date}</span>
