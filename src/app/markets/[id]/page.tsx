@@ -16,7 +16,7 @@ export default function MarketPage() {
   const globalAnchorPrice = 10.59;
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center font-mono">
+    <main className="min-h-screen bg-black text-white flex flex-col items-center font-mono pointer-events-auto">
       <header className="w-full py-4 flex justify-center border-b border-gray-900 shrink-0">
         <Image src="/BS_image.jpg" alt="BlackSlon" width={40} height={40} className="h-10 w-auto" />
       </header>
@@ -34,7 +34,7 @@ export default function MarketPage() {
         </section>
 
         {/* PANEL 3: TRADING */}
-        <section className="border border-yellow-600/50 bg-black/80 rounded-sm text-xs pointer-events-auto relative z-20">
+        <section className="border border-yellow-600/50 bg-black/80 rounded-sm text-xs pointer-events-auto relative z-50">
           <TradingPanel />
         </section>
 
