@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 
 export default function TradingPanel() {
@@ -12,6 +12,12 @@ export default function TradingPanel() {
   const [quantity, setQuantity] = useState(5)
   const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
   const [bsrStake, setBsrStake] = useState(50)
+  const [isMounted, setIsMounted] = useState(false)
+  
+  useEffect(() => {
+    setIsMounted(true)
+    console.log('TradingPanel mounted!')
+  }, [])
   
   const euroStake = 100 - bsrStake
 
