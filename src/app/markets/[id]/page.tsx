@@ -2,7 +2,7 @@
 
 import React from "react"
 import PhysicalMarketPanel from "@/components/PhysicalMarketPanel"
-import VirtualDimension from "@/components/VirtualDimension"
+import VirtualMarketPanel from "@/components/VirtualMarketPanel"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
 import { useParams } from 'next/navigation'
@@ -30,7 +30,7 @@ export default function MarketPage() {
 
         {/* PANEL 2: VIRTUAL (Order Book) */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm">
-          <VirtualDimension marketId={id} />
+          <VirtualMarketPanel marketId={id} />
         </section>
 
         {/* PANEL 3: TRADING */}

@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import PhysicalMarketPanel from './PhysicalMarketPanel'
-import VirtualDimension from './VirtualDimension'
+import VirtualMarketPanel from './VirtualMarketPanel'
 
 export default function MarketPanel({ currentPrice }: { currentPrice: number }) {
   const params = useParams()
@@ -19,7 +19,7 @@ export default function MarketPanel({ currentPrice }: { currentPrice: number }) 
           <PhysicalMarketPanel marketId={marketId} currentPrice={currentPrice} />
         </div>
         <div className="pl-4 overflow-y-auto no-scrollbar bg-blue-900/5">
-          <VirtualDimension marketId={marketId} />
+          <VirtualMarketPanel marketId={marketId} />
         </div>
       </div>
 
