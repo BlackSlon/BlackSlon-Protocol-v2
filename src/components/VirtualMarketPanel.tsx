@@ -24,12 +24,14 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
     <div className="flex flex-col h-full bg-black font-mono text-white border border-gray-800 overflow-hidden">
       
       {/* Header */}
-      <div className="text-[10px] text-gray-500 uppercase font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4 font-mono" style={{ letterSpacing: '0.5em' }}>
+      <div className="text-[10px] text-gray-500 uppercase font-bold text-center py-2 bg-black/40 mb-4 font-mono" style={{ letterSpacing: '0.5em' }}>
         Virtual Market Panel
       </div>
+      
+      <div className="mx-6 border-b border-gray-800 mt-2"></div>
 
       {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
-      <div className="p-4 border-b border-gray-800 bg-gradient-to-b from-black to-gray-950">
+      <div className="p-4 bg-gradient-to-b from-black to-gray-950">
         <div className="text-[12px] tracking-widest text-red-600 italic mb-1">
           BlackSlon Power Poland
         </div>
