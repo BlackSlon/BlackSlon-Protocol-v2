@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react"
-import PhysicalDimension from "@/components/PhysicalDimension"
+import PhysicalMarketPanel from "@/components/PhysicalMarketPanel"
 import VirtualDimension from "@/components/VirtualDimension"
 import TradingPanel from "@/components/TradingPanel"
 import PortfolioPanel from "@/components/PortfolioPanel"
@@ -25,7 +25,7 @@ export default function MarketPage() {
         
         {/* PANEL 1: PHYSICAL (BSTZ) - Teraz z poprawną ceną 10.59 */}
         <section className="border border-yellow-600/50 bg-black/40 rounded-sm overflow-hidden">
-          <PhysicalDimension marketId={id} currentPrice={globalAnchorPrice} />
+          <PhysicalMarketPanel marketId={id} currentPrice={globalAnchorPrice} />
         </section>
 
         {/* PANEL 2: VIRTUAL (Order Book) */}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import PhysicalDimension from './PhysicalDimension'
+import PhysicalMarketPanel from './PhysicalMarketPanel'
 import VirtualDimension from './VirtualDimension'
 
 export default function MarketPanel({ currentPrice }: { currentPrice: number }) {
@@ -16,7 +16,7 @@ export default function MarketPanel({ currentPrice }: { currentPrice: number }) 
 
       <div className="flex-grow grid grid-cols-[60%_40%] divide-x divide-gray-900 gap-4 mb-4 overflow-hidden">
         <div className="pr-2 overflow-y-auto no-scrollbar">
-          <PhysicalDimension marketId={marketId} currentPrice={currentPrice} />
+          <PhysicalMarketPanel marketId={marketId} currentPrice={currentPrice} />
         </div>
         <div className="pl-4 overflow-y-auto no-scrollbar bg-blue-900/5">
           <VirtualDimension marketId={marketId} />
