@@ -78,9 +78,9 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex-grow overflow-hidden">
             {buyOrders.map((o, i) => (
               <div key={i} className="grid grid-cols-3 py-3 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all group">
-                <div className="text-xl text-green-500 tracking-tighter leading-none">{o.volume.toLocaleString()}</div>
+                <div className="text-sm text-green-400/70 font-bold self-center">{o.volume.toLocaleString()}</div>
                 <div className="text-center text-gray-500 text-sm self-center">{o.unit}</div>
-                <div className="text-right text-green-400/70 font-bold text-sm self-center">{o.price.toFixed(2)}</div>
+                <div className="text-right text-xl text-green-500 tracking-tighter leading-none self-center">{o.price.toFixed(2)}</div>
               </div>
             ))}
           </div>
