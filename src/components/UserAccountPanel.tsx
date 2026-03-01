@@ -5,7 +5,7 @@ export default function UserAccountPanel() {
 
   return (
     <div className="flex flex-col h-full select-none p-4">
-      <div className="text-[10px] text-gray-500 uppercase font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4" style={{ fontFamily: 'Montserrat, sans-serif', letterSpacing: '0.3em' }}>
+      <div className="text-[10px] text-gray-500 uppercase font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4" style={{ fontFamily: 'Montserrat, sans-serif', letterSpacing: '0.5em' }}>
         <span>USER'S ACCOUNT</span>
       </div>
 
