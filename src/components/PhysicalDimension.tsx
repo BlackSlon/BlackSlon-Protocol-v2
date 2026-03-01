@@ -27,11 +27,11 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
 
       {/* ACTIVE BSTZ SEKCYJA */}
       <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
-        <div className="text-[10px] text-yellow-500 tracking-widest uppercase italic mb-2 text-center">
+        <div className="text-[10px] text-yellow-500 tracking-widest uppercase mb-2 text-center">
           STATUS: LIVE
         </div>
         <div className="flex flex-col">
-          <span className="text-[8px] text-gray-600 mb-2 uppercase italic text-center">
+          <span className="text-[8px] text-gray-600 mb-2 uppercase text-center">
             RANGE in EUR/100kWh
           </span>
           <div className="flex items-center justify-between px-2">
