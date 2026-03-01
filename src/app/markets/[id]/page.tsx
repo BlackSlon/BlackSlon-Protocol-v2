@@ -34,7 +34,7 @@ export default function MarketPage() {
         </section>
 
         {/* PANEL 3: TRADING */}
-        <section className="border border-yellow-600/50 bg-black/80 rounded-sm overflow-hidden text-xs">
+        <section className="border border-yellow-600/50 bg-black/80 rounded-sm text-xs">
           <TradingPanel />
         </section>
 
