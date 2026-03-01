@@ -28,7 +28,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
       {/* ACTIVE BSTZ SEKCYJA */}
       <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
         <div className="text-[10px] text-yellow-500 tracking-widest uppercase mb-2 text-center">
-          STATUS: LIVE
+          STATUS: <span className="text-green-500 animate-pulse font-black">LIVE</span>
         </div>
         <div className="flex flex-col">
           <span className="text-[8px] text-gray-600 mb-2 uppercase text-center">
