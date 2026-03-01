@@ -54,7 +54,7 @@ export default function TradingPanel() {
       </div>
 
       <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
-        <button onClick={() => setSide('BUY')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
+        <button onClick={() => { console.log('BUY button clicked!'); setSide('BUY'); }} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
         <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
@@ -91,7 +91,7 @@ export default function TradingPanel() {
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
-          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
+          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => { console.log('Slider changed to:', e.target.value); setBsrStake(parseInt(e.target.value)); }} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
