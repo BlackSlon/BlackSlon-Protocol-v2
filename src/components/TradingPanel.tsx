@@ -42,23 +42,23 @@ export default function TradingPanel() {
   }, [price, quantity, marginValue, bsrStake, euroStake])
 
   return (
-    <div className="flex flex-col h-full p-4 bg-transparent pointer-events-auto relative z-10">
+    <div className="flex flex-col h-full p-4 bg-transparent">
       
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
         <span>TRADING PANEL</span>
       </div>
 
-      <div className="text-center mb-3 shrink-0">
+      <div className="text-center mb-3">
         <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">ACTIVE INSTRUMENT</div>
         <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">{marketId}</span>
       </div>
 
-      <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
-        <button onClick={() => { console.log('BUY button clicked!'); setSide('BUY'); }} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
-        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
+      <div className="flex justify-center gap-2 mb-3">
+        <button onClick={() => { console.log('BUY button clicked!'); setSide('BUY'); }} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
+        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
+      <div className="border-b border-gray-900/50 pb-2 mb-2">
         <div className="text-[11px] text-gray-600 font-bold mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
@@ -69,7 +69,7 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
+      <div className="border-b border-gray-900/50 pb-2 mb-3">
         <div className="text-[11px] text-gray-600 font-bold mb-1">SET QUANTITY (1 {marketId} TOKEN = 100kWh)</div> 
         <div className="flex items-center justify-between">
           <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
@@ -80,18 +80,18 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      <button className={`w-full py-2 mb-4 border font-black uppercase tracking-[0.3em] text-[10px] transition-all duration-300 rounded-sm shrink-0
+      <button className={`w-full py-2 mb-4 border font-black uppercase tracking-[0.3em] text-[10px] transition-all duration-300 rounded-sm
         ${side === 'BUY' 
           ? 'border-green-500 text-green-500 hover:bg-green-500 hover:text-black' 
           : 'border-red-600 text-red-600 hover:bg-red-600 hover:text-white'}`}>
         EXECUTE {side}
       </button>
 
-      <div className="space-y-3 mb-4 shrink-0 px-1 pointer-events-auto">
+      <div className="space-y-3 mb-4 px-1">
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
-          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => { console.log('Slider changed to:', e.target.value); setBsrStake(parseInt(e.target.value)); }} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
+          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => { console.log('Slider changed to:', e.target.value); setBsrStake(parseInt(e.target.value)); }} className="w-full h-1 bg-gray-800 cursor-pointer" style={{ accentColor: '#3b82f6' }} />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
@@ -99,7 +99,7 @@ export default function TradingPanel() {
         </div>
       </div>
 
-      <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
+      <div className="mt-auto border-t border-gray-900 pt-2">
         <div className="text-center mb-1">
           <span className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">REQUIRED MARGIN</span>
         </div>
@@ -108,7 +108,7 @@ export default function TradingPanel() {
             {marginValue}%
           </span>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
           <div className="flex flex-col border-r border-gray-900/50 pr-2">
             <span className="text-[11px] text-gray-600 uppercase font-bold mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
