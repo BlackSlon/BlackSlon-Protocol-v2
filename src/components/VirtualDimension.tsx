@@ -72,7 +72,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         
         {/* BUY SIDE */}
         <div className="flex-1 flex flex-col border-r border-gray-800">
-          <div className="py-2 px-4 border-b border-gray-800 bg-green-950/20">
+          <div className="py-2 px-4 bg-green-950/20">
             <span className="text-[11px] text-green-500 tracking-widest">BUY ORDERS</span>
           </div>
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-bold px-4 py-2 border-b border-gray-800 bg-black">
