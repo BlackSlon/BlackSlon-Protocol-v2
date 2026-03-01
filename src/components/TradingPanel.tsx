@@ -1,101 +1,125 @@
 'use client'
 
+import { useState, useMemo } from 'react'
+import { useParams } from 'next/navigation'
 
-interface PhysicalDimensionProps {
-  marketId: string
-  currentPrice: number
-}
+export default function TradingPanel() {
+  const params = useParams()
+  const rawId = (params.id as string) || 'BS-P-PL'
+  const marketId = rawId.replace('IPT', 'BS') 
 
+  const [price, setPrice] = useState('10.59')
+  const [quantity, setQuantity] = useState(5)
+  const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
+  const [bsrStake, setBsrStake] = useState(50)
+  
+  const euroStake = 100 - bsrStake
 
-export default function PhysicalDimension({ marketId, currentPrice }: PhysicalDimensionProps) {
-  const history = [
-    { label: 'D-1', date: '27.02.2026', min: 9.05, max: 11.05, anchor: 9.95, change: 1.50 },
-    { label: 'W-1', date: '21.02.2026', min: 8.80, max: 10.80, anchor: 9.80, change: 3.10 },
-    { label: 'M-1', date: '28.01.2026', min: 8.50, max: 10.50, anchor: 9.50, change: 6.30 },
-    { label: 'Q-1', date: '28.11.2025', min: 8.00, max: 10.00, anchor: 9.00, change: 12.20 },
-    { label: 'H-1', date: '28.08.2025', min: 7.50, max: 9.50, anchor: 8.50, change: 18.80 },
-    { label: 'Y-1', date: '28.02.2025', min: 7.00, max: 9.00, anchor: 8.00, change: 26.30 },
+  const riskTable = [
+    { threshold: 10, marginL: 50, marginS: 100, fee: 1.00 },
+    { threshold: 25, marginL: 45, marginS: 90, fee: 0.85 },
+    { threshold: 50, marginL: 40, marginS: 80, fee: 0.60 },
+    { threshold: 75, marginL: 30, marginS: 60, fee: 0.35 },
+    { threshold: 100, marginL: 25, marginS: 50, fee: 0.20 }
   ]
 
+  const currentRisk = useMemo(() => {
+    return [...riskTable].reverse().find(r => bsrStake >= r.threshold) || riskTable[0]
+  }, [bsrStake])
+
+  const marginValue = side === 'BUY' ? currentRisk.marginL : currentRisk.marginS
+  
+  const { bsrReq, euroReq } = useMemo(() => {
+    const p = parseFloat(price.replace(',', '.')) || 0
+    const q = quantity || 0
+    const totalNotional = p * q
+    const totalMarginNeeded = totalNotional * (marginValue / 100)
+    
+    return {
+      bsrReq: (totalMarginNeeded * (bsrStake / 100)).toFixed(2),
+      euroReq: (totalMarginNeeded * (euroStake / 100)).toFixed(2)
+    }
+  }, [price, quantity, marginValue, bsrStake, euroStake])
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-transparent font-mono">
-      {/* NAGŁÓWEK SEKCI */}
+    <div className="flex flex-col h-full p-4 bg-transparent pointer-events-auto relative z-10">
+      
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
-        <span>PHYSICAL MARKET DIMENSION</span>
+        <span>TRADING PANEL</span>
       </div>
 
-
-      {/* TYTUŁ STREFY */}
-      <div className="text-center mb-4">
-        <div className="text-[11px] font-black tracking-[0.1em] text-red-600">
-          BlackSlon Trading Zone (BSTZ)
-        </div>
+      <div className="text-center mb-3 shrink-0">
+        <div className="text-[10px] font-black tracking-widest uppercase mb-1 text-red-600">ACTIVE INSTRUMENT</div>
+        <span className="text-[13px] text-yellow-500 font-bold uppercase tracking-[0.2em]">{marketId}</span>
       </div>
 
+      <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
+        <button onClick={() => setSide('BUY')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'BUY' ? 'border-green-600 bg-green-600/10 text-green-500' : 'border-gray-900 text-gray-700'}`}>BUY</button>
+        <button onClick={() => setSide('SELL')} className={`flex-1 py-1.5 border font-bold uppercase tracking-widest text-[9px] transition-all rounded-sm pointer-events-auto relative z-10 ${side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'}`}>SELL</button>
+      </div>
 
-      {/* ACTIVE BSTZ */}
-      <div className="mb-6 p-4 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
-        <div className="text-[10px] text-yellow-500 font-bold tracking-widest uppercase italic mb-3">
-          28.02.2026 ACTIVE BSTZ
-        </div>
-       
-        <div className="flex flex-col">
-          {/* ZAPIS EUR/100kWh NA SZTYWNO BEZ UPPERCASE */}
-          <span className="text-[9px] text-gray-500 mb-1 font-bold">PRICE RANGE (MIN / ANCHOR / MAX) in EUR/100kWh</span>
-          <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-black text-yellow-500">9.09</span>
-            <span className="text-lg font-bold text-green-500 mx-2">{currentPrice.toFixed(2)}</span>
-            <span className="text-2xl font-black text-yellow-500">11.11</span>
+      <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
+        <div className="text-[11px] text-gray-600 font-bold mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
+        <div className="flex items-center justify-between">
+          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
+            <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="bg-transparent text-[27px] text-center outline-none text-white px-2 w-full" />
+            <button onClick={() => setPrice(p => (parseFloat(p) + 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
           </div>
         </div>
       </div>
 
-
-      {/* TABELA HISTORYCZNA */}
-      <div className="flex-grow">
-        <div className="grid grid-cols-12 text-[9px] text-gray-600 font-bold uppercase pb-1 border-b border-gray-900 mb-2">
-          <div className="col-span-3">Ref / Date</div>
-          <div className="col-span-2 text-center">Min</div>
-          <div className="col-span-2 text-center font-bold text-gray-400">Anchor</div>
-          <div className="col-span-2 text-center">Max</div>
-          <div className="col-span-3 text-right">Trend</div>
-        </div>
-
-
-        <div className="space-y-3">
-          {history.map((row) => (
-            <div key={row.label} className="grid grid-cols-12 items-center py-1 border-b border-gray-900/30">
-              <div className="col-span-3 flex flex-col">
-                <span className="text-[11px] font-bold text-gray-400">{row.label}</span>
-                <span className="text-[8px] text-gray-600 leading-tight">{row.date}</span>
-              </div>
-
-
-              <div className="col-span-2 text-[11px] text-gray-500 text-center">
-                {row.min.toFixed(2)}
-              </div>
-              <div className="col-span-2 text-[11px] text-gray-300 text-center font-bold">
-                {row.anchor.toFixed(2)}
-              </div>
-              <div className="col-span-2 text-[11px] text-gray-500 text-center">
-                {row.max.toFixed(2)}
-              </div>
-
-
-              <div className={`col-span-3 text-[11px] text-right font-black ${row.change >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                {row.change >= 0 ? '▲' : '▼'} {Math.abs(row.change).toFixed(2)}%
-              </div>
-            </div>
-          ))}
+      <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
+        <div className="text-[11px] text-gray-600 font-bold mb-1">SET QUANTITY (1 {marketId} TOKEN = 100kWh)</div> 
+        <div className="flex items-center justify-between">
+          <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
+            <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
+            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)} className="bg-transparent text-[27px] text-center outline-none text-white px-2 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+            <button onClick={() => setQuantity(q => q + 1)} className="text-2xl text-gray-600 hover:text-white px-2">+</button>
+          </div>
         </div>
       </div>
 
+      <button className={`w-full py-2 mb-4 border font-black uppercase tracking-[0.3em] text-[10px] transition-all duration-300 rounded-sm shrink-0
+        ${side === 'BUY' 
+          ? 'border-green-500 text-green-500 hover:bg-green-500 hover:text-black' 
+          : 'border-red-600 text-red-600 hover:bg-red-600 hover:text-white'}`}>
+        EXECUTE {side}
+      </button>
 
-      <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
-        BSTZ Protocol · ADR Stabilization Active
+      <div className="space-y-3 mb-4 shrink-0 px-1 pointer-events-auto">
+        <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
+        <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
+          <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
+          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
+        </div>
+        <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
+          <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
+          <input type="range" min="10" max="100" value={euroStake} readOnly className="w-full h-1 bg-gray-950" style={{ accentColor: '#6b7280' }} />
+        </div>
+      </div>
+
+      <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
+        <div className="text-center mb-1">
+          <span className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">REQUIRED MARGIN</span>
+        </div>
+        <div className="text-center mb-2">
+          <span className="text-lg font-bold text-white leading-none">
+            {marginValue}%
+          </span>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
+          <div className="flex flex-col border-r border-gray-900/50 pr-2">
+            <span className="text-[11px] text-gray-600 uppercase font-bold mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
+            <span className="text-[17px] font-mono font-bold text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
+          </div>
+          <div className="flex flex-col pl-2 text-right">
+            <span className="text-[11px] text-gray-600 font-bold mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
+            <span className="text-[17px] font-mono font-bold text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
-
