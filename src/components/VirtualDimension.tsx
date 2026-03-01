@@ -42,7 +42,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       </div>
 
       {/* 3. LAST TICKER (Żółty) */}
-      <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+      <div className="mb-3 mx-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
         <div className="text-[10px] text-yellow-500 tracking-widest uppercase mb-2 text-center">
           LAST DEAL
         </div>
