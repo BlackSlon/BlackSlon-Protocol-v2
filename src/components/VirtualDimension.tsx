@@ -43,16 +43,14 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 3. LAST TICKER (Żółty) */}
       <div className="mb-3 mx-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+        <div className="text-[10px] text-yellow-500 tracking-widest uppercase mb-2">
+          LAST DEAL
+        </div>
         <div className="flex items-center justify-between px-2">
-          <div className="flex flex-col">
-            <div className="text-[10px] text-yellow-500 tracking-widest uppercase mb-2">
-              LAST DEAL
-            </div>
-            <div className="flex items-center">
-              <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
-              <span className="text-xl text-yellow-500">10.59</span>
-              <span className="text-[8px] text-gray-500 ml-1">Eur/100kWh</span>
-            </div>
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
+            <span className="text-xl text-yellow-500">10.59</span>
+            <span className="text-[8px] text-gray-500 ml-1">Eur/100kWh</span>
           </div>
           <div className="flex items-center">
             <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
