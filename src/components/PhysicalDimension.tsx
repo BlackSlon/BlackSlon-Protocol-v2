@@ -12,7 +12,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
   ]
 
   return (
-    <div className="flex flex-col h-full p-4 select-none bg-transparent font-mono text-white">
+    <div className="flex flex-col h-full p-4 bg-transparent font-mono text-white">
       {/* NAGŁÓWEK SEKCI */}
       <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4">
         <span>PHYSICAL MARKET DIMENSION</span>
