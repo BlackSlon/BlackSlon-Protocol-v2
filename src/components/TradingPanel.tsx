@@ -87,11 +87,11 @@ export default function TradingPanel() {
         EXECUTE {side}
       </button>
 
-      <div className="space-y-3 mb-4 shrink-0 px-1">
+      <div className="space-y-3 mb-4 shrink-0 px-1 pointer-events-auto">
         <div className="text-[11px] text-gray-500 uppercase font-bold tracking-tighter">Deposit Configuration</div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>€BSR STAKE</span><span>{bsrStake}%</span></div>
-          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 cursor-pointer" style={{ accentColor: '#3b82f6' }} />
+          <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
         </div>
         <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
           <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-[0.2em] mb-2"><span>eEURO STAKE</span><span>{euroStake}%</span></div> 
