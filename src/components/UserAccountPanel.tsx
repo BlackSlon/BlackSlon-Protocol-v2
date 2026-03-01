@@ -29,9 +29,10 @@ export default function UserAccountPanel() {
         <div className="w-[80%] border-b border-gray-800 mt-4" />
       </div>
 
-      {/* 2. LIQUIDITY SECTION - Wolne środki */}
-      <div className="p-4 border-b border-gray-900 bg-gradient-to-b from-black to-gray-950">
-        <div className="text-[8px] text-gray-600 uppercase font-black tracking-widest mb-2 italic">Available Liquidity</div>
+      <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
+        {/* 2. LIQUIDITY SECTION - Wolne środki */}
+        <div className="p-4 border-b border-gray-900 bg-gradient-to-b from-black to-gray-950">
+          <div className="text-[8px] text-gray-600 uppercase font-black tracking-widest mb-2 italic">Available Liquidity</div>
         <div className="flex justify-between items-baseline">
           <div className="flex flex-col">
             <span className="text-2xl font-black text-yellow-500 tracking-tighter">{balances.freeBSR}</span>
@@ -114,7 +115,7 @@ export default function UserAccountPanel() {
           </div>
         </div>
       </div>
-
+      </div>
     </div>
   )
 }

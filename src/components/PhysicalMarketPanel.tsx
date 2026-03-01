@@ -21,12 +21,13 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         <div className="w-[80%] border-b border-gray-800 mt-4" />
       </div>
 
-      {/* TYTUŁ: BlackSlon Trading Zone (BSTZ) - Power Poland (BS-P-PL) */}
-      <div className="text-center mb-4">
-        <div className="text-[11px] tracking-[0.1em] text-red-600">
-          BlackSlon Trading Zone (BSTZ) - Power Poland <span className="uppercase">(BS-P-PL)</span>
+      <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
+        {/* TYTUŁ: BlackSlon Trading Zone (BSTZ) - Power Poland (BS-P-PL) */}
+        <div className="text-center mb-4">
+          <div className="text-[11px] tracking-[0.1em] text-red-600">
+            BlackSlon Trading Zone (BSTZ) - Power Poland <span className="uppercase">(BS-P-PL)</span>
+          </div>
         </div>
-      </div>
 
       {/* ACTIVE BSTZ SEKCYJA */}
       <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
@@ -88,6 +89,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
 
       <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
         BSTZ Protocol · ADR Stabilization Active
+      </div>
       </div>
     </div>
   )

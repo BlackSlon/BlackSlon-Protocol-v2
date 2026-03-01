@@ -30,11 +30,12 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         <div className="w-[80%] border-b border-gray-800 mt-4" />
       </div>
 
-      {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
-      <div className="p-4 bg-gradient-to-b from-black to-gray-950">
-        <div className="text-[12px] tracking-widest text-red-600 italic mb-1">
-          BlackSlon Power Poland
-        </div>
+      <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
+        {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
+        <div className="p-4 bg-gradient-to-b from-black to-gray-950">
+          <div className="text-[12px] tracking-widest text-red-600 italic mb-1">
+            BlackSlon Power Poland
+          </div>
         <div className="flex justify-between items-center mt-2">
           <div className="flex gap-4">
             <span className="text-[10px] text-gray-500 uppercase font-normal">Instrument: <span className="text-gray-300">BS-P-PL</span></span>
@@ -128,6 +129,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
             <span className="text-blue-500/60 text-[11px] font-bold">1,245,000 kWh</span>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
