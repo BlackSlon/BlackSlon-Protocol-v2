@@ -24,7 +24,7 @@ export default function UserAccountPanel() {
       
       <div className="w-full pt-8 pb-2 flex flex-col items-center shrink-0">
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
-          USER'S ACCOUNT
+          USER'S ACCOUNT PANEL
         </div>
         <div className="w-[80%] border-b border-gray-800 mt-4" />
       </div>
