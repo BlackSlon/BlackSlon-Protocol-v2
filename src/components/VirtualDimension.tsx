@@ -30,7 +30,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 2. TYTUŁ INSTRUMENTU (Czerwony) */}
       <div className="p-4 border-b border-gray-800 bg-gradient-to-b from-black to-gray-950">
-        <div className="text-[12px] tracking-widest text-red-600 uppercase italic mb-1">
+        <div className="text-[12px] tracking-widest text-red-600 italic mb-1">
           BlackSlon Power Poland
         </div>
         <div className="flex justify-between items-center mt-2">
