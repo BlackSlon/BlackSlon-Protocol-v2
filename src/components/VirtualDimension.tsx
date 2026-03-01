@@ -42,17 +42,27 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       </div>
 
       {/* 3. LAST TICKER (Żółty) */}
-      <div className="grid grid-cols-2 border-b border-gray-800 bg-yellow-500/5 py-4">
-        <div className="text-center border-r border-gray-800 px-4">
-          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">LAST PRICE</div>
-          <div className="text-4xl font-black text-yellow-500 tracking-tighter">
-            10.59 <span className="text-[10px] text-yellow-800 font-normal">EUR</span>
-          </div>
-        </div>
-        <div className="text-center px-4">
-          <div className="text-[9px] text-gray-600 uppercase font-bold mb-1 tracking-widest">LAST VOLUME</div>
-          <div className="text-4xl font-black text-yellow-500 tracking-tighter">
-            1,250 <span className="text-[10px] text-yellow-800 font-normal">kWh</span>
+      <div className="border-b border-gray-800 bg-yellow-500/5 py-4 px-4">
+        <div className="flex flex-col">
+          <span className="text-[8px] text-gray-600 mb-2 uppercase italic text-center">
+            LAST MARKET DATA
+          </span>
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center">
+              <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
+              <span className="text-xl text-yellow-500">10.59</span>
+              <span className="text-[8px] text-gray-500 ml-1">EUR/100kWh</span>
+            </div>
+            <div className="flex items-center">
+              <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
+              <span className="text-xl text-yellow-500">1500</span>
+              <span className="text-[8px] text-gray-500 ml-1">kWh</span>
+            </div>
+            <div className="flex items-center">
+              <span className="text-[7px] text-gray-500 uppercase mr-2">UNIT:</span>
+              <span className="text-xl text-yellow-500">15</span>
+              <span className="text-[8px] text-gray-500 ml-1">BS-P-PL</span>
+            </div>
           </div>
         </div>
       </div>
