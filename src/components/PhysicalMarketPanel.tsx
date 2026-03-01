@@ -14,8 +14,11 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
   return (
     <div className="flex flex-col h-full p-4 bg-transparent font-mono text-white">
       {/* Header */}
-      <div className="text-[10px] text-gray-500 uppercase font-bold text-center py-2 border-b border-gray-900 bg-black/40 mb-4 font-mono" style={{ letterSpacing: '0.5em' }}>
-        Physical Market Panel
+      <div className="bg-black pt-5 pb-1">
+        <div className="text-[10px] text-gray-600 uppercase tracking-[0.5em] font-bold text-center">
+          Physical Market Panel
+        </div>
+        <div className="mx-8 border-b border-gray-900/50 mt-3"></div>
       </div>
 
       {/* TYTUŁ: BlackSlon Trading Zone (BSTZ) - Power Poland (BS-P-PL) */}
