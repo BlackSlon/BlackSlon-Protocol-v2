@@ -23,11 +23,11 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
       
-      <div className="w-full pt-8 pb-2 flex flex-col items-center shrink-0">
+      <div className="w-full pt-3 pb-2 flex flex-col items-center shrink-0">
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
           Virtual Market Panel
         </div>
-        <div className="w-[80%] border-b border-gray-800 mt-4" />
+        <div className="w-[80%] border-b border-gray-800 mt-2" />
       </div>
 
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
