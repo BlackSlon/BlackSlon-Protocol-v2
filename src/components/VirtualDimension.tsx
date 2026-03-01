@@ -43,26 +43,21 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 3. LAST TICKER (Żółty) */}
       <div className="border-b border-gray-800 bg-yellow-500/5 py-4 px-4">
-        <div className="flex flex-col">
-          <span className="text-[8px] text-gray-600 mb-2 uppercase italic text-center">
-            LAST MARKET DATA
-          </span>
-          <div className="flex flex-col items-center space-y-2">
-            <div className="flex items-center">
-              <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
-              <span className="text-xl text-yellow-500">10.59</span>
-              <span className="text-[8px] text-gray-500 ml-1">EUR/100kWh</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
-              <span className="text-xl text-yellow-500">1500</span>
-              <span className="text-[8px] text-gray-500 ml-1">kWh</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[7px] text-gray-500 uppercase mr-2">UNIT:</span>
-              <span className="text-xl text-yellow-500">15</span>
-              <span className="text-[8px] text-gray-500 ml-1">BS-P-PL</span>
-            </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
+            <span className="text-xl text-yellow-500">10.59</span>
+            <span className="text-[8px] text-gray-500 ml-1">Eur/100kWh</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
+            <span className="text-sm text-gray-400">1500</span>
+            <span className="text-[8px] text-gray-500 ml-1">kWh</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">UNIT:</span>
+            <span className="text-sm text-gray-400">15</span>
+            <span className="text-[8px] text-gray-500 ml-1">BS-P-PL</span>
           </div>
         </div>
       </div>
