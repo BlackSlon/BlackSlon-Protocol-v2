@@ -137,7 +137,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 5. BLACKSLON ENERGY INDEX BS-P-PL */}
       <div className="px-6 py-4 border-t border-gray-800 bg-black">
-        <div className="text-[10px] text-gray-600 uppercase tracking-[0.3em] font-bold mb-3">
+        <div className="text-[10px] tracking-widest text-amber-700 mb-3">
           BLACKSLON ENERGY INDEX BS-P-PL
         </div>
         <div className="flex justify-between items-center font-mono">
