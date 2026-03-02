@@ -46,16 +46,16 @@ export default function UserAccountPanel() {
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">Available Liquidity</div>
           <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:grid-cols-2 xs:grid-cols-1">
             <div className="border border-amber-500 rounded-sm py-1 px-3 overflow-hidden w-fit">
-              <div className="text-[8px] text-amber-500 uppercase tracking-widest mb-0">€BSR BALANCE</div>
-              <div className="text-lg text-amber-500 tracking-tighter leading-tight">3 200.00</div>
+              <div className="text-[8px] text-amber-500 uppercase tracking-widest mb-0 font-normal">€BSR BALANCE</div>
+              <div className="text-lg text-amber-500 tracking-tighter leading-tight font-normal">3 200.00</div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 overflow-hidden w-fit">
-              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0">eEURO BALANCE</div>
-              <div className="text-lg text-sky-400 tracking-tighter leading-tight">12 450.00</div>
+              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0 font-normal">eEURO BALANCE</div>
+              <div className="text-lg text-sky-400 tracking-tighter leading-tight font-normal">12 450.00</div>
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">Total Balance [EUR]</div>
-              <div className="text-lg text-gray-300 tracking-tighter leading-tight">{totalEURWithBSR}</div>
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0 font-normal">Total Balance [EUR]</div>
+              <div className="text-lg text-gray-300 tracking-tighter leading-tight font-normal">{totalEURWithBSR}</div>
             </div>
           </div>
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0 mt-4">BlackSlon Tokens Portfolio</div>
