@@ -102,7 +102,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
               <div key={i} className={i === 0 ? "grid grid-cols-3 py-0.5 px-4 border-b border-green-700/30 bg-green-700/10" : "grid grid-cols-3 py-0.5 px-4 border-b border-gray-900/50 hover:bg-green-700/10 transition-all group"}>
                 <div className="text-[11px] text-gray-400 self-center">{formatVolume(o.volume)}</div>
                 <div className="text-center text-[11px] self-center text-gray-400">{o.unit}</div>
-                <div className="text-right text-[11px] self-center text-gray-400">{o.price.toFixed(2)}</div>
+                <div className="text-right text-[11px] self-center text-green-700">{o.price.toFixed(2)}</div>
               </div>
             ))}
           </div>
@@ -130,7 +130,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex-grow overflow-hidden">
             {sellOrders.map((o, i) => (
               <div key={i} className={i === 0 ? "grid grid-cols-3 py-0.5 px-4 border-b border-red-500/30 bg-red-500/10" : "grid grid-cols-3 py-0.5 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all group"}>
-                <div className="text-left text-[11px] self-center text-gray-400">{o.price.toFixed(2)}</div>
+                <div className="text-left text-[11px] self-center text-red-600">{o.price.toFixed(2)}</div>
                 <div className="text-center text-[11px] self-center text-gray-400">{o.unit}</div>
                 <div className="text-right text-[11px] text-gray-400 self-center">{formatVolume(o.volume)}</div>
               </div>
