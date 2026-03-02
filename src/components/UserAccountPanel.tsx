@@ -12,19 +12,14 @@ export default function UserAccountPanel() {
   ]
 
   const vaultLiquidity = {
-    lockedBSR: '1,250.40',
+    lockedBSR: '1 250.40',
     lockedEUR: '450.00'
   }
 
   const bsrPriceHistory = [10.2, 10.5, 10.3, 10.8, 10.6, 10.9, 11.1, 10.7, 11.2, 10.8]
   const hFactor = '2.48'
 
-  // Dane dla wykresu €BSR/EUR z ostatnich 3 dni
-  const bsrEurData = [
-    { day: 'Dzień 1', price: 1.20 },
-    { day: 'Dzień 2', price: 1.23 },
-    { day: 'Dzień 3', price: 1.45 }
-  ]
+  const bsrEurRate = '1 250.40'
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
@@ -120,40 +115,12 @@ export default function UserAccountPanel() {
             </div>
           </div>
 
-          {/* BLACKSLON RESERVE €BSR/EUR CHART */}
+          {/* BLACKSLON RESERVE €BSR/EUR */}
           <div className="mt-4">
             <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2">BlackSlon Reserve (€BSR/EUR)</div>
-            <div className="bg-gray-900/50 border border-gray-800 rounded-sm p-2">
-              <div className="text-[8px] text-gray-500 mb-1">Live - Last 3 Days</div>
-              <ResponsiveContainer width="100%" height={80}>
-                <LineChart data={bsrEurData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis 
-                    dataKey="day" 
-                    tick={{ fontSize: 8, fill: '#9CA3AF' }}
-                    axisLine={{ stroke: '#374151' }}
-                  />
-                  <YAxis 
-                    tick={{ fontSize: 8, fill: '#9CA3AF' }}
-                    axisLine={{ stroke: '#374151' }}
-                    domain={['dataMin - 0.05', 'dataMax + 0.05']}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#111827', 
-                      border: '1px solid #374151',
-                      fontSize: '10px'
-                    }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="price" 
-                    stroke="#F59E0B" 
-                    strokeWidth={2}
-                    dot={{ fill: '#F59E0B', r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-sm py-1.5 px-3 overflow-hidden">
+              <div className="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Current Rate</div>
+              <div className="text-lg text-yellow-500 tracking-tighter leading-tight">{bsrEurRate}</div>
             </div>
           </div>
         </div>
