@@ -122,7 +122,7 @@ export default function UserAccountPanel() {
           {/* BLACKSLON RESERVE €BSR/EUR */}
           <div className="mt-4">
             <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2">BlackSlon Reserve (€BSR/EUR)</div>
-            <div className="bg-gray-900/50 border border-gray-800 rounded-sm py-2.5 px-3 overflow-hidden">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-sm py-2.5 px-3 overflow-hidden w-fit">
               <div className="text-lg text-amber-500 tracking-tighter leading-tight">{bsrEurRate}</div>
             </div>
           </div>
