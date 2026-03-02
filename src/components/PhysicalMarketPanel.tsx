@@ -36,7 +36,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         </div>
 
         {/* RANGES */}
-        <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+        <div className="mb-3 p-3 border border-yellow-500/40 rounded-sm">
           <div className="flex flex-col">
             <div className="flex items-center justify-between px-2">
               {/* Żółte wartości są teraz wyraźnie większe i ważniejsze (text-xl) */}
@@ -66,7 +66,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           <div className="grid grid-cols-12 text-[9px] text-gray-600 font-bold uppercase pb-1 border-b border-gray-900 mb-2">
             <div className="col-span-3">Ref / Date</div>
             <div className="col-span-2 text-center">Min</div>
-            <div className="col-span-2 text-center text-gray-400">Anchor</div>
+            <div className="col-span-2 text-center text-gray-400 font-normal">Anchor</div>
             <div className="col-span-2 text-center">Max</div>
             <div className="col-span-3 text-right">Trend</div>
           </div>

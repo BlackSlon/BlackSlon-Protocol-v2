@@ -101,11 +101,11 @@ export default function UserAccountPanel() {
         <div className="mb-6 px-0">
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2">BlackSlon Vault</div>
           <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:grid-cols-2 xs:grid-cols-1">
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
+            <div className="border border-amber-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-amber-800 uppercase tracking-widest mb-0">Locked €BSR</div>
               <div className="text-lg text-amber-500 tracking-tighter leading-tight">{vaultLiquidity.lockedBSR}</div>
             </div>
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
+            <div className="border border-blue-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-0">Locked eEURO</div>
               <div className="text-lg text-blue-500 tracking-tighter leading-tight">{vaultLiquidity.lockedEUR}</div>
             </div>

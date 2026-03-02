@@ -57,7 +57,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       
       {/* 3. LAST DEAL FRAME */}
-      <div className="mb-3 mx-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+      <div className="mb-3 mx-3 p-3 border border-yellow-500/40 rounded-sm">
         <div className="flex items-center justify-between px-2 flex-nowrap gap-2">
           <div className="flex items-center whitespace-nowrap shrink-0">
             <span className="text-[7px] text-gray-500 uppercase mr-1">LAST PRICE:</span>
