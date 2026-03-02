@@ -50,7 +50,7 @@ export default function UserAccountPanel() {
               <div className="text-lg text-yellow-500 tracking-tighter leading-tight">3 200.00</div>
             </div>
           </div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0.5 mt-2">BlackSlon Tokens Portfolio</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0.5 mt-4">BlackSlon Tokens Portfolio</div>
         </div>
         
         {/* TABLE INVENTORY */}
