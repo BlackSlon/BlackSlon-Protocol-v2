@@ -58,7 +58,7 @@ export default function UserAccountPanel() {
           {/* Table Header */}
           <div className="grid grid-cols-5 text-[7px] text-white uppercase px-2 py-1 border-b border-gray-900">
             <div className="tracking-widest">Token</div>
-            <div className="text-center tracking-widest">Qty (kWh)</div>
+            <div className="text-center tracking-widest">Volume (kWh)</div>
             <div className="text-center tracking-widest">Avg</div>
             <div className="text-center tracking-widest">Last</div>
             <div className="text-right tracking-widest">PnL (EUR)</div>
