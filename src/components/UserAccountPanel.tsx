@@ -43,14 +43,7 @@ export default function UserAccountPanel() {
       {/* BLACKSLON PORTFOLIO SECTION */}
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0 space-y-6">
         <div className="pl-0 pr-0 pt-4 pb-2 bg-gradient-to-b from-black to-gray-950 w-full">
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0.5">BlackSlon User's Data</div>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4">
-              <span className="text-[10px] text-gray-500 uppercase font-normal">UID: <span className="text-yellow-500">BS-PRO-001</span></span>
-              <span className="text-[10px] text-gray-500 uppercase font-normal">Mode: <span className="text-green-500 animate-pulse font-black">CONNECTED</span></span>
-            </div>
-          </div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-3">Available Liquidity</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">Available Liquidity</div>
           <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:grid-cols-2 xs:grid-cols-1">
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">€BSR BALANCE</div>
@@ -154,6 +147,10 @@ export default function UserAccountPanel() {
 
       {/* CONNECT WALLET BUTTON */}
       <div className="px-6 py-2 w-full">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[9px] text-gray-600 uppercase tracking-widest">UID: <span className="text-gray-400">BS-PRO-001</span></span>
+          <span className="text-[9px] text-gray-600 uppercase tracking-widest">Mode: <span className="text-green-500 animate-pulse font-black">CONNECTED</span></span>
+        </div>
         <button className="w-full py-3 bg-gray-800 text-gray-400 uppercase tracking-[0.3em] text-[10px] border border-gray-700 hover:bg-gray-700 hover:text-gray-300 transition-all">
           CONNECT WALLET
         </button>
