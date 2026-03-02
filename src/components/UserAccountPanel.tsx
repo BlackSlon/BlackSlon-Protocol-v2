@@ -56,7 +56,7 @@ export default function UserAccountPanel() {
         {/* TABLE INVENTORY */}
         <div className="mb-4">
           {/* Table Header */}
-          <div className="grid grid-cols-5 text-[7px] text-gray-700 uppercase px-2 py-1 border-b border-gray-900">
+          <div className="grid grid-cols-5 text-[7px] text-white uppercase px-2 py-1 border-b border-gray-900">
             <div className="tracking-widest">Token</div>
             <div className="text-center tracking-widest">Qty (kWh)</div>
             <div className="text-center tracking-widest">Avg</div>
