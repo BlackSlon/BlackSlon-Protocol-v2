@@ -90,33 +90,33 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         </div>
 
         {/* FUNDAMENTALS OF PHYSICAL MARKET */}
-        <div className="px-6 py-4 border-t border-gray-900 pt-4 mt-auto">
+        <div className="px-6 py-4 border-t border-gray-900 pt-5 mt-auto">
           <div className="text-[10px] text-gray-600 uppercase tracking-[0.3em] font-bold mb-3">
             Fundamentals of Physical Market
           </div>
           <div className="grid grid-cols-2 gap-4 font-mono">
-            {/* SYSTEM LOAD */}
+            {/* ANNUAL CONSUMPTION */}
             <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase">SYSTEM LOAD</span>
-              <span className="text-[11px] font-black text-white">~19.4 GW</span>
+              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">ANNUAL CONSUMPTION</span>
+              <span className="text-[11px] font-black text-white">174.2 TWh</span>
             </div>
             
-            {/* GRID FREQ */}
+            {/* NET IMPORT/EXPORT */}
             <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase">GRID FREQ</span>
-              <span className="text-[11px] font-black text-green-500">50.02 Hz</span>
+              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">NET IMPORT/EXPORT</span>
+              <span className="text-[11px] font-black text-white">IMPORT <span className="text-blue-400">3.2%</span></span>
             </div>
             
-            {/* CO2 INTENSITY */}
+            {/* FOSSIL GEN (AVG) */}
             <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase">CO2 INTENSITY</span>
-              <span className="text-[11px] font-black text-gray-400">680 g/kWh</span>
+              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">FOSSIL GEN (AVG)</span>
+              <span className="text-[11px] font-black text-white">COAL 62% | GAS 7%</span>
             </div>
             
-            {/* GEN MIX */}
+            {/* RENEWABLES (AVG) */}
             <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase">GEN MIX</span>
-              <span className="text-[11px] font-black text-white">COAL 62% | <span className="text-yellow-500">RES 38%</span></span>
+              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">RENEWABLES (AVG)</span>
+              <span className="text-[11px] font-black text-white"><span className="text-yellow-500">RES 31%</span> (Wind/PV/Hydro)</span>
             </div>
           </div>
         </div>
