@@ -76,9 +76,9 @@ export default function UserAccountPanel() {
           ))}
         </div>
 
-        {/* VAULT LIQUIDITY */}
+        {/* BLACKSLON VAULT */}
         <div className="mb-4">
-          <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-2">Vault Liquidity</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2">BlackSlon Vault</div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xs:grid-cols-1">
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-sm py-1.5 px-3">
               <div className="text-[8px] text-yellow-800 uppercase tracking-widest mb-1">Locked €BSR</div>
