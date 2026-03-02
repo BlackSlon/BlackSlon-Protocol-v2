@@ -97,8 +97,8 @@ export default function UserAccountPanel() {
 
       {/* RISK MANAGEMENT SECTION */}
       <div className="px-6 py-4 border-t border-gray-900 bg-black w-full sm:px-2">
-        <div className="text-[8px] text-red-600 uppercase tracking-widest mb-3">
-          BLACKSLON RISK MANAGEMENT
+        <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2">
+          BlackSlon Risk Management
         </div>
         
         <div className="flex justify-between items-center mb-4">
