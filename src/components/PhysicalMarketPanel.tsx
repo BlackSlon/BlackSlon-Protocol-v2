@@ -45,10 +45,11 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
                 <span className="text-xl text-yellow-500">9.09</span>
               </div>
               
-              {/* Zielony Anchor teraz również text-xl dla spójności */}
-              <div className="flex flex-col items-center opacity-80">
+              {/* Szary Anchor - mniejszy i mniej widoczny */}
+              <div className="flex flex-col items-center">
                 <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor</span>
-                <span className="text-xl text-green-500">{currentPrice.toFixed(2)}</span>
+                <span className="text-[11px] text-gray-600">{currentPrice.toFixed(2)}</span>
+                <span className="text-[6px] text-gray-500">EUR/100kWh</span>
               </div>
               
               <div className="flex flex-col items-center">
