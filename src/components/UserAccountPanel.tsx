@@ -47,15 +47,15 @@ export default function UserAccountPanel() {
           <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:grid-cols-2 xs:grid-cols-1">
             <div className="border border-amber-500 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-amber-500 uppercase tracking-widest mb-0 font-normal">€BSR BALANCE</div>
-              <div className="text-lg text-amber-500 tracking-tighter leading-tight font-normal">3 200.00</div>
+              <div className="text-sm text-amber-500 tracking-tighter leading-tight font-normal">3 200.00</div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0 font-normal">eEURO BALANCE</div>
-              <div className="text-lg text-sky-400 tracking-tighter leading-tight font-normal">12 450.00</div>
+              <div className="text-sm text-sky-400 tracking-tighter leading-tight font-normal">12 450.00</div>
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0 font-normal">Total Balance [EUR]</div>
-              <div className="text-lg text-gray-300 tracking-tighter leading-tight font-normal">{totalEURWithBSR}</div>
+              <div className="text-sm text-gray-300 tracking-tighter leading-tight font-normal">{totalEURWithBSR}</div>
             </div>
           </div>
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0 mt-4">BlackSlon Tokens Portfolio</div>
@@ -96,15 +96,15 @@ export default function UserAccountPanel() {
           <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:grid-cols-2 xs:grid-cols-1">
             <div className="border border-amber-500 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-amber-500 uppercase tracking-widest mb-0">Locked €BSR</div>
-              <div className="text-lg text-amber-500 tracking-tighter leading-tight">{vaultLiquidity.lockedBSR}</div>
+              <div className="text-sm text-amber-500 tracking-tighter leading-tight">{vaultLiquidity.lockedBSR}</div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0">Locked eEURO</div>
-              <div className="text-lg text-sky-400 tracking-tighter leading-tight">{vaultLiquidity.lockedEUR}</div>
+              <div className="text-sm text-sky-400 tracking-tighter leading-tight">{vaultLiquidity.lockedEUR}</div>
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">Total Locked Value [EUR]</div>
-              <div className="text-lg text-gray-300 tracking-tighter leading-tight">{totalLockedEUR}</div>
+              <div className="text-sm text-gray-300 tracking-tighter leading-tight">{totalLockedEUR}</div>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function UserAccountPanel() {
           <div className="flex justify-between items-center mb-4">
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">H-Factor (H-BSTZ)</span>
-              <span className="text-lg text-gray-300 tracking-tighter leading-tight">
+              <span className="text-sm text-gray-300 tracking-tighter leading-tight">
                 {hFactor}
               </span>
             </div>
@@ -135,9 +135,9 @@ export default function UserAccountPanel() {
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0"></div>
                 <div className="text-[8px] text-amber-500 uppercase tracking-widest">LIVE</div>
-                <span className="text-lg text-amber-500 tracking-tighter leading-none">1 €BSR</span>
-                <span className="text-lg text-gray-600 tracking-tighter leading-none mx-1">=</span>
-                <span className="text-lg text-sky-400 tracking-tighter leading-none">2.45 eEURO</span>
+                <span className="text-sm text-amber-500 tracking-tighter leading-none">1 €BSR</span>
+                <span className="text-sm text-gray-600 tracking-tighter leading-none mx-1">=</span>
+                <span className="text-sm text-sky-400 tracking-tighter leading-none">2.45 eEURO</span>
               </div>
               <button className="ml-auto text-[7px] uppercase tracking-widest text-gray-600 border border-gray-800 px-2 py-0.5 hover:text-gray-400 hover:border-gray-600 transition-all rounded-sm">
                 HISTORY

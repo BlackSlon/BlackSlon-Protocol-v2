@@ -113,7 +113,7 @@ export default function TradingPanel() {
             <span className="text-[9px] text-gray-400 uppercase tracking-tighter">REQUIRED MARGIN</span>
           </div>
           <div className="text-center mb-2">
-            <span className="text-lg text-gray-400 leading-none">
+            <span className="text-sm text-gray-400 leading-none">
               {marginValue}%
             </span>
           </div>
@@ -121,11 +121,11 @@ export default function TradingPanel() {
           <div className="flex flex-wrap gap-2 border-t border-gray-900/50 pt-2 pb-2">
             <div className="border border-amber-700 rounded-sm py-1 px-3 w-fit">
               <div className="text-[8px] text-amber-700 uppercase tracking-widest mb-0">€BSR Deposit Value</div>
-              <div className="text-lg text-amber-700 tracking-tighter leading-tight">{bsrReq} BSR</div>
+              <div className="text-sm text-amber-700 tracking-tighter leading-tight">{bsrReq} BSR</div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 w-fit ml-auto">
               <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0">eEURO Deposit Value</div>
-              <div className="text-lg text-sky-400 tracking-tighter leading-tight">{euroReq} EUR</div>
+              <div className="text-sm text-sky-400 tracking-tighter leading-tight">{euroReq} EUR</div>
             </div>
           </div>
         </div>
