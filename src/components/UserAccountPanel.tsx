@@ -85,7 +85,7 @@ export default function UserAccountPanel() {
                 <div key={index} className="grid grid-cols-6 items-center py-1 px-2 border-b border-gray-900 w-full hover:bg-gray-900/40 transition-colors">
                   <div className={`w-[20%] text-[11px] ${item.color === 'yellow' ? 'text-yellow-500' : 'text-blue-500'} whitespace-nowrap`}>{item.token}</div>
                   <div className="w-[15%] text-center text-[11px] text-gray-400">{item.unit}</div>
-                  <div className="w-[20%] text-center text-[11px] text-gray-400">{item.quantity}</div>
+                  <div className="w-[20%] text-center text-[11px] text-gray-400 whitespace-nowrap">{item.quantity}</div>
                   <div className="w-[15%] text-center text-[11px] text-gray-400">{item.avgPrice}</div>
                   <div className="w-[15%] text-center text-[11px] text-gray-400">{item.lastPrice}</div>
                   <div className={`w-[15%] text-right text-[11px] ${item.pnl.startsWith('+') ? 'text-green-500' : 'text-red-600'}`}>
