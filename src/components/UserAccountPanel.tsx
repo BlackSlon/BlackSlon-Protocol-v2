@@ -64,7 +64,7 @@ export default function UserAccountPanel() {
           <div className="mb-0">
             {/* Table Header */}
             <div className="table-fixed w-full">
-              <div className="grid grid-cols-6 text-[7px] text-white uppercase px-2 py-1 border-b border-gray-900 w-full">
+              <div className="grid grid-cols-6 text-[7px] text-gray-500 font-normal uppercase px-2 py-1 border-b border-gray-900 w-full">
                 <div className="w-[20%] tracking-widest">Token</div>
                 <div className="w-[15%] text-center tracking-widest">Unit</div>
                 <div className="w-[20%] text-center tracking-widest normal-case">Volume (kWh)</div>
