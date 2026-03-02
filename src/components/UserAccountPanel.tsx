@@ -135,7 +135,9 @@ export default function UserAccountPanel() {
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0"></div>
                 <div className="text-[8px] text-amber-500 uppercase tracking-widest">LIVE</div>
-                <div className="text-lg text-amber-500 tracking-tighter leading-none">{bsrEurRate}</div>
+                <span className="text-lg text-amber-500 tracking-tighter leading-none">1 €BSR</span>
+                <span className="text-lg text-gray-600 tracking-tighter leading-none mx-1">=</span>
+                <span className="text-lg text-sky-400 tracking-tighter leading-none">2.45 eEURO</span>
               </div>
               <button className="ml-auto text-[7px] uppercase tracking-widest text-gray-600 border border-gray-800 px-2 py-0.5 hover:text-gray-400 hover:border-gray-600 transition-all rounded-sm">
                 HISTORY
