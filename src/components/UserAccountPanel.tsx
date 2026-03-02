@@ -32,14 +32,14 @@ export default function UserAccountPanel() {
       {/* BLACKSLON PORTFOLIO SECTION */}
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0 sm:px-2">
         <div className="p-4 bg-gradient-to-b from-black to-gray-950 w-full sm:p-4">
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 px-2">BlackSlon User's Data</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon User's Data</div>
           <div className="flex justify-between items-center">
             <div className="flex gap-4">
               <span className="text-[10px] text-gray-500 uppercase font-normal">UID: <span className="text-yellow-500">BS-PRO-001</span></span>
               <span className="text-[10px] text-gray-500 uppercase font-normal">Mode: <span className="text-green-500 animate-pulse font-black">CONNECTED</span></span>
             </div>
           </div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2 mt-3 px-2">Available Liquidity</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2 mt-3">Available Liquidity</div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xs:grid-cols-1">
             <div className="border border-blue-500/30 rounded-sm py-1.5 px-3 overflow-hidden">
               <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-1">eEURO BALANCE</div>
@@ -50,7 +50,7 @@ export default function UserAccountPanel() {
               <div className="text-lg text-yellow-500 tracking-tighter leading-tight">3 200.00</div>
             </div>
           </div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2 px-2">BlackSlon Tokens Portfolio</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2">BlackSlon Tokens Portfolio</div>
         </div>
         
         {/* TABLE INVENTORY */}
