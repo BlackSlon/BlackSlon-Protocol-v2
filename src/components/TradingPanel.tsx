@@ -110,7 +110,7 @@ export default function TradingPanel() {
 
         {/* BSR <-> eEURO EXCHANGE */}
         <div className="mb-2 shrink-0 px-1">
-          <div className="text-[9px] text-gray-500 uppercase tracking-tighter mb-1">€BSR ↔ <span className="normal-case">e</span>EURO Exchange</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon €BSR Tokens</div>
           <div className="border border-gray-900 rounded-sm px-2 py-1">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest">Rate</span>
