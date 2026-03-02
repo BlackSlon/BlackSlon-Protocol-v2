@@ -38,8 +38,8 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         {/* RANGES */}
         <div className="mb-3 px-2 py-2 border border-yellow-500/40 rounded-sm">
           <div className="flex justify-between items-center mb-1">
-            <div className="text-[6px] text-gray-600 tracking-widest">EUR / 100kWh</div>
             <div className="text-[6px] text-amber-700 uppercase tracking-widest">Valid today · 02.03.2026</div>
+            <div className="text-[6px] text-gray-600 tracking-widest">EUR / 100kWh</div>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
