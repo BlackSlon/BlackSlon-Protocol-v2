@@ -29,6 +29,30 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           </div>
         </div>
 
+        {/* RANGES */}
+        <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between px-2">
+              {/* Żółte wartości są teraz wyraźnie większe i ważniejsze (text-xl) */}
+              <div className="flex flex-col items-center">
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Min</span>
+                <span className="text-xl text-yellow-500">9.09</span>
+              </div>
+              
+              {/* Zielony Anchor teraz również text-xl dla spójności */}
+              <div className="flex flex-col items-center opacity-80">
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor</span>
+                <span className="text-xl text-green-500">{currentPrice.toFixed(2)}</span>
+              </div>
+              
+              <div className="flex flex-col items-center">
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Max</span>
+                <span className="text-xl text-yellow-500">11.11</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         
         {/* HISTORICAL TABLE */}
         <div className="flex-grow overflow-hidden">
