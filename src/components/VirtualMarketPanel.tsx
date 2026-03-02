@@ -104,7 +104,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
               <div key={i} className={i === 0 ? "grid grid-cols-3 py-2 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all group" : "grid grid-cols-3 py-0.5 px-4 border-b border-gray-900/50 hover:bg-green-500/10 transition-all group"}>
                 <div className={i === 0 ? "text-[11px] text-gray-400 self-center" : "text-[11px] text-gray-400 self-center"}>{formatVolume(o.volume)}</div>
                 <div className={i === 0 ? "text-center text-green-500 text-[11px] self-center" : "text-center text-green-500 text-[11px] self-center"}>{o.unit}</div>
-                <div className={i === 0 ? "text-xl text-green-500 tracking-tighter leading-none text-right self-center sm:text-base" : "text-right text-[11px] text-green-500 self-center"}>{o.price.toFixed(2)}</div>
+                <div className={i === 0 ? "text-xl text-green-500 tracking-tighter leading-none text-right self-center sm:text-sm" : "text-right text-[11px] text-green-500 self-center"}>{o.price.toFixed(2)}</div>
               </div>
             ))}
           </div>
@@ -132,7 +132,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex-grow overflow-hidden">
             {sellOrders.map((o, i) => (
               <div key={i} className={i === 0 ? "grid grid-cols-3 py-2 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all group" : "grid grid-cols-3 py-0.5 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all group"}>
-                <div className={i === 0 ? "text-xl text-red-500 tracking-tighter leading-none self-center sm:text-base" : "text-left text-[11px] text-red-500 self-center"}>{o.price.toFixed(2)}</div>
+                <div className={i === 0 ? "text-xl text-red-500 tracking-tighter leading-none self-center sm:text-sm" : "text-left text-[11px] text-red-500 self-center"}>{o.price.toFixed(2)}</div>
                 <div className={i === 0 ? "text-center text-red-500 text-[11px] self-center" : "text-center text-red-500 text-[11px] self-center"}>{o.unit}</div>
                 <div className={i === 0 ? "text-right text-[11px] text-gray-400 self-center" : "text-right text-[11px] text-gray-400 self-center"}>{formatVolume(o.volume)}</div>
               </div>
