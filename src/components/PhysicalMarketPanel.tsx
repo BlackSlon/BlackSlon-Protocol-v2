@@ -27,42 +27,9 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           <div className="text-[11px] tracking-[0.1em] text-amber-700">
             BlackSlon Trading Zone
           </div>
-          <div className="flex justify-between items-center mt-2">
-            <div className="flex gap-4">
-              <span className="text-[10px] text-gray-500 uppercase font-normal">Instrument: <span className="text-yellow-500">BS-P-PL</span></span>
-              <span className="text-[10px] text-gray-500 uppercase font-normal">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
-            </div>
-          </div>
         </div>
 
-        {/* RANGES */}
-        <div className="mb-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
-          <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-2 text-center">
-            Status: <span className="text-green-500 animate-pulse font-black">LIVE</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[8px] text-gray-600 mb-2 uppercase text-center">RANGE in EUR/100kWh</span>
-            <div className="flex items-center justify-between px-2">
-              {/* Żółte wartości są teraz wyraźnie większe i ważniejsze (text-xl) */}
-              <div className="flex flex-col items-center">
-                <span className="text-[7px] text-gray-500 uppercase mb-0">Min</span>
-                <span className="text-xl text-yellow-500">9.09</span>
-              </div>
-              
-              {/* Zielony Anchor teraz również text-xl dla spójności */}
-              <div className="flex flex-col items-center opacity-80">
-                <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor</span>
-                <span className="text-xl text-green-500">{currentPrice.toFixed(2)}</span>
-              </div>
-              
-              <div className="flex flex-col items-center">
-                <span className="text-[7px] text-gray-500 uppercase mb-0">Max</span>
-                <span className="text-xl text-yellow-500">11.11</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        
         {/* HISTORICAL TABLE */}
         <div className="flex-grow overflow-hidden">
           <div className="grid grid-cols-12 text-[9px] text-gray-600 font-bold uppercase pb-1 border-b border-gray-900 mb-2">
@@ -81,7 +48,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
                   <span className="text-[8px] text-gray-200 leading-tight">{row.date}</span>
                 </div>
                 <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.min.toFixed(2)}</div>
-                <div className="col-span-2 text-[11px] text-gray-300 text-center">{row.anchor.toFixed(2)}</div>
+                <div className="col-span-2 text-[11px] text-gray-600 text-center">{row.anchor.toFixed(2)}</div>
                 <div className="col-span-2 text-[11px] text-gray-500 text-center">{row.max.toFixed(2)}</div>
                 <div className={`col-span-3 text-[11px] text-right ${row.change >= 0 ? 'text-green-700' : 'text-red-700'}`}>
                   {row.change >= 0 ? '▲' : '▼'} {row.trend}
