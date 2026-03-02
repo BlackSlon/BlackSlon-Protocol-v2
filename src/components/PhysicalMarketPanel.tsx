@@ -65,9 +65,9 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
         <div className="flex-grow overflow-hidden">
           <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-900 mb-2">
             <div className="col-span-3 text-gray-400 font-bold">Ref / Date</div>
-            <div className="col-span-2 text-center text-yellow-600 font-bold">Min</div>
+            <div className="col-span-2 text-center text-red-600 font-bold">Min</div>
             <div className="col-span-2 text-center text-gray-600 font-normal">Anchor</div>
-            <div className="col-span-2 text-center text-yellow-600 font-bold">Max</div>
+            <div className="col-span-2 text-center text-teal-600 font-bold">Max</div>
             <div className="col-span-3 text-right text-gray-500 font-bold">Trend</div>
           </div>
 
@@ -78,9 +78,9 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
                   <span className="text-[11px] text-gray-400">{row.label}</span>
                   <span className="text-[8px] text-gray-500 leading-tight">{row.date}</span>
                 </div>
-                <div className="col-span-2 text-[11px] text-yellow-600 text-center">{row.min.toFixed(2)}</div>
+                <div className="col-span-2 text-[11px] text-red-600 text-center">{row.min.toFixed(2)}</div>
                 <div className="col-span-2 text-[11px] text-gray-600 text-center">{row.anchor.toFixed(2)}</div>
-                <div className="col-span-2 text-[11px] text-yellow-600 text-center">{row.max.toFixed(2)}</div>
+                <div className="col-span-2 text-[11px] text-teal-600 text-center">{row.max.toFixed(2)}</div>
                 <div className={`col-span-3 text-[11px] text-right ${row.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {row.change >= 0 ? '▲' : '▼'} {row.trend}
                 </div>
