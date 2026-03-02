@@ -19,7 +19,7 @@ export default function UserAccountPanel() {
   const bsrPriceHistory = [10.2, 10.5, 10.3, 10.8, 10.6, 10.9, 11.1, 10.7, 11.2, 10.8]
   const hFactor = '2.48'
 
-  const bsrEurRate = '1 250.40'
+  const bsrEurRate = '1 €BSR = 2.45 eEURO'
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
@@ -121,7 +121,6 @@ export default function UserAccountPanel() {
           <div className="mt-4">
             <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2">BlackSlon Reserve (€BSR/EUR)</div>
             <div className="bg-gray-900/50 border border-gray-800 rounded-sm py-2.5 px-3 overflow-hidden">
-              <div className="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Current Rate</div>
               <div className="text-lg text-yellow-500 tracking-tighter leading-tight">{bsrEurRate}</div>
             </div>
           </div>
@@ -129,7 +128,7 @@ export default function UserAccountPanel() {
         </div>
 
       {/* CONNECT WALLET BUTTON */}
-      <div className="px-6 py-4 w-full">
+      <div className="px-6 py-2 w-full">
         <button className="w-full py-3 bg-gray-800 text-gray-400 uppercase tracking-[0.3em] text-[10px] border border-gray-700 hover:bg-gray-700 hover:text-gray-300 transition-all">
           CONNECT WALLET
         </button>
