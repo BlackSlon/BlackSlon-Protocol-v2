@@ -150,42 +150,42 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           {/* D-1 */}
           <div className="flex flex-col items-center text-center flex-shrink-0">
             <span className="text-[9px] text-gray-500">D-1</span>
-            <span className="text-[11px] text-gray-400">10.59</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">10.59</span>
             <span className="text-[9px] text-green-500">+4.2%</span>
           </div>
           
           {/* W-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">W-1</span>
-            <span className="text-[11px] text-gray-400">10.72</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">10.72</span>
             <span className="text-[9px] text-green-500">+3.1%</span>
           </div>
           
           {/* M-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">M-1</span>
-            <span className="text-[11px] text-gray-400">10.85</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">10.85</span>
             <span className="text-[9px] text-green-500">+2.4%</span>
           </div>
           
           {/* Q-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">Q-1</span>
-            <span className="text-[11px] text-gray-400">10.95</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">10.95</span>
             <span className="text-[9px] text-green-500">+1.8%</span>
           </div>
           
           {/* H-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">H-1</span>
-            <span className="text-[11px] text-gray-400">11.02</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">11.02</span>
             <span className="text-[9px] text-green-500">+1.2%</span>
           </div>
           
           {/* Y-1 */}
           <div className="flex flex-col items-center text-center flex-shrink-0">
             <span className="text-[9px] text-gray-500">Y-1</span>
-            <span className="text-[11px] text-gray-400">9.87</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">9.87</span>
             <span className="text-[9px] text-green-500">+5.8%</span>
           </div>
         </div>
@@ -200,42 +200,42 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           {/* D-1 */}
           <div className="flex flex-col items-center text-center flex-shrink-0">
             <span className="text-[9px] text-gray-500">D-1</span>
-            <span className="text-[11px] text-gray-400">1,245</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">1,245</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
           
           {/* W-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">W-1</span>
-            <span className="text-[11px] text-gray-400">8,715</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">8,715</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
           
           {/* M-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">M-1</span>
-            <span className="text-[11px] text-gray-400">37,440</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">37,440</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
           
           {/* Q-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">Q-1</span>
-            <span className="text-[11px] text-gray-400">112,320</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">112,320</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
           
           {/* H-1 */}
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4 flex-shrink-0 sm:px-2">
             <span className="text-[9px] text-gray-500">H-1</span>
-            <span className="text-[11px] text-gray-400">224,640</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">224,640</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
           
           {/* Y-1 */}
           <div className="flex flex-col items-center text-center flex-shrink-0">
             <span className="text-[9px] text-gray-500">Y-1</span>
-            <span className="text-[11px] text-gray-400">449,280</span>
+            <span className="text-[11px] text-gray-400 sm:text-[10px]">449,280</span>
             <span className="text-[7px] text-gray-600">MWh</span>
           </div>
         </div>
