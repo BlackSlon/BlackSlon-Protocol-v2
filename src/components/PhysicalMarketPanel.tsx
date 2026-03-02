@@ -98,25 +98,25 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             {/* ANNUAL CONSUMPTION */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">ANNUAL CONSUMPTION</span>
-              <span className="text-[11px] font-black text-white">174.2 TWh</span>
+              <span className="text-[11px] font-black text-gray-400">174.2 TWh</span>
             </div>
             
             {/* NET IMPORT/EXPORT */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">NET IMPORT/EXPORT</span>
-              <span className="text-[11px] font-black text-white">IMPORT <span className="text-blue-400">3.2%</span></span>
+              <span className="text-[11px] font-black text-gray-400">IMPORT <span className="text-blue-400">3.2%</span></span>
             </div>
             
             {/* FOSSIL GEN (AVG) */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">FOSSIL GEN (AVG)</span>
-              <span className="text-[11px] font-black text-white">COAL 62% | GAS 7%</span>
+              <span className="text-[11px] font-black text-gray-400">COAL 62% | GAS 7%</span>
             </div>
             
             {/* RENEWABLES (AVG) */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">RENEWABLES (AVG)</span>
-              <span className="text-[11px] font-black text-white"><span className="text-yellow-500">RES 31%</span> (Wind/PV/Hydro)</span>
+              <span className="text-[11px] font-black text-gray-400"><span className="text-yellow-500">RES 31%</span> (Wind/PV/Hydro)</span>
             </div>
           </div>
         </div>

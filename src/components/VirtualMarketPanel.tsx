@@ -65,8 +65,8 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           </div>
           <div className="flex items-center">
             <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
-            <span className="text-sm text-gray-400">1000</span>
-            <span className="text-[8px] text-gray-500 ml-1">kWh</span>
+            <span className="text-sm text-gray-400">1</span>
+            <span className="text-[8px] text-gray-500 ml-1">MWh</span>
           </div>
         </div>
       </div>
