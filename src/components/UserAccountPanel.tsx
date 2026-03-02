@@ -39,6 +39,17 @@ export default function UserAccountPanel() {
               <span className="text-[10px] text-gray-500 uppercase font-normal">Mode: <span className="text-green-500 animate-pulse font-black">CONNECTED</span></span>
             </div>
           </div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2 mt-3">Available Liquidity</div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-sm p-3">
+              <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-1">eEURO Balance</div>
+              <div className="text-lg text-blue-500 tracking-tighter">12,450.00 EUR</div>
+            </div>
+            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-sm p-3">
+              <div className="text-[8px] text-yellow-800 uppercase tracking-widest mb-1">€BSR Balance</div>
+              <div className="text-lg text-yellow-500 tracking-tighter">3,200.00 €BSR</div>
+            </div>
+          </div>
         </div>
         
         {/* TABLE INVENTORY */}
