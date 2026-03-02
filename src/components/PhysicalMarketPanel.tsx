@@ -104,7 +104,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             {/* NET IMPORT/EXPORT */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">NET IMPORT/EXPORT</span>
-              <span className="text-[11px] font-black text-gray-400">IMPORT <span className="text-blue-400">3.2%</span></span>
+              <span className="text-[11px] font-black text-gray-400">IMPORT <span className="text-gray-400">3.2%</span></span>
             </div>
             
             {/* FOSSIL GEN (AVG) */}
@@ -116,7 +116,7 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
             {/* RENEWABLES (AVG) */}
             <div className="flex flex-col">
               <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">RENEWABLES (AVG)</span>
-              <span className="text-[11px] font-black text-gray-400"><span className="text-yellow-500">RES 31%</span> (Wind/PV/Hydro)</span>
+              <span className="text-[11px] font-black text-gray-400"><span className="text-gray-400">RES 31%</span> (Wind/PV/Hydro)</span>
             </div>
           </div>
         </div>
