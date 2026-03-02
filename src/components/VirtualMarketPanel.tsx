@@ -195,7 +195,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center">
             <span className="text-[9px] text-gray-500">D-1</span>
             <span className="text-[11px] text-gray-400">1,245,000</span>
-            <span className="text-[9px] text-blue-500">+8.2%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
           
@@ -203,7 +202,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4">
             <span className="text-[9px] text-gray-500">W-1</span>
             <span className="text-[11px] text-gray-400">8,715,000</span>
-            <span className="text-[9px] text-blue-500">+5.4%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
           
@@ -211,7 +209,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4">
             <span className="text-[9px] text-gray-500">M-1</span>
             <span className="text-[11px] text-gray-400">37,440,000</span>
-            <span className="text-[9px] text-red-600">-2.1%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
           
@@ -219,7 +216,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4">
             <span className="text-[9px] text-gray-500">Q-1</span>
             <span className="text-[11px] text-gray-400">112,320,000</span>
-            <span className="text-[9px] text-blue-500">+3.7%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
           
@@ -227,7 +223,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center border-r border-gray-900 px-4">
             <span className="text-[9px] text-gray-500">H-1</span>
             <span className="text-[11px] text-gray-400">224,640,000</span>
-            <span className="text-[9px] text-red-600">-1.8%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
           
@@ -235,7 +230,6 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
           <div className="flex flex-col items-center text-center px-4">
             <span className="text-[9px] text-gray-500">Y-1</span>
             <span className="text-[11px] text-gray-400">449,280,000</span>
-            <span className="text-[9px] text-blue-500">+12.3%</span>
             <span className="text-[7px] text-gray-600">kWh</span>
           </div>
         </div>
