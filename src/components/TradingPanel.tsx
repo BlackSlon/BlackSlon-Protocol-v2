@@ -124,7 +124,7 @@ export default function TradingPanel() {
               <div className="text-sm text-amber-700 tracking-tighter leading-tight">{bsrReq} BSR</div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 w-fit ml-auto">
-              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0">eEURO Deposit Value</div>
+              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit Value</div>
               <div className="text-sm text-sky-400 tracking-tighter leading-tight">{euroReq} EUR</div>
             </div>
           </div>
