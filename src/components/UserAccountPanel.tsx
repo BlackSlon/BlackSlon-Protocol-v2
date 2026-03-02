@@ -6,9 +6,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function UserAccountPanel() {
   // Przykładowe dane portfela
   const inventory = [
-    { token: 'BS-P-PL', quantity: '150,000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
-    { token: 'BS-G-DE', quantity: '80,000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
-    { token: 'BS-W-FR', quantity: '200,000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
+    { token: 'BS-P-PL', unit: '50', quantity: '5,000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
+    { token: 'BS-G-DE', unit: '30', quantity: '3,000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
+    { token: 'BS-W-FR', unit: '100', quantity: '10,000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
   ]
 
   const vaultLiquidity = {
@@ -59,22 +59,24 @@ export default function UserAccountPanel() {
           <div className="mb-0">
             {/* Table Header */}
             <div className="table-fixed w-full">
-              <div className="grid grid-cols-5 text-[7px] text-white uppercase px-2 py-1 border-b border-gray-900 w-full">
-                <div className="w-[25%] tracking-widest">Token</div>
+              <div className="grid grid-cols-6 text-[7px] text-white uppercase px-2 py-1 border-b border-gray-900 w-full">
+                <div className="w-[20%] tracking-widest">Token</div>
+                <div className="w-[15%] text-center tracking-widest">Unit</div>
                 <div className="w-[20%] text-center tracking-widest">Volume (kWh)</div>
                 <div className="w-[15%] text-center tracking-widest">Avg<br/>Price</div>
                 <div className="w-[15%] text-center tracking-widest">Last<br/>Price</div>
-                <div className="w-[25%] text-right tracking-widest">PnL (EUR)</div>
+                <div className="w-[15%] text-right tracking-widest">PnL (EUR)</div>
               </div>
 
               {/* Table Rows */}
               {inventory.map((item, index) => (
-                <div key={index} className="grid grid-cols-5 items-center py-1 px-2 border-b border-gray-900 w-full hover:bg-gray-900/40 transition-colors">
-                  <div className={`w-[25%] text-[10px] ${item.color === 'yellow' ? 'text-yellow-500' : 'text-blue-500'} whitespace-nowrap`}>{item.token}</div>
+                <div key={index} className="grid grid-cols-6 items-center py-1 px-2 border-b border-gray-900 w-full hover:bg-gray-900/40 transition-colors">
+                  <div className={`w-[20%] text-[10px] ${item.color === 'yellow' ? 'text-yellow-500' : 'text-blue-500'} whitespace-nowrap`}>{item.token}</div>
+                  <div className="w-[15%] text-center text-[9px] text-gray-400">{item.unit}</div>
                   <div className="w-[20%] text-center text-[9px] text-gray-400">{item.quantity}</div>
                   <div className="w-[15%] text-center text-[9px] text-gray-400">{item.avgPrice}</div>
                   <div className="w-[15%] text-center text-[9px] text-gray-400">{item.lastPrice}</div>
-                  <div className={`w-[25%] text-right text-[9px] ${item.pnl.startsWith('+') ? 'text-green-500' : 'text-red-600'}`}>
+                  <div className={`w-[15%] text-right text-[9px] ${item.pnl.startsWith('+') ? 'text-green-500' : 'text-red-600'}`}>
                     {item.pnl}
                   </div>
                 </div>
