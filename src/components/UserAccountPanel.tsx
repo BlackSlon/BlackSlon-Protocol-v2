@@ -51,7 +51,7 @@ export default function UserAccountPanel() {
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">eEURO BALANCE</div>
-              <div className="text-lg text-gray-300 tracking-tighter leading-tight">12 450.00</div>
+              <div className="text-lg text-sky-300 tracking-tighter leading-tight">12 450.00</div>
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">Total Balance [EUR]</div>
@@ -100,7 +100,7 @@ export default function UserAccountPanel() {
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">Locked eEURO</div>
-              <div className="text-lg text-gray-300 tracking-tighter leading-tight">{vaultLiquidity.lockedEUR}</div>
+              <div className="text-lg text-sky-300 tracking-tighter leading-tight">{vaultLiquidity.lockedEUR}</div>
             </div>
             <div className="border border-gray-800 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0">Total Locked Value [EUR]</div>
