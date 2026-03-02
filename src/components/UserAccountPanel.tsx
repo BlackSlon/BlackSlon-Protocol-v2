@@ -44,13 +44,13 @@ export default function UserAccountPanel() {
           </div>
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-3">Available Liquidity</div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 xs:grid-cols-1">
-            <div className="border border-blue-500/30 rounded-sm py-1 px-3 overflow-hidden">
-              <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-0">eEURO BALANCE</div>
-              <div className="text-lg text-blue-500 tracking-tighter leading-tight">12 450.00</div>
-            </div>
             <div className="border border-amber-500/30 rounded-sm py-1 px-3 overflow-hidden">
               <div className="text-[8px] text-amber-800 uppercase tracking-widest mb-0">€BSR BALANCE</div>
               <div className="text-lg text-amber-500 tracking-tighter leading-tight">3 200.00</div>
+            </div>
+            <div className="border border-blue-500/30 rounded-sm py-1 px-3 overflow-hidden">
+              <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-0">eEURO BALANCE</div>
+              <div className="text-lg text-blue-500 tracking-tighter leading-tight">12 450.00</div>
             </div>
           </div>
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0 mt-4">BlackSlon Tokens Portfolio</div>
