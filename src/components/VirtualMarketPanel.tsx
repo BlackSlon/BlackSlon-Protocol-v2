@@ -7,7 +7,10 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
     { price: 10.54, unit: 120, volume: 12000 },
     { price: 10.53, unit: 180, volume: 18000 },
     { price: 10.52, unit: 95, volume: 9500 },
-    { price: 10.51, unit: 200, volume: 20000 }
+    { price: 10.51, unit: 200, volume: 20000 },
+    { price: 10.50, unit: 135, volume: 13500 },
+    { price: 10.49, unit: 165, volume: 16500 },
+    { price: 10.48, unit: 110, volume: 11000 }
   ]
 
   const sellOrders = [
@@ -15,7 +18,10 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
     { price: 10.61, unit: 85, volume: 8500 },
     { price: 10.62, unit: 140, volume: 14000 },
     { price: 10.63, unit: 75, volume: 7500 },
-    { price: 10.64, unit: 160, volume: 16000 }
+    { price: 10.64, unit: 160, volume: 16000 },
+    { price: 10.65, unit: 125, volume: 12500 },
+    { price: 10.66, unit: 190, volume: 19000 },
+    { price: 10.67, unit: 105, volume: 10500 }
   ]
 
   const maxVol = Math.max(...buyOrders.map(o => o.volume), ...sellOrders.map(o => o.volume))
