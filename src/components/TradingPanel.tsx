@@ -69,7 +69,7 @@ export default function TradingPanel() {
         </div>
 
         <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
-          <div className="text-[11px] text-gray-600 font-normal mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
+          <div className="text-[9px] text-gray-500 font-normal mb-1">SET ORDER PRICE (EUR/100kWh)</div> 
           <div className="flex items-center justify-between">
             <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
               <button onClick={() => setPrice(p => (parseFloat(p) - 0.01).toFixed(2))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
@@ -80,7 +80,7 @@ export default function TradingPanel() {
         </div>
 
         <div className="border-b border-gray-900/50 pb-2 mb-3 shrink-0">
-          <div className="text-[11px] text-gray-600 mb-1">SET QUANTITY (1 {marketId} TOKEN = 100kWh)</div> 
+          <div className="text-[9px] text-gray-500 mb-1">SET QUANTITY (1 {marketId} TOKEN = 100kWh)</div> 
           <div className="flex items-center justify-between">
             <div className="bg-zinc-800/70 border border-gray-700 rounded-sm flex items-center p-1 w-full">
               <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-2xl text-gray-600 hover:text-white px-2">-</button>
@@ -98,7 +98,7 @@ export default function TradingPanel() {
         </button>
 
         <div className="space-y-3 mb-4 shrink-0 px-1 pointer-events-auto">
-          <div className="text-[11px] text-gray-500 uppercase tracking-tighter">Deposit Configuration</div>
+          <div className="text-[9px] text-gray-500 uppercase tracking-tighter">Deposit Configuration</div>
           <div className="bg-gray-900/20 p-2 rounded-sm border border-gray-900">
             <div className="flex justify-between text-[9px] text-gray-500 tracking-[0.2em] mb-2"><span>€BSR RATIO</span><span>{bsrStake}%</span></div>
             <input type="range" min="10" max="100" step="1" value={bsrStake} onChange={(e) => setBsrStake(parseInt(e.target.value))} className="w-full h-1 bg-gray-800 cursor-pointer pointer-events-auto" style={{ accentColor: '#3b82f6' }} />
@@ -111,7 +111,7 @@ export default function TradingPanel() {
 
         <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
           <div className="text-center mb-1">
-            <span className="text-[11px] text-gray-500 uppercase tracking-tighter">REQUIRED MARGIN</span>
+            <span className="text-[9px] text-gray-500 uppercase tracking-tighter">REQUIRED MARGIN</span>
           </div>
           <div className="text-center mb-2">
             <span className="text-lg text-white leading-none">
@@ -121,11 +121,11 @@ export default function TradingPanel() {
           
           <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
             <div className="flex flex-col border-r border-gray-900/50 pr-2">
-              <span className="text-[11px] text-gray-600 uppercase mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
+              <span className="text-[9px] text-gray-500 uppercase mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
               <span className="text-[17px] font-mono text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
             </div>
             <div className="flex flex-col pl-2 text-right">
-              <span className="text-[11px] text-gray-600 mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
+              <span className="text-[9px] text-gray-500 mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
               <span className="text-[17px] font-mono text-white" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
             </div>
           </div>
