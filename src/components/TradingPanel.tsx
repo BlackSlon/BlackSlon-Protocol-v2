@@ -124,14 +124,14 @@ export default function TradingPanel() {
             </span>
           </div>
           
-          <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
-            <div className="flex flex-col border-r border-gray-900/50 pr-2">
-              <span className="text-[9px] text-amber-500 uppercase mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
-              <span className="text-[17px] font-mono text-amber-400" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
+          <div className="flex flex-wrap gap-2 border-t border-gray-900/50 pt-2 pb-2">
+            <div className="border border-amber-500/30 rounded-sm py-1 px-3 w-fit">
+              <div className="text-[8px] text-amber-800 uppercase tracking-widest mb-0">€BSR Deposit Value</div>
+              <div className="text-lg text-amber-500 tracking-tighter leading-tight">{bsrReq} BSR</div>
             </div>
-            <div className="flex flex-col pl-2 text-right">
-              <span className="text-[9px] text-blue-500 uppercase mb-1 tracking-tighter whitespace-nowrap">eEURO DEPOSIT VALUE:</span> 
-              <span className="text-[17px] font-mono text-blue-400" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{euroReq} EUR</span>
+            <div className="border border-blue-500/30 rounded-sm py-1 px-3 w-fit">
+              <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-0">eEURO Deposit Value</div>
+              <div className="text-lg text-blue-500 tracking-tighter leading-tight">{euroReq} EUR</div>
             </div>
           </div>
         </div>
