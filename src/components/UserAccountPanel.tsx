@@ -5,9 +5,9 @@ import React, { useMemo } from 'react'
 export default function UserAccountPanel() {
   // Przykładowe dane portfela
   const inventory = [
-    { token: 'BS-P-PL', quantity: '150,000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00' },
-    { token: 'BS-G-DE', quantity: '80,000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00' },
-    { token: 'BS-W-FR', quantity: '200,000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00' },
+    { token: 'BS-P-PL', quantity: '150,000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
+    { token: 'BS-G-DE', quantity: '80,000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
+    { token: 'BS-W-FR', quantity: '200,000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
   ]
 
   const vaultLiquidity = {
@@ -67,7 +67,7 @@ export default function UserAccountPanel() {
           {/* Table Rows */}
           {inventory.map((item, index) => (
             <div key={index} className="grid grid-cols-5 items-center py-1 px-2 border-b border-gray-900/50 hover:bg-gray-900/40 transition-colors">
-              <div className="text-[10px] text-white">{item.token}</div>
+              <div className={`text-[10px] ${item.color === 'yellow' ? 'text-yellow-500' : 'text-blue-500'}`}>{item.token}</div>
               <div className="text-center text-[9px] text-gray-400">{item.quantity}</div>
               <div className="text-center text-[9px] text-gray-400">{item.avgPrice}</div>
               <div className="text-center text-[9px] text-gray-400">{item.lastPrice}</div>
