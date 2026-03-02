@@ -27,6 +27,12 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           <div className="text-[11px] tracking-[0.1em] text-amber-700">
             BlackSlon Trading Zone
           </div>
+          <div className="flex justify-between items-center mt-2">
+            <div className="flex gap-4">
+              <span className="text-[10px] text-gray-500 uppercase font-normal">Instrument: <span className="text-yellow-500">BS-P-PL</span></span>
+              <span className="text-[10px] text-gray-500 uppercase font-normal">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
+            </div>
+          </div>
         </div>
 
         {/* RANGES */}
