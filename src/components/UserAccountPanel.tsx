@@ -6,9 +6,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function UserAccountPanel() {
   // Przykładowe dane portfela
   const inventory = [
-    { token: 'BS-P-PL', unit: '1500', quantity: '5000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
-    { token: 'BS-G-DE', unit: '800', quantity: '3000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
-    { token: 'BS-W-FR', unit: '2000', quantity: '10000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
+    { token: 'BS-P-PL', unit: '1500', quantity: '150000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
+    { token: 'BS-G-DE', unit: '800', quantity: '80000', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
+    { token: 'BS-W-FR', unit: '2000', quantity: '200000', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
   ]
 
   const vaultLiquidity = {
