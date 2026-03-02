@@ -23,21 +23,23 @@ export default function UserAccountPanel() {
       
       {/* HEADER */}
       <div className="w-full pt-3 pb-2 flex flex-col items-center shrink-0">
-        <div className="text-[10px] text-red-600 uppercase tracking-[0.5em] font-bold">
-          BLACKSLON PORTFOLIO
+        <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
+          USER'S ACCOUNT PANEL
         </div>
         <div className="w-[85%] border-b border-gray-900 mt-2" />
       </div>
 
-      {/* SUB-HEADER */}
-      <div className="px-6 py-2 text-center">
-        <div className="text-[9px] text-gray-600">
-          UID: BS-PRO-001 | TYPE: INSTITUTIONAL
-        </div>
-      </div>
-
-      {/* PORTFOLIO BODY */}
+      {/* BLACKSLON PORTFOLIO SECTION */}
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
+        <div className="p-4 bg-gradient-to-b from-black to-gray-950">
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BLACKSLON PORTFOLIO</div>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-4">
+              <span className="text-[10px] text-gray-500 uppercase font-normal">UID: <span className="text-yellow-500">BS-PRO-001</span></span>
+              <span className="text-[10px] text-gray-500 uppercase font-normal">Type: <span className="text-green-500 animate-pulse font-black">INSTITUTIONAL</span></span>
+            </div>
+          </div>
+        </div>
         
         {/* TABLE INVENTORY */}
         <div className="mb-4">
