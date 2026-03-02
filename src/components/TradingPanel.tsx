@@ -59,8 +59,13 @@ export default function TradingPanel() {
 
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
         <div className="text-center mb-3 shrink-0">
-          <div className="text-[10px] tracking-widest uppercase mb-1 text-red-600">ACTIVE INSTRUMENT</div>
-          <span className="text-[13px] text-yellow-500 font-normal uppercase tracking-[0.2em]">{marketId}</span>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon Trading Terminal</div>
+          <div className="flex justify-between items-center mt-2">
+            <div className="flex gap-4">
+              <span className="text-[10px] text-gray-500 uppercase font-normal">Instrument: <span className="text-yellow-500">BS-P-PL</span></span>
+              <span className="text-[10px] text-gray-500 uppercase font-normal">Status: <span className="text-green-500 animate-pulse font-black">LIVE</span></span>
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
