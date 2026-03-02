@@ -38,7 +38,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
         {/* 2. TYTUŁ ORDER BOOK (Brązowy) */}
         <div className="p-4 bg-gradient-to-b from-black to-gray-950">
-          <div className="text-[10px] tracking-widest text-amber-700 mb-1">
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">
             BlackSlon Order Book
           </div>
           <div className="flex justify-between items-center">
@@ -137,7 +137,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 5. BLACKSLON ENERGY INDEX BS-P-PL */}
       <div className="px-6 py-4 border-t border-gray-800 bg-black">
-        <div className="text-[10px] tracking-widest text-amber-700 mb-3">
+        <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-3">
           BlackSlon Energy Index BS-P-PL
         </div>
         <div className="flex justify-between items-center font-mono">
@@ -187,7 +187,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       {/* 6. BLACKSLON LIQUIDITY */}
       <div className="px-6 py-4 border-t border-gray-800 bg-black">
-        <div className="text-[10px] tracking-widest text-amber-700 mb-3">
+        <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-3">
           BlackSlon Liquidity
         </div>
         <div className="flex justify-between items-center font-mono">
