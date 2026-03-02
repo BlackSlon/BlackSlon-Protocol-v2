@@ -89,6 +89,38 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           </div>
         </div>
 
+        {/* FUNDAMENTALS OF PHYSICAL MARKET */}
+        <div className="px-6 py-4 border-t border-gray-900 pt-4 mt-auto">
+          <div className="text-[10px] text-gray-600 uppercase tracking-[0.3em] font-bold mb-3">
+            Fundamentals of Physical Market
+          </div>
+          <div className="grid grid-cols-2 gap-4 font-mono">
+            {/* SYSTEM LOAD */}
+            <div className="flex flex-col">
+              <span className="text-[8px] text-gray-600 uppercase">SYSTEM LOAD</span>
+              <span className="text-[11px] font-black text-white">~19.4 GW</span>
+            </div>
+            
+            {/* GRID FREQ */}
+            <div className="flex flex-col">
+              <span className="text-[8px] text-gray-600 uppercase">GRID FREQ</span>
+              <span className="text-[11px] font-black text-green-500">50.02 Hz</span>
+            </div>
+            
+            {/* CO2 INTENSITY */}
+            <div className="flex flex-col">
+              <span className="text-[8px] text-gray-600 uppercase">CO2 INTENSITY</span>
+              <span className="text-[11px] font-black text-gray-400">680 g/kWh</span>
+            </div>
+            
+            {/* GEN MIX */}
+            <div className="flex flex-col">
+              <span className="text-[8px] text-gray-600 uppercase">GEN MIX</span>
+              <span className="text-[11px] font-black text-white">COAL 62% | <span className="text-yellow-500">RES 38%</span></span>
+            </div>
+          </div>
+        </div>
+
         {/* FOOTER */}
         <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
           BSTZ Protocol · ADR Stabilization Active
