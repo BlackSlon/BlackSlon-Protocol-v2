@@ -22,7 +22,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
   // Function to format volume with spaces
   const formatVolume = (vol: number) => {
-    return vol.toLocaleString('pl-PL')
+    return vol.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   }
 
   return (
