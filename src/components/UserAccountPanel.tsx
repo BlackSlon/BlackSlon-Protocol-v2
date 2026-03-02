@@ -5,10 +5,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export default function UserAccountPanel() {
   // Przykładowe dane portfela
+  const fmt = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\u202f/g, ' ').replace(/,/g, '.')
+
   const inventory = [
-    { token: 'BS-P-PL', unit: '30', quantity: '3000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
-    { token: 'BS-G-DE', unit: '45', quantity: '4500', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
-    { token: 'BS-W-FR', unit: '22', quantity: '2200', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
+    { token: 'BS-P-PL', unit: '30', quantity: '3 000', avgPrice: 10.45, lastPrice: 10.89, pnl: '+630.00', color: 'yellow' },
+    { token: 'BS-G-DE', unit: '45', quantity: '4 500', avgPrice: 12.10, lastPrice: 11.96, pnl: '-112.00', color: 'blue' },
+    { token: 'BS-W-FR', unit: '22', quantity: '2 200', avgPrice: 9.80, lastPrice: 11.02, pnl: '+244.00', color: 'yellow' },
   ]
 
   const vaultLiquidity = {
@@ -20,6 +22,12 @@ export default function UserAccountPanel() {
   const hFactor = '2.48'
 
   const bsrEurRate = '1 €BSR = 2.45 eEURO'
+  const exchangeRate = 2.45
+
+  // Calculate total balance in EUR
+  const totalBSR = 3200 + 1250.40 // Available + Locked
+  const totalEUR = (totalBSR * exchangeRate).toFixed(2)
+  const totalEURWithBSR = fmt(12450 + (totalBSR * exchangeRate)) // eEURO + €BSR converted
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
@@ -51,6 +59,10 @@ export default function UserAccountPanel() {
             <div className="border border-blue-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
               <div className="text-[8px] text-blue-800 uppercase tracking-widest mb-0">eEURO BALANCE</div>
               <div className="text-lg text-blue-500 tracking-tighter leading-tight">12 450.00</div>
+            </div>
+            <div className="border border-green-500/30 rounded-sm py-1 px-3 overflow-hidden w-fit">
+              <div className="text-[8px] text-green-800 uppercase tracking-widest mb-0">Total Balance [EUR]</div>
+              <div className="text-lg text-green-500 tracking-tighter leading-tight">{totalEURWithBSR}</div>
             </div>
           </div>
           <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0 mt-4">BlackSlon Tokens Portfolio</div>
