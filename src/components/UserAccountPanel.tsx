@@ -48,7 +48,7 @@ export default function UserAccountPanel() {
               <div className="text-[8px] text-yellow-800 uppercase tracking-widest mb-1 truncate">€BSR BALANCE: <span className="text-lg text-yellow-500 tracking-tighter leading-tight">3 200.00</span></div>
             </div>
           </div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2 mt-4">BlackSlon Tokens Portfolio</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 mt-2">BlackSlon Tokens Portfolio</div>
         </div>
         
         {/* TABLE INVENTORY */}
