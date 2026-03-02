@@ -126,7 +126,7 @@ export default function TradingPanel() {
           
           <div className="grid grid-cols-2 gap-4 border-t border-gray-900/50 pt-2 pb-2">
             <div className="flex flex-col border-r border-gray-900/50 pr-2">
-              <span className="text-[9px] text-gray-500 uppercase mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
+              <span className="text-[9px] text-amber-500 uppercase mb-1 tracking-tighter whitespace-nowrap">€BSR Deposit Value:</span>
               <span className="text-[17px] font-mono text-amber-400" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{bsrReq} BSR</span>
             </div>
             <div className="flex flex-col pl-2 text-right">
