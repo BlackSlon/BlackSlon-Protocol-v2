@@ -59,7 +59,7 @@ export default function TradingPanel() {
 
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0 sm:px-2">
         <div className="pt-2 pb-1 bg-gradient-to-b from-black to-gray-950 w-full">
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon Energy Tokens</div>
+          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon Trading Terminal</div>
         </div>
 
         <div className="flex justify-center gap-2 mb-3 shrink-0 pointer-events-auto relative z-10">
