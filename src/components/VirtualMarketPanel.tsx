@@ -52,6 +52,23 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       
       {/* 3. LAST DEAL FRAME */}
       <div className="mb-3 mx-3 p-3 border border-yellow-500/40 bg-yellow-500/5 rounded-sm">
+        <div className="flex items-center justify-between px-2">
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">LAST PRICE:</span>
+            <span className="text-xl text-yellow-500">10.59</span>
+            <span className="text-[8px] text-gray-500 ml-1">EUR/100kWh</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">UNIT:</span>
+            <span className="text-sm text-gray-400">10</span>
+            <span className="text-[8px] text-gray-500 ml-1">BS-P-PL</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-[7px] text-gray-500 uppercase mr-2">VOLUME:</span>
+            <span className="text-sm text-gray-400">1000</span>
+            <span className="text-[8px] text-gray-500 ml-1">kWh</span>
+          </div>
+        </div>
       </div>
       
       {/* 4. MAIN ORDER BOOK GRID (Thin Lines) */}
