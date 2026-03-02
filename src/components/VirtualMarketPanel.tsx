@@ -55,11 +55,10 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
       <div className="mb-3 mx-3 px-2 py-2 border border-yellow-500/40 rounded-sm">
         <div className="flex justify-between items-center mb-1">
           <div className="text-[6px] text-red-700 uppercase tracking-widest">Last Trade · BS-P-PL</div>
-          <div className="text-[6px] text-gray-600 tracking-widest">EUR / 100kWh</div>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex flex-col items-center">
-            <span className="text-[7px] text-gray-500 uppercase mb-0">Price</span>
+            <span className="text-[7px] text-gray-500 uppercase mb-0">Price <span className="normal-case text-gray-600">(EUR/100kWh)</span></span>
             <span className="text-sm text-yellow-500 tracking-tighter leading-tight">10.59</span>
           </div>
           <div className="text-gray-800 text-[10px]">——</div>
