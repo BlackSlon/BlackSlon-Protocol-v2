@@ -18,7 +18,6 @@ export default function UserAccountPanel() {
     lockedEUR: '450.00'
   }
 
-  const bsrPriceHistory = [10.2, 10.5, 10.3, 10.8, 10.6, 10.9, 11.1, 10.7, 11.2, 10.8]
   const hFactor = '2.48'
 
   const bsrEurRate = '1 €BSR = 2.45 eEURO'
@@ -138,9 +137,16 @@ export default function UserAccountPanel() {
 
           {/* BLACKSLON RESERVE €BSR/EUR */}
           <div className="mt-4">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-2">BlackSlon Reserve (€BSR/EUR)</div>
-            <div className="bg-gray-900/50 border border-gray-800 rounded-sm py-2.5 px-3 overflow-hidden w-fit">
-              <div className="text-lg text-amber-500 tracking-tighter leading-tight">{bsrEurRate}</div>
+            <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1">BlackSlon Reserve (€BSR/EUR)</div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0"></div>
+                <div className="text-[8px] text-gray-500 uppercase tracking-widest">LIVE</div>
+                <div className="text-lg text-amber-500 tracking-tighter leading-none">{bsrEurRate}</div>
+              </div>
+              <button className="ml-auto text-[7px] uppercase tracking-widest text-gray-600 border border-gray-800 px-2 py-0.5 hover:text-gray-400 hover:border-gray-600 transition-all rounded-sm">
+                HISTORY
+              </button>
             </div>
           </div>
         </div>
