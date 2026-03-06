@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>BlackSlon Terminal - Core Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <script src="engine.js"></script>
+    
+    <style>
+        /* Całkowity reset i wymuszenie Montserrat */
+        * {
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        body { 
+            background: #050505; 
+            color: #e0e0e0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .black-terminal { 
+            border: 1px solid #1a1a1a; 
+            padding: 40px; 
+            background: #000; 
+            box-shadow: 0 0 50px rgba(0,0,0,1), 0 0 20px rgba(255,255,255,0.02);
+            width: 450px;
+        }
+
+        .ticker { 
+            color: #666; 
+            font-size: 0.8em; 
+            letter-spacing: 4px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+        }
+
+        .price-main { 
+            font-size: 4em; 
+            font-weight: 200; 
+            margin: 20px 0; 
+            color: #fff;
+            letter-spacing: -2px;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        .stats { 
+            border-top: 1px solid #111; 
+            margin-top: 20px; 
+            padding-top: 20px; 
+        }
+
+        .stat-row { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 0.85em; 
+            margin: 8px 0; 
+            color: #aaa; 
+        }
+
+        .stat-val { 
+            color: #fff; 
+            font-weight: 400; 
+        }
+        
+        .slider-container { margin-top: 30px; }
+
+        input[type=range] { 
+            width: 100%; 
+            background: #222; 
+            cursor: pointer;
+            accent-color: #fff;
+            height: 4px;
+        }
+
+        .bsz-indicator { 
+            font-size: 0.65em; 
+            color: #333; 
+            margin-top: 15px; 
+            letter-spacing: 1px; 
+            text-align: center; 
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="black-terminal">
+    <div class="ticker">BLSN-E-PL // protocol</div>
+    <div class="price-main" id="price-display">0.00</div>
+    
+    <div class="slider-container">
+        <div class="stat-row">
+            <span>LIQUIDTY (S)</span>
+            <span class="stat-val" id="liq-val">0</span>
+        </div>
+        <input type="range" min="0" max="5000000" value="0" id="liq-input">
+    </div>
+
+    <div class="stats">
+        <div class="stat-row">
+            <span>ANCHOR (a)</span>
+            <span class="stat-val" id="anchor-val">---</span>
+        </div>
+        <div class="stat-row">
+            <span>STABILIZER b</span>
+            <span class="stat-val" id="b-val">---</span>
+        </div>
+        <div class="bsz-indicator" id="bsz-info">BLACKSLON SETTLEMENT ZONE: +/- 10%</div>
+    </div>
+</div>
+
+<script>
+    const engine = window.BSZ_Engine;
+    // Wykorzystujemy Twoją zasadę: Liquidty i protocol
+    const anchor = engine.calculateAnchor(110, 105, 100); 
+    let emaP = anchor;
+
+    const input = document.getElementById('liq-input');
+    
+    function refresh() {
+        const s = parseFloat(input.value);
+        // Stabilizer b: Progressive Friction + EMA
+        const b_adj = engine.calculateAdaptiveB(emaP, anchor, emaP);
+        const p = engine.getNextPrice(anchor, b_adj, s);
+
+        document.getElementById('price-display').innerText = p.toFixed(2);
+        document.getElementById('liq-val').innerText = s.toLocaleString() + " EUR";
+        document.getElementById('b-val').innerText = b_adj.toFixed(8);
+        document.getElementById('anchor-val').innerText = anchor.toFixed(2);
+        
+        emaP = (p * 0.1) + (emaP * 0.9);
+    }
+
+    input.oninput = refresh;
+    refresh();
+</script>
+</body>
+</html>
