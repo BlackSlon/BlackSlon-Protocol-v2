@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /
-
-# BlackSlon Protocol - Under Construction
-# This site is temporarily offline for major updates
-# Please check back later
