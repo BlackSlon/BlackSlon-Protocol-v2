@@ -3,9 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true
-  },
-  experimental: {
-    serverComponentsExternalPackages: ['react-simple-maps']
   }
 }
 
