@@ -82,38 +82,6 @@ export default function PhysicalDimension({ marketId, currentPrice }: { marketId
           </div>
         </div>
 
-        {/* FUNDAMENTALS OF PHYSICAL MARKET */}
-        <div className="py-4 border-t border-gray-900 pt-5 mt-auto">
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-3">
-            Fundamentals of Physical Market
-          </div>
-          <div className="grid grid-cols-2 gap-4 font-mono">
-            {/* ANNUAL CONSUMPTION */}
-            <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">ANNUAL CONSUMPTION</span>
-              <span className="text-[11px] font-black text-gray-400">174.2 TWh</span>
-            </div>
-            
-            {/* NET IMPORT/EXPORT */}
-            <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">NET IMPORT/EXPORT</span>
-              <span className="text-[11px] font-black text-gray-400">IMPORT <span className="text-gray-400">3.2%</span></span>
-            </div>
-            
-            {/* FOSSIL GEN (AVG) */}
-            <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">FOSSIL GEN (AVG)</span>
-              <span className="text-[11px] font-black text-gray-400">COAL 62% | GAS 7%</span>
-            </div>
-            
-            {/* RENEWABLES (AVG) */}
-            <div className="flex flex-col">
-              <span className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">RENEWABLES (AVG)</span>
-              <span className="text-[11px] font-black text-gray-400"><span className="text-gray-400">RES 31%</span> (Wind/PV/Hydro)</span>
-            </div>
-          </div>
-        </div>
-
         {/* FOOTER */}
         <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
           BSTZ Protocol · ADR Stabilization Active

@@ -79,16 +79,13 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         
         {/* BUY SIDE */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="py-2 px-4 border-b border-gray-800 bg-green-950/20">
-            <span className="text-[11px] text-green-700 tracking-widest">BUY ORDERS</span>
-          </div>
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-normal px-4 py-2 border-b border-gray-800 bg-black">
             <div className="text-center">
               <div>VOLUME</div>
               <div className="text-gray-600 normal-case">(kWh)</div>
             </div>
             <div className="text-center">
-              <div>UNIT</div>
+              <div className="text-[11px] text-green-700 tracking-widest font-bold">BUY ORDERS</div>
               <div className="text-gray-600">(BS-P-PL)</div>
             </div>
             <div className="text-right">
@@ -109,16 +106,13 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
         {/* SELL SIDE */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="py-2 px-4 border-b border-gray-800 bg-red-950/20 text-right">
-            <span className="text-[11px] text-red-500 tracking-widest">SELL ORDERS</span>
-          </div>
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-normal px-4 py-2 border-b border-gray-800 bg-black">
             <div className="text-left">
               <div>PRICE</div>
               <div className="text-gray-600 normal-case">(EUR/100kWh)</div>
             </div>
             <div className="text-center">
-              <div>UNIT</div>
+              <div className="text-[11px] text-red-500 tracking-widest font-bold">SELL ORDERS</div>
               <div className="text-gray-600">(BS-P-PL)</div>
             </div>
             <div className="text-right">
