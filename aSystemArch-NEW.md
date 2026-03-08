@@ -56,13 +56,13 @@ All fund movements are governed by audited smart contract logic. There is no dis
 
 BS-P (BlackSlon Power) and BS-G (BlackSlon Gas) tokens are the instruments that users actually buy, sell, and hold. Every other component of the protocol exists to support their integrity.
 
-Each token represents **100 kWh** of electric power or natural gas in a specific European market (e.g., BS-G-NL for Dutch gas on TTF, BS-P-DE for German power on EEX). They are perpetual — no expiry, no rollover — and their price is always bounded by the BSSZ corridor of the market they belong to.
+Each token represents **100 kWh** of electric power or natural gas in a specific European market (e.g., BS-G-NL for Dutch gas on TTF, BS-P-DE for German market). They are perpetual — no expiry, no rollover — and their price is always bounded by the BSSZ corridor of the market they belong to.
 
 Their value at any moment is:
 
 $$V_{token} = I_t \times 100\text{ kWh}$$
 
-Where $I_t$ is the BSEI for that market — always at least 80% anchored to the Physical Meridian. BS-P/G tokens serve a dual purpose: energy price hedge for industrial consumers, and energy-denominated store of value for investors. In Phase 2, they gain physical redemption rights for 1MW+ consumers via the Virtual-to-Physical Swap mechanism.
+Where $I_t$ is the BSEI for that market — always at least 80% anchored to the Physical Meridian. BS-P/G tokens serve a dual purpose: energy price hedge for industrial consumers, and energy-denominated store of value for investors. In Phase 2, they gain physical redemption rights for 1MW+ (minimum yearly contracted power or gas capacity) consumers via the Virtual-to-Physical Swap mechanism.
 
 Full specification: `BS-PG-Token-Specification.md`
 

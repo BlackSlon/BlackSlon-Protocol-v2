@@ -52,7 +52,7 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
 
       
       {/* 3. LAST DEAL FRAME */}
-      <div className="mb-3 mx-3 px-2 py-2 border border-yellow-500/40 rounded-sm">
+      <div className="mb-3 mx-3 px-2 py-2 border border-amber-700/40 rounded-sm">
         <div className="flex justify-between items-center mb-1">
           <div className="text-[6px] text-red-700 uppercase tracking-widest">Last Trade · BS-P-PL</div>
         </div>
@@ -85,11 +85,11 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
               <div className="text-gray-600 normal-case">(kWh)</div>
             </div>
             <div className="text-center">
-              <div className="text-[11px] text-green-700 tracking-widest font-bold">BUY ORDERS</div>
+              <div>UNIT</div>
               <div className="text-gray-600">(BS-P-PL)</div>
             </div>
             <div className="text-right">
-              <div>PRICE</div>
+              <div className="text-[11px] text-green-700 tracking-widest font-bold">BUY ORDERS</div>
               <div className="text-gray-600 normal-case">(EUR/100kWh)</div>
             </div>
           </div>
@@ -108,11 +108,11 @@ export default function VirtualDimension({ marketId }: { marketId: string }) {
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="grid grid-cols-3 text-[7px] text-gray-500 uppercase font-normal px-4 py-2 border-b border-gray-800 bg-black">
             <div className="text-left">
-              <div>PRICE</div>
+              <div className="text-[11px] text-red-500 tracking-widest font-bold">SELL ORDERS</div>
               <div className="text-gray-600 normal-case">(EUR/100kWh)</div>
             </div>
             <div className="text-center">
-              <div className="text-[11px] text-red-500 tracking-widest font-bold">SELL ORDERS</div>
+              <div>UNIT</div>
               <div className="text-gray-600">(BS-P-PL)</div>
             </div>
             <div className="text-right">
