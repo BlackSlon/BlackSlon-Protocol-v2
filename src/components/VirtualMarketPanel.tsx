@@ -9,6 +9,16 @@ import { getMarketColors } from '@/lib/marketColors'
 const formatVolume = (vol: number) =>
   vol.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
+// ─── BSEI Formula ─────────────────────────────────────────────────────────────
+// Source: BSEI-Framework.md
+// I_t = ω * a + (1 - ω) * P_RVWAP
+// ω = 0.80 (default Inertia Factor — 80% Physical Meridian, 20% internal VWAP)
+const OMEGA = 0.80
+
+function calculateBSEI(anchor: number, pRvwap: number): number {
+  return OMEGA * anchor + (1 - OMEGA) * pRvwap
+}
+
 interface Props {
   selectedMarketId?: string
 }
@@ -17,24 +27,39 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const storeData = useVirtual()
   const colors = getMarketColors(selectedMarketId)
 
-  // Always generate order book from selected market data
   const mData = getMarketData(selectedMarketId as any) as any
   const anchor = mData?.bsszPositions?.[0]?.bssz?.anchor
     ?? mData?.bsszCalculation?.anchor
     ?? 10.59
+
   const generated = generateOrderBook(anchor, selectedMarketId)
-  
-  // Merge generated orders with user orders from store (filter by current market)
+
+  // Merge generated orders with user orders from store
   const userBids = storeData.orderBook.bids.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
   const userAsks = storeData.orderBook.asks.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
-  
+
   const displayBids = [...generated.bids, ...userBids].sort((a, b) => b.price - a.price)
   const displayAsks = [...generated.asks, ...userAsks].sort((a, b) => a.price - b.price)
+
   const storeLastTrade = storeData.orderBook.lastTrade
   const displayLastTrade = storeLastTrade && (Date.now() - storeLastTrade.timestamp < 86400000)
     ? storeLastTrade
     : { price: anchor, units: 10, volume: 1000, timestamp: Date.now() }
-  const displayBsei = { It: anchor, omega: 0.80, pRvwap: anchor * 0.999, anchor, history: generateBSEIHistory(anchor) }
+
+  // ── BSEI: I_t = ω * anchor + (1 - ω) * P_RVWAP ──
+  // P_RVWAP derived from internal 24h rolling VWAP of executed transactions.
+  // In demo: approximate as slight discount to anchor (reflects thin internal market).
+  const pRvwap = anchor * 0.999
+  const It = calculateBSEI(anchor, pRvwap)
+
+  const displayBsei = {
+    It,
+    omega: OMEGA,
+    pRvwap,
+    anchor,
+    history: generateBSEIHistory(It), // history based on computed It, not raw anchor
+  }
+
   const displayLiquidity = generateLiquiditySnapshots()
   const displayMarketId = selectedMarketId
 
@@ -57,18 +82,11 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
           <div className={`text-[10px] tracking-widest font-bold ${colors.title}`}>
             BlackSlon Order Book
           </div>
-          <div className="flex items-center gap-1.5 ml-auto">
-            <div className={`w-1 h-1 rounded-full animate-pulse ${colors.pulse}`} />
-            <span className={`text-[8px] uppercase tracking-widest ${colors.title}`}>
-              I<sub>t</sub> = {displayBsei.It.toFixed(2)}
-            </span>
-          </div>
         </div>
       </div>
 
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0 sm:px-2">
 
-        <>
         {/* ── Last Trade ── */}
         <div className={`mb-3 mx-3 px-2 py-2 border rounded-sm ${colors.border}`}>
           <div className="flex justify-between items-center mb-1">
@@ -151,9 +169,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                   </div>
                   <div className="text-right text-[11px] self-center text-green-700">
                     {o.price.toFixed(2)}
-                    {o.ownedByUser && (
-                      <span className="ml-1 text-[7px] text-green-900">●</span>
-                    )}
+                    {o.ownedByUser && <span className="ml-1 text-[7px] text-green-900">●</span>}
                   </div>
                 </div>
               ))}
@@ -191,9 +207,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                 >
                   <div className="text-left text-[11px] self-center text-red-600">
                     {o.price.toFixed(2)}
-                    {o.ownedByUser && (
-                      <span className="ml-1 text-[7px] text-red-900">●</span>
-                    )}
+                    {o.ownedByUser && <span className="ml-1 text-[7px] text-red-900">●</span>}
                   </div>
                   <div className="text-center text-[11px] self-center text-gray-400">
                     {o.units}
@@ -214,7 +228,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
         <div className="px-6 py-4 border-t border-gray-800 bg-black sm:px-2">
           <div className="flex items-center gap-3 mb-3">
             <div className={`text-[10px] tracking-widest font-bold ${colors.title}`}>
-              BlackSlon Energy Index
+              BlackSlon Energy Index (BSEI)
             </div>
             <span className={`text-[10px] uppercase tracking-widest ${colors.label}`}>
               {displayMarketId}
@@ -244,11 +258,15 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
             ))}
           </div>
 
-          {/* R-VWAP vs anchor spread */}
+          {/* I_t breakdown: physical meridian vs R-VWAP */}
           <div className="mt-2 flex items-center gap-3 text-[8px] text-gray-700">
-            <span>P<sub>RVWAP</sub>: <span className="text-gray-500">{displayBsei.pRvwap.toFixed(2)}</span></span>
+            <span>
+              I<sub>t</sub>: <span className="text-gray-400">{displayBsei.It.toFixed(4)}</span>
+            </span>
             <span className="text-gray-800">·</span>
-            <span>Anchor: <span className="text-gray-500">{displayBsei.anchor.toFixed(2)}</span></span>
+            <span>P<sub>RVWAP</sub>: <span className="text-gray-500">{displayBsei.pRvwap.toFixed(4)}</span></span>
+            <span className="text-gray-800">·</span>
+            <span>Anchor (a): <span className="text-gray-500">{displayBsei.anchor.toFixed(4)}</span></span>
             <span className="text-gray-800">·</span>
             <span>
               Spread:{' '}
@@ -257,7 +275,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                   ? 'text-amber-700'
                   : 'text-gray-500'
               }>
-                {((displayBsei.It - displayBsei.anchor) / displayBsei.anchor * 100).toFixed(2)}%
+                {((displayBsei.It - displayBsei.anchor) / displayBsei.anchor * 100).toFixed(3)}%
               </span>
             </span>
           </div>
@@ -292,7 +310,6 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
             ))}
           </div>
         </div>
-        </>
 
       </div>
     </div>

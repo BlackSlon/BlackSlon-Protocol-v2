@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackSlon Color Samples</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: monospace;
+            padding: 20px;
+        }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .color-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .color-box {
+            width: 100%;
+            height: 60px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+        }
+        .color-name {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #999;
+        }
+        .color-hex {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .description {
+            font-size: 10px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px;">BlackSlon Color Samples - Gas Markets</h1>
+    
+    <div class="color-grid">
+        <!-- Current Blue -->
+        <div class="color-card">
+            <div class="color-name">Aktualny niebieski</div>
+            <div class="color-box" style="background: #1E3A8A;"></div>
+            <div class="color-hex">#1E3A8A</div>
+            <div class="description">blue-900 - zbyt intensywny</div>
+        </div>
+
+        <!-- Option 1 -->
+        <div class="color-card">
+            <div class="color-name">Stonowany szaroniebieski</div>
+            <div class="color-box" style="background: #374151;"></div>
+            <div class="color-hex">#374151</div>
+            <div class="description">gray-600 - bardzo stonowany</div>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="color-card">
+            <div class="color-name">Ciemny szaroniebieski</div>
+            <div class="color-box" style="background: #4B5563;"></div>
+            <div class="color-hex">#4B5563</div>
+            <div class="description">gray-700 - elegancki</div>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="color-card">
+            <div class="color-name">Średni stonowany niebieski</div>
+            <div class="color-box" style="background: #64748B;"></div>
+            <div class="color-hex">#64748B</div>
+            <div class="description">slate-500 - profesjonalny</div>
+        </div>
+
+        <!-- Option 4 -->
+        <div class="color-card">
+            <div class="color-name">Ciemny slate niebieski</div>
+            <div class="color-box" style="background: #475569;"></div>
+            <div class="color-hex">#475569</div>
+            <div class="description">slate-600 - rekomendowany</div>
+        </div>
+
+        <!-- Option 5 -->
+        <div class="color-card">
+            <div class="color-name">Spójny szary</div>
+            <div class="color-box" style="background: #6B7280;"></div>
+            <div class="color-hex">#6B7280</div>
+            <div class="description">gray-500 - jak logo szare</div>
+        </div>
+
+        <!-- Yellow Reference -->
+        <div class="color-card">
+            <div class="color-name">Żółty reference</div>
+            <div class="color-box" style="background: #EAB308;"></div>
+            <div class="color-hex">#EAB308</div>
+            <div class="description">yellow-500 - dla power</div>
+        </div>
+
+        <!-- Gray Reference -->
+        <div class="color-card">
+            <div class="color-name">Szary reference</div>
+            <div class="color-box" style="background: #6B7280;"></div>
+            <div class="color-hex">#6B7280</div>
+            <div class="description">gray-500 - dla paneli</div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #666;">
+        <p>Wybierz kolor, który najbardziej Ci odpowiada i podaj mi jego kod HEX.</p>
+        <p>Niebieski będzie używany dla gas markets (BS-G-*).</p>
+    </div>
+</body>
+</html>

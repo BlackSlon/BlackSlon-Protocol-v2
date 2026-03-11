@@ -3,16 +3,44 @@
 import { useState, useEffect } from 'react'
 import { useUserAccount } from '@/store/blackslon'
 
-// ─── Solvency Tier Config ────────────────────────────────────────────────────
+// ─── Ecosystem Solvency Tiers (H_solv) ──────────────────────────────────────
+// Source: Ecosystem-Solvency-Macro.md
+// Tier I:   H_solv > 1.15  → Expansion
+// Tier II:  H_solv 1.05–1.15 → Equilibrium
+// Tier III: H_solv 1.00–1.05 → Mitigation
+// Tier IV:  H_solv < 1.00  → Safeguard
 const SOLVENCY_TIERS = [
-  { tier: 'I',   label: 'PRIME',    min: 0.85, color: '#22c55e', glow: 'rgba(34,197,94,0.4)',   bg: 'rgba(34,197,94,0.06)',   border: 'rgba(34,197,94,0.3)'   },
-  { tier: 'II',  label: 'SECURE',   min: 0.65, color: '#38bdf8', glow: 'rgba(56,189,248,0.4)',  bg: 'rgba(56,189,248,0.06)',  border: 'rgba(56,189,248,0.3)'  },
-  { tier: 'III', label: 'WATCH',    min: 0.40, color: '#b45309', glow: 'rgba(180,83,9,0.4)',    bg: 'rgba(180,83,9,0.06)',    border: 'rgba(180,83,9,0.3)'    },
-  { tier: 'IV',  label: 'CRITICAL', min: 0,    color: '#ef4444', glow: 'rgba(239,68,68,0.4)',   bg: 'rgba(239,68,68,0.06)',   border: 'rgba(239,68,68,0.3)'   },
+  { tier: 'I',   label: 'Expansion',   min: 1.15, color: '#22c55e', glow: 'rgba(34,197,94,0.4)',   bg: 'rgba(34,197,94,0.06)',   border: 'rgba(34,197,94,0.3)'   },
+  { tier: 'II',  label: 'Equilibrium', min: 1.05, color: '#38bdf8', glow: 'rgba(56,189,248,0.4)',  bg: 'rgba(56,189,248,0.06)',  border: 'rgba(56,189,248,0.3)'  },
+  { tier: 'III', label: 'Mitigation',  min: 1.00, color: '#b45309', glow: 'rgba(180,83,9,0.4)',    bg: 'rgba(180,83,9,0.06)',    border: 'rgba(180,83,9,0.3)'    },
+  { tier: 'IV',  label: 'Safeguard',   min: 0,    color: '#ef4444', glow: 'rgba(239,68,68,0.4)',   bg: 'rgba(239,68,68,0.06)',   border: 'rgba(239,68,68,0.3)'   },
 ] as const
 
-function getSolvencyTier(s: number) {
-  return SOLVENCY_TIERS.find((t) => s >= t.min) ?? SOLVENCY_TIERS[3]
+// H_solv is a ratio (typically 1.0–1.5+), normalize to 0–100% for progress bar
+// Display range: 0.90 (critical) → 1.30 (ultra-solvent) mapped to 0–100%
+const H_SOLV_MIN_DISPLAY = 0.90
+const H_SOLV_MAX_DISPLAY = 1.30
+
+function getSolvencyTier(hSolv: number) {
+  return SOLVENCY_TIERS.find((t) => hSolv >= t.min) ?? SOLVENCY_TIERS[3]
+}
+
+function hSolvToPercent(hSolv: number): number {
+  const pct = ((hSolv - H_SOLV_MIN_DISPLAY) / (H_SOLV_MAX_DISPLAY - H_SOLV_MIN_DISPLAY)) * 100
+  return Math.min(100, Math.max(0, pct))
+}
+
+// ─── H-Factor (H_BSSZ) Health Zones ─────────────────────────────────────────
+// Source: Risk-Management-Micro.md
+// H > 1.10  → SAFE       (Green)  — full operational access
+// 1.05–1.10 → WARNING    (Yellow) — margin call notification
+// 1.00–1.05 → RESTRICTED (Orange) — reduce-only mode
+// H ≤ 1.00  → INTERVENTION (Red)  — smart liquidation triggered
+function getHealthZone(h: number): { label: string; color: string; description: string } {
+  if (h > 1.10) return { label: 'SAFE',         color: '#22c55e', description: 'Full operational access' }
+  if (h > 1.05) return { label: 'WARNING',       color: '#eab308', description: 'Add collateral — margin call' }
+  if (h > 1.00) return { label: 'RESTRICTED',    color: '#f97316', description: 'Reduce-only mode active' }
+  return             { label: 'INTERVENTION',    color: '#ef4444', description: 'Smart liquidation triggered' }
 }
 
 const fmt = (n: number) =>
@@ -40,8 +68,12 @@ export default function UserAccountPanel() {
   const [liquidationRisk, setLiquidationRisk] = useState<boolean | null>(null)
   const [checking, setChecking] = useState(false)
 
-  const activeTier = getSolvencyTier(solvency)
-  const pct = Math.round(solvency * 100)
+  // H_solv from store (ratio, e.g. 1.18, 1.07, 0.98)
+  const hSolv: number = (solvency as any).hSolv ?? solvency
+  const activeTier = getSolvencyTier(hSolv)
+  const solvPct = Math.round(hSolvToPercent(hSolv))
+
+  const healthZone = getHealthZone(hFactor)
 
   const totalBSRinEUR = user.bsrBalance * bsrEuroRate
   const totalBalance = user.eEuroBalance + totalBSRinEUR
@@ -137,64 +169,94 @@ export default function UserAccountPanel() {
           ))}
         </div>
 
-        {/* ── Section: Solvency ── */}
+        {/* ── Section: Ecosystem Solvency (Protocol Level) ── */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
-              BlackSlon Solvency Engine
+            <div className="text-[10px] tracking-widest text-amber-700 font-bold">
+              Ecosystem Solvency Engine
             </div>
             <span className="text-[7px] text-gray-700 uppercase tracking-widest">(Protocol Level)</span>
           </div>
 
-          {/* Current Tier */}
+          {/* H_solv value + tier */}
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[9px] text-gray-600 uppercase tracking-widest">Current Tier</span>
-            <span className="text-[11px] font-black" style={{ color: activeTier.color }}>
-              T{activeTier.tier}
-            </span>
+            <div>
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
+                H<sub>solv</sub> Index
+              </div>
+              <div className="text-sm font-black tracking-tighter" style={{ color: activeTier.color }}>
+                {hSolv.toFixed(3)}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Solvency Tier</div>
+              <div className="text-[11px] font-black tracking-widest" style={{ color: activeTier.color }}>
+                Tier {activeTier.tier} — {activeTier.label}
+              </div>
+            </div>
           </div>
 
-          {/* Progress bar */}
-          <div className="flex justify-between items-center mb-1">
-            <span className="text-[9px] text-gray-600 uppercase tracking-widest">Solvency Index</span>
-            <span className="text-[11px] font-black" style={{ color: activeTier.color }}>
-              {pct}%
-            </span>
+          {/* Progress bar — mapped from H_solv range 0.90–1.30 */}
+          <div className="flex justify-between text-[7px] text-gray-700 mb-0.5">
+            <span>0.90</span>
+            <span className="text-gray-800">|1.00</span>
+            <span className="text-gray-800">|1.05</span>
+            <span className="text-gray-800">|1.15</span>
+            <span>1.30</span>
           </div>
           <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800">
             <div
               className="h-full rounded-full transition-all duration-1000 ease-out"
               style={{
-                width: `${pct}%`,
+                width: `${solvPct}%`,
                 background: `linear-gradient(90deg, ${activeTier.color}80, ${activeTier.color})`,
                 boxShadow: `0 0 8px ${activeTier.glow}`,
               }}
             />
           </div>
           <div className="text-right text-[7px] mt-0.5" style={{ color: activeTier.color + '99' }}>
-            {activeTier.tier === 'I' ? 'Ultra-solvent' : activeTier.tier === 'II' ? 'Stable margin' : activeTier.tier === 'III' ? 'Margin pressure' : 'Liquidation risk'}
+            {activeTier.tier === 'I'
+              ? 'Ultra-solvent — all operations permitted'
+              : activeTier.tier === 'II'
+              ? 'Standard operations — enhanced monitoring'
+              : activeTier.tier === 'III'
+              ? 'eEURO-only collateral required'
+              : 'Hard stop — reduce-only mode'}
           </div>
         </div>
 
-        {/* ── Section: Risk Management ── */}
+        {/* ── Section: Risk Management (User Level) ── */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
+            <div className="text-[10px] tracking-widest text-amber-700 font-bold">
               BlackSlon Risk Management
             </div>
-            <span className="text-[7px] text-gray-700 uppercase tracking-widest">(User's Level)</span>
+            <span className="text-[7px] text-gray-700 uppercase tracking-widest">(User Level)</span>
           </div>
-          <div className="flex justify-between items-center mb-3">
+
+          {/* H_BSSZ value + zone */}
+          <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">H-Factor (H-BSTZ)</div>
-              <div className="text-sm text-green-700 tracking-tighter leading-tight">{hFactor.toFixed(2)}</div>
-            </div>
-            <div className="text-right">
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-1">Status</div>
-              <div className="text-[10px] text-green-700 tracking-[0.2em] uppercase animate-pulse">
-                {hFactor >= 1.5 ? 'SAFE ZONE' : hFactor >= 1.0 ? 'WATCH' : 'DANGER'}
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
+                H-Factor (H<sub>BSSZ</sub>)
+              </div>
+              <div className="text-sm tracking-tighter leading-tight" style={{ color: healthZone.color }}>
+                {hFactor.toFixed(3)}
               </div>
             </div>
+            <div className="text-right">
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Health Zone</div>
+              <div
+                className={`text-[10px] tracking-[0.2em] uppercase font-bold ${
+                  healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
+                }`}
+                style={{ color: healthZone.color }}
+              >
+                {healthZone.label}
+              </div>
+              <div className="text-[7px] text-gray-700 mt-0.5">{healthZone.description}</div>
+            </div>
+
             {/* Liquidation check */}
             <div className="flex flex-col items-end gap-1">
               <button
@@ -221,6 +283,30 @@ export default function UserAccountPanel() {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* H-Factor zone reference */}
+          <div className="grid grid-cols-4 gap-0.5 mt-1">
+            {[
+              { zone: 'SAFE',         threshold: '> 1.10', color: '#22c55e' },
+              { zone: 'WARNING',      threshold: '> 1.05', color: '#eab308' },
+              { zone: 'RESTRICTED',   threshold: '> 1.00', color: '#f97316' },
+              { zone: 'INTERVENTION', threshold: '≤ 1.00', color: '#ef4444' },
+            ].map((z) => (
+              <div
+                key={z.zone}
+                className="text-center px-1 py-0.5 rounded-sm border"
+                style={{
+                  borderColor: healthZone.label === z.zone ? z.color : 'rgba(55,65,81,0.4)',
+                  background: healthZone.label === z.zone ? `${z.color}15` : 'transparent',
+                }}
+              >
+                <div className="text-[6px] uppercase tracking-widest" style={{ color: z.color }}>
+                  {z.zone}
+                </div>
+                <div className="text-[6px] text-gray-700">{z.threshold}</div>
+              </div>
+            ))}
           </div>
         </div>
 

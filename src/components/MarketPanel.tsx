@@ -9,7 +9,9 @@ import UserAccountPanel from './UserAccountPanel'
 import { useMarketPanel } from '@/store/blackslon'
 import type { MarketId } from '@/store/types'
 
-// Solvency tier → UI config
+// ─── Ecosystem Solvency Tier UI config ───────────────────────────────────────
+// Source: Ecosystem-Solvency-Macro.md
+// Labels match the protocol specification exactly
 const TIER_CONFIG = {
   I:   { label: 'Tier I — Expansion',    color: 'text-green-700',  dot: 'bg-green-700' },
   II:  { label: 'Tier II — Equilibrium', color: 'text-yellow-500', dot: 'bg-yellow-500' },
@@ -29,7 +31,6 @@ export default function MarketPanel() {
     bsrReserve,
   } = useMarketPanel()
 
-  // Sync URL param → store on mount / route change
   useEffect(() => {
     const normalized = urlMarketId.replace('IPT', 'BS') as MarketId
     if (normalized !== activeMarketId) {
@@ -51,7 +52,7 @@ export default function MarketPanel() {
         {/* Protocol status indicators */}
         <div className="flex items-center gap-4">
 
-          {/* Solvency Tier */}
+          {/* Ecosystem Solvency Tier */}
           <div className="flex items-center gap-1.5">
             <div className={`w-1.5 h-1.5 rounded-full ${tier.dot} ${solvency.tier !== 'I' ? 'animate-pulse' : ''}`} />
             <span className={`text-[8px] uppercase tracking-widest ${tier.color}`}>
@@ -103,7 +104,7 @@ export default function MarketPanel() {
         </div>
       </div>
 
-      {/* ── BSTZ Price Index footer ── */}
+      {/* ── BSEI Price Index footer ── */}
       <div className="bg-[#0d1117] border border-gray-800/50 p-4 rounded-sm mt-auto shrink-0">
         <div className="flex justify-between items-center mb-1">
           <span className="text-[11px] text-gray-400 uppercase font-bold tracking-widest italic">
@@ -113,7 +114,7 @@ export default function MarketPanel() {
             <span className="text-[8px] text-blue-500 font-mono animate-pulse uppercase">
               ADR Protocol Active
             </span>
-            {/* H_solv value */}
+            {/* H_solv live value */}
             <span className="text-[8px] text-gray-600 uppercase tracking-widest">
               H<sub>solv</sub>:{' '}
               <span className={tier.color}>{solvency.hSolv.toFixed(3)}</span>
@@ -128,12 +129,12 @@ export default function MarketPanel() {
 
         <div className="flex justify-between items-baseline">
           <div className="flex flex-col gap-0.5">
+            {/* BSEI — BlackSlon Energy Index (not BSTZ) */}
             <span className="text-[11px] text-gray-500 font-bold tracking-tighter uppercase">
-              BSTZ PRICE INDEX · {activeMarketId}
+              BSEI PRICE INDEX · {activeMarketId}
             </span>
-            {/* BSSZ corridor hint */}
             <span className="text-[8px] text-gray-700 font-mono">
-              BSSZ corridor displayed in Physical Panel
+              BSSZ corridor displayed in Physical Panel · ω = 0.80
             </span>
           </div>
 

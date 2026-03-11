@@ -6,12 +6,52 @@ import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
 import type { BSSZState } from '@/store/types'
 
+// ─── Tiering Matrix ───────────────────────────────────────────────────────────
+// Source: Risk-Management-Micro.md + Economic-Equilibrium-Treasury-Governance.md
+// Only 5 discrete tiers are defined in the protocol spec.
+// Slider snaps to the nearest defined tier.
+const TIER_MATRIX: Record<number, { marginLong: number; marginShort: number; fee: number }> = {
+  10:  { marginLong: 0.50, marginShort: 1.00, fee: 0.0100 },
+  25:  { marginLong: 0.45, marginShort: 0.90, fee: 0.0085 },
+  50:  { marginLong: 0.40, marginShort: 0.80, fee: 0.0060 },
+  75:  { marginLong: 0.30, marginShort: 0.60, fee: 0.0035 },
+  100: { marginLong: 0.25, marginShort: 0.50, fee: 0.0020 },
+}
+
+const BSR_TIERS = [10, 25, 50, 75, 100] as const
+type BsrTier = typeof BSR_TIERS[number]
+
+/** Snap continuous slider value to nearest defined protocol tier */
+function snapToTier(value: number): BsrTier {
+  return BSR_TIERS.reduce((prev, curr) =>
+    Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+  ) as BsrTier
+}
+
 interface Props {
   selectedMarketId?: string
 }
 
 export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
-  const colors = getMarketColors(selectedMarketId)
+  const marketColors = getMarketColors(selectedMarketId)
+  const colors = marketColors.isGas
+    ? {
+        title: 'text-blue-400',
+        value: 'text-blue-500',
+        label: 'text-blue-700',
+        border: 'border-blue-800/30',
+        pulse: 'bg-blue-700',
+        isGas: true,
+      }
+    : {
+        title: 'text-yellow-600',
+        value: 'text-yellow-500',
+        label: 'text-yellow-700',
+        border: 'border-yellow-800/30',
+        pulse: 'bg-yellow-700',
+        isGas: false,
+      }
+
   const {
     pendingOrder,
     activeOrders,
@@ -24,15 +64,13 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
     marketId,
   } = useTrading()
 
-  // Load BSSZ from selected market data
   const [bssz, setBssz] = useState<BSSZState>(storeBssz)
-  
+
   useEffect(() => {
     if (selectedMarketId) {
       try {
         const marketData = getMarketData(selectedMarketId as any) as any
         if (marketData?.bsszPositions?.[0]?.bssz) {
-          const anchor = marketData.bsszPositions[0].bssz.anchor
           setBssz({
             floor: marketData.bsszPositions[0].bssz.floor,
             ceiling: marketData.bsszPositions[0].bssz.ceiling,
@@ -40,11 +78,9 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
             lockReason: null,
           })
         } else {
-          // Fallback to store BSSZ if market data not available
           setBssz(storeBssz)
         }
-      } catch (e) {
-        // Market data not found, use store BSSZ
+      } catch {
         setBssz(storeBssz)
       }
     } else {
@@ -52,7 +88,6 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
     }
   }, [selectedMarketId, storeBssz])
 
-  // Set default price based on anchor from Physical Market data
   const getAnchorPrice = () => {
     try {
       const md = getMarketData(selectedMarketId as any) as any
@@ -61,47 +96,61 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
     } catch {}
     return '10.59'
   }
+
   const [price, setPrice] = useState(getAnchorPrice())
   const [quantity, setQuantity] = useState(5)
   const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
-  const [bsrStake, setBsrStake] = useState(50)
+
+  // BSR stake — always snapped to a defined protocol tier (10/25/50/75/100)
+  // Exception: Tier III/IV override to 0 (eEURO-only mandate)
+  const [bsrTier, setBsrTier] = useState<BsrTier>(50)
   const [orderError, setOrderError] = useState<string | null>(null)
   const [orderSuccess, setOrderSuccess] = useState(false)
 
-  // Reset price to anchor when market changes
   useEffect(() => {
     setPrice(getAnchorPrice())
     setOrderError(null)
     setOrderSuccess(false)
   }, [selectedMarketId])
 
-  const euroStake = 100 - bsrStake
+  // Effective BSR stake: 0 when eEURO-only mandate is active, otherwise the chosen tier
+  const isForcedEuroOnly = solvencyTier === 'III' || solvencyTier === 'IV'
+  const effectiveBsrStake = isForcedEuroOnly ? 0 : bsrTier
+  const euroStake = 100 - effectiveBsrStake
+
+  // Tier III/IV resets chosen tier to minimum (will snap back when mandate lifts)
+  useEffect(() => {
+    if (isForcedEuroOnly) {
+      setBsrTier(10) // reset to minimum so it snaps correctly when mandate lifts
+    }
+  }, [isForcedEuroOnly])
 
   // Keep pending order preview in sync with inputs
   useEffect(() => {
     const p = parseFloat(price.replace(',', '.'))
     if (!isNaN(p) && quantity > 0) {
-      setPendingOrder(side, p, quantity, bsrStake)
+      setPendingOrder(side, p, quantity, effectiveBsrStake)
     }
-  }, [side, price, quantity, bsrStake])
+  }, [side, price, quantity, effectiveBsrStake])
 
-  // Initial trigger on mount
   useEffect(() => {
     const p = parseFloat(price.replace(',', '.'))
     if (!isNaN(p) && quantity > 0) {
-      setPendingOrder(side, p, quantity, bsrStake)
+      setPendingOrder(side, p, quantity, effectiveBsrStake)
     }
-  }, []) // Empty dependency array - run only once on mount
-
-  // Tier III/IV forces eEURO-only
-  useEffect(() => {
-    if (solvencyTier === 'III' || solvencyTier === 'IV') {
-      setBsrStake(0)
-    }
-  }, [solvencyTier])
+  }, [])
 
   const handlePriceStep = (delta: number) => {
     setPrice((p: string) => (parseFloat(p) + delta).toFixed(2))
+  }
+
+  const handleBsrSliderChange = (raw: number) => {
+    const snapped = snapToTier(raw)
+    setBsrTier(snapped)
+    const p = parseFloat(price.replace(',', '.'))
+    if (!isNaN(p) && quantity > 0) {
+      setPendingOrder(side, p, quantity, snapped)
+    }
   }
 
   const handleConfirm = () => {
@@ -112,12 +161,11 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
       setOrderError('Invalid price or quantity')
       return
     }
-    // Validate against dynamic BSSZ (not store's hardcoded value)
     if (p < bssz.floor || p > bssz.ceiling) {
       setOrderError(`Price ${p.toFixed(2)} outside BSSZ corridor [${bssz.floor.toFixed(2)} – ${bssz.ceiling.toFixed(2)}]`)
       return
     }
-    const error = placeOrder(side, p, quantity, bsrStake, selectedMarketId || 'BS-P-PL')
+    const error = placeOrder(side, p, quantity, effectiveBsrStake, selectedMarketId || 'BS-P-PL')
     if (error) {
       setOrderError(error)
     } else {
@@ -129,6 +177,11 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const priceNum = parseFloat(price.replace(',', '.'))
   const priceOutOfBSSZ = !isNaN(priceNum) && (priceNum < bssz.floor || priceNum > bssz.ceiling)
   const isBlocked = solvencyTier === 'IV'
+
+  // Get margin info for current effective tier
+  const currentTierData = isForcedEuroOnly
+    ? { marginLong: 0.50, marginShort: 1.00, fee: 0.0100 } // eEURO-only = 10% BSR tier rates
+    : TIER_MATRIX[bsrTier]
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
@@ -143,8 +196,13 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0 sm:px-2">
 
         <div className="pt-2 pb-1 bg-gradient-to-b from-black to-gray-950 w-full">
-          <div className={`text-[10px] tracking-widest font-bold mb-1 text-center ${colors.title}`}>
-            BlackSlon Trading Terminal
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-[10px] tracking-widest font-bold text-amber-700">
+              BlackSlon Trading Terminal
+            </div>
+            <div className={`px-2 py-0.5 rounded text-[7px] uppercase tracking-widest font-bold border ${colors.border} ${colors.title}`}>
+              {selectedMarketId}
+            </div>
           </div>
         </div>
 
@@ -165,7 +223,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
               ⚠ Tier III — eEURO-Only Collateral Required
             </div>
             <div className="text-[7px] text-amber-700 mt-0.5">
-              BSR stake has been set to 0%. Deposit eEURO only.
+              BSR stake disabled. New positions require 100% eEURO collateral.
             </div>
           </div>
         )}
@@ -272,44 +330,62 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
           </div>
         )}
 
-        {/* Deposit sliders */}
+        {/* ── BSR/eEURO Collateral Configuration ── */}
         <div className="space-y-1 mb-2 shrink-0 px-1">
-          <div className="text-[9px] text-gray-500 uppercase tracking-tighter mb-1">Deposit Configuration</div>
-          <div className="px-2 py-1 rounded-sm border border-gray-900">
-            <div className="flex justify-between text-[9px] tracking-[0.2em] mb-1">
-              <span className="text-amber-700">€BSR RATIO</span>
-              <span className="text-amber-700">{bsrStake}%</span>
-            </div>
-            <input
-              type="range" min="0" max="100" step="1" value={bsrStake}
-              disabled={solvencyTier === 'III' || solvencyTier === 'IV'}
-              onChange={(e) => {
-                const newValue = parseInt(e.target.value)
-                console.log('Slider onChange:', { oldValue: bsrStake, newValue })
-                setBsrStake(newValue)
-                // Immediately update pending order
-                const p = parseFloat(price.replace(',', '.'))
-                if (!isNaN(p) && quantity > 0) {
-                  setPendingOrder(side, p, quantity, newValue)
-                }
-              }}
-              className="w-full h-px bg-gray-800 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
-              style={{ accentColor: '#b45309' }}
-            />
+          <div className="text-[9px] text-gray-500 uppercase tracking-tighter mb-1">
+            Collateral Configuration
           </div>
+
+          {/* Tier selector — 5 discrete protocol tiers */}
+          <div className="px-2 py-1.5 rounded-sm border border-gray-900">
+            <div className="flex justify-between text-[9px] tracking-[0.2em] mb-2">
+              <span className="text-amber-700">€BSR RATIO</span>
+              <span className="text-amber-700">
+                {isForcedEuroOnly ? '0% (Tier III/IV override)' : `${bsrTier}%`}
+              </span>
+            </div>
+
+            {/* Discrete tier buttons */}
+            <div className="flex gap-1">
+              {BSR_TIERS.map((tier) => (
+                <button
+                  key={tier}
+                  onClick={() => !isForcedEuroOnly && handleBsrSliderChange(tier)}
+                  disabled={isForcedEuroOnly}
+                  className={`flex-1 py-1 text-[7px] rounded-sm border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${
+                    bsrTier === tier && !isForcedEuroOnly
+                      ? 'border-amber-700 bg-amber-700/20 text-amber-700'
+                      : 'border-gray-800 text-gray-600 hover:border-amber-700/50 hover:text-amber-800'
+                  }`}
+                >
+                  {tier}%
+                </button>
+              ))}
+            </div>
+
+            {/* Margin info for selected tier */}
+            <div className="mt-1.5 flex justify-between text-[7px] text-gray-700">
+              <span>
+                Margin: <span className="text-gray-500">
+                  {side === 'BUY'
+                    ? `${(currentTierData.marginLong * 100).toFixed(0)}% long`
+                    : `${(currentTierData.marginShort * 100).toFixed(0)}% short`}
+                </span>
+              </span>
+              <span>
+                Fee: <span className="text-gray-500">{(currentTierData.fee * 100).toFixed(2)}%</span>
+              </span>
+            </div>
+          </div>
+
+          {/* eEURO display (read-only) */}
           <div className="px-2 py-1 rounded-sm border border-gray-900">
-            <div className="flex justify-between text-[9px] tracking-[0.2em] mb-1">
+            <div className="flex justify-between text-[9px] tracking-[0.2em]">
               <span className="text-sky-400">eEURO RATIO</span>
               <span className="text-sky-400">{euroStake}%</span>
             </div>
-            <input type="range" min="0" max="100" value={euroStake} readOnly
-              className="w-full h-px bg-gray-700" 
-              style={{ 
-                accentColor: '#38bdf8',
-                background: `linear-gradient(to right, #38bdf8 0%, #38bdf8 ${euroStake}%, #374151 ${euroStake}%, #374151 100%)`
-              }} />
           </div>
-                  </div>
+        </div>
 
         {/* Margin summary */}
         <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
@@ -318,21 +394,18 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
           </div>
           <div className="text-center mb-2">
             <span className="text-sm text-gray-400 leading-none">
-              {(() => {
-                console.log('UI rendering pendingOrder:', pendingOrder)
-                return pendingOrder ? `${pendingOrder.marginPct}%` : '—'
-              })()}
+              {pendingOrder ? `${pendingOrder.marginPct}%` : '—'}
             </span>
           </div>
           <div className="flex flex-wrap gap-2 border-t border-gray-900/50 pt-2 pb-2">
             <div className="border border-amber-700 rounded-sm py-1 px-3 w-fit">
-              <div className="text-[8px] text-amber-700 uppercase tracking-widest mb-0">€BSR Deposit Value</div>
+              <div className="text-[8px] text-amber-700 uppercase tracking-widest mb-0">€BSR Deposit</div>
               <div className="text-[11px] text-amber-700 tracking-tighter leading-tight">
                 {pendingOrder ? `${pendingOrder.bsrDeposit.toFixed(2)} BSR` : '—'}
               </div>
             </div>
             <div className="border border-sky-400 rounded-sm py-1 px-3 w-fit ml-auto">
-              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit Value</div>
+              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit</div>
               <div className="text-[11px] text-sky-400 tracking-tighter leading-tight">
                 {pendingOrder ? `${pendingOrder.eEuroDeposit.toFixed(2)} EUR` : '—'}
               </div>
@@ -349,8 +422,8 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
                 <div
                   key={order.id}
                   className={`px-2 py-1.5 rounded-sm border ${
-                    order.side === 'BUY' 
-                      ? 'border-green-700/30 bg-green-900/10' 
+                    order.side === 'BUY'
+                      ? 'border-green-700/30 bg-green-900/10'
                       : 'border-red-600/30 bg-red-900/10'
                   }`}
                 >

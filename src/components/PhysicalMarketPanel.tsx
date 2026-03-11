@@ -12,7 +12,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
   const colors = getMarketColors(selectedMarketId)
   const marketData = getMarketData(selectedMarketId as any) as any
 
-  // Resolve BSSZ data - handle both old format (BS-P-PL) and new format (BS-G-NL)
+  // Resolve BSSZ data — handle both old format (BS-P-PL) and new format (BS-G-NL)
   let bsszPositions: any[] = []
   let currentAnchor = 0
   let currentFloor = 0
@@ -48,7 +48,6 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
     }
   }
 
-  // Today's date for display
   const today = new Date().toLocaleDateString('pl-PL', {
     day: '2-digit',
     month: '2-digit',
@@ -71,11 +70,11 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
         {/* ── Section title ── */}
         <div className="pt-2 pb-1 bg-gradient-to-b from-black to-gray-950 w-full">
           <div className={`text-[10px] tracking-widest font-bold mb-1 text-center ${colors.title}`}>
-            BlackSlon Settlement Zone
+            BlackSlon Settlement Zone (BSSZ)
           </div>
         </div>
 
-        {/* ── BSSZ Corridor ── */}
+        {/* ── BSSZ Corridor — today's values ── */}
         <div className={`mb-3 px-2 py-2 border rounded-sm ${isLocked ? 'border-red-500/60 bg-red-900/10' : colors.border}`}>
           <div className="flex justify-between items-center mb-1">
             <div className={`text-[6px] uppercase tracking-widest ${colors.title}`}>
@@ -86,7 +85,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
 
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Min (−10%)</span>
+              <span className="text-[7px] text-gray-500 uppercase mb-0">Floor (−10%)</span>
               <span className={`text-sm leading-tight font-normal ${colors.value}`}>
                 {currentFloor.toFixed(2)}
               </span>
@@ -95,7 +94,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
             <div className="text-gray-800 text-[10px]">——</div>
 
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor</span>
+              <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor (a)</span>
               <span className="text-sm text-gray-300 leading-tight font-normal">
                 {currentAnchor.toFixed(2)}
               </span>
@@ -107,7 +106,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
             <div className="text-gray-800 text-[10px]">——</div>
 
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Max (+20%)</span>
+              <span className="text-[7px] text-gray-500 uppercase mb-0">Ceiling (+20%)</span>
               <span className={`text-sm leading-tight font-normal ${colors.value}`}>
                 {currentCeiling.toFixed(2)}
               </span>
@@ -120,9 +119,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
           <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-900 mb-2">
             <div className="col-span-2 text-gray-400 font-bold">Ref</div>
             <div className="col-span-2 text-gray-400 font-bold">Date</div>
-            <div className="col-span-2 text-center text-gray-500 font-bold">Min</div>
+            <div className="col-span-2 text-center text-gray-500 font-bold">Floor</div>
             <div className="col-span-2 text-center text-gray-600 font-normal">Anchor</div>
-            <div className="col-span-2 text-center text-gray-500 font-bold">Max</div>
+            <div className="col-span-2 text-center text-gray-500 font-bold">Ceiling</div>
             <div className="col-span-2 text-right text-gray-500 font-bold">Trend</div>
           </div>
 
@@ -159,7 +158,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
 
         {/* ── Footer ── */}
         <div className="mt-6 pt-2 border-t border-gray-900 text-[8px] text-gray-700 text-center tracking-widest uppercase">
-          BSTZ Protocol · ADR Stabilization Active · {selectedMarketId}
+          BlackSlon Protocol · ADR Stabilization Active · {selectedMarketId}
         </div>
       </div>
     </div>

@@ -90,11 +90,16 @@ function MarketTile({ market, liveData }: { market: any; liveData: any }) {
   const iptPrice = wholesalePrice / 10
   const mockChange = "+1.24%"
 
+  // Wszystkie instrumenty świecą się jak aktywne
   const borderColor = market.type === 'Power' ? 'border-yellow-500' : 'border-blue-400'
   const priceColor = market.type === 'Power' ? 'text-yellow-500' : 'text-blue-400'
+  
+  // Aktywny rynek ma wypełnienie, inne mają tło
+  const isActiveMarket = market.id === 'BS-P-PL'
+  const bgStyle = isActiveMarket ? 'bg-yellow-500/10' : 'bg-[#050505]'
 
   return (
-    <div className={`bg-[#050505] border ${borderColor} p-6 hover:border-white/60 transition-all group relative`}>
+    <div className={`${bgStyle} border ${borderColor} p-6 hover:border-white/60 transition-all group relative`}>
       <div className="flex justify-between items-start mb-4">
         <code className="text-[9px] text-gray-600 font-mono tracking-tighter">{market.id}</code>
         <div className="flex items-center gap-2">
