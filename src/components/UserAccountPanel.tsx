@@ -217,11 +217,17 @@ export default function UserAccountPanel() {
           <div className="text-right text-[7px] mt-0.5" style={{ color: activeTier.color + '99' }}>
             {activeTier.tier === 'I'
               ? 'Ultra-solvent — all operations permitted'
-              : activeTier.tier === 'II'
-              ? 'Standard operations — enhanced monitoring'
-              : activeTier.tier === 'III'
-              ? 'eEURO-only collateral required'
-              : 'Hard stop — reduce-only mode'}
+              : 'eEURO-only collateral required'}
+          </div>
+
+          {/* BlackSlon Solvency Simulator Button */}
+          <div className="mt-3">
+            <button
+              onClick={() => window.open('/simulator.html', '_blank')}
+              className="w-full px-3 py-2 text-[10px] font-bold tracking-widest uppercase bg-amber-700 hover:bg-amber-600 text-white rounded transition-colors duration-200 border border-amber-600"
+            >
+              BlackSlon Solvency Simulator
+            </button>
           </div>
         </div>
 

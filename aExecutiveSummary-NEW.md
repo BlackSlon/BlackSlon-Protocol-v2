@@ -52,7 +52,7 @@ Today, annualised volatility regularly exceeds **50%** — as witnessed most rec
 
 The result is a structural collapse of the forward curve as a hedging instrument. Beyond the front month, liquidity has effectively disappeared for most participants. Year-ahead contracts — once the backbone of industrial energy procurement — are now the exclusive domain of entities with unlimited capital buffers.
 
-This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan are the only players who can open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 15% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
+This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 15% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
 
 **Legal Gatekeeping.** Energy Exchanges onboarding takes 6–12 months. A single standardised EFET framework agreement "negotiations" costs up to €50,000 in legal fees plus 6-12 months of "administrative overhead" — for a document that offers almost no room for actual negotiation. This is not compliance. It is a manufactured entry fee designed to maintain exclusivity.
 
@@ -72,17 +72,39 @@ Furthermore, the traditional Peak/Off-Peak regime in power markets has become ob
 
 BlackSlon is the first decentralised protocol built specifically for the European wholesale energy market. It does not attempt to replicate the legacy system on a blockchain. It eliminates the structural failures of the legacy system and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
 
-**Democratised Access.** We reduce the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
+**Democratised Access** 
 
-**Perpetual Instruments.** BS-P and BS-G tokens — BlackSlon Power and Gas — are non-expiring claims on the real-time value of energy within specific European markets. There is no forced roll, no year-end liquidity crunch, no expiry mechanics. A position opened today remains valid indefinitely, continuously marked to the BlackSlon Energy Index (BSEI) — a real-time, physically-anchored benchmark that no single actor can manipulate.
+We reduce the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
 
-**Algorithmic Price Truth.** The BSEI (BlackSlon Energy Settlement Index) is an autonomous transaction-weighted index — derived from executed BS-P/G trades, continuously calculated, and bounded by the physical market corridor (BSSZ). It is the reference price for all mark-to-market valuations.
+**Perpetual Instruments** 
 
-**Instant Settlement. No Intermediaries.** eEURO — our MiCA-compliant Euro stablecoin — settles positions in seconds. No clearing banks. No 24-48 hour wire transfer delays. No positions force-closed because a payment arrived one hour late. Capital is liquid, on-chain, and always accessible.
+BS-P and BS-G tokens — BlackSlon Power and Gas — are non-expiring claims on the real-time value of energy within specific European markets. There is no forced roll, no year-end liquidity crunch, no expiry mechanics. A position opened today remains valid indefinitely — its price determined by supply and demand within the BlackSlon Ecosystem, which is continuously anchored to physical market reality through the weighted forward curve - BlackSlon Settlement Zone and smoothed by the ADR mechanism. 
 
-**Institutional-Grade Risk Architecture.** The protocol operates a dual-layer risk framework: individual account health monitored in real time through the Health Factor ($H_{BSSZ}$), and systemic solvency tracked through the Ecosystem Solvency Index ($H_{solv}$). Smart Incremental Liquidation replaces catastrophic forced closures with surgical, 10% position reductions that protect both users and the protocol Vault simultaneously.
+**Algorithmic Price Truth — BlackSlon Energy Settlement Index (BSEI)** 
 
-**Physical Market Tether.** BlackSlon is not a purely synthetic protocol. Physical Liquidity Providers — licensed European energy trading entities with direct access to TTF, EEX, EPEX, and TGE — will underpin every market. In Phase 2, BS-P/G tokens become redeemable for physical energy delivery for 1MW+ industrial consumers. Following the industrial stabilization, the protocol expands to all remaining participants, including small enterprises and individual households. The virtual and physical markets are not separated — they are the same market, accessed through different interfaces.
+Unlike crude oil markets where the last executed deal becomes the settlement reference — amplifying noise from thin or distressed trading — and unlike gas and power benchmarks that rely on daily fixings which lag real market conditions and create manipulation windows at the close, the BSEI employs a three-tier Segmented R-VWAP over a 72-hour window: the most recent 24 hours carry 50% of the weight, the preceding 24–48 hours carry 25%, and the oldest 48–72 hours carry the remaining 25%. To manipulate the BSEI, a single actor would need to dominate trading volume across three consecutive days — making single-session manipulation economically unviable. The BSEI is not a price peg — it is a dynamic benchmark for mark-to-market valuation and risk management across all virtual energy markets.
+
+**Structural Volatility Filter  — BlackSlon Settlement Zone (BSSZ)** 
+
+The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th close — the trend was preserved inside the corridor. No forced liquidations. No margin stress. The chaos was not transmitted to participant portfolios.
+
+**Instant Settlement. No Intermediaries**
+
+eEURO — our MiCA-compliant Euro stablecoin — settles positions in seconds. No clearing banks. No 24-48 hour wire transfer delays. No positions force-closed because a payment arrived one hour late. Capital is liquid, on-chain, and always accessible.
+
+**Institutional-Grade Risk Architecture** 
+
+The protocol operates a dual-layer risk framework: individual account health monitored in real time through the Health Factor ($H_{BSSZ}$), and systemic solvency tracked through the Ecosystem Solvency Index ($H_{solv}$). Smart Incremental Liquidation replaces catastrophic forced closures with surgical, 10% position reductions that protect both users and the protocol Vault simultaneously.
+
+**Physical Market Tether.** 
+
+BlackSlon is not a purely synthetic protocol. The BSSZ — anchored daily to physical exchange/OTC prices via the weighted forward curve and Settlement Anchor — ensures that virtual token prices can never decouple from physical market reality. Physical Liquidity Providers — licensed European energy trading entities with direct access to TTF, EEX, EPEX, CEGH and TGE — will underpin every market. In Phase 2, BS-P/G tokens become redeemable for physical energy delivery. The virtual and physical markets are not separated — they are the same market, accessed through different interfaces.
+
+**The Inversion**
+
+As the BlackSlon Ecosystem matures and the BlackSlon Protocol accumulates sufficient trading volume and participant depth, the protocol anticipates a natural inversion: the BSEI itself becomes the benchmark — a more liquid, transparent, and accessible reference than the underlying physical markets it was originally derived from.
+
+This mirrors the historical evolution of financial benchmarks: instruments initially derived from physical markets eventually become the reference that physical markets price against. The BlackSlon Protocol is designed to follow the same trajectory in European energy markets — transitioning from a protocol tethered to physical reality, to a protocol that defines it.
 
 ## The Precedent: Marc Rich and the Birth of the Spot Market
 
@@ -109,6 +131,8 @@ Traditional energy markets are buried under layers of manufactured complexity: e
 **Zero Curve.** We collapse the fragmented forward curve — intraday, day-ahead, month, quarter, year — into a single, perpetual Token. No contango. No backwardation. If your analysis says energy prices will rise over the next three years, you buy the Token. One instrument. One truth.
 
 **Zero Counterparty Risk.** The protocol is the counterparty. Not a bank, not a clearing house, not a trading company, producer or end-user. A trustless, mathematically governed system — immutable, transparent, always solvent by design.
+
+**Zero Entry Barrier.** 100 kWh minimum. Any participant. Anywhere. Any time.
 
 *We don't add layers of complexity. We strip them away.*
 

@@ -4,7 +4,7 @@
 
 ## 1. Overview
 
-Liquidity is the foundational prerequisite of any trading protocol. Without it, price discovery fails, positions cannot be entered or exited at fair value, and systemic risk accumulates silently. The BlackSlon Protocol is engineered with a **three-layer liquidity architecture** that eliminates the structural weaknesses of traditional energy markets — without sacrificing the physical market tether that gives BS-P/G tokens their real-world value.
+Liquidity is the foundational prerequisite of any trading platform/protocol. Without it, price discovery fails, positions cannot be entered or exited at fair value, and systemic risk accumulates silently. The BlackSlon Protocol is engineered with a **three-layer liquidity architecture** that eliminates the structural weaknesses of traditional energy markets — without sacrificing the physical market tether that gives BS-P/G tokens their real-world value.
 
 ---
 
@@ -31,8 +31,10 @@ Traditional wholesale energy markets operate on Central Limit Order Books where 
 The BlackSlon Protocol eliminates both vulnerabilities:
 
 - **24/7/365 Operation:** The protocol operates continuously, independent of physical exchange hours. Users can manage BS-P/G exposure during weekends, holidays, and off-market hours — exactly when physical risk events (weather, geopolitical shocks, infrastructure failures) most commonly occur.
-- **Algorithmic Depth:** The Liquidity Vault provides programmatic market making that cannot "pull quotes" during volatility. Within its exposure limits, it is always available.
-- **PLP Institutional Backstop:** PLPs are contractually committed participants with physical market access — not discretionary traders who can exit at will.
+
+- **Algorithmic Depth:** The Liquidity Vault provides programmatic market making that remains active within its defined exposure limits — unlike traditional market makers, it does not withdraw quotes based on discretionary risk appetite. Vault liquidity is suspended only under predefined solvency conditions (Tier III/IV) designed to protect the protocol's capital base.
+
+- **PLP Institutional Backstop:** PLPs are licensed energy trading entities with physical market access, operating under contractual liquidity obligations defined in the PLP Agreement. Their participation is structured and regulated — providing materially greater continuity than discretionary retail market makers — while remaining subject to their own internal risk frameworks and regulatory constraints.
 
 ---
 
@@ -44,36 +46,35 @@ Key properties:
 
 - **Transparent:** All bids and asks are visible to all participants in real time
 - **Fair:** No preferential order routing, no hidden liquidity tiers
-- **BSSZ-Constrained:** No order outside the $[a - 10\%, a + 20\%]$ corridor can be placed or executed — the protocol rejects them at the matching engine level
-- **Circuit Breaker Protected:** The $b_{adj}$ mechanism slows order matching when price velocity approaches BSSZ boundaries, preventing boundary violations before they occur
+- **BSSZ-Constrained:** No order outside the $[A - 10\%, A + 20\%]$ corridor can be placed or executed — the protocol rejects them at the matching engine level
 
 The BSEI ($I_t$) serves as the Mark-to-Market reference for all open positions — not the last traded price on the Order Book. This insulates PnL calculations from thin-market manipulation.
 
 ---
 
-## 5. Physical Liquidity Providers: Layer 2
+### 5. Physical Liquidity Providers: Layer 2
 
-PLPs are the institutional backbone of the BlackSlon liquidity architecture. They are licensed energy trading entities with direct access to physical European energy exchanges (TTF, EEX, EPEX, TGE) that participate in the protocol as professional market makers and physical hedge counterparties.
+PLPs are the institutional backbone of the BlackSlon liquidity architecture — licensed energy trading entities with direct access to ICE, EEX, EPEX, and TGE, participating as professional market makers and physical hedge counterparties.
 
 ### 5.1 Role in Liquidity Provision
 
-When organic Order Book depth is insufficient to match a user order, PLPs quote prices within the BSSZ corridor. This ensures that users always have a counterparty available — not at any price, but at a fair, physically-anchored price.
+When organic Order Book depth is insufficient, PLPs quote prices within the BSSZ corridor — ensuring users have a counterparty at a physically-anchored price. For PLPs, this is not merely a service obligation: actively quoting the short side in backwardated markets generates structural roll yield independent of directional price movement. 
 
-### 5.2 Delta-Neutral Integrity
+Full PLP opportunity framework: Section [15].
 
-PLPs monitor the aggregate net virtual imbalance across all BlackSlon markets. When virtual positions create a significant directional bias, PLPs have the option to:
+### 5.2 Virtual-Physical Integration
 
-- **Hedge** the net exposure on physical exchanges — creating a real-world counterpart to virtual positions
-- **Hold** the virtual counterparty position speculatively
-- **Pass** oversized positions to the Protocol Vault (Layer 3)
+PLPs monitor aggregate net virtual imbalance across BlackSlon markets and manage their exposure through three channels:
 
-This delta-neutral management ensures that significant virtual profits always have a corresponding physical or capital backstop — the fundamental guarantee that distinguishes BlackSlon from purely synthetic trading protocols.
+- **Hedge** — offset net virtual exposure on physical exchanges
+- **Hold** — carry the virtual counterparty position as part of an active book management strategy
+- **Pass** — transfer oversized positions to the Protocol Vault
 
-### 5.3 24/7 Coverage
+This integration ensures that material virtual profits have a corresponding physical or capital backstop — the structural distinction between BlackSlon and purely synthetic protocols.
 
-Unlike physical exchange market makers who operate only during trading hours, PLPs in the BlackSlon Protocol provide continuous coverage. Off-hours quotes may carry a wider effective range within the BSSZ corridor, but execution is never suspended.
+### 5.3 Continuous Coverage
 
-Full PLP specification, eligibility, fee structure, and onboarding: `Physical-Liquidity-Provider.md`
+PLPs provide liquidity beyond physical exchange hours. Off-hours quotes operate within a wider effective range inside the BSSZ corridor — reflecting the reduced hedging capacity outside active exchange sessions, while maintaining market continuity during exactly the periods when physical risk events most commonly occur.
 
 ---
 
@@ -83,20 +84,22 @@ The Protocol Liquidity Vault acts as the market maker of last resort — a capit
 
 ### Hard Exposure Limit
 
-The Vault never accumulates a net directional position exceeding **15% of total Vault value**:
+The Vault is hard-capped at a net directional exposure of 15% of total Vault value.
 
 $$\text{Vault Exposure} \leq V_{eEURO} \cdot \lambda_{max}, \quad \lambda_{max} = 0.15$$
 
-This limit is enforced at the smart contract level and cannot be overridden by governance. It prevents the Vault from becoming an uncapped counterparty to a unidirectional market — the scenario that destroyed several algorithmic stablecoin protocols.
+This limit is enforced at the smart contract level and cannot be overridden by governance. It prevents the Vault from becoming an uncapped counterparty to a unidirectional market.
 
 ### Activation Conditions
 
 The Vault activates Layer 3 market making only when:
-1. No matching organic counterparty exists on the Order Book
+1. $H_{solv}$ is in Tier I or Tier II (protocol is healthy enough to absorb the exposure)
 2. No PLP quote is available within the BSSZ corridor
-3. $H_{solv}$ is in Tier I or Tier II (protocol is healthy enough to absorb the exposure)
+3. No matching organic counterparty exists on the Order Book
 
 In Tier III or Tier IV, the Vault suspends all new market making activity — preserving capital for solvency obligations rather than liquidity provision.
+
+In backwardated energy markets, the participant base exhibits a natural long bias — most users enter the protocol with a bullish energy thesis. As the market maker of last resort, the Vault absorbs the unmatched portion of this flow, accumulating a structurally short counterparty exposure. In backwardation, this is not a liability — it is a systematically advantaged position, as the roll decay embedded in the forward curve continuously works in favour of the short side.
 
 ---
 
@@ -104,21 +107,22 @@ In Tier III or Tier IV, the Vault suspends all new market making activity — pr
 
 ### Phase 1 — Synthetic Liquidity (Bootstrap)
 
-In Phase 1, liquidity is built progressively through the three-layer stack. The primary goal is to establish sufficient Order Book depth and PLP participation to ensure continuous, fair pricing across all BSSZ markets.
+Phase 1 is deliberately scoped as a liquidity-building period — the primary objective is establishing sufficient Order Book depth and PLP participation to ensure continuous, fair pricing across all BSSZ markets before physical obligations are introduced.
 
 - BS-P/G tokens are cash-settled virtual instruments — no physical delivery
 - PLP hedging is commercial and discretionary — physical coverage is not guaranteed for every position
-- The Vault provides backstop liquidity within its 15% exposure limit
-- $H_{solv}$ monitoring ensures the protocol never extends beyond its capital base
+- The Vault provides backstop liquidity within its 15% hard exposure cap
+- $H_{solv}$ monitoring ensures the protocol operates within its verified capital base at all times
 
 ### Phase 2 — Physical Liquidity (Maturity)
 
-In Phase 2, liquidity gains a physical dimension as BS-P/G tokens become redeemable for physical energy delivery for 1MW+ industrial consumers.
+In Phase 2, liquidity gains a physical dimension as BS-P/G tokens become redeemable for physical energy delivery for eligible industrial consumers (minimum 1MW annual baseload offtake capacity — establishing the operational and regulatory framework for progressive expansion to SMEs and, ultimately, individual households. The end state is a single open market accessible to every energy consumer in Europe, regardless of scale.)
 
-- PLPs evolve from market makers into physical delivery counterparties
-- The $Hedge_{PLP}$ component enters the $H_{solv}$ numerator as a verified asset
-- Virtual-to-Physical Swap creates a direct capital flow from the BlackSlon Ecosystem into real energy markets
-- Liquidity deepens organically as industrial consumers use BS-P/G tokens for genuine energy procurement hedging
+- PLPs evolve from market makers into physical delivery counterparties — a fundamental expansion of their role and revenue base
+- Physical hedge positions become verified protocol assets, strengthening the $H_{solv}$ capital base
+- Virtual-to-Physical Swap creates direct capital flow from the BlackSlon Ecosystem into real energy procurement
+- Liquidity deepens organically as industrial consumers use BS-P/G tokens for genuine multi-year energy hedging 
+  — the market segment with the highest structural demand for the roll yield strategies available to PLPs
 
 ---
 
@@ -126,62 +130,31 @@ In Phase 2, liquidity gains a physical dimension as BS-P/G tokens become redeema
 
 ### The $H_{solv}$ Macro Circuit Breaker
 
-The ultimate liquidity safeguard is the Ecosystem Solvency Index ($H_{solv}$). When solvency drops into Tier III or IV, the protocol automatically restricts new position openings — preventing further liquidity obligations from accumulating when the capital base is under stress.
-
-Full $H_{solv}$ framework: `Ecosystem-Solvency-Macro.md`
+The ultimate liquidity safeguard is the Ecosystem Solvency Index ($H_{solv}$). When solvency drops into Tier III or IV, the protocol automatically restricts new position openings — 
+preventing further liquidity obligations from accumulating when the capital base is under stress.
 
 ### Concentration Risk
 
-Concentration risk is one of the most underestimated systemic threats in any clearing infrastructure. A single dominant participant — whether a large industrial hedger, an aggressive speculator, or a PLP — can unilaterally destabilise a market simply by exiting their position. The BlackSlon Protocol addresses this through a multi-dimensional concentration framework.
+Concentration risk is a structural consideration in any clearing infrastructure. The BlackSlon Protocol applies a graduated concentration framework — calibrated to the protocol's maturity stage and active participant base — to ensure no single participant can unilaterally destabilise a market by entering or exiting a dominant position.
 
 #### 8.1 Open Interest Limit
 
-No single participant may hold more than **20% of total open interest** in any single BSSZ market at any time:
+As the protocol scales, no single participant should represent a dominant share of open interest in any single BSSZ market. The target threshold is **20% of total open interest** per 
+participant — applied progressively as market depth develops:
 
 $$OI_{participant} \leq OI_{total} \cdot 0.20$$
 
-This limit applies to:
-- Individual user accounts
-- PLPs (their own proprietary positions, excluding hedging activity)
-- Any group of accounts identifiable as acting in concert (determined by KYC/AML entity mapping)
-
-If a participant's position grows beyond 20% due to organic market movement (e.g., other participants close positions reducing total OI), they are given a **24-hour grace period** to reduce exposure before automated restrictions apply. New position openings in the breached direction are blocked immediately.
-
-#### 8.2 PLP Market Share Limit
-
-To prevent a single PLP from achieving monopolistic control over liquidity provision, no single PLP may provide more than **40% of total active liquidity quotes** across all BSSZ markets simultaneously:
-
-$$Liquidity_{PLP_i} \leq Liquidity_{total} \cdot 0.40$$
-
-This ensures that the sudden withdrawal of any single PLP — due to internal risk limits, regulatory action, or commercial decision — cannot create a liquidity black hole across the protocol.
-
-#### 8.3 Collateral Concentration
-
-No single eEURO issuer or custodian may represent more than **50% of total $V_{eEURO}$** in the Protocol Vault. This protects against counterparty risk at the stablecoin infrastructure level — if a single eEURO provider faces a regulatory or liquidity event, the protocol retains sufficient diversified reserves to continue operating.
-
-#### 8.4 Market-Level Imbalance Monitor
-
-Beyond individual position limits, the protocol monitors **aggregate directional imbalance** across each BSSZ market:
-
-$$Imbalance_{market} = \frac{|\sum OI_{LONG} - \sum OI_{SHORT}|}{\sum OI_{total}}$$
-
-| Imbalance Level | Response |
-|:---|:---|
-| $< 60\%$ | Normal operations |
-| $60\% – 75\%$ | PLP alert triggered — additional liquidity in minority direction incentivised |
-| $> 75\%$ | New positions in dominant direction require **150% of standard margin** |
-| $> 90\%$ | New positions in dominant direction **suspended** until rebalancing occurs |
-
-This mechanism prevents the Order Book from becoming one-sided — a scenario where virtually all participants are long (or short) simultaneously, leaving no organic counterparty for exits and forcing the Vault to absorb all flow.
+This applies to individual accounts and any group of accounts identifiable as acting in concert via on-chain wallet clustering and transaction pattern analysis. Where a participant's share grows due to organic market movement (other participants reducing positions), a grace period applies before automated restrictions are triggered.
 
 #### 8.5 Regulatory Alignment
 
 The concentration framework is designed to align with the standards applied to **Central Counterparties (CCPs)** under **EMIR (EU 648/2012)** — the EU regulation governing OTC derivatives clearing. While the BlackSlon Protocol is not formally classified as a CCP under EMIR in Phase 1, proactively adopting equivalent concentration risk standards:
 
 - Demonstrates regulatory maturity to the NCA during CASP licensing
-- Prepares the protocol for potential EMIR-equivalent classification in Phase 2 as physical settlement obligations grow
+- Establishes a credible risk governance baseline consistent with institutional counterparty expectations as physical settlement obligations grow in Phase 2
 - Provides institutional participants (PLPs, industrial hedgers) with the compliance assurance required by their own internal risk frameworks
 
 ### Off-Hours Liquidity
 
-During periods when physical exchanges are closed (weekends, holidays), the BSEI Physical Meridian is frozen at the last validated fixing. The BSSZ corridor remains active and trading continues, but the Physical Meridian component ($\omega \cdot a$) does not update until the next exchange session opens. This is disclosed to all participants as a standard operating condition.
+During periods when physical exchanges are closed (weekends, holidays), the Settlement Anchor ($A$) is frozen at the last validated fixing. The BSSZ corridor remains active and trading 
+continues at unchanged boundaries — the anchor does not update until the next exchange session opens. This is a standard operating condition disclosed to all participants, and reflects the protocol's deliberate design: 24/7 trading access within a physically-anchored corridor, not 24/7 anchor recalculation.

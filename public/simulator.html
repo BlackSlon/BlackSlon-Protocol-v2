@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackSlon — Stress Test Simulator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111;
+    color: #ccc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 32px 24px 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .page-title { font-size: 13px; font-weight: 600; color: #666; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .page-sub { font-size: 12px; color: #444; margin-bottom: 28px; }
+  hr.divider { border: none; border-top: 1px solid #222; margin: 24px 0; }
+  .section-label { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .controls-row { display: flex; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 28px; }
+  .control-group { display: flex; flex-direction: column; gap: 8px; }
+  .price-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+  .price-btn { font-size: 13px; font-weight: 500; padding: 6px 16px; border: 1px solid #333; border-radius: 4px; background: #1a1a1a; color: #999; cursor: pointer; transition: all 0.1s; }
+  .price-btn:hover { border-color: #555; color: #ccc; }
+  .price-btn.active { background: #2a2a2a; border-color: #777; color: #eee; font-weight: 600; }
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+  input[type=range] { -webkit-appearance: none; width: 200px; height: 2px; background: #333; border-radius: 2px; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #aaa; cursor: pointer; }
+  .slider-val { font-size: 13px; font-weight: 600; color: #eee; min-width: 38px; }
+  .summary-row { display: flex; gap: 1px; background: #222; border: 1px solid #222; border-radius: 4px; overflow: hidden; margin-bottom: 28px; }
+  .sum-card { flex: 1; background: #1a1a1a; padding: 12px 16px; min-width: 120px; }
+  .sum-card .s-label { font-size: 11px; color: #555; margin-bottom: 4px; white-space: nowrap; }
+  .sum-card .s-value { font-size: 18px; font-weight: 600; color: #ddd; }
+  .s-value.pos { color: #5a9e72; }
+  .s-value.neg { color: #b05a4a; }
+  .s-value.hi  { color: #eee; }
+  .plp-block { background: #161616; border: 1px solid #2a2a2a; border-radius: 4px; padding: 14px 18px; margin-bottom: 28px; }
+  .plp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .plp-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1f1f1f; gap: 12px; }
+  .plp-row:nth-child(odd) { padding-right: 24px; }
+  .plp-row:nth-child(even) { padding-left: 24px; border-left: 1px solid #1f1f1f; }
+  .plp-key { font-size: 12px; color: #555; }
+  .plp-val { font-size: 13px; font-weight: 600; color: #aaa; white-space: nowrap; }
+  .tables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 800px) { .tables-grid { grid-template-columns: 1fr; } .plp-grid { grid-template-columns: 1fr; } .plp-row:nth-child(even) { padding-left: 0; border-left: none; } }
+  .table-block { background: #161616; border: 1px solid #222; border-radius: 4px; overflow: hidden; }
+  .table-head-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid #222; }
+  .table-head-row span { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.07em; text-transform: uppercase; }
+  .tl-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.05em; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #444; padding: 7px 10px; text-align: left; border-bottom: 1px solid #1f1f1f; background: #131313; }
+  td { padding: 6px 10px; border-bottom: 1px solid #1a1a1a; color: #888; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c1c1c; }
+  td.pos { color: #5a9e72; }
+  td.neg { color: #b05a4a; }
+  td.hi  { color: #ccc; }
+  .zbadge { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+  .z-safe { background: #1a2e22; color: #5a9e72; }
+  .z-warn { background: #2e2318; color: #c8883a; }
+  .z-rest { background: #2a2518; color: #b8a03a; }
+  .z-int  { background: #2e1a18; color: #b05a4a; }
+  .solv-block { background: #161616; border: 1px solid #222; border-radius: 4px; padding: 16px 18px; margin-bottom: 28px; }
+  .solv-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .hsolv-big { font-size: 42px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; transition: color 0.3s; }
+  .hsolv-sub { font-size: 11px; color: #444; margin-top: 4px; }
+  .solv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1f1f1f; border: 1px solid #1f1f1f; border-radius: 3px; overflow: hidden; margin-bottom: 12px; }
+  @media (max-width: 700px) { .solv-grid { grid-template-columns: 1fr; } }
+  .solv-item { background: #131313; padding: 9px 13px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .solv-key { font-size: 11px; color: #444; }
+  .solv-val { font-size: 12px; font-weight: 600; color: #999; white-space: nowrap; }
+  .solv-val.pos { color: #5a9e72; }
+  .solv-val.neg { color: #b05a4a; }
+  .solv-val.hi  { color: #ccc; }
+  .tier-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 3px; border: 1px solid; }
+  .tier-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tier-label { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .insight { background: #161616; border-left: 2px solid #2a2a2a; padding: 12px 16px; border-radius: 0 4px 4px 0; }
+  .insight p { font-size: 12px; color: #555; line-height: 1.7; }
+  footer { margin-top: 32px; font-size: 10px; color: #333; letter-spacing: 0.07em; text-transform: uppercase; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; border-top: 1px solid #1f1f1f; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page-title">BlackSlon Protocol — Stress Test Simulator</div>
+<div class="page-sub">Entry price: 8 EUR · Anchor tracks market (ADR active) · Always IN ZONE · Buyers ×10 (100k tokens, 25% margin, 100% €BSR) · Sellers ×5 (200k tokens, 100% margin SHORT, 10% €BSR / 90% eEURO) · PLP capital: €2,000,000</div>
+<hr class="divider">
+
+<div class="controls-row">
+  <div class="control-group">
+    <div class="section-label">Token price</div>
+    <div class="price-buttons" id="priceButtons"></div>
+  </div>
+  <div class="control-group">
+    <div class="section-label">PLP hedge ratio — <span id="hedgePct" style="color:#ccc">70%</span> of net ITM exposure</div>
+    <div class="slider-row">
+      <span style="font-size:11px;color:#444">0%</span>
+      <input type="range" min="0" max="100" value="70" step="5" id="hedgeSlider">
+      <span style="font-size:11px;color:#444">100%</span>
+      <div class="slider-val" id="sliderVal">70%</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">Summary — price <span id="priceLabel">10 EUR</span> (entry: 8 EUR)</div>
+<div class="summary-row" id="summaryRow"></div>
+
+<div class="section-label">Physical Liquidity Provider</div>
+<div class="plp-block" id="plpBlock"></div>
+
+<div class="section-label">Positions</div>
+<div class="tables-grid">
+  <div class="table-block">
+    <div class="table-head-row">
+      <span>Buyers — LONG · 100k tokens · 25% margin · 100% €BSR</span>
+      <span class="tl-badge" id="buyerBadge"></span>
+    </div>
+    <table id="buyersTable"></table>
+  </div>
+  <div class="table-block">
+    <div class="table-head-row">
+      <span>Sellers — SHORT · 200k tokens · 100% margin · 90% eEURO</span>
+      <span class="tl-badge" id="sellerBadge"></span>
+    </div>
+    <table id="sellersTable"></table>
+  </div>
+</div>
+
+<div class="section-label">Protocol solvency</div>
+<div class="solv-block" id="solvBlock"></div>
+
+<div class="insight" id="insightBox"></div>
+
+<footer>
+  <span>BlackSlon Protocol — White Paper v2.0</span>
+  <span>Stress Test Simulator — illustrative purposes only</span>
+  <span>March 2026</span>
+</footer>
+
+<script>
+const ENTRY = 8, PRICES = [3, 6, 10, 12, 16], PLP_CAP = 2000000;
+let currentPrice = 10, hedgeRatio = 0.70;
+
+const fmtEUR = n => (n < 0 ? '−' : '') + '€' + Math.abs(Math.round(n)).toLocaleString('en-US');
+const fmtH   = h => Math.max(0, h).toFixed(2);
+const pct    = n => Math.round(n * 100) + '%';
+
+function calcBuyer(p) {
+  const qty = 100000, im = qty * ENTRY * 0.25, pnl = (p - ENTRY) * qty, eq = im + pnl;
+  return { qty, im, pnl, equity: eq, h: eq / (im * 0.5) };
+}
+function calcSeller(p) {
+  const qty = 200000, im = qty * ENTRY * 1.0, pnl = (ENTRY - p) * qty, eq = im + pnl;
+  return { qty, im, pnl, equity: eq, h: eq / (im * 0.5) };
+}
+function zone(h) {
+  if (h > 1.10) return { label: 'SAFE',         cls: 'z-safe', color: '#5a9e72' };
+  if (h > 1.05) return { label: 'WARNING',      cls: 'z-warn', color: '#c8883a' };
+  if (h > 1.00) return { label: 'RESTRICTED',   cls: 'z-rest', color: '#b8a03a' };
+  return               { label: 'INTERVENTION', cls: 'z-int',  color: '#b05a4a' };
+}
+function tierInfo(h) {
+  if (h > 1.15) return { label: 'Tier I — Expansion',    c: '#5a9e72', bg: '#1a2e22', bc: '#2a4a32' };
+  if (h > 1.05) return { label: 'Tier II — Equilibrium', c: '#5a9e72', bg: '#1a2822', bc: '#2a3e30' };
+  if (h > 1.00) return { label: 'Tier III — Mitigation', c: '#c8883a', bg: '#2e2318', bc: '#4a3820' };
+  return               { label: 'Tier IV — Safeguard',   c: '#b05a4a', bg: '#2e1a18', bc: '#4a2820' };
+}
+
+function render() {
+  const p = currentPrice;
+  const b = calcBuyer(p), s = calcSeller(p);
+  const bITM = Math.max(0, b.pnl) * 10, sITM = Math.max(0, s.pnl) * 5;
+  const totITM = bITM + sITM, netImb = bITM - sITM;
+  const plpH = Math.max(0, netImb) * hedgeRatio, plpC = Math.min(plpH, PLP_CAP);
+  const vE = s.im * 0.90 * 5, vB = (b.im * 10) + (s.im * 0.10 * 5);
+  const bLiq = b.h <= 1.0, sLiq = s.h <= 1.0;
+  const lps = (bLiq ? Math.max(0, b.equity) * 0.5 * 10 : 0) + (sLiq ? Math.max(0, s.equity) * 0.5 * 5 : 0);
+  const totIM = (bLiq ? 0 : b.im * 10) + (sLiq ? 0 : s.im * 5);
+  const denom = totITM + totIM + 500000;
+  const hNo = (vE + vB + lps) / denom, hWith = (vE + vB + lps + plpC) / denom;
+  const hColor = hWith > 1.05 ? '#5a9e72' : hWith > 1.0 ? '#c8883a' : '#b05a4a';
+  const tier = tierInfo(hWith);
+  const bz = zone(b.h), sz = zone(s.h);
+
+  document.getElementById('priceLabel').textContent = p + ' EUR';
+
+  document.getElementById('summaryRow').innerHTML = [
+    { label: 'Token price',       val: p + ' EUR',          cls: 'hi' },
+    { label: 'Buyers PnL ×10',   val: fmtEUR(b.pnl * 10), cls: b.pnl >= 0 ? 'pos' : 'neg' },
+    { label: 'Sellers PnL ×5',   val: fmtEUR(s.pnl * 5),  cls: s.pnl >= 0 ? 'pos' : 'neg' },
+    { label: 'H_solv (no PLP)',   val: fmtH(hNo),           cls: hNo > 1.05 ? 'pos' : hNo > 1 ? '' : 'neg' },
+    { label: 'H_solv (with PLP)', val: fmtH(hWith),         cls: hWith > 1.05 ? 'pos' : hWith > 1 ? '' : 'neg' },
+  ].map(c => `<div class="sum-card"><div class="s-label">${c.label}</div><div class="s-value ${c.cls}">${c.val}</div></div>`).join('');
+
+  document.getElementById('plpBlock').innerHTML = `<div class="plp-grid">
+    <div class="plp-row"><span class="plp-key">Net virtual imbalance (buyers ITM − sellers ITM)</span><span class="plp-val">${fmtEUR(netImb)}</span></div>
+    <div class="plp-row"><span class="plp-key">PLP physical hedge (${pct(hedgeRatio)} × imbalance)</span><span class="plp-val">${fmtEUR(plpH)}</span></div>
+    <div class="plp-row"><span class="plp-key">Effective PLP cover (capped @ €2M)</span><span class="plp-val">${fmtEUR(plpC)}</span></div>
+    <div class="plp-row"><span class="plp-key">H_solv: without PLP → with PLP</span><span class="plp-val">${fmtH(hNo)} → ${fmtH(hWith)}</span></div>
+  </div>`;
+
+  const mkBadge = (z, id) => {
+    const el = document.getElementById(id);
+    el.textContent = z.label; el.className = 'tl-badge ' + z.cls;
+  };
+  mkBadge(bz, 'buyerBadge'); mkBadge(sz, 'sellerBadge');
+
+  const mkRows = (z, n, data, th) => {
+    let r = `<tr>${th.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+    for (let i = 1; i <= n; i++) r += `<tr>
+      <td class="hi">${data.name} ${i}</td>
+      <td>${fmtEUR(data.im)}</td>
+      <td class="${data.pnl>=0?'pos':'neg'}">${fmtEUR(data.pnl)}</td>
+      <td class="${data.equity>=0?'':'neg'}">${fmtEUR(data.equity)}</td>
+      <td style="font-weight:600;color:${z.color}">${fmtH(data.h)}</td>
+      <td><span class="zbadge ${z.cls}">${z.label}</span></td>
+    </tr>`;
+    return r;
+  };
+  const th = ['User','IM','PnL','Equity','H-factor','Zone'];
+  document.getElementById('buyersTable').innerHTML  = mkRows(bz, 10, {...b, name:'Buyer'},  th);
+  document.getElementById('sellersTable').innerHTML = mkRows(sz,  5, {...s, name:'Seller'}, th);
+
+  document.getElementById('solvBlock').innerHTML = `
+    <div class="solv-top">
+      <div>
+        <div class="section-label" style="margin-bottom:6px">H_solv — Ecosystem Solvency Index</div>
+        <div class="hsolv-sub">price ${p} EUR · PLP hedge ${pct(hedgeRatio)}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="hsolv-big" style="color:${hColor}">${fmtH(hWith)}</div>
+        <div class="hsolv-sub">${fmtH(hNo)} without PLP</div>
+      </div>
+    </div>
+    <div class="solv-grid">
+      <div class="solv-item"><span class="solv-key">Vault eEURO (sellers 90%)</span><span class="solv-val pos">${fmtEUR(vE)}</span></div>
+      <div class="solv-item"><span class="solv-key">Vault BSR (buyers + sellers 10%)</span><span class="solv-val pos">${fmtEUR(vB)}</span></div>
+      <div class="solv-item"><span class="solv-key">LPS gain (50% of liquidations)</span><span class="solv-val pos">${fmtEUR(lps)}</span></div>
+      <div class="solv-item"><span class="solv-key">PLP physical backstop</span><span class="solv-val pos">${fmtEUR(plpC)}</span></div>
+      <div class="solv-item"><span class="solv-key">Total Vault (adjusted)</span><span class="solv-val hi">${fmtEUR(vE+vB+lps+plpC)}</span></div>
+      <div class="solv-item"><span class="solv-key">ITM obligations</span><span class="solv-val neg">${fmtEUR(totITM)}</span></div>
+    </div>
+    <div style="height:10px"></div>
+    <div class="tier-row" style="background:${tier.bg};border-color:${tier.bc}">
+      <div class="tier-dot" style="background:${tier.c}"></div>
+      <div class="tier-label" style="color:${tier.c}">${tier.label}</div>
+    </div>`;
+
+  const insights = {
+    3:  'Deep decline (−62.5%). Buyers enter Smart Incremental Liquidation. LPS collects 50% of each liquidated position, strengthening the Vault and reducing €BSR supply. Sellers\' €7.2M eEURO margin provides the primary hard-asset backstop. PLP intervention is not critical on the downside.',
+    6:  'Moderate decline (−25%). Some buyers approach the intervention threshold. The asymmetric margin structure reveals its design intent: sellers posted €7.2M in hard eEURO collateral as a deep buffer. Protocol remains solvent with minimal PLP support.',
+    10: 'Upside scenario (+25%). Buyers gain, sellers under moderate pressure but within safe zone. Net ITM imbalance begins to emerge — this is where PLP hedging on the physical market starts to matter. Adjust the PLP slider to observe the direct H_solv impact.',
+    12: 'Stress scenario (+50%). Sellers approach or enter intervention. PLP hedge ratio becomes critical — move the slider between 0% and 100% to see how much the physical backstop contributes. This is the mathematical proof that PLP is architecturally necessary, not optional.',
+    16: 'Extreme upside (+100%). Sellers are deep in liquidation. Protocol faces maximum ITM obligations to buyers. Without sufficient PLP coverage H_solv deteriorates toward Tier III/IV — triggering eEURO-only entry mandates and position restrictions. PLP at 70%+ is the difference between Tier I and Tier IV.'
+  };
+  document.getElementById('insightBox').innerHTML = `<p>${insights[p]}</p>`;
+}
+
+document.getElementById('priceButtons').innerHTML = PRICES.map(p =>
+  `<button class="price-btn${p===10?' active':''}" onclick="setPrice(${p})">${p} EUR</button>`
+).join('');
+
+function setPrice(p) {
+  currentPrice = p;
+  document.querySelectorAll('.price-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === p + ' EUR');
+  });
+  render();
+}
+
+document.getElementById('hedgeSlider').addEventListener('input', function() {
+  hedgeRatio = this.value / 100;
+  const s = this.value + '%';
+  document.getElementById('hedgePct').textContent = s;
+  document.getElementById('sliderVal').textContent = s;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

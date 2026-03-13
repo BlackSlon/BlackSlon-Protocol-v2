@@ -30,11 +30,11 @@ This creates a natural alignment between protocol sustainability (€BSR demand)
 
 ### Key Observations:
 
-- **Asymmetric Margin:** SHORT positions require 2× the margin of LONG positions due to the unbounded upside risk of energy prices.
+- **Asymmetric Margin:** SHORT positions require 2× the margin of LONG positions
 - **Fee Compression:** 100% €BSR collateral reduces trading fees by **80%** compared to minimum €BSR usage (0.20% vs 1.00%).
 - **Capital Efficiency:** Maximum €BSR stake enables 4:1 leverage on LONG positions — the highest capital efficiency tier.
 
-> **Implementation Note:** The Tiering Matrix is enforced at the smart contract level. Users select their €BSR/eEURO ratio **per trade** — not globally. This allows tactical collateral allocation across different positions based on conviction and risk tolerance.
+**Implementation Note:** The Tiering Matrix is enforced at the smart contract level. Users select their €BSR/eEURO ratio **per trade** — not globally. This allows tactical collateral allocation across different positions based on conviction and risk tolerance.
 
 ---
 

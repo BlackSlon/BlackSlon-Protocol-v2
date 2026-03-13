@@ -6,23 +6,53 @@
 
 The BlackSlon Protocol is built on a foundational principle: virtual energy trading must remain tethered to physical market reality. The Physical Liquidity Provider (PLP) is the institutional mechanism that enforces this tether.
 
-A PLP is a licensed, professional energy market participant — a trading firm, utility, or energy bank — with direct access to physical European energy exchanges (TTF, EEX, EPEX, TGE, etc.) and OTC markets. By integrating PLPs into the BlackSlon Protocol, the ecosystem achieves something no pure DeFi protocol can offer: **real physical market depth as the ultimate backstop for virtual positions.**
+A PLP is a licensed, professional energy market participant — a sales & trading energy entity, utility, producer or balancing operator — with direct access to physical European energy exchanges and/or OTC markets. By integrating PLPs into the BlackSlon Protocol, the ecosystem achieves something no pure DeFi protocol can offer: **real physical market depth as the ultimate backstop for virtual positions.**
 
 ---
 
 ## 2. The PLP Value Proposition
 
-The relationship between the BlackSlon Protocol and its PLPs is symbiotic, not extractive. PLPs are not passive liquidity pools — they are active market participants who benefit directly from their role.
+The relationship between the BlackSlon Protocol and its PLPs 
+is symbiotic, not extractive. PLPs are not passive liquidity 
+pools — they are active market participants who capture roll 
+yield, execute cross-market arbitrage, and build structurally 
+advantaged positions precisely because they provide liquidity 
+to a market with a persistent long bias.
 
-### Why a PLP Participates:
+European energy prices have trended structurally higher over 
+the past decade, and that narrative drives the majority of 
+participants toward the long side of BS-P/G tokens. This 
+consensus creates a persistent, structural imbalance — and 
+for a sophisticated PLP, imbalance is opportunity.
+
+A PLP providing liquidity on the short side is not betting 
+against energy prices. They are harvesting the roll yield 
+embedded in backwardated forward curves — earning a systematic 
+return as the ADR mechanism mechanically rolls expiring 
+contracts into cheaper long-dated ones, regardless of where 
+spot prices move. In the current European gas market, this 
+roll decay runs at 3–5% monthly on the FM cycle alone. In 
+power, the structural decline from Cal27 to Cal29 represents 
+an additional 23% of embedded decay over the Phase 2 
+redemption horizon.
+
+Layered on top of roll yield are three additional return 
+streams that require no directional view: cross-market 
+arbitrage between isolated BSSZ corridors with divergent 
+curve structures, delta-neutral hedging with an anchor decay 
+overlay that converts the roll into positive carry, and 
+spark-spread positioning between BS-G and BS-P markets using 
+the physical exchange access that PLP status provides.
+
+### Additional PLP Benefits
 
 | Benefit | Description |
 |:---|:---|
-| **Fee Revenue** | PLPs earn a share of protocol trading fees proportional to their liquidity contribution |
-| **Physical Hedge Efficiency** | PLPs can use the BlackSlon Order Book to hedge their physical exposure at zero spread and zero counterparty risk |
-| **Information Advantage** | Real-time access to aggregated virtual flow data provides a leading indicator for physical market positioning |
-| **€BSR Allocation** | Strategic PLPs receive a preferential Genesis allocation of €BSR, aligning their long-term interests with protocol growth |
-| **Regulatory Simplicity** | Virtual positions are settled within the BSSZ — no physical delivery obligations in Phase 1 |
+| **Fee Revenue** | Proportional share of protocol trading fees based on liquidity contribution |
+| **Physical Hedge Efficiency** | BlackSlon Order Book as a zero-spread, zero-counterparty-risk hedging venue for existing physical exposure |
+| **Information Advantage** | Real-time aggregated virtual flow data as a leading indicator for physical market positioning |
+| **€BSR Genesis Allocation** | Preferential allocation aligning long-term PLP interests with protocol growth |
+| **Regulatory Simplicity** | Virtual settlement within BSSZ — no physical delivery obligations in Phase 1 |
 
 ---
 
