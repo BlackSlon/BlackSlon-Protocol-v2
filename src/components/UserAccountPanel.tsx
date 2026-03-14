@@ -220,16 +220,7 @@ export default function UserAccountPanel() {
               : 'eEURO-only collateral required'}
           </div>
 
-          {/* BlackSlon Solvency Simulator Button */}
-          <div className="mt-3">
-            <button
-              onClick={() => window.open('/simulator.html', '_blank')}
-              className="w-full px-3 py-2 text-[10px] font-bold tracking-widest uppercase bg-amber-700 hover:bg-amber-600 text-white rounded transition-colors duration-200 border border-amber-600"
-            >
-              BlackSlon Solvency Simulator
-            </button>
-          </div>
-        </div>
+                  </div>
 
         {/* ── Section: Risk Management (User Level) ── */}
         <div>
@@ -261,33 +252,6 @@ export default function UserAccountPanel() {
                 {healthZone.label}
               </div>
               <div className="text-[7px] text-gray-700 mt-0.5">{healthZone.description}</div>
-            </div>
-
-            {/* Liquidation check */}
-            <div className="flex flex-col items-end gap-1">
-              <button
-                onClick={handleLiquidationCheck}
-                disabled={checking}
-                className="text-[8px] uppercase tracking-widest px-2 py-1 border rounded-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  border: `1px solid ${checking ? 'rgba(71,85,105,0.3)' : 'rgba(239,68,68,0.35)'}`,
-                  color: checking ? '#475569' : '#ef4444',
-                  background: checking ? 'rgba(71,85,105,0.1)' : 'rgba(239,68,68,0.06)',
-                }}
-              >
-                {checking ? (
-                  <span className="flex items-center gap-1">
-                    <span className="inline-block h-2 w-2 rounded-full border border-slate-500 border-t-transparent animate-spin" />
-                    Scanning
-                  </span>
-                ) : '⚠ Liq. Check'}
-              </button>
-              {liquidationRisk !== null && !checking && (
-                <div className="text-[8px] tracking-widest uppercase"
-                  style={{ color: liquidationRisk ? '#ef4444' : '#22c55e' }}>
-                  {liquidationRisk ? '⚡ AT RISK' : '✓ SAFE'}
-                </div>
-              )}
             </div>
           </div>
 
