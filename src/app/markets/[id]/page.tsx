@@ -11,25 +11,30 @@ import Image from 'next/image'
 import { getMarketColors } from '@/lib/marketColors'
 
 const activeMarkets = [
-  { id: 'BS-P-PL', name: 'BlackSlon Power — Poland' },
   { id: 'BS-P-DE', name: 'BlackSlon Power — Germany' },
-  { id: 'BS-P-N', name: 'BlackSlon Power — Norway' },
+  { id: 'BS-P-NO', name: 'BlackSlon Power — Nordic' },
+  { id: 'BS-P-PL', name: 'BlackSlon Power — Poland' },
   { id: 'BS-P-UK', name: 'BlackSlon Power — United Kingdom' },
   { id: 'BS-G-NL', name: 'BlackSlon Gas — Netherlands' },
   { id: 'BS-G-DE', name: 'BlackSlon Gas — Germany' },
   { id: 'BS-G-PL', name: 'BlackSlon Gas — Poland' },
   { id: 'BS-G-BG', name: 'BlackSlon Gas — Bulgaria' },
-]
+  ]
 const dormantMarkets = [
-  { id: 'BS-P-IT', name: 'BlackSlon Power — Italy' },
   { id: 'BS-P-FR', name: 'BlackSlon Power — France' },
+  { id: 'BS-P-IT', name: 'BlackSlon Power — Italy' },
+  { id: 'BS-P-ES', name: 'BlackSlon Power — Spain' },
+  { id: 'BS-P-TR', name: 'BlackSlon Power — Turkey' },
+  { id: 'BS-G-UK', name: 'BlackSlon Gas — United Kingdom' },
   { id: 'BS-G-IT', name: 'BlackSlon Gas — Italy' },
+  { id: 'BS-G-NO', name: 'BlackSlon Gas — Norway' },
   { id: 'BS-G-AT', name: 'BlackSlon Gas — Austria' },
+  { id: 'BS-G-BL', name: 'BlackSlon Gas — Baltic' },
 ]
 
 export default function MarketPage() {
   const params = useParams()
-  const id = params.id as string
+  const id = params?.id as string
   const [selectedInstrument, setSelectedInstrument] = useState(id || 'BS-P-PL')
   const mColors = getMarketColors(selectedInstrument)
 
@@ -55,6 +60,10 @@ export default function MarketPage() {
 
   const AmberLogo = () => (
     <Image src="/BSamber_image.png" alt="BlackSlon" width={50} height={50} className="h-10 w-auto opacity-80" />
+  )
+
+  const MainLogo = () => (
+    <Image src="/BS_image.jpg" alt="BlackSlon" width={50} height={50} className="h-10 w-auto opacity-80" />
   )
 
   const GrayLogo = () => (
@@ -127,9 +136,9 @@ export default function MarketPage() {
         </section>
 
         {/* PANEL 3: TRADING */}
-        <section className="border border-amber-700/30 bg-black/80 rounded-sm text-xs relative z-50 flex flex-col">
+        <section className={`border ${mColors.isGas ? 'border-blue-500/30' : 'border-yellow-600/30'} bg-black/80 rounded-sm text-xs relative z-50 flex flex-col`}>
           <div className="flex items-center justify-center px-3 py-1 border-b border-gray-900/60">
-            <GrayLogo />
+            <PanelLogo />
           </div>
           <TradingPanel selectedMarketId={selectedInstrument} />
         </section>
@@ -137,7 +146,7 @@ export default function MarketPage() {
         {/* PANEL 4: PORTFOLIO */}
         <section className="border border-amber-700/30 bg-black/40 rounded-sm text-xs flex flex-col">
           <div className="flex items-center justify-center px-3 py-1 border-b border-gray-900/60">
-            <GrayLogo />
+            <MainLogo />
           </div>
           <UserAccountPanel />
         </section>

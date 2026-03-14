@@ -147,7 +147,7 @@ export default function UserAccountPanel() {
             <div className="text-center tracking-widest">Units</div>
             <div className="text-center tracking-widest normal-case">Vol (kWh)</div>
             <div className="text-center tracking-widest">Avg P.</div>
-            <div className="text-center tracking-widest">Last P.</div>
+            <div className="text-center tracking-widest">BSEI</div>
             <div className="text-right tracking-widest">PnL (EUR)</div>
           </div>
           {inventory.map((item) => (

@@ -188,7 +188,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
       <div className="w-full pt-1 pb-1 flex flex-col items-center shrink-0">
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
-          Order Panel
+          Trading Panel
         </div>
         <div className="w-[80%] border-b border-gray-800 mt-2" />
       </div>

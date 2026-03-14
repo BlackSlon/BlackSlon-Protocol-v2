@@ -949,7 +949,7 @@ The User-Level Risk Engine operates in coordination with two higher-order system
 
 **BSSZ Corridor Enforcement**
 
-All orders and settlements must occur within the **BSSZ corridor** ($[A - 10\%, A + 20\%]$), where $A$ is the Settlement Anchor. Orders outside the BSSZ corridor cannot be placed — the Order Panel/BlackSlon Trading Terminal enforces corridor boundaries at input level, making out-of-range submissions technically impossible. A secondary validation at the matching engine level provides an additional systemic safeguard.
+All orders and settlements must occur within the **BSSZ corridor** ($[A - 10\%, A + 20\%]$), where $A$ is the Settlement Anchor. Orders outside the BSSZ corridor cannot be placed — the Trading Panel/BlackSlon Trading Terminal enforces corridor boundaries at input level, making out-of-range submissions technically impossible. A secondary validation at the matching engine level provides an additional systemic safeguard.
 
 **Ecosystem Solvency Index ($H_{solv}$)**
 

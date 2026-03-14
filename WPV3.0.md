@@ -75,6 +75,8 @@ These 316 ICE members are a precisely stratified ecosystem:
 
 What is not on either list is as revealing as what is. No municipal heating utilities. No small power plants. No small renewable energy producers. No industrial consumers. No individuals. No entity without a **€3–5 million capital base** and six to twelve months of regulatory onboarding. EEX and ICE Futures Europe are, by architectural intention, closed to everyone outside a narrow institutional stratum.
 
+Unlike the global accessibility of Crude Oil (Brent, WTI), Copper, or Gold, European wholesale energy markets remain a fortress. While most trading platforms offer access to the American Henry Hub, they provide virtually no gateway to European Natural Gas or Wholesale Electricity. These are closed, heavily regulated ecosystems dominated by an institutional oligopoly that excludes the broader market by design. BlackSlon does not intend to merely reflect or facilitate a transition for these legacy structures; it is their replacement
+
 **BlackSlon opens that door.**
 
 ---
@@ -947,7 +949,7 @@ The User-Level Risk Engine operates in coordination with two higher-order system
 
 **BSSZ Corridor Enforcement**
 
-All orders and settlements must occur within the **BSSZ corridor** ($[A - 10\%, A + 20\%]$), where $A$ is the Settlement Anchor. Orders outside the BSSZ corridor cannot be placed — the Order Panel/BlackSlon Trading Terminal enforces corridor boundaries at input level, making out-of-range submissions technically impossible. A secondary validation at the matching engine level provides an additional systemic safeguard.
+All orders and settlements must occur within the **BSSZ corridor** ($[A - 10\%, A + 20\%]$), where $A$ is the Settlement Anchor. Orders outside the BSSZ corridor cannot be placed — the Trading Panel/BlackSlon Trading Terminal enforces corridor boundaries at input level, making out-of-range submissions technically impossible. A secondary validation at the matching engine level provides an additional systemic safeguard.
 
 **Ecosystem Solvency Index ($H_{solv}$)**
 
