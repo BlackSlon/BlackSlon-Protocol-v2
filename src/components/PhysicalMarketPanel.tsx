@@ -184,9 +184,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
               <div
                 key={driver.label}
                 className={`flex flex-col items-center text-center flex-shrink-0 ${
-                  i > 0 && i < 6
-                    ? 'border-r border-gray-900 px-4'
-                    : ''
+                  i > 0
+                    ? 'border-l border-gray-900 px-2'
+                    : 'px-2'
                 }`}
               >
                 <span className="text-[8px] text-gray-500">{driver.label}</span>
