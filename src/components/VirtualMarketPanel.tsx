@@ -41,10 +41,9 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const displayBids = [...generated.bids, ...userBids].sort((a, b) => b.price - a.price)
   const displayAsks = [...generated.asks, ...userAsks].sort((a, b) => a.price - b.price)
 
-  // Get market-specific last trade from market data
-  const marketLastTrade = mData?.lastTrade
-  const displayLastTrade = marketLastTrade && (Date.now() - marketLastTrade.timestamp < 86400000)
-    ? marketLastTrade
+  const storeLastTrade = storeData.orderBook.lastTrade
+  const displayLastTrade = storeLastTrade && (Date.now() - storeLastTrade.timestamp < 86400000)
+    ? storeLastTrade
     : { price: anchor, units: 10, volume: 1000, timestamp: Date.now() }
 
   // ── BSEI: I_t = ω * anchor + (1 - ω) * P_RVWAP ──
