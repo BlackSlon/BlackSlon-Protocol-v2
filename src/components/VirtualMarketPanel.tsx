@@ -95,7 +95,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
               Last Trade · {displayMarketId}
             </div>
             {lastTrade && (
-              <div className="text-[6px] text-gray-700 uppercase tracking-widest">
+              <div className="text-[6px] text-gray-500 uppercase tracking-widest">
                 {new Date(lastTrade.timestamp).toLocaleTimeString('pl-PL')}
               </div>
             )}
@@ -129,7 +129,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
               </div>
             </div>
           ) : (
-            <div className="text-[10px] text-gray-700 text-center py-1">No trades yet</div>
+            <div className="text-[10px] text-gray-500 text-center py-1">No trades yet</div>
           )}
         </div>
 
@@ -234,7 +234,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
             <span className={`text-[10px] uppercase tracking-widest ${colors.label}`}>
               {displayMarketId}
             </span>
-            <span className="text-[8px] text-gray-700 ml-auto">
+            <span className="text-[8px] text-gray-500 ml-auto">
               ω = {displayBsei.omega.toFixed(2)}
             </span>
           </div>
@@ -260,7 +260,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
           </div>
 
           {/* I_t breakdown: physical meridian vs R-VWAP */}
-          <div className="mt-2 flex items-center gap-3 text-[8px] text-gray-700">
+          <div className="mt-2 flex items-center gap-3 text-[8px] text-gray-500">
             <span>
               I<sub>t</sub>: <span className="text-gray-400">{displayBsei.It.toFixed(4)}</span>
             </span>

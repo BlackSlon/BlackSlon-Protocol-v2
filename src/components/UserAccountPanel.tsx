@@ -175,7 +175,7 @@ export default function UserAccountPanel() {
             <div className="text-[10px] tracking-widest text-amber-700 font-bold">
               Ecosystem Solvency Engine
             </div>
-            <span className="text-[7px] text-gray-700 uppercase tracking-widest">(Protocol Level)</span>
+            <span className="text-[7px] text-gray-500 uppercase tracking-widest">(Protocol Level)</span>
           </div>
 
           {/* H_solv value + tier */}
@@ -197,7 +197,7 @@ export default function UserAccountPanel() {
           </div>
 
           {/* Progress bar — mapped from H_solv range 0.90–1.30 */}
-          <div className="flex justify-between text-[7px] text-gray-700 mb-0.5">
+          <div className="flex justify-between text-[7px] text-gray-500 mb-0.5">
             <span>0.90</span>
             <span className="text-gray-800">|1.00</span>
             <span className="text-gray-800">|1.05</span>
@@ -251,7 +251,7 @@ export default function UserAccountPanel() {
               >
                 {healthZone.label}
               </div>
-              <div className="text-[7px] text-gray-700 mt-0.5">{healthZone.description}</div>
+              <div className="text-[7px] text-gray-500 mt-0.5">{healthZone.description}</div>
             </div>
           </div>
 
@@ -274,7 +274,7 @@ export default function UserAccountPanel() {
                 <div className="text-[6px] uppercase tracking-widest" style={{ color: z.color }}>
                   {z.zone}
                 </div>
-                <div className="text-[6px] text-gray-700">{z.threshold}</div>
+                <div className="text-[6px] text-gray-500">{z.threshold}</div>
               </div>
             ))}
           </div>

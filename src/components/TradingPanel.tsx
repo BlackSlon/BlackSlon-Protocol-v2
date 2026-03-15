@@ -244,14 +244,14 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
             onClick={() => setSide('BUY')}
             disabled={isBlocked}
             className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
-              side === 'BUY' ? 'border-green-700 bg-green-700/10 text-green-700' : 'border-gray-900 text-gray-700'
+              side === 'BUY' ? 'border-green-700 bg-green-700/10 text-green-700' : 'border-gray-900 text-gray-500'
             }`}
           >BUY</button>
           <button
             onClick={() => setSide('SELL')}
             disabled={isBlocked}
             className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
-              side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-700'
+              side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-500'
             }`}
           >SELL</button>
         </div>
@@ -298,12 +298,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
               <button onClick={() => setQuantity(q => q + 1)} className="text-sm text-gray-600 hover:text-white px-2 py-1">+</button>
             </div>
           </div>
-          {pendingOrder && (
-            <div className="text-[7px] text-gray-700 text-center mt-1">
-              Notional: {pendingOrder.totalNotional.toFixed(2)} EUR · Fee: {pendingOrder.tradingFee.toFixed(2)} EUR
-            </div>
-          )}
-        </div>
+                  </div>
 
         {/* Confirm */}
         {orderSuccess ? (
@@ -364,7 +359,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
             </div>
 
             {/* Margin info for selected tier */}
-            <div className="mt-1.5 flex justify-between text-[7px] text-gray-700">
+            <div className="mt-1.5 flex justify-between text-[7px] text-gray-500">
               <span>
                 Margin: <span className="text-gray-500">
                   {side === 'BUY'

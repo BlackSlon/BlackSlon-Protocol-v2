@@ -80,7 +80,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
             <div className={`text-[6px] uppercase tracking-widest ${colors.title}`}>
               Valid today · {today}
             </div>
-            <div className="text-[6px] text-gray-600 tracking-widest">EUR / 100kWh</div>
+            <div className="text-[6px] text-gray-400 tracking-widest">EUR / 100kWh</div>
           </div>
 
           <div className="flex items-center justify-between">
@@ -169,7 +169,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
               Active
             </span>
           </div>
-          <div className="text-[8px] text-gray-600 mb-2 text-center">
+          <div className="text-[8px] text-gray-400 mb-2 text-center">
             VALID TODAY
           </div>
           <div className="flex justify-between items-center font-mono overflow-hidden">
