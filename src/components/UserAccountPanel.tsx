@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useUserAccount } from '@/store/blackslon'
+import WalletConnect from '@/components/WalletConnect'
 
 // ─── Ecosystem Solvency Tiers (H_solv) ──────────────────────────────────────
 // Source: Ecosystem-Solvency-Macro.md
@@ -353,41 +354,11 @@ export default function UserAccountPanel() {
           </div>
         </div>
 
-      </div>
-
-      {/* ── Footer: Wallet ── */}
-      <div className="px-6 py-2 shrink-0 border-t border-gray-900">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-[9px] text-gray-600 uppercase tracking-widest">
-            UID: <span className="text-gray-400">{user.id}</span>
-          </span>
-          <div className="flex items-center gap-1.5">
-            <span
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: user.walletConnected ? '#22c55e' : '#ef4444' }}
-            />
-            <span className="text-[9px] uppercase tracking-widest"
-              style={{ color: user.walletConnected ? '#22c55e' : '#ef4444' }}>
-              {user.walletConnected ? 'CONNECTED' : 'DISCONNECTED'}
-            </span>
-          </div>
+        {/* ── Section: Wallet Connection ── */}
+        <div>
+          <WalletConnect />
         </div>
-        {user.walletConnected && (
-          <div className="text-[9px] text-gray-600 tracking-tight mb-1 text-center">
-            {shortAddress}
-          </div>
-        )}
-        <button
-          onClick={() => setWalletConnected(!user.walletConnected)}
-          className="w-full py-2 uppercase tracking-[0.3em] text-[10px] border transition-all rounded-sm"
-          style={{
-            border: `1px solid ${user.walletConnected ? 'rgba(239,68,68,0.35)' : 'rgba(34,197,94,0.35)'}`,
-            color: user.walletConnected ? '#ef4444' : '#22c55e',
-            background: user.walletConnected ? 'rgba(239,68,68,0.05)' : 'rgba(34,197,94,0.05)',
-          }}
-        >
-          {user.walletConnected ? 'Disconnect Wallet' : 'Connect Wallet'}
-        </button>
+
       </div>
     </div>
   )

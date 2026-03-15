@@ -150,6 +150,33 @@ export const useTrading = create<TradingState>((set, get) => {
     marketId: 'BS-P-PL',
 
     setPendingOrder: (side, price, quantity, bsrStake) => {
+      const state = get()
+      const us = useUserAccount.getState()
+      
+      // Check current position in this market
+      const currentPosition = us.inventory.find(p => p.token === state.marketId)
+      const currentUnits = currentPosition?.units || 0
+      
+      // Calculate net position change
+      let netPositionChange = 0
+      if (side === 'BUY') {
+        if (currentUnits < 0) {
+          // Closing short - no deposit up to short amount
+          netPositionChange = Math.max(0, quantity + currentUnits)
+        } else {
+          // Opening/adding to long
+          netPositionChange = quantity
+        }
+      } else {
+        if (currentUnits > 0) {
+          // Selling owned - no deposit up to owned amount
+          netPositionChange = Math.max(0, quantity - currentUnits)
+        } else {
+          // Opening/adding to short
+          netPositionChange = quantity
+        }
+      }
+
       const totalNotional = price * quantity
       const { bsrEuroRate } = useUserAccount.getState()
 
@@ -174,8 +201,11 @@ export const useTrading = create<TradingState>((set, get) => {
         bsrStake >= 50  ? 0.0060 :
         bsrStake >= 25  ? 0.0085 : 0.0100
 
-      const tradingFee     = totalNotional * feePct
-      const marginRequired = (totalNotional * marginPct) / 100
+      const tradingFee = totalNotional * feePct
+      
+      // Only calculate deposits for net new position
+      const netNotional = price * netPositionChange
+      const marginRequired = netPositionChange > 0 ? (netNotional * marginPct) / 100 : 0
       const bsrDepositEUR  = (marginRequired * bsrStake) / 100
       const eEuroDeposit   = (marginRequired * (100 - bsrStake)) / 100
       const bsrDeposit     = bsrDepositEUR / bsrEuroRate
@@ -193,8 +223,34 @@ export const useTrading = create<TradingState>((set, get) => {
       if (state.solvencyTier === 'III' && bsrStake > 0)
         return 'Tier III: Only eEURO collateral allowed'
 
-      // ── Margin calc ───────────────────────────────────────────────────────
-      const totalNotional = price * quantity
+      // ── Check inventory for this market ──────────────────────────────────
+      const currentPosition = us.inventory.find(p => p.token === marketId)
+      const currentUnits = currentPosition?.units || 0
+      
+      // Calculate net position change
+      let netPositionChange = 0
+      if (side === 'BUY') {
+        // BUY increases position (or reduces short)
+        if (currentUnits < 0) {
+          // Closing short position - no deposit needed up to the short amount
+          netPositionChange = Math.max(0, quantity + currentUnits)
+        } else {
+          // Opening new long or adding to long
+          netPositionChange = quantity
+        }
+      } else {
+        // SELL decreases position (or opens short)
+        if (currentUnits > 0) {
+          // Selling owned tokens - no deposit needed up to owned amount
+          netPositionChange = Math.max(0, quantity - currentUnits)
+        } else {
+          // Opening new short or adding to short
+          netPositionChange = quantity
+        }
+      }
+
+      // ── Margin calc (only for net new position) ──────────────────────────
+      const totalNotional = price * netPositionChange
       let marginPct: number
       if (side === 'BUY') {
         if (bsrStake >= 100) marginPct = 25
@@ -210,16 +266,19 @@ export const useTrading = create<TradingState>((set, get) => {
         else marginPct = 100
       }
 
-      const marginRequired = (totalNotional * marginPct) / 100
+      // Only calculate deposits for net new position
+      const marginRequired = netPositionChange > 0 ? (totalNotional * marginPct) / 100 : 0
       const bsrDepositEUR  = (marginRequired * bsrStake) / 100
       const eEuroDeposit   = (marginRequired * (100 - bsrStake)) / 100
       const bsrNeeded      = bsrDepositEUR / us.bsrEuroRate
 
-      // ── Balance checks ────────────────────────────────────────────────────
-      if (bsrNeeded > us.user.bsrBalance)
-        return `Insufficient €BSR. Required: ${bsrNeeded.toFixed(2)}, Available: ${us.user.bsrBalance.toFixed(2)}`
-      if (eEuroDeposit > us.user.eEuroBalance)
-        return `Insufficient eEURO. Required: ${eEuroDeposit.toFixed(2)}, Available: ${us.user.eEuroBalance.toFixed(2)}`
+      // ── Balance checks (only if deposit needed) ───────────────────────────
+      if (netPositionChange > 0) {
+        if (bsrNeeded > us.user.bsrBalance)
+          return `Insufficient €BSR. Required: ${bsrNeeded.toFixed(2)}, Available: ${us.user.bsrBalance.toFixed(2)}`
+        if (eEuroDeposit > us.user.eEuroBalance)
+          return `Insufficient eEURO. Required: ${eEuroDeposit.toFixed(2)}, Available: ${us.user.eEuroBalance.toFixed(2)}`
+      }
 
       // ── H_BSSZ pre-check ─────────────────────────────────────────────────
       const newLockedBSR  = us.vault.lockedBSR + bsrNeeded

@@ -28,7 +28,7 @@
 6. [Founder's Heritage](#6-founder)
 7. [The Name: Black Swan × Black Elephant](#7-name)
 8. [BSSZ Framework: The Physical Energy Foundation](#8-bssz)
-9. [BSEI Framework: The Transaction Settlement Index](#9-bsei)
+9. [BSEI Benchmark: The Virtual Settlement Index](#9-bsei)
 10. [BS-P & BS-G Token Specification](#10-tokens)
 11. [Economic Equilibrium & Treasury Governance](#11-economics)
 12. [Ecosystem Solvency: Macro Level](#12-macro-solvency)
@@ -158,6 +158,22 @@ To make matters worse the system is now facing a structural rebellion:
 **Political and Regulatory Arbitrariness**
 
 Energy markets in the EU increasingly subject to retroactive Windfall Taxes and sudden regulatory shifts. While many European nations imposed various windfall taxes in 2022, the most extreme examples occurred in Poland and Romania, where retrospective laws effectively confiscated more than 98% of profits from power traders. These levies were often applied to gains from risky positions closed months prior, punishing participants who had successfully managed their exposure long before the legislation was introduced. This creates a toxic environment of private risk, public profit - a system where traders bear 100% of the potential losses, while the state claims nearly all of the success. Such unpredictable and predatory interventionism destroys market liquidty and trust.
+
+**The Forward Curve: Illusion, Reality, and Democratisation**
+
+In the legacy world of energy finance, banks and institutional investors still demand 15-to-30-year price projections to approve investments in nuclear, gas, or renewable assets. However, the reality on the trading floor is different.
+
+- The 3-Year Horizon: Beyond a 2-to-3-year window, there is no real market, even in the most liquid ones. You cannot get a fixed price per kWh — whether as a consumer buying or a producer selling. You can sign a 15 or 30-year contract, but only with price formulas that reference the spot market — the very instrument most sensitive to short-term shocks. 95% of actual trading happens in the near-term. Geopolitical shocks, rapid regulatory shifts, and the Green Transition have made long-term price discovery nothing more than reading tea leaves.
+
+- The Projection Paradox: Analysts still produce 20-year models, but they lack any merit-based foundation or proven predictive framework. These are paper realities built for banking compliance — completely disconnected from the actual risks that market participants face every day.
+
+- The Spot-Centric Shift: Because seasonality is almost dead and risks are systemic, the entire energy market is collapsing into a continuous present. The distinction between front-month, quarter, and year-ahead prices is blurring — not as a temporary anomaly, but as a structural feature of a market permanently reshaped by geopolitics and the energy transition.
+
+- The Capital Paradox of Backwardation: Yet within this collapsing curve, one structural truth persists: European energy markets are backwardated — Cal+1 and Cal+2 contracts trade at a significant discount to spot, embedding cheaper future energy into their price. Every sophisticated institutional player knows this. Every major utility, every investment-grade trading house actively harvests this discount — buying cheap forward exposure today, locking in margins that smaller participants cannot access. The minimum ticket to participate in this trade on EEX or ICE is not a market decision. It is a capital gate: hundreds of thousands of euros in posted guarantees, held idle for 12 to 24 months, just to hold the position. Only entities with investment-grade credit ratings and balance sheets large enough to absorb multi-year margin obligations can afford to play at that end of the curve. For everyone else, the cheapest and most structurally advantaged part of the forward market is simply out of reach — not because of a lack of market access, but because of the cost of money itself.
+
+- The Democratisation of the Forward Curve: BlackSlon dissolves that gate entirely. The BS-P and BS-G token price is derived from the Physical Meridian — a weighted basket that permanently embeds 25% Calendar Year exposure into every token, regardless of size. Critically, both Cal+1 and Cal+2 are active components of this basket from July 1st — when the Dormant ADR activates and begins its weekly migration from Cal+1 toward Cal+2. The protocol is continuously rolling into the cheapest part of the forward curve, mechanically and without friction, harvesting the backwardation discount that institutional players spend millions in capital and legal overhead to access manually. When you buy 100 kWh of BS-G-NL for a few euros, you are not buying spot-price exposure. You are buying a blended instrument that already contains the structural discount of the forward curve — the same economic advantage that Goldman Sachs and Shell extract through multi-million euro Cal+1 and Cal+2 positions — compressed into a single token, accessible without a credit rating, without a bank guarantee, and without a six-month onboarding process.
+
+For the first time, the cheapest part of the energy market is also the most accessible.
 
 **ETRM (Energy Trading & Risk Management IT system)**
 
