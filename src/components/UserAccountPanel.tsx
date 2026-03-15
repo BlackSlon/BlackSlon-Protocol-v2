@@ -170,6 +170,82 @@ export default function UserAccountPanel() {
           ))}
         </div>
 
+        {/* ── Section: User's Portfolio Risk Management ── */}
+        <div>
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[10px] tracking-widest text-amber-700 font-bold">
+              User's Portfolio Risk Management
+            </div>
+            <span className="text-[7px] text-gray-500 uppercase tracking-widest">(User Level)</span>
+          </div>
+
+          {/* H_BSSZ value + zone */}
+          <div className="flex justify-between items-center mb-2">
+            <div>
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
+                H-Factor (H<sub>BSSZ</sub>)
+              </div>
+              <div className="text-sm font-black tracking-tighter" style={{ color: healthZone.color }}>
+                {hFactor.toFixed(3)}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Health Zone</div>
+              <div
+                className={`text-[11px] font-black tracking-widest ${
+                  healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
+                }`}
+                style={{ color: healthZone.color }}
+              >
+                {healthZone.label}
+              </div>
+            </div>
+          </div>
+
+          {/* Progress bar - mapped from H_BSSZ range 0.90–1.30 */}
+          <div className="flex justify-between text-[7px] text-gray-500 mb-0.5">
+            <span>0.90</span>
+            <span className="text-gray-800">|1.00</span>
+            <span className="text-gray-800">|1.05</span>
+            <span className="text-gray-800">|1.10</span>
+            <span>1.30</span>
+          </div>
+          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800">
+            <div
+              className="h-full rounded-full transition-all duration-1000 ease-out"
+              style={{
+                width: `${Math.min(100, Math.max(0, ((hFactor - 0.90) / (1.30 - 0.90)) * 100))}%`,
+                background: healthZone.color,
+                boxShadow: `0 0 8px ${healthZone.color}`,
+              }}
+            />
+          </div>
+
+          {/* Zone labels below bar */}
+          <div className="grid grid-cols-4 gap-0.5 mt-1">
+            {[
+              { zone: 'INTERVENTION', threshold: '≤ 1.00', color: '#ef4444' },
+              { zone: 'RESTRICTED',   threshold: '> 1.00', color: '#f97316' },
+              { zone: 'WARNING',      threshold: '> 1.05', color: '#eab308' },
+              { zone: 'SAFE',         threshold: '> 1.10', color: '#22c55e' },
+            ].map((z) => (
+              <div
+                key={z.zone}
+                className="text-center px-1 py-0.5 rounded-sm border"
+                style={{
+                  borderColor: healthZone.label === z.zone ? z.color : 'rgba(55,65,81,0.4)',
+                  background: healthZone.label === z.zone ? `${z.color}15` : 'transparent',
+                }}
+              >
+                <div className="text-[6px] uppercase tracking-widest" style={{ color: z.color }}>
+                  {z.zone}
+                </div>
+                <div className="text-[6px] text-gray-500">{z.threshold}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* ── Section: Ecosystem Solvency (Protocol Level) ── */}
         <div>
           <div className="flex items-center justify-between mb-1">
@@ -221,64 +297,6 @@ export default function UserAccountPanel() {
               : 'eEURO-only collateral required'}
           </div>
 
-                  </div>
-
-        {/* ── Section: Risk Management (User Level) ── */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold">
-              BlackSlon Risk Management
-            </div>
-            <span className="text-[7px] text-gray-500 uppercase tracking-widest">(User Level)</span>
-          </div>
-
-          {/* H_BSSZ value + zone */}
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
-                H-Factor (H<sub>BSSZ</sub>)
-              </div>
-              <div className="text-sm tracking-tighter leading-tight" style={{ color: healthZone.color }}>
-                {hFactor.toFixed(3)}
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Health Zone</div>
-              <div
-                className={`text-[10px] tracking-[0.2em] uppercase font-bold ${
-                  healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
-                }`}
-                style={{ color: healthZone.color }}
-              >
-                {healthZone.label}
-              </div>
-              <div className="text-[7px] text-gray-500 mt-0.5">{healthZone.description}</div>
-            </div>
-          </div>
-
-          {/* H-Factor zone reference */}
-          <div className="grid grid-cols-4 gap-0.5 mt-1">
-            {[
-              { zone: 'SAFE',         threshold: '> 1.10', color: '#22c55e' },
-              { zone: 'WARNING',      threshold: '> 1.05', color: '#eab308' },
-              { zone: 'RESTRICTED',   threshold: '> 1.00', color: '#f97316' },
-              { zone: 'INTERVENTION', threshold: '≤ 1.00', color: '#ef4444' },
-            ].map((z) => (
-              <div
-                key={z.zone}
-                className="text-center px-1 py-0.5 rounded-sm border"
-                style={{
-                  borderColor: healthZone.label === z.zone ? z.color : 'rgba(55,65,81,0.4)',
-                  background: healthZone.label === z.zone ? `${z.color}15` : 'transparent',
-                }}
-              >
-                <div className="text-[6px] uppercase tracking-widest" style={{ color: z.color }}>
-                  {z.zone}
-                </div>
-                <div className="text-[6px] text-gray-500">{z.threshold}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* ── Section: BSR Reserve & Exchange ── */}
