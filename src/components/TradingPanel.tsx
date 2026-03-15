@@ -381,8 +381,8 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
           {/* eEURO display (read-only) */}
           <div className="px-2 py-1 rounded-sm border border-gray-900">
             <div className="flex justify-between text-[9px] tracking-[0.2em]">
-              <span className="text-sky-400">eEURO RATIO</span>
-              <span className="text-sky-400">{euroStake}%</span>
+              <span className="text-blue-600">eEURO RATIO</span>
+              <span className="text-blue-600">{euroStake}%</span>
             </div>
           </div>
         </div>
@@ -404,9 +404,9 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
                 {pendingOrder ? `${pendingOrder.bsrDeposit.toFixed(2)} BSR` : '—'}
               </div>
             </div>
-            <div className="border border-sky-400 rounded-sm py-1 px-3 w-fit ml-auto">
-              <div className="text-[8px] text-sky-400 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit</div>
-              <div className="text-[11px] text-sky-400 tracking-tighter leading-tight">
+            <div className="border border-blue-600 rounded-sm py-1 px-3 w-fit ml-auto">
+              <div className="text-[8px] text-blue-600 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit</div>
+              <div className="text-[11px] text-blue-600 tracking-tighter leading-tight">
                 {pendingOrder ? `${pendingOrder.eEuroDeposit.toFixed(2)} EUR` : '—'}
               </div>
             </div>

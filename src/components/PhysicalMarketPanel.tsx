@@ -169,6 +169,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
               Active
             </span>
           </div>
+          <div className="text-[8px] text-gray-600 mb-2 text-center">
+            VALID TODAY
+          </div>
           <div className="flex justify-between items-center font-mono overflow-hidden">
             {[
               { label: 'D-1', value: currentAnchor, changePct: 4.2 },
@@ -186,11 +189,11 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
                     : ''
                 }`}
               >
-                <span className="text-[9px] text-gray-500">{driver.label}</span>
-                <span className="text-[11px] text-gray-400">
+                <span className="text-[8px] text-gray-500">{driver.label}</span>
+                <span className="text-[9px] text-gray-400">
                   {driver.value.toFixed(2)}
                 </span>
-                <span className={`text-[9px] ${driver.changePct >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                <span className={`text-[8px] ${driver.changePct >= 0 ? 'text-green-700' : 'text-red-600'}`}>
                   {driver.changePct >= 0 ? '+' : ''}{driver.changePct.toFixed(1)}%
                 </span>
               </div>
