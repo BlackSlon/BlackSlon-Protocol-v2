@@ -99,7 +99,7 @@ The summer 2022 (several months after the outbreak of the Russian-Ukrainian War,
 
 That episode was not an anomaly. It was a preview.
 
-Annualised volatility in European energy markets now regularly exceeds 50% — structural, persistent, and increasingly detached from physical fundamentals. Most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. We witnessed on TTF gas market a +24.7% intraday spike on March 2nd, followed by a 50.4% weekly surge peaking at 68.63 EUR/MWh, only to see a -19.5% daily collapse in the following session. This is a level of volatility typical of collapsing 'shitcoins,' not the continent's primary energy benchmark.
+Annualised volatility in European energy markets now regularly exceeds 50% — structural, persistent, and increasingly detached from physical fundamentals. Most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. On TTF, the front-month contract surged over +52% from 31.96 EUR/MWh on February 27th to an intraday peak of 48.66 EUR/MWh on March 2nd alone — before continuing to climb to a weekly high of 68.63 EUR/MWh on March 9th, representing a +114.8% rally in just eight trading days. The following session delivered a -19.5% daily collapse. This is a level of volatility typical of collapsing 'shitcoins,' not the continent's primary energy benchmark.
 
 The result is a structural collapse of the forward curve as a hedging instrument. Beyond the front month, liquidity has effectively disappeared for most participants. Year-ahead contracts — once the backbone of industrial energy procurement — are now the exclusive domain of entities with unlimited capital buffers.
 

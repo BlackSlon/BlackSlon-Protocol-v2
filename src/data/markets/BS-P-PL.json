@@ -6,6 +6,12 @@
   "currency": "EUR",
   "unit": "100kWh",
   "lastUpdate": "2026-03-09T13:00:00Z",
+  "lastTrade": {
+    "price": 10.59,
+    "units": 15,
+    "volume": 1500,
+    "timestamp": 1741498800000
+  },
   "historicalData": [
     { "date": "2026-03-08", "price": 10.45, "volume": 125000 },
     { "date": "2026-03-07", "price": 10.52, "volume": 118000 },

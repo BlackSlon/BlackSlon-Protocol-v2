@@ -6,6 +6,12 @@
   "currency": "EUR",
   "unit": "EUR/100kWh",
   "lastUpdate": "2026-03-09T15:00:00Z",
+  "lastTrade": {
+    "price": 4.68,
+    "units": 12,
+    "volume": 1200,
+    "timestamp": 1741506000000
+  },
   "_formula": {
     "meridian": "0.10*DA + 0.40*FM + 0.25*FQ + 0.25*Cal",
     "adr": "0.50*meridian(T-1) + 0.25*meridian(T-2) + 0.25*meridian(T-3)",

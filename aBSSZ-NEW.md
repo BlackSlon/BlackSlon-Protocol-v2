@@ -74,11 +74,11 @@ Component Definitions:
 
 ## 4. The BlackSlon Settlement Zone (BSSZ) Formula
 
-Once the Physical Meridian ($a$) is established, the protocol defines the BlackSlon Settlement Zone:
+Once the Physical Meridian ($A$) is established, the protocol defines the BlackSlon Settlement Zone:
 
-$$BSSZ_{Range} = [a - 10\%, a + 20\%]$$
+$$BSSZ_{Range} = [A - 10\%, A + 20\%]$$
 
-**The Physical Meridian as the Pivot:** The Physical Meridian ($a$) is the only variable that moves the entire corridor. The BSSZ is strictly limited to an asymmetric range of $-10\%$ and $+20\%$ relative to it:
+**The Physical Meridian as the Pivot:** The Physical Meridian ($A$) is the only variable that moves the entire corridor. The BSSZ is strictly limited to an asymmetric range of $-10\%$ and $+20\%$ relative to it:
 
 - **BSSZ Floor ($-10\%$):** Blocks settlement if the price drops more than 10% below the Physical Meridian, preventing sudden liquidity drainage and protecting against cascading sell-offs.
 - **BSSZ Ceiling ($+20\%$):** Allows for significant value appreciation, driving long-term demand for €BSR and BlackSlon Power and Gas Tokens. This asymmetry reflects the fundamental nature of energy markets — prices spike upward far more violently than they collapse. The ceiling also protects short positions from catastrophic squeezes, insulating the protocol from irrational, high-velocity upward volatility.

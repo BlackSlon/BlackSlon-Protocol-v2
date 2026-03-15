@@ -16,6 +16,12 @@ export interface MarketData {
   currency: string
   unit: string
   lastUpdate: string
+  lastTrade?: {
+    price: number
+    units: number
+    volume: number
+    timestamp: number
+  }
   bsszPositions?: BSSZPosition[]
   historicalData?: MarketHistoricalData[]
   bsszCalculation?: {

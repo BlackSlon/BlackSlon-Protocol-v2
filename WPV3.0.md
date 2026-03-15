@@ -75,8 +75,6 @@ These 316 ICE members are a precisely stratified ecosystem:
 
 What is not on either list is as revealing as what is. No municipal heating utilities. No small power plants. No small renewable energy producers. No industrial consumers. No individuals. No entity without a **€3–5 million capital base** and six to twelve months of regulatory onboarding. EEX and ICE Futures Europe are, by architectural intention, closed to everyone outside a narrow institutional stratum.
 
-Unlike the global accessibility of Crude Oil (Brent, WTI), Copper, or Gold, European wholesale energy markets remain a fortress. While most trading platforms offer access to the American Henry Hub, they provide virtually no gateway to European Natural Gas or Wholesale Electricity. These are closed, heavily regulated ecosystems dominated by an institutional oligopoly that excludes the broader market by design. BlackSlon does not intend to merely reflect or facilitate a transition for these legacy structures; it is their replacement
-
 **BlackSlon opens that door.**
 
 ---
@@ -95,17 +93,17 @@ Its not only about the amount of capital, but system architecture. To be able to
 
 **The Collapse of Risk Management** 
 
-CRO (Chief Risk Officer) in the energy sector over the last few years was the most frustrating seat at the table. Risk managers were like pilots watching the plane entered a storm no one had ever mapped. Their influence over reality dropped to zero. For decades, the industry lived by the gospel of Monte Carlo simulations and Value-at-Risk (VaR) models. But in today’s reality, these tools have become useless. They were built for a different world - one where annual price volatility stayed within a few percent, with low interest rates and regulations more predictable. They were never designed to survive a reality where prices swing by double digits in a single day. When the market moves 15% in a few hours, models simply disintegrate.
+CRO (Chief Risk Officer) in the energy sector over the last few years was the most frustrating seat at the table. Risk managers were like pilots watching the plane entered a storm no one had ever mapped. Their influence over reality dropped to zero. For decades, the industry lived by the gospel of Monte Carlo simulations and Value-at-Risk (VaR) models. But in today’s reality, these tools have become useless. They were built for a different world - one where annual price volatility stayed within a few percent, with low interest rates and regulations more predictable. They were never designed to survive a reality where prices swing by double digits in a single day. When the market moves 25% in a few hours, models simply disintegrate.
 
-The summer 2022 (several months after the outbreak of the Russian-Ukrainian War, when physical gas flows were still largely intact) European gas prices surged from €70/MWh to an irrational €350/MWh. This was not driven by a physical shortage or actual demand, but by a systemic collapse of risk management mechanisms. Following the termination of long-term contracts with Russian Gazprom, the market's largest gas trader was caught with a massive, unhedged short position. As prices rose, the company faced billions in margin calls they could not meet, triggering a forced buying spree to cover positions. The entire European market became a hostage to the insolvency of a single player, which drove prices to artificial levels that everyone knew were detached from reality, yet the system remained powerless to stop the spiral. To make matters worse, during such stress events, clearinghouses and brokers usually aggressively hike risk coefficients. This forces participants to post exponentially higher collateral just to maintain the exact same position. Instead of acting as a stabilizer, the system effectively cannibalizes its own participants, draining their remaining liquidty at the very moment they need it most. Instead of providing a safety, these institutions are creating a downward/upward spiral that destroys market.
+The summer 2022 (several months after the outbreak of the Russian-Ukrainian War, when physical gas flows were still largely intact) European gas prices surged from €70/MWh to an irrational €350/MWh. This was not driven by a physical shortage or actual demand, but by a systemic collapse of risk management mechanisms. Following the termination of long-term contracts with Russian Gazprom, the European market's largest gas trader was caught with a massive, unhedged short position. As prices rose, the company faced billions in margin calls they could not meet, triggering a forced buying spree to cover positions. The entire European market became a hostage to the insolvency of a single player, which drove prices to artificial levels that everyone knew were detached from reality, yet the system remained powerless to stop the spiral. To make matters worse, during such stress events, clearinghouses and brokers usually aggressively hike risk coefficients. This forces participants to post exponentially higher collateral just to maintain the exact same position. Instead of acting as a stabilizer, the system effectively cannibalizes its own participants, draining their remaining liquidty at the very moment they need it most. Instead of providing a safety, these institutions are creating a downward/upward spiral that destroys market.
 
 That episode was not an anomaly. It was a preview.
 
-Annualised volatility in European energy markets now regularly exceeds 50% — structural, persistent, and increasingly detached from physical fundamentals. Most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. We witnessed on TTF gas market a +24.7% intraday spike on March 2nd, followed by a 50.4% weekly surge peaking at 68.63 EUR/MWh, only to see a -19.5% daily collapse in the following session. This is a level of volatility typical of collapsing 'shitcoins,' not the continent's primary energy benchmark.
+Annualised volatility in European energy markets now regularly exceeds 50% — structural, persistent, and increasingly detached from physical fundamentals. Most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. On TTF, the front-month contract surged over +52% from 31.96 EUR/MWh on February 27th to an intraday peak of 48.66 EUR/MWh on March 2nd alone — before continuing to climb to a weekly high of 68.63 EUR/MWh on March 9th, representing a +114.8% rally in just eight trading days. The following session delivered a -19.5% daily collapse. This is a level of volatility typical of 'shitcoins,' not the continent's primary energy benchmark.
 
 The result is a structural collapse of the forward curve as a hedging instrument. Beyond the front month, liquidity has effectively disappeared for most participants. Year-ahead contracts — once the backbone of industrial energy procurement — are now the exclusive domain of entities with unlimited capital buffers.
 
-This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 15% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
+This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 50% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
 
 I spent over twenty years embracing volatility. It was never the trader's enemy — it was the point. Volatility is where mispricing lives, where prepared traders find edge. **But we have arrived somewhere different.** The volatility we face today is not opportunity. It is a carousel rotating fast enough that entry and exit are both impossible — not because you lack skill, but because the system can't handle that level of volatility. The game itself has been redesigned.
 
@@ -115,7 +113,7 @@ Energy Exchanges onboarding takes 6–12 months. A single standardised EFET fram
 
 **Counterparty Risk** 
 
-Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022 without consequences. US LNG tankers performed mid-ocean U-turns in 2022, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded penalties. 
+Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022 without consequences. US LNG tankers performed mid-ocean U-turns in 2022, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded contractual penalties. 
 
 The ultimate example of credit and counterparty risk is the entire Ukrainian market. Ukraine represents one of the most significant energy hubs in Europe, but it operates under extreme financial friction. For years, even long before the outbreak of the war in 2022, it has remained a premium market, where energy prices were consistently among the highest in the region. It serves as the good example of a "broken system" operating in a 1990s-era paradigm due to a total lack of trust and efficiency.
 
@@ -192,7 +190,7 @@ Unlike crude oil markets where the last executed deal becomes the settlement ref
 
 **Structural Volatility Filter — BlackSlon Settlement Zone (BSSZ)**
 
-The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th close — the trend was preserved inside the corridor. No forced liquidations. No margin stress. The chaos was not transmitted to participant portfolios.
+The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th, The BlackSlon Settlement Anchor absorbed this shock, over those same eight trading days, the Anchor appreciated +55% — capturing the full directional trend — with a maximum single-day move of +19%, no single-session crashes, and zero transmission of the -19.5% daily collapse on March 10th. The trend was captured. The noise was not.
 
 **Instant Settlement. No Intermediaries** 
 
@@ -224,7 +222,7 @@ Malewicz did not simplify painting. He stripped it to its irreducible essence �
 
 **Zero Entry Barrier.** 100 kWh minimum, from w few euros. Any participant. Anywhere. Any time.
 
-*We don't add layers of complexity. We strip them away.*
+*BlackSlon doesn't add layers of complexity. It strips them away.*
 
 ---
 
@@ -255,6 +253,8 @@ The **Black Elephant** — the massive, obvious risk that everyone in the room c
 While the industry chases Black Swans, BlackSlon focuses on the Elephants. The risks are not hidden. They are hiding in plain sight — in the architecture of a market that has not fundamentally changed since the 20th century.
 
 **BlackSlon is not an optimization of this system. It is its replacement.**
+
+It has happened before. In 1973, Marc Rich executed the first spot oil trade — a direct, bilateral crude transaction that bypassed the long-term contract structures that had governed oil markets since their inception. The established players called it reckless. Regulators called it destabilising. Within a decade, the spot market he created is the oil market — and every benchmark, every futures contract, every hedge traded by the institutions that once dismissed him is priced against it.
 
 ---
 
@@ -291,7 +291,7 @@ Component Definitions:
 
 ### 8.2. Asymptotic Daily Rebalancing (ADR): The Stability Engine
 
-To ensure the Physical Meridian remains stable and does not suffer from "Price Cliffs" when energy contracts expire or there Black Swan events during weekend or holiday trading gaps, the protocol implements ADR (Asymptotic Daily Rebalancing) — the "Smoothing Engine" of the protocol. 
+To ensure the Physical Meridian remains stable and does not suffer from "Price Cliffs" when energy contracts expire or there are Black Swan events during weekend or holiday trading gaps, the protocol implements ADR (Asymptotic Daily Rebalancing) — the "Smoothing Engine" of the protocol. 
 
 It ensures that all transitions — whether between expiring and incoming contracts or across volatility-heavy market gaps — are seamless. By integrating these shifts through a controlled mathematical curve, ADR prevents artificial or sudden jumps in the BSST.
 

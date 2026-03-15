@@ -44,25 +44,39 @@ For the entire remainder of the European economy — small independent traders, 
 
 The European wholesale energy market suffers from structural failures that no incremental reform has been able to address:
 
-**The Capital Barrier.** Entry requires €3–5 million in liquid capital or bank guarantees — before a single trade is executed. Independent traders are forced to compete against state-backed giants with investment-grade ratings and unlimited access to cheap capital, using nothing but their own equity.
+**The Capital Barrier** 
 
-**The Collapse of Risk Management.** VaR models and Monte Carlo simulations — the industry's standard tools — were built for a world where annual price volatility in European energy markets stayed within **2–3%**. In that world, one-year forward contracts were the standard instrument: a producer locked in a price for the coming year, an industrial consumer hedged their cost base, and the system functioned. That world no longer exists.
+Entry requires €3–5 million in liquid capital or bank guarantees — before a single trade is executed. Independent traders are forced to compete against state-backed giants with investment-grade ratings and unlimited access to cheap capital, using nothing but their own equity.
 
-Today, annualised volatility regularly exceeds **50%** — as witnessed most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. We witnessed on TTF gas market a +24.7% intraday spike on March 2nd, followed by a 50.4% weekly surge peaking at 68.63 EUR/MWh, only to see a -19.5% daily collapse in the following session. This is a level of volatility typical of collapsing 'shitcoins,' not the continent's primary energy benchmark.
+**The Collapse of Risk Management** 
+
+VaR models and Monte Carlo simulations — the industry's standard tools — were built for a world where annual price volatility in European energy markets stayed within **2–3%**. In that world, one-year forward contracts were the standard instrument: a producer locked in a price for the coming year, an industrial consumer hedged their cost base, and the system functioned. That world no longer exists.
+
+Today, annualised volatility regularly exceeds **50%** — as witnessed most recently following the outbreak of conflict in Iran, when European gas and power markets moved violently within hours. On TTF gas market, the front-month contract surged over +52% from 31.96 EUR/MWh on February 27th to an intraday peak of 48.66 EUR/MWh on March 2nd alone — before continuing to climb to a weekly high of 68.63 EUR/MWh on March 9th, representing a +114.8% rally in just eight trading days. The following session delivered a -19.5% daily collapse. This is a level of volatility typical of 'shitcoins,' not the continent's primary energy benchmark.
 
 The result is a structural collapse of the forward curve as a hedging instrument. Beyond the front month, liquidity has effectively disappeared for most participants. Year-ahead contracts — once the backbone of industrial energy procurement — are now the exclusive domain of entities with unlimited capital buffers.
 
-This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 15% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
+This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 50% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
 
-**Legal Gatekeeping.** Energy Exchanges onboarding takes 6–12 months. A single standardised EFET framework agreement "negotiations" costs up to €50,000 in legal fees plus 6-12 months of "administrative overhead" — for a document that offers almost no room for actual negotiation. This is not compliance. It is a manufactured entry fee designed to maintain exclusivity.
+**Legal Gatekeeping** 
 
-**Counterparty Risk.** Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022 without consequence. US LNG tankers performed mid-ocean U-turns in 2022, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded penalties. In Ukraine — one of Europe's most significant energy hubs — 100% prepayment is required even for the largest state entities, because the system has no mechanism for trust.
+Energy Exchanges onboarding takes 6–12 months. A single standardised EFET framework agreement "negotiations" costs up to €50,000 in legal fees plus 6-12 months of "administrative overhead" — for a document that offers almost no room for actual negotiation. This is not compliance. It is a manufactured entry fee designed to maintain exclusivity.
 
-**Market Illiquidity and Time Constraints.** In Poland, Europe's fastest-growing gas market, natural gas trading is effectively limited to a 2–4 hour daily window. Outside that window: no participants, no market makers, no liquidity. Critical events — weather shocks, geopolitical developments, infrastructure failures — cannot be priced in until the market reopens. The result is gaps, manipulation, and cascading volatility at every open.
+**Counterparty Risk** 
 
-**Information Asymmetry.** Real-time price discovery is a paid privilege. Bloomberg terminals, Argus, Platts, Montel — tens of thousands of euros per year, restricted to a single user. This is further exacerbated by the deliberate gatekeeping of historical transparency: even official exchanges like the EEX only publish free data reaching back a few weeks. If you need to investigate market trends or verify prices from just six months ago, you are met with a paywall. In the legacy system, the past is as expensive as the present, leaving smaller players with no way to audit, benchmark, or learn from market history without paying the "institutional tax."Small producers and industrial consumers trade in the dark, structurally disadvantaged before the first order is placed.
+Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022, which secured nearly 50% of Europe’s total gas needs. US LNG tankers performed mid-ocean U-turns in 2021, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded contractual penalties. In Ukraine — one of Europe's most significant energy hubs — 100% prepayment is required even for the largest state entities, because the system has no mechanism for trust.
 
-**The Death of Seasonality and the Peak/Off-Peak Regime.** The Summer/Winter storage spread — the foundational carry trade of European gas markets — is dead. Governments now mandate 90% storage filling regardless of price. Traders are forced to inject at a loss as a regulatory obligation. Banks, already risk-averse toward the energy sector, are tightening credit lines further. The result is a liquidity vacuum in an already capital-starved market.
+**Market Illiquidity and Time Constraints**
+
+ In Poland, Europe's fastest-growing gas market, natural gas trading is effectively limited to a 2–4 hour daily window. Outside that window: no participants, no market makers, no liquidity. Critical events — weather shocks, geopolitical developments, infrastructure failures — cannot be priced in until the market reopens. The result is gaps, manipulation, and cascading volatility at every open.
+
+**Information Asymmetry** 
+
+Real-time price discovery is a paid privilege. Bloomberg terminals, Argus, Platts, Montel — tens of thousands of euros per year, restricted to a single user. This is further exacerbated by the deliberate gatekeeping of historical transparency: even official exchanges like the EEX only publish free data reaching back a few weeks. If you need to investigate market trends or verify prices from just six months ago, you are met with a paywall. In the legacy system, the past is as expensive as the present, leaving smaller players with no way to audit, benchmark, or learn from market history without paying the "institutional tax." Small producers and industrial consumers trade in the dark, structurally disadvantaged before the first order is placed.
+
+**The Death of Seasonality and the Peak/Off-Peak Regime** 
+
+The Summer/Winter storage spread — the foundational carry trade of European gas markets — is dead. Governments now mandate 90% storage filling regardless of price. Traders are forced to inject at a loss as a regulatory obligation. Banks, already risk-averse toward the energy sector, are tightening credit lines further. The result is a liquidity vacuum in an already capital-starved market.
 
 Furthermore, the traditional Peak/Off-Peak regime in power markets has become obsolete. In the legacy world, the afternoon window from 13:00 to 15:00 was the "Daily Peak" — the most expensive hours of the day. Today, in the era of mass solar generation, these same hours during summer often witness negative prices across major European wholesale markets. Producers are forced to pay consumers to offload their energy, a phenomenon known as "Renewable Cannibalization."
 
@@ -74,7 +88,7 @@ BlackSlon is the first decentralised protocol built specifically for the Europea
 
 **Democratised Access** 
 
-We reduce the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
+BlackSlon reduces the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
 
 **Perpetual Instruments** 
 
@@ -86,7 +100,7 @@ Unlike crude oil markets where the last executed deal becomes the settlement ref
 
 **Structural Volatility Filter  — BlackSlon Settlement Zone (BSSZ)** 
 
-The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th close — the trend was preserved inside the corridor. No forced liquidations. No margin stress. The chaos was not transmitted to participant portfolios.
+The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th, The BlackSlon Settlement Anchor absorbed this shock, over those same eight trading days, the Anchor appreciated +55% — capturing the full directional trend — with a maximum single-day move of +19%, no single-session crashes, and zero transmission of the -19.5% daily collapse on March 10th. The trend was captured. The noise was not.
 
 **Instant Settlement. No Intermediaries**
 
@@ -104,7 +118,7 @@ BlackSlon is not a purely synthetic protocol. The BSSZ — anchored daily to phy
 
 As the BlackSlon Ecosystem matures and the BlackSlon Protocol accumulates sufficient trading volume and participant depth, the protocol anticipates a natural inversion: the BSEI itself becomes the benchmark — a more liquid, transparent, and accessible reference than the underlying physical markets it was originally derived from.
 
-This mirrors the historical evolution of financial benchmarks: instruments initially derived from physical markets eventually become the reference that physical markets price against. The BlackSlon Protocol is designed to follow the same trajectory in European energy markets — transitioning from a protocol tethered to physical reality, to a protocol that defines it.
+This mirrors the historical evolution of energy commodity benchmarks: instruments initially derived from physical markets eventually become the reference that physical markets price against. The BlackSlon Protocol is designed to follow the same trajectory in European energy markets — transitioning from a protocol tethered to physical reality, to a protocol that defines it.
 
 ## The Precedent: Marc Rich and the Birth of the Spot Market
 
@@ -142,8 +156,6 @@ BlackSlon was not built in a venture capital office. It was built by me - energy
 
 I emerged from the **post-Soviet energy frontier** — Central - Eastern Europe (CEE), a landscape defined by tectonic shifts. In the span of a few decades, I witnessed the dissolution of the Soviet Union and Czechoslovakia, the reunification of Germany, the collapse of Yugoslavia, and the War in Ukraine. This is not a region where stability is taken for granted. It is a region where legacy systems collapse under pressure — repeatedly, predictably, and always at the worst possible moment.
 
-This heritage forged a different kind of trader. I don't just manage risk. **I was forged by it.**
-
 I have traded Natural Gas, Power, Crude Oil, Refined Products, Carbon Emissions Allowances, Green Certificates, and complex cross-commodity spreads — as Trader, Originator, Partner, and CEO in tier-one global trading houses. I have operated on ICE, EEX, EPEX Spot and TGE. For years, I was one of the largest natural gas suppliers from the European Union to Ukraine. I have navigated the chronic illiquidity of CEE/SEE markets and the deep liquidity of North-Western Europe (NWE) to capture the profound anomalies that exist in the space between them.
 
 Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. That era taught me something no Bloomberg terminal can: how markets really work when the infrastructure fails, the regulator intervenes, and the counterparty disappears.
@@ -158,7 +170,7 @@ In Slavic languages, *Slon* / *Слон* means **Elephant**.
 
 **BlackSlon** is the synthesis of two concepts that define the energy markets of our era:
 
-The **Black Swan** — the unpredictable, catastrophic event that models cannot anticipate: the pandemic, the war, the mid-ocean U-turn of a contracted LNG tanker, or the overnight vanishing of a dominant supplier like Gazprom, which historically secured nearly 50% of Europe’s total gas needs.
+The **Black Swan** — the unpredictable, catastrophic event that models cannot anticipate: the pandemic, the war, the mid-ocean U-turn of a contracted LNG tanker, or the overnight vanishing of a dominant supplier like Gazprom.
 
 The **Black Elephant** — the massive, obvious risk that everyone in the room can see, and everyone chooses to ignore: the structural insolvency of clearing infrastructure, the death of the forward curve, the regulatory capture of markets that were supposed to be free.
 
