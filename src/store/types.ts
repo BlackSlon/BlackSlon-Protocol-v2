@@ -84,6 +84,7 @@ export interface OrderBook {
   bids: Order[]
   asks: Order[]
   lastTrade: LastTrade | null
+  lastTradeByMarket: Record<MarketId, LastTrade>
 }
 
 export interface BSEISnapshot {

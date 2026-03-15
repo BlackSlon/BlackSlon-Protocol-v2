@@ -5,6 +5,7 @@ import { useVirtual } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { generateOrderBook, generateBSEIHistory, generateLiquiditySnapshots } from '@/data/markets/orderBookGenerator'
 import { getMarketColors } from '@/lib/marketColors'
+import type { MarketId } from '@/store/types'
 
 const formatVolume = (vol: number) =>
   vol.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -41,9 +42,10 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const displayBids = [...generated.bids, ...userBids].sort((a, b) => b.price - a.price)
   const displayAsks = [...generated.asks, ...userAsks].sort((a, b) => a.price - b.price)
 
-  const storeLastTrade = storeData.orderBook.lastTrade
-  const displayLastTrade = storeLastTrade && (Date.now() - storeLastTrade.timestamp < 86400000)
-    ? storeLastTrade
+  // Get market-specific last trade
+  const marketLastTrade = storeData.orderBook.lastTradeByMarket?.[selectedMarketId as MarketId]
+  const displayLastTrade = marketLastTrade && (Date.now() - marketLastTrade.timestamp < 86400000)
+    ? marketLastTrade
     : { price: anchor, units: 10, volume: 1000, timestamp: Date.now() }
 
   // ── BSEI: I_t = ω * anchor + (1 - ω) * P_RVWAP ──

@@ -87,6 +87,7 @@ export const useVirtual = create<VirtualState>(() => ({
       { id: '16', price: 10.67, units: 105, volume: 10500, ownedByUser: false },
     ],
     lastTrade: { price: 10.59, units: 10, volume: 1000, timestamp: Date.now() },
+    lastTradeByMarket: {} as Record<string, any>,
   },
   bsei: {
     It: 10.59, omega: 0.80, pRvwap: 10.58, anchor: 10.59,
@@ -265,11 +266,13 @@ export const useTrading = create<TradingState>((set, get) => {
         }
 
         if (filledQty > 0) {
+          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() }
           useVirtual.setState(vs => ({
             orderBook: {
               ...vs.orderBook,
               asks: survivingUserAsks,   // only user resting asks persist
-              lastTrade: { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() },
+              lastTrade: tradeData,
+              lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
             },
           }))
           useDealConfirmation.getState().showDeal({ side: 'BUY', price: fillPrice, filledQty, remainingQty, marketId, timestamp: Date.now() })
@@ -301,11 +304,13 @@ export const useTrading = create<TradingState>((set, get) => {
         }
 
         if (filledQty > 0) {
+          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() }
           useVirtual.setState(vs => ({
             orderBook: {
               ...vs.orderBook,
               bids: survivingUserBids,
-              lastTrade: { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() },
+              lastTrade: tradeData,
+              lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
             },
           }))
           useDealConfirmation.getState().showDeal({ side: 'SELL', price: fillPrice, filledQty, remainingQty, marketId, timestamp: Date.now() })
