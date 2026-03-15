@@ -389,22 +389,20 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
         {/* Margin summary */}
         <div className="mt-auto border-t border-gray-900 pt-2 shrink-0">
-          <div className="text-center mb-1">
-            <span className="text-[9px] text-gray-400 uppercase tracking-tighter">REQUIRED MARGIN</span>
-          </div>
-          <div className="text-center mb-2">
-            <span className="text-sm text-gray-400 leading-none">
-              {pendingOrder ? `${pendingOrder.marginPct}%` : '—'}
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2 border-t border-gray-900/50 pt-2 pb-2">
+          <div className="flex items-center justify-between gap-2">
             <div className="border border-amber-700 rounded-sm py-1 px-3 w-fit">
               <div className="text-[8px] text-amber-700 uppercase tracking-widest mb-0">€BSR Deposit</div>
               <div className="text-[11px] text-amber-700 tracking-tighter leading-tight">
                 {pendingOrder ? `${pendingOrder.bsrDeposit.toFixed(2)} BSR` : '—'}
               </div>
             </div>
-            <div className="border border-blue-600 rounded-sm py-1 px-3 w-fit ml-auto">
+            <div className="text-center flex-1">
+              <div className="text-[9px] text-gray-400 uppercase tracking-tighter">REQUIRED MARGIN</div>
+              <div className="text-sm text-gray-400 leading-none">
+                {pendingOrder ? `${pendingOrder.marginPct}%` : '—'}
+              </div>
+            </div>
+            <div className="border border-blue-600 rounded-sm py-1 px-3 w-fit">
               <div className="text-[8px] text-blue-600 uppercase tracking-widest mb-0"><span className="normal-case">e</span>EURO Deposit</div>
               <div className="text-[11px] text-blue-600 tracking-tighter leading-tight">
                 {pendingOrder ? `${pendingOrder.eEuroDeposit.toFixed(2)} EUR` : '—'}
