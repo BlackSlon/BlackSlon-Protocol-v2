@@ -31,7 +31,7 @@ function hSolvToPercent(hSolv: number): number {
   return Math.min(100, Math.max(0, pct))
 }
 
-// ─── H-Factor (H_BSSZ) Health Zones ─────────────────────────────────────────
+// ─── H-Factor (H_user) Health Zones ─────────────────────────────────────────
 // Source: Risk-Management-Micro.md
 // H > 1.10  → SAFE       (Green)  — full operational access
 // 1.05–1.10 → WARNING    (Yellow) — margin call notification
@@ -179,11 +179,11 @@ export default function UserAccountPanel() {
             <span className="text-[7px] text-gray-500 uppercase tracking-widest">(User Level)</span>
           </div>
 
-          {/* H_BSSZ value + zone */}
+          {/* H_user value + zone */}
           <div className="flex justify-between items-center mb-2">
             <div>
               <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
-                H-Factor (H<sub>BSSZ</sub>)
+                H-Factor (H<sub>user</sub>)
               </div>
               <div className="text-sm font-black tracking-tighter" style={{ color: healthZone.color }}>
                 {hFactor.toFixed(3)}
@@ -202,7 +202,7 @@ export default function UserAccountPanel() {
             </div>
           </div>
 
-          {/* Progress bar - mapped from H_BSSZ range 0.90–1.30 */}
+          {/* Progress bar - mapped from H_user range 0.90–1.30 */}
           <div className="flex justify-between text-[7px] text-gray-500 mb-0.5">
             <span>0.90</span>
             <span className="text-gray-800">|1.00</span>

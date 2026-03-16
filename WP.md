@@ -1394,7 +1394,7 @@ The Managing Entity is responsible for the technical, mathematical, and regulato
 
 | Constant | Symbol | Value | Used In |
 |:---------|:------:|:-----:|:--------|
-| Epsilon buffer | ε | **0.02** | H_BSSZ, SIL |
+| Epsilon buffer | ε | **0.02** | H_user, SIL |
 | BSEI decay constant | λ | ln(2)/6 ≈ 0.1155 | BSEI formula |
 | BSEI anchor guard lower | — | a × 0.85 | BSEI safeguard |
 | BSEI anchor guard upper | — | a × 1.25 | BSEI safeguard |
@@ -1403,7 +1403,7 @@ The Managing Entity is responsible for the technical, mathematical, and regulato
 | BSSZ floor | — | a × 0.90 | BSSZ |
 | BSSZ ceiling | — | a × 1.20 | BSSZ |
 | BSEI anchor weight (deprecated) | ω | — | Replaced by WTSI-24h |
-| IM denominator factor | — | 0.50 | H_BSSZ |
+| IM denominator factor | — | 0.50 | H_user |
 | SIL step size | SIL_step | 10% | SIL |
 | SIL round cap | SIL_max | 50% | SIL |
 | Intervention Threshold | H_INT | ≤ 1.00 | Zone IV |
@@ -1412,7 +1412,7 @@ The Managing Entity is responsible for the technical, mathematical, and regulato
 | ADS rolling window | ADS_window | 3 blocks | ADS |
 | ADS pause duration | ADS_pause | 15 min | ADS |
 | Emergency Collateral Lock duration | — | max 48h | ADS |
-| Emergency Collateral Lock release | — | H_BSSZ,avg > 1.10 | ADS |
+| Emergency Collateral Lock release | — | H_user,avg > 1.10 | ADS |
 | Vault exposure limit | λ_max | 15% | Layer 3 |
 | OI concentration limit | — | 20% per participant | Liquidity |
 | PLP market share limit | — | 40% per PLP | Liquidity |

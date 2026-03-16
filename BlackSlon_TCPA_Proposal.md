@@ -6,9 +6,9 @@
 
 ## 1. Problem Statement
 
-The current H_BSSZ formula creates a structural vulnerability for users with high €BSR collateral ratios under market stress:
+The current H_user formula creates a structural vulnerability for users with high €BSR collateral ratios under market stress:
 
-$$H_{BSSZ} = \frac{Equity_{total}}{\sum IM_j \cdot 0.5}$$
+$$H_{user} = \frac{Equity_{total}}{\sum IM_j \cdot 0.5}$$
 
 $$Equity_{total} = Q_{eEURO} + Q_{€BSR} \cdot P_{€BSR}(t) + \sum \Delta PnL_j$$
 

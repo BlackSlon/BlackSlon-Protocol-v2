@@ -11,7 +11,7 @@ Power alone: approximately **3,570,000,000 MWh** traded annually at an average o
 
 But physical delivery is only the tip of the iceberg. On the TTF gas hub alone (by far the biggest European energy exchange), physically settled contracts represent an estimated 3–5% of total traded volume. The rest is financial — hedges, spreads, rollovers, and speculative flow. The true notional turnover of European energy markets runs into the **trillions of euros annually**.
 
-And yet — this trillion-euro market is effectively controlled by fewer than 800 entities.
+And yet — this trillion-euro market is effectively controlled by several hundred entities.
 
 
 ## The Two Gates of the Private Club
@@ -136,10 +136,6 @@ As the BlackSlon Ecosystem matures and the BlackSlon Protocol accumulates suffic
 
 This mirrors the historical evolution of energy commodity benchmarks: instruments initially derived from physical markets eventually become the reference that physical markets price against. The BlackSlon Protocol is designed to follow the same trajectory in European energy markets — transitioning from a protocol tethered to physical reality, to a protocol that defines it.
 
-## The Precedent: Marc Rich and the Birth of the Spot Market
-
-In 1973, Marc Rich executed the first spot oil trade — a direct, bilateral crude transaction that bypassed the long-term contract structures that had governed oil markets since their inception. The established players called it reckless. Within a decade, the spot market he created *is* the oil market.
-
 **BlackSlon is the Market — for the 21st century.**
 
 The architecture we are replacing was built for a different world: one of centralised trust, analogue settlement, and institutional gatekeeping. That world is ending. The question is not whether European energy markets will be rebuilt on open, transparent, algorithmically governed infrastructure. The question is who builds it first.
@@ -148,7 +144,7 @@ The architecture we are replacing was built for a different world: one of centra
 
 BlackSlon draws its design philosophy from an unlikely source: **Kazimierz Malewicz** — the Polish-Russian-Ukrainian artist and founding father of Suprematism, pioneer of the Zero Form.
 
-Malewicz did not simplify painting. He stripped it to its irreducible essence — a black square on white canvas — and in doing so created something more powerful than everything that came before it. **He did not add layers. He removed them until only truth remained.**
+Malewicz did not simplify painting. He stripped it to its irreducible essence — a black square on white canvas — and in doing so created something more powerful than everything that came before it. **He did not add layers. He removed them.**
 
 This is exactly what BlackSlon does to energy trading.
 
@@ -160,7 +156,7 @@ Traditional energy markets are buried under layers of manufactured complexity: e
 
 **Zero Curve.** We collapse the fragmented forward curve — intraday, day-ahead, month, quarter, year — into a single, perpetual Token. No contango. No backwardation. If your analysis says energy prices will rise over the next three years, you buy the Token. One instrument. One truth.
 
-**Zero Counterparty Risk.** The protocol is the counterparty. Not a bank, not a clearing house, not a trading company, producer or end-user. A trustless, mathematically governed system — immutable, transparent, always solvent by design.
+**Zero Counterparty Risk.** The protocol is the counterparty. Not a bank, not a clearing house, not a trading company, producer or end-user. A trustless, mathematically governed system — immutable, transparent, solvent by design.
 
 **Zero Entry Barrier.** 100 kWh minimum. Any participant. Anywhere. Any time.
 
@@ -170,7 +166,7 @@ Traditional energy markets are buried under layers of manufactured complexity: e
 
 BlackSlon was not built in a venture capital office. It was built by me - energy trader who spent 2 decades inside the system that BlackSlon is now replacing.
 
-I emerged from the **post-Soviet energy frontier** — Central - Eastern Europe (CEE), a landscape defined by tectonic shifts. In the span of a few decades, I witnessed the dissolution of the Soviet Union and Czechoslovakia, the reunification of Germany, the collapse of Yugoslavia, and the War in Ukraine. This is not a region where stability is taken for granted. It is a region where legacy systems collapse under pressure — repeatedly, predictably, and always at the worst possible moment.
+I emerged from the **post-Soviet energy frontier** — Central - Eastern Europe (CEE), a landscape defined by tectonic shifts. In the span of a few decades, I witnessed the dissolution of the Soviet Union and Czechoslovakia, the reunification of Germany, the collapse of Yugoslavia, and the War in Ukraine. This is not a region where stability is taken for granted. It is a region where legacy systems collapse under pressure.
 
 I have traded Natural Gas, Power, Crude Oil, Refined Products, Carbon Emissions Allowances, Green Certificates, and complex cross-commodity spreads — as Trader, Originator, Partner, and CEO in tier-one global trading houses. I have operated on ICE, EEX, EPEX Spot and TGE. For years, I was one of the largest natural gas suppliers from the European Union to Ukraine. I have navigated the chronic illiquidity of CEE/SEE markets and the deep liquidity of North-Western Europe (NWE) to capture the profound anomalies that exist in the space between them.
 
@@ -196,5 +192,4 @@ This is not a flaw in the European energy market architecture. **It is the archi
 
 **BlackSlon is not an optimization of this system. It is its replacement.**
 
----
-
+and it has happened before. In 1973, Marc Rich executed the first spot oil trade — a direct, bilateral crude transaction that bypassed the long-term contract structures that had governed oil markets since their inception. The established players called it reckless. Regulators called it destabilising. Within a decade, the spot market he created **is** the oil market — and every benchmark, every futures contract, every hedge traded by the institutions that once dismissed him is priced against it.

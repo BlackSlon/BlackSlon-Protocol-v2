@@ -280,7 +280,7 @@ export const useTrading = create<TradingState>((set, get) => {
           return `Insufficient eEURO. Required: ${eEuroDeposit.toFixed(2)}, Available: ${us.user.eEuroBalance.toFixed(2)}`
       }
 
-      // ── H_BSSZ pre-check ─────────────────────────────────────────────────
+      // ── H_user pre-check ─────────────────────────────────────────────────
       const newLockedBSR  = us.vault.lockedBSR + bsrNeeded
       const newLockedEuro = us.vault.lockedEuro + eEuroDeposit
       const equity =
@@ -289,7 +289,7 @@ export const useTrading = create<TradingState>((set, get) => {
         us.inventory.reduce((s, p) => s + p.pnl, 0)
       const newHFactor = equity / ((newLockedBSR * us.bsrEuroRate + newLockedEuro) * 0.5)
       if (newHFactor < 1.0)
-        return `Trade rejected: would push H_BSSZ to ${newHFactor.toFixed(2)} (min 1.00)`
+        return `Trade rejected: would push H_user to ${newHFactor.toFixed(2)} (min 1.00)`
 
       // ── MATCHING ENGINE ───────────────────────────────────────────────────
       // getFullOrderBook returns the same book VirtualDimension renders:
