@@ -5,6 +5,7 @@ import { useVirtual } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { generateOrderBook, generateBSEIHistory, generateLiquiditySnapshots } from '@/data/markets/orderBookGenerator'
 import { getMarketColors } from '@/lib/marketColors'
+import { getCurrentCycleData } from '@/lib/marketCycle'
 import type { MarketId } from '@/store/types'
 
 const formatVolume = (vol: number) =>
@@ -28,10 +29,19 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const storeData = useVirtual()
   const colors = getMarketColors(selectedMarketId)
 
-  const mData = getMarketData(selectedMarketId as any) as any
-  const anchor = mData?.bsszPositions?.[0]?.bssz?.anchor
-    ?? mData?.bsszCalculation?.anchor
-    ?? 10.59
+  // Get current cycle data for this specific market
+  const cycleData = getCurrentCycleData(selectedMarketId)
+  const marketPrices: Record<string, number> = {
+    'BS-G-NL': 4.43,
+    'BS-G-DE': 4.50,
+    'BS-G-PL': 4.78,
+    'BS-G-BG': 4.13,
+    'BS-P-DE': 9.121,
+    'BS-P-NO': 4.972,
+    'BS-P-PL': 9.938,
+    'BS-P-UK': 8.773,
+  }
+  const anchor = cycleData ? cycleData.anchor / 10 : marketPrices[selectedMarketId] || 10.59
 
   const generated = generateOrderBook(anchor, selectedMarketId)
 

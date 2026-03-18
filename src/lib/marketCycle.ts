@@ -29,6 +29,13 @@ export interface CycleBsszPosition {
   }
 }
 
+export interface HistoricalData {
+  DA: number
+  FM: number
+  FQ: number
+  Cal: number | null
+}
+
 /**
  * Returns the current cycle day number (1–7).
  * Advances every 24 hours from CYCLE_BASE_MS, wrapping at CYCLE_LENGTH.
@@ -45,8 +52,8 @@ export function getCurrentCycleData(marketId: string): CycleDayData | null {
   const markets = (cycleData as any).markets
   const market = markets[marketId]
   if (!market) return null
-  const currentDay = getCycleDay()
-  return (market.cycle as CycleDayData[]).find(d => d.day === currentDay) ?? null
+  const cycle = market.cycle as CycleDayData[]
+  return cycle.find(d => d.day === 0) ?? cycle[0]
 }
 
 /**
@@ -59,30 +66,79 @@ export function getCycleBsszPositions(marketId: string): CycleBsszPosition[] | n
   const market = markets[marketId]
   if (!market) return null
 
-  const currentDay = getCycleDay()
   const cycle: CycleDayData[] = market.cycle
+  const historical: { M1: HistoricalData; H1: HistoricalData; Y1: HistoricalData } = market.historical
 
+  // Order from D-1 (day 1) to W-1 (day 7)
   const ordered: CycleDayData[] = []
-  for (let i = 0; i < CYCLE_LENGTH; i++) {
-    const idx = ((currentDay - 1 - i) + CYCLE_LENGTH) % CYCLE_LENGTH
-    ordered.push(cycle[idx])
+  for (let i = 1; i <= CYCLE_LENGTH; i++) {
+    ordered.push(cycle[i])
   }
 
-  return ordered.map((d, i) => {
-    const older = ordered[i + 1]
-    const trendPct = older
-      ? parseFloat(((d.anchor - older.anchor) / older.anchor * 100).toFixed(2))
-      : null
+  // Use day 0 (ACTIVE) anchor for trend calculations
+  const currentAnchor = cycle[0].anchor
+
+  // Map cycle days: D-1 (day 7), D-2 (day 6), ..., D-6 (day 2), W-1 (day 1)
+  const cycleRows = ordered.map((d, i) => {
+    let trendPct: number | null = null
+    
+    // D-1 (index 0) has no reference, so trendPct = null
+    if (i === 0) {
+      trendPct = null
+    } else {
+      // All other rows compare to ACTIVE (currentAnchor)
+      trendPct = parseFloat(((currentAnchor - d.anchor) / d.anchor * 100).toFixed(2))
+    }
+    
     return {
-      label: `D-${i + 1}`,
+      label: d.label,
       refDate: d.date_ref,
       adrData: [],
       bssz: {
-        anchor: d.anchor,
-        floor: d.floor,
-        ceiling: d.ceiling,
+        anchor: d.anchor / 10,
+        floor: d.floor / 10,
+        ceiling: d.ceiling / 10,
         trendPct,
       },
     }
   })
+
+  // Add historical rows (M-1, Q-1, Y-1)
+  const historicalRows: CycleBsszPosition[] = [
+    {
+      label: 'M-1',
+      refDate: 'H1 2026',
+      adrData: [],
+      bssz: {
+        anchor: historical.H1.DA / 10,
+        floor: (historical.H1.DA * 0.9) / 10,
+        ceiling: (historical.H1.DA * 1.2) / 10,
+        trendPct: parseFloat(((currentAnchor - historical.H1.DA) / historical.H1.DA * 100).toFixed(2)),
+      },
+    },
+    {
+      label: 'Q-1',
+      refDate: 'M1 2026',
+      adrData: [],
+      bssz: {
+        anchor: historical.M1.DA / 10,
+        floor: (historical.M1.DA * 0.9) / 10,
+        ceiling: (historical.M1.DA * 1.2) / 10,
+        trendPct: parseFloat(((currentAnchor - historical.M1.DA) / historical.M1.DA * 100).toFixed(2)),
+      },
+    },
+    {
+      label: 'Y-1',
+      refDate: 'Y1 2025',
+      adrData: [],
+      bssz: {
+        anchor: historical.Y1.DA / 10,
+        floor: (historical.Y1.DA * 0.9) / 10,
+        ceiling: (historical.Y1.DA * 1.2) / 10,
+        trendPct: parseFloat(((currentAnchor - historical.Y1.DA) / historical.Y1.DA * 100).toFixed(2)),
+      },
+    },
+  ]
+
+  return [...cycleRows, ...historicalRows]
 }

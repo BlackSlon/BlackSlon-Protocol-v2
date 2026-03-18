@@ -1,5 +1,7 @@
 'use client'
 
+import { useMarketPanel } from '@/store/blackslon'
+
 interface Order {
   price: number;
   amount: number;
@@ -8,18 +10,19 @@ interface Order {
 
 export default function BlackSlonMatrix() {
   const monoStyle = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' };
+  const { currentPrice } = useMarketPanel();
 
-  // Symulacja danych Orderbook (Bids & Asks)
+  // Symulacja danych Orderbook (Bids & Asks) based on current price
   const asks: Order[] = [
-    { price: 10.95, amount: 150, total: 1642.50 },
-    { price: 10.82, amount: 200, total: 2164.00 },
-    { price: 10.70, amount: 80, total: 856.00 },
+    { price: currentPrice + 0.36, amount: 150, total: (currentPrice + 0.36) * 150 },
+    { price: currentPrice + 0.23, amount: 200, total: (currentPrice + 0.23) * 200 },
+    { price: currentPrice + 0.11, amount: 80, total: (currentPrice + 0.11) * 80 },
   ];
 
   const bids: Order[] = [
-    { price: 10.45, amount: 120, total: 1254.00 },
-    { price: 10.30, amount: 300, total: 3090.00 },
-    { price: 10.15, amount: 450, total: 4567.50 },
+    { price: currentPrice - 0.14, amount: 120, total: (currentPrice - 0.14) * 120 },
+    { price: currentPrice - 0.29, amount: 300, total: (currentPrice - 0.29) * 300 },
+    { price: currentPrice - 0.44, amount: 450, total: (currentPrice - 0.44) * 450 },
   ];
 
   return (
@@ -58,7 +61,7 @@ export default function BlackSlonMatrix() {
 
         {/* CURRENT PRICE DIVIDER */}
         <div className="border-y border-gray-800 py-2 my-2 bg-black flex justify-center items-center gap-4">
-          <span className="text-xl font-bold text-white font-mono" style={monoStyle}>10.59</span>
+          <span className="text-xl font-bold text-white font-mono" style={monoStyle}>{currentPrice.toFixed(2)}</span>
           <span className="text-[9px] text-green-500 font-bold uppercase tracking-tighter">▲ 0.4%</span>
         </div>
 

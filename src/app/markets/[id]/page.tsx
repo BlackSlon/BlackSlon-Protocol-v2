@@ -108,15 +108,23 @@ export default function MarketPage() {
 
       <div className="w-full max-w-[1600px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[22%_26%_20%_28%] gap-4 items-start py-2 pointer-events-auto">
         
-        {/* PANEL 1: VIRTUAL (Order Book) */}
+        {/* PANEL 1: PHYSICAL (BSTZ) */}
         <section className={`border ${mColors.isGas ? 'border-blue-500/30' : 'border-yellow-600/30'} bg-black/40 rounded-sm overflow-hidden flex flex-col`}>
+          <div className="flex items-center justify-center px-3 py-3 border-b border-gray-900/60">
+            <PanelLogo />
+          </div>
+          <PhysicalMarketPanel selectedMarketId={selectedInstrument} />
+        </section>
+
+        {/* PANEL 2: VIRTUAL (Order Book) */}
+        <section className={`border ${mColors.isGas ? 'border-blue-500/30' : 'border-yellow-600/30'} bg-black/40 rounded-sm flex flex-col`}>
           <div className="flex items-center justify-center px-3 py-3 border-b border-gray-900/60">
             <PanelLogo />
           </div>
           <VirtualMarketPanel selectedMarketId={selectedInstrument} />
         </section>
 
-        {/* PANEL 2: TRADING */}
+        {/* PANEL 3: TRADING */}
         <section className={`border ${mColors.isGas ? 'border-blue-500/30' : 'border-yellow-600/30'} bg-black/80 rounded-sm text-xs relative z-50 flex flex-col`}>
           <div className="flex items-center justify-center px-3 py-3 border-b border-gray-900/60">
             <PanelLogo />
@@ -124,20 +132,12 @@ export default function MarketPage() {
           <TradingPanel selectedMarketId={selectedInstrument} />
         </section>
 
-        {/* PANEL 3: PORTFOLIO */}
+        {/* PANEL 4: PORTFOLIO */}
         <section className="border border-amber-700/30 bg-black/40 rounded-sm text-xs flex flex-col">
           <div className="flex items-center justify-center px-3 py-3 border-b border-gray-900/60">
             <MainLogo />
           </div>
           <UserAccountPanel />
-        </section>
-
-        {/* PANEL 4: PHYSICAL (BSTZ) */}
-        <section className={`border ${mColors.isGas ? 'border-blue-500/30' : 'border-yellow-600/30'} bg-black/40 rounded-sm overflow-hidden flex flex-col`}>
-          <div className="flex items-center justify-center px-3 py-3 border-b border-gray-900/60">
-            <PanelLogo />
-          </div>
-          <PhysicalMarketPanel selectedMarketId={selectedInstrument} />
         </section>
 
       </div>

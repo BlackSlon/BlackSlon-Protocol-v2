@@ -24,8 +24,8 @@ export const useDealConfirmation = create<DealConfirmationState>((set) => ({
   clearDeal: () => set({ deal: null }),
 }))
 
-export const useMarketPanel = create<MarketPanelState>((set) => ({
-  currentPrice: 10.59,
+export const useMarketPanel = create<MarketPanelState>((set, get) => ({
+  currentPrice: 9.938, // BS-P-PL default
   activeMarketId: 'BS-P-PL',
   solvency: {
     tier: 'I',
@@ -36,7 +36,19 @@ export const useMarketPanel = create<MarketPanelState>((set) => ({
     pBsr: 2.4500,
     fuseState: 'INACTIVE',
   },
-  setMarketId: (id: MarketId) => set({ activeMarketId: id }),
+  setMarketId: (id: MarketId) => {
+    const marketPrices: Record<string, number> = {
+      'BS-G-NL': 4.43,
+      'BS-G-DE': 4.50,
+      'BS-G-PL': 4.78,
+      'BS-G-BG': 4.13,
+      'BS-P-DE': 9.121,
+      'BS-P-NO': 4.972,
+      'BS-P-PL': 9.938,
+      'BS-P-UK': 8.773,
+    }
+    set({ activeMarketId: id, currentPrice: marketPrices[id] || 10.59 })
+  },
   setCurrentPrice: (price: number) => set({ currentPrice: price }),
   setSolvency: (solvency: Partial<SolvencyState>) =>
     set((state) => ({ solvency: { ...state.solvency, ...solvency } })),
@@ -117,9 +129,20 @@ export const useVirtual = create<VirtualState>(() => ({
 // renders, so the matching engine sees the same book as the user.
 function getFullOrderBook(marketId: string) {
   const md = getMarketData(marketId as MarketId) as any
+  const marketPrices: Record<string, number> = {
+    'BS-G-NL': 4.43,
+    'BS-G-DE': 4.50,
+    'BS-G-PL': 4.78,
+    'BS-G-BG': 4.13,
+    'BS-P-DE': 9.121,
+    'BS-P-NO': 4.972,
+    'BS-P-PL': 9.938,
+    'BS-P-UK': 8.773,
+  }
   const anchor: number =
     md?.bsszPositions?.[0]?.bssz?.anchor ??
     md?.bsszCalculation?.anchor ??
+    marketPrices[marketId] ??
     10.59
 
   // Generated market-maker orders (recreated on every call, not persisted)
@@ -146,7 +169,19 @@ function getFullOrderBook(marketId: string) {
 }
 
 export const useTrading = create<TradingState>((set, get) => {
-  const anchor = 10.59
+  const marketPanel = useMarketPanel.getState()
+  const activeMarketId = marketPanel.activeMarketId || 'BS-P-PL'
+  const marketPrices: Record<string, number> = {
+    'BS-G-NL': 4.43,
+    'BS-G-DE': 4.50,
+    'BS-G-PL': 4.78,
+    'BS-G-BG': 4.13,
+    'BS-P-DE': 9.121,
+    'BS-P-NO': 4.972,
+    'BS-P-PL': 9.938,
+    'BS-P-UK': 8.773,
+  }
+  const anchor = marketPrices[activeMarketId] || 10.59
   return {
     pendingOrder: null,
     activeOrders: [],

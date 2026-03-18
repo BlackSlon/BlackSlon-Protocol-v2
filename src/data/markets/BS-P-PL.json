@@ -7,7 +7,7 @@
   "unit": "100kWh",
   "lastUpdate": "2026-03-09T13:00:00Z",
   "lastTrade": {
-    "price": 10.59,
+    "price": 9.938,
     "units": 15,
     "volume": 1500,
     "timestamp": 1741498800000
@@ -19,7 +19,7 @@
     { "date": "2026-03-05", "price": 10.61, "volume": 115000 },
     { "date": "2026-03-04", "price": 10.55, "volume": 128000 },
     { "date": "2026-03-03", "price": 10.48, "volume": 122000 },
-    { "date": "2026-03-02", "price": 10.59, "volume": 119000 },
+    { "date": "2026-03-02", "price": 9.938, "volume": 119000 },
     { "date": "2026-03-01", "price": 10.63, "volume": 127000 },
     { "date": "2026-02-28", "price": 10.51, "volume": 121000 },
     { "date": "2026-02-27", "price": 10.44, "volume": 116000 },
@@ -41,7 +41,7 @@
       "adrData": [
         {
           "date": "08.03.2026",
-          "dayAhead": 10.59,
+          "dayAhead": 9.938,
           "frontMonth": 10.65,
           "month2": 10.72,
           "frontQuarter": 10.80,
@@ -53,7 +53,7 @@
       ],
       "bssz": {
         "floor": 9.53,
-        "anchor": 10.59,
+        "anchor": 9.938,
         "ceiling": 12.71,
         "trendPct": 4.2
       }
@@ -359,7 +359,7 @@
     }
   ],
   "bsszCalculation": {
-    "anchor": 10.59,
+    "anchor": 9.938,
     "floor": 9.53,
     "ceiling": 12.71,
     "method": "20-day rolling average",

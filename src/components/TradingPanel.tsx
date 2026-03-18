@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTrading } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
+import { getCurrentCycleData } from '@/lib/marketCycle'
 import type { BSSZState } from '@/store/types'
 
 // ─── Tiering Matrix ───────────────────────────────────────────────────────────
@@ -69,16 +70,28 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   useEffect(() => {
     if (selectedMarketId) {
       try {
-        const marketData = getMarketData(selectedMarketId as any) as any
-        if (marketData?.bsszPositions?.[0]?.bssz) {
+        // Get current cycle data for this market
+        const cycleData = getCurrentCycleData(selectedMarketId)
+        if (cycleData) {
           setBssz({
-            floor: marketData.bsszPositions[0].bssz.floor,
-            ceiling: marketData.bsszPositions[0].bssz.ceiling,
+            floor: cycleData.floor / 10,
+            ceiling: cycleData.ceiling / 10,
             isLocked: false,
             lockReason: null,
           })
         } else {
-          setBssz(storeBssz)
+          // Fallback to market data
+          const marketData = getMarketData(selectedMarketId as any) as any
+          if (marketData?.bsszPositions?.[0]?.bssz) {
+            setBssz({
+              floor: marketData.bsszPositions[0].bssz.floor,
+              ceiling: marketData.bsszPositions[0].bssz.ceiling,
+              isLocked: false,
+              lockReason: null,
+            })
+          } else {
+            setBssz(storeBssz)
+          }
         }
       } catch {
         setBssz(storeBssz)
@@ -90,11 +103,19 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
   const getAnchorPrice = () => {
     try {
+      // Get current cycle data for this market
+      const cycleData = getCurrentCycleData(selectedMarketId)
+      if (cycleData) {
+        return (cycleData.anchor / 10).toFixed(2)
+      }
+      // Fallback to market data
       const md = getMarketData(selectedMarketId as any) as any
       if (md?.bsszPositions?.[0]?.bssz?.anchor) return md.bsszPositions[0].bssz.anchor.toFixed(2)
       if (md?.bsszCalculation?.anchor) return md.bsszCalculation.anchor.toFixed(2)
     } catch {}
-    return '10.59'
+    // Better fallback: check if it's a power market and use appropriate default
+    const isPower = selectedMarketId.startsWith('BS-P')
+    return isPower ? '9.50' : '3.50'
   }
 
   const [price, setPrice] = useState(getAnchorPrice())
