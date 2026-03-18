@@ -111,7 +111,7 @@ export default function MarketPanel() {
             Live Synthesis Output
           </span>
           <div className="flex items-center gap-3">
-            <span className="text-[8px] text-blue-500 font-mono animate-pulse uppercase">
+            <span className="text-[8px] text-cyan-400 font-mono animate-pulse uppercase">
               ADR Protocol Active
             </span>
             {/* H_solv live value */}

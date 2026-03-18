@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
+import { getCycleBsszPositions } from '@/lib/marketCycle'
 
 interface Props {
   selectedMarketId?: string
@@ -34,14 +35,22 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
     return () => clearInterval(interval)
   }, [])
 
-  // Resolve BSSZ data — handle both old format (BS-P-PL) and new format (BS-G-NL)
+  // Resolve BSSZ data — cycle data takes priority over static JSON
   let bsszPositions: any[] = []
   let currentAnchor = 0
   let currentFloor = 0
   let currentCeiling = 0
   let isLocked = false
 
-  if (marketData?.bsszPositions?.length > 0) {
+  const cyclePositions = getCycleBsszPositions(selectedMarketId)
+
+  if (cyclePositions && cyclePositions.length > 0) {
+    // Cycle simulation data (7-day Iran conflict event)
+    bsszPositions = cyclePositions
+    currentAnchor = cyclePositions[0].bssz.anchor
+    currentFloor = cyclePositions[0].bssz.floor
+    currentCeiling = cyclePositions[0].bssz.ceiling
+  } else if (marketData?.bsszPositions?.length > 0) {
     // New format: BS-G-NL etc.
     bsszPositions = marketData.bsszPositions
     currentAnchor = marketData.bsszPositions[0].bssz.anchor
@@ -52,7 +61,6 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
     currentAnchor = marketData.bsszCalculation.anchor
     currentFloor = marketData.bsszCalculation.floor
     currentCeiling = marketData.bsszCalculation.ceiling
-    // Create synthetic BSSZ positions from historicalData
     if (marketData.historicalData?.length > 0) {
       const labels = ['D-1','D-2','D-3','D-4','D-5','D-6','D-7','W-1','M-1','Q-1','H-1','Y-1']
       bsszPositions = marketData.historicalData.slice(0, labels.length).map((d: any, i: number, arr: any[]) => ({

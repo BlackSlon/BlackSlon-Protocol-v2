@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "description": "BlackSlon 7-day cyclic simulation based on Iran conflict event Feb 27 - Mar 10 2026",
+    "cycle_days": 7,
+    "generated": "2026-03-18",
+    "base_date": "2026-03-18",
+    "currencies": {
+      "PL": "PLN/4.25 -> EUR",
+      "UK": "GBP/0.85 -> EUR"
+    }
+  },
+  "markets": {
+    "BS-G-NL": {
+      "name": "BlackSlon Gas — Netherlands",
+      "reference": "TTF / ICE",
+      "currency": "EUR/MWh",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 31.96, "FM": 31.96, "FQ": 31.56, "Cal": 27.16, "anchor": 31.14, "floor": 28.03, "ceiling": 37.37 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 44.50, "FM": 44.50, "FQ": 43.23, "Cal": 29.10, "anchor": 31.05, "floor": 27.94, "ceiling": 37.26 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 54.29, "FM": 54.29, "FQ": 52.73, "Cal": 31.87, "anchor": 36.12, "floor": 32.51, "ceiling": 43.34 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 47.71, "FM": 48.72, "FQ": 46.92, "Cal": 35.82, "anchor": 42.99, "floor": 38.69, "ceiling": 51.59 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 49.87, "FM": 50.51, "FQ": 48.62, "Cal": 31.94, "anchor": 45.61, "floor": 41.05, "ceiling": 54.73 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 51.66, "FM": 53.32, "FQ": 52.23, "Cal": 35.82, "anchor": 46.29, "floor": 41.66, "ceiling": 55.55 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 47.40, "FM": 47.35, "FQ": 46.72, "Cal": 35.82, "anchor": 48.11, "floor": 43.30, "ceiling": 57.73 }
+      ],
+      "historical": {
+        "Q1": { "DA": 26.43, "FM": 26.43, "FQ": 26.28, "Cal": 25.58 },
+        "H1": { "DA": 31.80, "FM": 31.80, "FQ": 31.46, "Cal": 29.51 },
+        "Y1": { "DA": 34.83, "FM": 34.83, "FQ": 33.71, "Cal": 29.21 }
+      }
+    },
+    "BS-G-DE": {
+      "name": "BlackSlon Gas — Germany",
+      "reference": "THE",
+      "currency": "EUR/MWh",
+      "spread_to_TTF": 0.50,
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 32.46, "FM": 32.46, "FQ": 32.06, "Cal": 27.66, "anchor": 31.64, "floor": 28.48, "ceiling": 37.97 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 45.00, "FM": 45.00, "FQ": 43.73, "Cal": 29.60, "anchor": 31.55, "floor": 28.40, "ceiling": 37.86 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 54.79, "FM": 54.79, "FQ": 53.23, "Cal": 32.37, "anchor": 36.62, "floor": 32.96, "ceiling": 43.94 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 48.21, "FM": 49.22, "FQ": 47.42, "Cal": 36.32, "anchor": 43.49, "floor": 39.14, "ceiling": 52.19 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 50.37, "FM": 51.01, "FQ": 49.12, "Cal": 32.44, "anchor": 46.11, "floor": 41.50, "ceiling": 55.33 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 52.16, "FM": 53.82, "FQ": 52.73, "Cal": 36.32, "anchor": 46.79, "floor": 42.11, "ceiling": 56.15 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 47.90, "FM": 47.85, "FQ": 47.22, "Cal": 36.32, "anchor": 48.61, "floor": 43.75, "ceiling": 58.33 }
+      ],
+      "historical": {
+        "Q1": { "DA": 26.93, "FM": 26.93, "FQ": 26.78, "Cal": 26.08 },
+        "H1": { "DA": 32.30, "FM": 32.30, "FQ": 31.96, "Cal": 30.01 },
+        "Y1": { "DA": 35.33, "FM": 35.33, "FQ": 34.21, "Cal": 29.71 }
+      }
+    },
+    "BS-G-PL": {
+      "name": "BlackSlon Gas — Poland",
+      "reference": "TGE",
+      "currency": "EUR/MWh",
+      "note": "PLN prices divided by 4.25",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 35.72, "FM": 34.58, "FQ": 34.72, "Cal": 32.71, "anchor": 34.45, "floor": 31.01, "ceiling": 41.34 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 50.78, "FM": 48.69, "FQ": 47.29, "Cal": 35.36, "anchor": 35.12, "floor": 31.61, "ceiling": 42.14 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 60.89, "FM": 58.37, "FQ": 57.63, "Cal": 38.00, "anchor": 40.51, "floor": 36.46, "ceiling": 48.61 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 53.28, "FM": 52.16, "FQ": 51.51, "Cal": 38.99, "anchor": 47.58, "floor": 42.82, "ceiling": 57.10 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 55.07, "FM": 54.93, "FQ": 52.87, "Cal": 37.86, "anchor": 50.19, "floor": 45.17, "ceiling": 60.23 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 59.91, "FM": 59.89, "FQ": 57.26, "Cal": 40.94, "anchor": 51.22, "floor": 46.10, "ceiling": 61.46 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 50.73, "FM": 50.09, "FQ": 49.88, "Cal": 40.94, "anchor": 53.21, "floor": 47.89, "ceiling": 63.85 }
+      ],
+      "historical": {
+        "Q1": { "DA": 35.88, "FM": 35.88, "FQ": 35.04, "Cal": 31.76 },
+        "H1": { "DA": 36.42, "FM": 36.42, "FQ": 35.87, "Cal": 34.71 },
+        "Y1": { "DA": 38.54, "FM": 38.54, "FQ": 37.35, "Cal": 33.41 }
+      }
+    },
+    "BS-G-BG": {
+      "name": "BlackSlon Gas — Balkan Hub",
+      "reference": "Balkan Hub",
+      "currency": "EUR/MWh",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 31.43, "FM": 31.59, "FQ": 31.59, "Cal": 27.16, "anchor": 30.98, "floor": 27.88, "ceiling": 37.18 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 43.43, "FM": 44.50, "FQ": 39.87, "Cal": 29.10, "anchor": 31.43, "floor": 28.29, "ceiling": 37.72 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 54.29, "FM": 54.29, "FQ": 48.48, "Cal": 31.87, "anchor": 36.18, "floor": 32.56, "ceiling": 43.42 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 40.65, "FM": 40.47, "FQ": 40.47, "Cal": 35.82, "anchor": 42.87, "floor": 38.58, "ceiling": 51.44 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 35.70, "FM": 35.56, "FQ": 35.56, "Cal": 31.94, "anchor": 44.15, "floor": 39.74, "ceiling": 52.98 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 41.31, "FM": 41.28, "FQ": 41.28, "Cal": 35.82, "anchor": 40.01, "floor": 36.01, "ceiling": 48.01 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 41.31, "FM": 41.28, "FQ": 41.28, "Cal": 35.82, "anchor": 39.77, "floor": 35.79, "ceiling": 47.72 }
+      ],
+      "historical": {
+        "Q1": { "DA": 30.50, "FM": 30.50, "FQ": 30.50, "Cal": 30.50 },
+        "H1": { "DA": 30.11, "FM": 30.11, "FQ": 30.11, "Cal": 30.11 },
+        "Y1": { "DA": 29.91, "FM": 29.91, "FQ": 29.91, "Cal": 29.91 }
+      }
+    },
+    "BS-P-DE": {
+      "name": "BlackSlon Power — Germany",
+      "reference": "EEX Phelix DE",
+      "currency": "EUR/MWh",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 73.67,  "FM": 70.69,  "FQ": 79.71,  "Cal": null, "anchor": 73.20,  "floor": 65.88,  "ceiling": 87.84  },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 88.20,  "FM": 83.25,  "FQ": 81.47,  "Cal": null, "anchor": 74.05,  "floor": 66.65,  "ceiling": 88.86  },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 100.60, "FM": 95.94,  "FQ": 87.48,  "Cal": null, "anchor": 79.41,  "floor": 71.47,  "ceiling": 95.29  },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 93.03,  "FM": 88.98,  "FQ": 85.66,  "Cal": null, "anchor": 88.12,  "floor": 79.31,  "ceiling": 105.74 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 93.67,  "FM": 90.34,  "FQ": 87.93,  "Cal": null, "anchor": 93.89,  "floor": 84.50,  "ceiling": 112.67 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 95.54,  "FM": 93.33,  "FQ": 92.28,  "Cal": null, "anchor": 93.58,  "floor": 84.22,  "ceiling": 112.30 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 97.15,  "FM": 87.77,  "FQ": 92.54,  "Cal": null, "anchor": 94.20,  "floor": 84.78,  "ceiling": 113.04 }
+      ],
+      "historical": {
+        "Q1": { "DA": 73.84, "FM": 70.80, "FQ": 79.73, "Cal": null },
+        "H1": { "DA": 79.48, "FM": 75.78, "FQ": 84.00, "Cal": null },
+        "Y1": { "DA": 79.48, "FM": 75.78, "FQ": 84.00, "Cal": null }
+      }
+    },
+    "BS-P-PL": {
+      "name": "BlackSlon Power — Poland",
+      "reference": "TGE Power",
+      "currency": "EUR/MWh",
+      "note": "PLN prices divided by 4.25",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 21.48, "FM": 21.80, "FQ": 23.27, "Cal": null, "anchor": 21.98, "floor": 19.78, "ceiling": 26.38 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 22.78, "FM": 22.88, "FQ": 23.63, "Cal": null, "anchor": 21.65, "floor": 19.49, "ceiling": 25.98 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 25.22, "FM": 23.75, "FQ": 24.19, "Cal": null, "anchor": 22.19, "floor": 19.97, "ceiling": 26.63 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 23.17, "FM": 23.32, "FQ": 22.92, "Cal": null, "anchor": 23.22, "floor": 20.90, "ceiling": 27.86 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 23.15, "FM": 22.96, "FQ": 22.93, "Cal": null, "anchor": 23.88, "floor": 21.49, "ceiling": 28.66 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 23.26, "FM": 23.27, "FQ": 21.72, "Cal": null, "anchor": 23.40, "floor": 21.06, "ceiling": 28.08 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 22.87, "FM": 19.95, "FQ": 21.77, "Cal": null, "anchor": 23.29, "floor": 20.96, "ceiling": 27.95 }
+      ],
+      "historical": {
+        "Q1": { "DA": 21.90, "FM": 22.00, "FQ": 22.87, "Cal": null },
+        "H1": { "DA": 23.24, "FM": 23.25, "FQ": 23.79, "Cal": null },
+        "Y1": { "DA": 23.49, "FM": 23.49, "FQ": 23.97, "Cal": null }
+      }
+    },
+    "BS-P-NO": {
+      "name": "BlackSlon Power — Nordic",
+      "reference": "Nasdaq Commodities Nordic",
+      "currency": "EUR/MWh",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 66.26, "FM": 49.85, "FQ": 41.88, "Cal": null, "anchor": 51.96, "floor": 46.76, "ceiling": 62.35 },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 70.91, "FM": 53.45, "FQ": 42.75, "Cal": null, "anchor": 52.43, "floor": 47.19, "ceiling": 62.92 },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 76.72, "FM": 57.91, "FQ": 44.05, "Cal": null, "anchor": 54.68, "floor": 49.21, "ceiling": 65.62 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 71.90, "FM": 54.00, "FQ": 42.94, "Cal": null, "anchor": 57.97, "floor": 52.17, "ceiling": 69.56 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 68.51, "FM": 52.46, "FQ": 42.69, "Cal": null, "anchor": 59.44, "floor": 53.50, "ceiling": 71.33 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 67.00, "FM": 52.57, "FQ": 43.60, "Cal": null, "anchor": 58.99, "floor": 53.09, "ceiling": 70.79 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 66.74, "FM": 52.30, "FQ": 43.60, "Cal": null, "anchor": 58.61, "floor": 52.75, "ceiling": 70.33 }
+      ],
+      "historical": {
+        "Q1": { "DA": 66.26, "FM": 49.85, "FQ": 42.20, "Cal": null },
+        "H1": { "DA": 69.60, "FM": 52.03, "FQ": 42.90, "Cal": null },
+        "Y1": { "DA": 69.60, "FM": 52.03, "FQ": 42.90, "Cal": null }
+      }
+    },
+    "BS-P-UK": {
+      "name": "BlackSlon Power — United Kingdom",
+      "reference": "N2EX / Elexon",
+      "currency": "EUR/MWh",
+      "note": "GBP prices divided by 0.85",
+      "cycle": [
+        { "day": 1, "date_ref": "2026-02-27", "label": "D-10", "DA": 83.49,  "FM": 82.19,  "FQ": 77.61,  "Cal": null, "anchor": 80.12,  "floor": 72.11,  "ceiling": 96.14  },
+        { "day": 2, "date_ref": "2026-03-02", "label": "D-9",  "DA": 108.08, "FM": 124.24, "FQ": 118.10, "Cal": null, "anchor": 80.98,  "floor": 72.88,  "ceiling": 97.18  },
+        { "day": 3, "date_ref": "2026-03-03", "label": "D-8",  "DA": 129.26, "FM": 124.56, "FQ": 121.06, "Cal": null, "anchor": 91.78,  "floor": 82.60,  "ceiling": 110.14 },
+        { "day": 4, "date_ref": "2026-03-04", "label": "D-7",  "DA": 117.00, "FM": 115.08, "FQ": 112.05, "Cal": null, "anchor": 107.02, "floor": 96.32,  "ceiling": 128.42 },
+        { "day": 5, "date_ref": "2026-03-05", "label": "D-6",  "DA": 120.26, "FM": 114.35, "FQ": 114.39, "Cal": null, "anchor": 118.71, "floor": 106.84, "ceiling": 142.45 },
+        { "day": 6, "date_ref": "2026-03-06", "label": "D-5",  "DA": 119.69, "FM": 117.29, "FQ": 97.06,  "Cal": null, "anchor": 119.55, "floor": 107.60, "ceiling": 143.46 },
+        { "day": 7, "date_ref": "2026-03-09", "label": "D-4",  "DA": 107.88, "FM": 106.47, "FQ": 91.18,  "Cal": null, "anchor": 119.05, "floor": 107.15, "ceiling": 142.86 }
+      ],
+      "historical": {
+        "Q1": { "DA": 81.70, "FM": 79.58, "FQ": 77.65, "Cal": null },
+        "H1": { "DA": 88.09, "FM": 86.14, "FQ": 82.57, "Cal": null },
+        "Y1": { "DA": 88.09, "FM": 86.14, "FQ": 82.57, "Cal": null }
+      }
+    }
+  }
+}

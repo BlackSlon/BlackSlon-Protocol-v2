@@ -103,8 +103,8 @@ export default function MarketsPage() {
       {/* ── Coming Soon — Gas ── */}
       <div className="max-w-5xl mx-auto mb-12">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 opacity-40 shrink-0" />
-          <span className="text-[7px] text-blue-500 uppercase tracking-[0.35em] shrink-0">Gas Markets</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-40 shrink-0" />
+          <span className="text-[7px] text-cyan-400 uppercase tracking-[0.35em] shrink-0">Gas Markets</span>
           <div className="flex-1 border-t border-gray-900" />
           <span className="text-[7px] text-gray-800 shrink-0">{dormantGas.length}</span>
         </div>
