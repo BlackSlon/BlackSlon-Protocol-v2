@@ -132,7 +132,7 @@ export default function MarketsPage() {
       {/* ── Documentation Links ── */}
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-5xl mx-auto mb-16">
         <Link href="/whitepaper">
-          <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer border border-gray-800 rounded-lg">
+          <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer border border-gray-800 rounded-lg h-48 w-full flex flex-col justify-center">
             <div className="w-20 h-20 mx-auto mb-3">
               <Image src="/BS_image.jpg" alt="Whitepaper" width={80} height={80} />
             </div>
@@ -141,7 +141,7 @@ export default function MarketsPage() {
           </div>
         </Link>
         <Link href="/executive-summary">
-          <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer border border-gray-800 rounded-lg">
+          <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer border border-gray-800 rounded-lg h-48 w-full flex flex-col justify-center">
             <div className="w-20 h-20 mx-auto mb-3">
               <Image src="/BS_image.jpg" alt="Executive Summary" width={80} height={80} />
             </div>
