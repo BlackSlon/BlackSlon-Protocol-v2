@@ -136,7 +136,7 @@ export default function MarketsPage() {
             <div className="w-20 h-20 mx-auto mb-3">
               <Image src="/BS_image.jpg" alt="Whitepaper" width={80} height={80} />
             </div>
-            <p className="text-white text-sm font-semibold">White Paper</p>
+            <p className="text-amber-600 text-sm font-semibold">White Paper</p>
             <p className="text-gray-400 text-[10px] opacity-80">Protocol Documentation</p>
           </div>
         </Link>
@@ -145,7 +145,7 @@ export default function MarketsPage() {
             <div className="w-20 h-20 mx-auto mb-3">
               <Image src="/BS_image.jpg" alt="Executive Summary" width={80} height={80} />
             </div>
-            <p className="text-white text-sm font-semibold">Executive Summary</p>
+            <p className="text-amber-600 text-sm font-semibold">Executive Summary</p>
             <p className="text-gray-400 text-[10px] opacity-80">Project Overview</p>
           </div>
         </Link>

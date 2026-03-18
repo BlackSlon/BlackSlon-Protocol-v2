@@ -60,6 +60,13 @@ html, body {
   line-height: 1.4 !important;
 }
 
+
+
+/* Remove bold from all headings */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  font-weight: normal !important;
+}
+
 /* Table styles for markdown */
 .prose table {
   width: 100%;

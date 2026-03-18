@@ -17,10 +17,10 @@ export default function WhitepaperPage() {
         <div className="mb-40">
           <div className="flex justify-center mb-16">
             <a href="/" className="cursor-pointer">
-              <img src="/BS_image.jpg" alt="BlackSlon" className="h-48 w-auto hover:opacity-80 transition-opacity" />
+              <img src="/BS_image.jpg" alt="BlackSlon" className="h-60 w-auto hover:opacity-80 transition-opacity" />
             </a>
           </div>
-          <h1 className="text-4xl font-bold mb-6 text-amber-600 text-center">BlackSlon - White Paper</h1>
+          <h1 className="text-4xl mb-6 text-amber-600 text-center">BlackSlon - White Paper</h1>
           <p className="text-gray-400 text-center">Protocol Documentation & Technical Specifications</p>
         </div>
 
