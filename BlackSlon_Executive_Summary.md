@@ -28,7 +28,9 @@ BlackSlon is the first decentralised protocol built specifically for European wh
 
 **Smart Incremental Liquidation** — Positions are reduced in 10% increments, never closed in full. The protocol is designed to give correct positions the time they need to mature — not eliminate participants at the moment of maximum stress.
 
-**Physical Liquidity Providers (PLPs)** — Licensed European energy trading entities with direct access to local/national/regional markets. The virtual-physical bridge from Day 1. Phase 2: BS-P/G tokens redeemable for physical energy delivery.
+**Physical Liquidity Providers (PLPs)** — Licensed European energy trading entities with direct access to local/national/regional markets. Structural upward trends in European energy drive most participants to accumulate (buy) BS-P/G tokens, creating a persistent market imbalance. For sophisticated PLPs, this imbalance offers an opportunity to harvest roll yield by providing short-side liquidity. Rather than betting against prices, PLPs earn systematic returns as the ADR mechanism rolls expiring contracts into cheaper long-dated ones capitalizing on the structural backwardation that has dominated European gas and power markets. Current market conditions offer a 3–5% monthly roll decay in gas and an additional 23% in power across the Cal27 to Cal29 horizon. This positions liquidity provision as a structural yield-generation strategy rather than pure price speculation.This yield is further amplified during systemic shocks. 
+
+In the event of sudden geopolitical disruptions, since the onset of the conflict in Iran in 2026, the spread between the front-end and the long-dated curve widens aggressively. In these moments of maximum dislocation, the ADR mechanism captures the widening spread, accelerating roll decay and transforming extreme market volatility into unprecedented yield for liquidity providers.
 
 ---
 

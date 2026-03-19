@@ -188,122 +188,83 @@ export default function UserAccountPanel() {
 
         {/* ── Section: User's Portfolio Risk Management ── */}
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold">
-              User's Portfolio Risk Management
-            </div>
-            <span className="text-[7px] text-gray-500 uppercase tracking-widest">(User Level)</span>
+          <div className="text-[9px] tracking-widest text-amber-700 font-bold mb-1">
+            User's Portfolio Risk Management
           </div>
 
-          {/* H_user value + zone */}
-          <div className="flex justify-between items-center mb-2">
-            <div>
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">
-                H-Factor (H<sub>user</sub>)
-              </div>
-              <div className="text-sm font-normal tracking-tighter" style={{ color: healthZone.color }}>
+          {/* H_user value + zone - compact */}
+          <div className="flex justify-between items-center mb-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[7px] text-gray-600 uppercase">H-Factor</span>
+              <span className="text-sm font-normal tracking-tighter" style={{ color: healthZone.color }}>
                 {hFactor.toFixed(3)}
-              </div>
+              </span>
             </div>
-            <div className="text-right">
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Health Zone</div>
-              <div
-                className={`text-[11px] font-black tracking-widest ${
-                  healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
-                }`}
-                style={{ color: healthZone.color }}
-              >
-                {healthZone.label}
-              </div>
+            <div
+              className={`text-[10px] font-black tracking-widest ${
+                healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
+              }`}
+              style={{ color: healthZone.color }}
+            >
+              {healthZone.label}
             </div>
           </div>
 
-          {/* Progress bar - mapped from H_user range 0.90–1.30 */}
-          <div className="flex justify-between text-[7px] text-gray-500 mb-0.5">
-            <span>0.90</span>
-            <span className="text-gray-800">|1.00</span>
-            <span className="text-gray-800">|1.05</span>
-            <span className="text-gray-800">|1.10</span>
-            <span>1.30</span>
-          </div>
-          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800">
+          {/* Compact progress bar */}
+          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800 mb-0.5">
             <div
               className="h-full rounded-full transition-all duration-1000 ease-out"
               style={{
                 width: `${Math.min(100, Math.max(0, ((hFactor - 0.90) / (1.30 - 0.90)) * 100))}%`,
                 background: healthZone.color,
-                boxShadow: `0 0 8px ${healthZone.color}`,
+                boxShadow: `0 0 6px ${healthZone.color}`,
               }}
             />
           </div>
-
-          {/* Zone labels below bar */}
-          <div className="grid grid-cols-4 gap-0.5 mt-1">
-            {[
-              { zone: 'SAFE',         threshold: 'H > 1.10', color: '#22c55e' },
-              { zone: 'WARNING',      threshold: '1.05 < H ≤ 1.10', color: '#eab308' },
-              { zone: 'RESTRICTED',   threshold: '1.00 < H ≤ 1.05', color: '#f97316' },
-              { zone: 'INTERVENTION', threshold: 'H ≤ 1.00', color: '#ef4444' },
-            ].map((z) => (
-              <div
-                key={z.zone}
-                className="text-center px-1 py-0.5 rounded-sm border"
-                style={{
-                  borderColor: healthZone.label === z.zone ? z.color : 'rgba(55,65,81,0.4)',
-                  background: healthZone.label === z.zone ? `${z.color}15` : 'transparent',
-                }}
-              >
-                <div className="text-[6px] uppercase tracking-widest" style={{ color: z.color }}>
-                  {z.zone}
-                </div>
-                <div className="text-[9px] text-gray-300 leading-tight font-semibold">{z.threshold}</div>
-              </div>
-            ))}
+          <div className="flex justify-between text-[6px] text-gray-600">
+            <span>0.90</span>
+            <span>1.00</span>
+            <span>1.10</span>
+            <span>1.30</span>
           </div>
         </div>
 
-        {/* ── Section: Ecosystem Solvency (Protocol Level) ── */}
+        {/* ── Section: BlackSlon Ecosystem Solvency Index ── */}
         <div>
-          {/* H_solv value + tier */}
-          <div className="flex justify-between items-center mb-2">
-            <div>
-              <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-0.5">
-                Hsolv Index
-              </div>
-              <div className="text-sm font-normal tracking-tighter" style={{ color: activeTier.color }}>
+          <div className="text-[9px] tracking-widest text-amber-700 font-bold mb-1">
+            BlackSlon Ecosystem Solvency Index
+          </div>
+
+          {/* H_solv value + tier - compact */}
+          <div className="flex justify-between items-center mb-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[7px] text-gray-600 uppercase">H<sub>solv</sub></span>
+              <span className="text-sm font-normal tracking-tighter" style={{ color: activeTier.color }}>
                 {hSolv.toFixed(3)}
-              </div>
+              </span>
             </div>
-            <div className="text-right">
-              <div className="text-[8px] text-gray-600 uppercase tracking-widest mb-0.5">Solvency Tier</div>
-              <div className="text-[11px] font-black tracking-widest" style={{ color: activeTier.color }}>
-                Tier {activeTier.tier} — {activeTier.label}
-              </div>
+            <div className="text-[10px] font-black tracking-widest" style={{ color: activeTier.color }}>
+              Tier {activeTier.tier} — {activeTier.label}
             </div>
           </div>
 
-          {/* Progress bar — mapped from H_solv range 0.90–1.30 */}
-          <div className="flex justify-between text-[7px] text-gray-500 mb-0.5">
-            <span>0.90</span>
-            <span className="text-gray-800">|1.00</span>
-            <span className="text-gray-800">|1.05</span>
-            <span className="text-gray-800">|1.15</span>
-            <span>1.30</span>
-          </div>
-          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800">
+          {/* Compact progress bar */}
+          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800 mb-0.5">
             <div
               className="h-full rounded-full transition-all duration-1000 ease-out"
               style={{
                 width: `${solvPct}%`,
                 background: `linear-gradient(90deg, ${activeTier.color}80, ${activeTier.color})`,
-                boxShadow: `0 0 8px ${activeTier.glow}`,
+                boxShadow: `0 0 6px ${activeTier.glow}`,
               }}
             />
           </div>
-          <div className="text-center text-[7px] text-gray-500 mt-1">
-            Ultra-solvent — all operations permitted
+          <div className="flex justify-between text-[6px] text-gray-600">
+            <span>0.90</span>
+            <span>1.00</span>
+            <span>1.15</span>
+            <span>1.30</span>
           </div>
-
         </div>
 
         {/* ── Section: BSR Reserve & Exchange ── */}

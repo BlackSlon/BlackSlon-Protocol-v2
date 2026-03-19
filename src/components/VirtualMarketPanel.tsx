@@ -69,7 +69,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
     omega: OMEGA,
     pRvwap,
     anchor,
-    history: generateBSEIHistory(It), // history based on computed It, not raw anchor
+    history: generateBSEIHistory(It, selectedMarketId), // history based on computed It, not raw anchor
   }
 
   const displayLiquidity = generateLiquiditySnapshots()
@@ -81,10 +81,11 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
 
       {/* ── Header ── */}
-      <div className="w-full pt-1 pb-1 flex items-center justify-center shrink-0">
+      <div className="w-full pt-1 pb-1 flex flex-col items-center shrink-0">
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
           Virtual Market Panel
         </div>
+        <div className="w-[80%] border-b border-gray-800 mt-2" />
       </div>
 
       {/* ── Order Book title ── */}
@@ -244,9 +245,6 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
             <span className={`text-[10px] uppercase tracking-widest ${colors.label}`}>
               {displayMarketId}
             </span>
-            <span className="text-[8px] text-gray-500 ml-auto">
-              ω = {displayBsei.omega.toFixed(2)}
-            </span>
           </div>
           <div className="flex justify-between items-center font-mono overflow-hidden">
             {displayBsei.history.map((snap, i) => (
@@ -269,27 +267,6 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
             ))}
           </div>
 
-          {/* I_t breakdown: physical meridian vs R-VWAP */}
-          <div className="mt-2 flex items-center gap-3 text-[8px] text-gray-500">
-            <span>
-              I<sub>t</sub>: <span className="text-gray-400">{displayBsei.It.toFixed(4)}</span>
-            </span>
-            <span className="text-gray-800">·</span>
-            <span>P<sub>RVWAP</sub>: <span className="text-gray-500">{displayBsei.pRvwap.toFixed(4)}</span></span>
-            <span className="text-gray-800">·</span>
-            <span>Anchor (a): <span className="text-gray-500">{displayBsei.anchor.toFixed(4)}</span></span>
-            <span className="text-gray-800">·</span>
-            <span>
-              Spread:{' '}
-              <span className={
-                Math.abs(displayBsei.It - displayBsei.anchor) / displayBsei.anchor > 0.02
-                  ? 'text-amber-700'
-                  : 'text-gray-500'
-              }>
-                {((displayBsei.It - displayBsei.anchor) / displayBsei.anchor * 100).toFixed(3)}%
-              </span>
-            </span>
-          </div>
         </div>
 
         {/* ── Liquidity ── */}

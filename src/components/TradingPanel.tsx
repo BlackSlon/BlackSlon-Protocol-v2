@@ -264,15 +264,19 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
           <button
             onClick={() => setSide('BUY')}
             disabled={isBlocked}
-            className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
-              side === 'BUY' ? 'border-green-700 bg-green-700/10 text-green-700' : 'border-gray-900 text-gray-500'
+            className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all duration-200 rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
+              side === 'BUY' 
+                ? 'border-green-700 bg-green-700/10 text-green-700' 
+                : 'border-gray-900 text-gray-500 hover:border-green-500 hover:bg-green-500/20 hover:text-green-400 hover:shadow-green-500/20'
             }`}
           >BUY</button>
           <button
             onClick={() => setSide('SELL')}
             disabled={isBlocked}
-            className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
-              side === 'SELL' ? 'border-red-600 bg-red-600/10 text-red-500' : 'border-gray-900 text-gray-500'
+            className={`flex-1 py-1.5 border font-normal uppercase tracking-widest text-[9px] transition-all duration-200 rounded-sm disabled:opacity-30 disabled:cursor-not-allowed ${
+              side === 'SELL' 
+                ? 'border-red-600 bg-red-600/10 text-red-500' 
+                : 'border-gray-900 text-gray-500 hover:border-red-500 hover:bg-red-500/20 hover:text-red-400 hover:shadow-red-500/20'
             }`}
           >SELL</button>
         </div>

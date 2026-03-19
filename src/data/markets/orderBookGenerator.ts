@@ -33,16 +33,109 @@ export function generateOrderBook(anchor: number, marketId: string): { bids: Ord
 }
 
 /**
- * Generates BSEI history snapshots based on anchor price
+ * Generates BSEI history snapshots based on anchor price and market-specific BSSZ
  */
-export function generateBSEIHistory(anchor: number) {
+export function generateBSEIHistory(anchor: number, marketId: string) {
+  // Market-specific BSSZ data - using day-specific ranges from hardcoded data
+  const bsszData: Record<string, Array<{ floor: number; cap: number }>> = {
+    'BS-G-NL': [
+      { floor: 4.53, cap: 6.04 }, // D-1
+      { floor: 4.37, cap: 5.82 }, // D-2
+      { floor: 4.08, cap: 5.44 }, // D-3
+      { floor: 4.04, cap: 5.39 }, // D-4
+      { floor: 4.35, cap: 5.80 }, // D-5
+      { floor: 3.63, cap: 4.84 }, // D-6
+      { floor: 2.76, cap: 3.68 }, // W-1
+    ],
+    'BS-G-DE': [
+      { floor: 4.59, cap: 6.12 }, // D-1
+      { floor: 4.42, cap: 5.89 }, // D-2
+      { floor: 4.12, cap: 5.49 }, // D-3
+      { floor: 4.09, cap: 5.45 }, // D-4
+      { floor: 4.39, cap: 5.86 }, // D-5
+      { floor: 3.67, cap: 4.90 }, // D-6
+      { floor: 2.81, cap: 3.74 }, // W-1
+    ],
+    'BS-G-PL': [
+      { floor: 5.03, cap: 6.70 }, // D-1
+      { floor: 4.91, cap: 6.54 }, // D-2
+      { floor: 4.52, cap: 6.02 }, // D-3
+      { floor: 4.39, cap: 5.86 }, // D-4
+      { floor: 4.80, cap: 6.40 }, // D-5
+      { floor: 4.07, cap: 5.42 }, // D-6
+      { floor: 3.09, cap: 4.12 }, // W-1
+    ],
+    'BS-G-BG': [
+      { floor: 3.35, cap: 4.46 }, // D-1
+      { floor: 3.20, cap: 4.27 }, // D-2
+      { floor: 3.33, cap: 4.44 }, // D-3
+      { floor: 3.64, cap: 4.86 }, // D-4
+      { floor: 3.56, cap: 4.75 }, // D-5
+      { floor: 2.84, cap: 3.79 }, // D-6
+      { floor: 2.52, cap: 3.36 }, // W-1
+    ],
+    'BS-P-DE': [
+      { floor: 8.205, cap: 10.940 }, // D-1
+      { floor: 8.173, cap: 10.897 }, // D-2
+      { floor: 8.074, cap: 10.765 }, // D-3
+      { floor: 7.886, cap: 10.514 }, // D-4
+      { floor: 7.711, cap: 10.281 }, // D-5
+      { floor: 7.132, cap: 9.510 }, // D-6
+      { floor: 6.806, cap: 9.075 }, // W-1
+    ],
+    'BS-P-NO': [
+      { floor: 5.731, cap: 7.642 }, // D-1
+      { floor: 5.598, cap: 7.464 }, // D-2
+      { floor: 5.595, cap: 7.460 }, // D-3
+      { floor: 5.720, cap: 7.627 }, // D-4
+      { floor: 5.825, cap: 7.766 }, // D-5
+      { floor: 5.724, cap: 7.632 }, // D-6
+      { floor: 5.583, cap: 7.444 }, // W-1
+    ],
+    'BS-P-PL': [
+      { floor: 8.957, cap: 11.943 }, // D-1
+      { floor: 8.860, cap: 11.813 }, // D-2
+      { floor: 8.960, cap: 11.946 }, // D-3
+      { floor: 8.981, cap: 11.975 }, // D-4
+      { floor: 9.045, cap: 12.060 }, // D-5
+      { floor: 8.723, cap: 11.630 }, // D-6
+      { floor: 8.599, cap: 11.465 }, // W-1
+    ],
+    'BS-P-UK': [
+      { floor: 8.146, cap: 10.861 }, // D-1
+      { floor: 7.809, cap: 10.412 }, // D-2
+      { floor: 7.489, cap: 9.985 }, // D-3
+      { floor: 7.444, cap: 9.925 }, // D-4
+      { floor: 6.958, cap: 9.277 }, // D-5
+      { floor: 6.947, cap: 9.263 }, // D-6
+      { floor: 6.106, cap: 8.141 }, // W-1
+    ],
+  }
+  
+  const dayRanges = bsszData[marketId] || Array(7).fill({ floor: anchor * 0.9, cap: anchor * 1.2 })
+  
+  // Generate values within each day's BSSZ range with smaller, realistic changes
+  // V-RWAP concept: values roll with 50/25/25 weighting, so changes are gradual
+  const generateValue = (dayIndex: number) => {
+    const range = dayRanges[dayIndex]
+    const mid = (range.floor + range.cap) / 2
+    const variance = (range.cap - range.floor) * 0.15 // 15% variance from midpoint
+    return mid + (Math.random() - 0.5) * variance
+  }
+  
+  const smallTrend = () => {
+    const trends = [0.8, 1.2, -0.5, -1.1, 1.5, -0.9, 0.3]
+    return trends[Math.floor(Math.random() * trends.length)]
+  }
+  
   return [
-    { label: 'D-1', value: anchor, changePct: 4.2 },
-    { label: 'W-1', value: anchor * 1.012, changePct: 3.1 },
-    { label: 'M-1', value: anchor * 1.025, changePct: 2.4 },
-    { label: 'Q-1', value: anchor * 1.034, changePct: 1.8 },
-    { label: 'H-1', value: anchor * 1.041, changePct: 1.2 },
-    { label: 'Y-1', value: anchor * 0.932, changePct: 5.8 },
+    { label: 'D-1', value: generateValue(0), changePct: smallTrend() },
+    { label: 'D-2', value: generateValue(1), changePct: smallTrend() },
+    { label: 'D-3', value: generateValue(2), changePct: smallTrend() },
+    { label: 'D-4', value: generateValue(3), changePct: smallTrend() },
+    { label: 'D-5', value: generateValue(4), changePct: smallTrend() },
+    { label: 'D-6', value: generateValue(5), changePct: smallTrend() },
+    { label: 'W-1', value: generateValue(6), changePct: smallTrend() },
   ]
 }
 
@@ -52,10 +145,11 @@ export function generateBSEIHistory(anchor: number) {
 export function generateLiquiditySnapshots() {
   return [
     { label: 'D-1', value: 1245 },
+    { label: 'D-2', value: 2380 },
+    { label: 'D-3', value: 3520 },
+    { label: 'D-4', value: 4890 },
+    { label: 'D-5', value: 6150 },
+    { label: 'D-6', value: 7420 },
     { label: 'W-1', value: 8715 },
-    { label: 'M-1', value: 37440 },
-    { label: 'Q-1', value: 112320 },
-    { label: 'H-1', value: 224640 },
-    { label: 'Y-1', value: 449280 },
   ]
 }
