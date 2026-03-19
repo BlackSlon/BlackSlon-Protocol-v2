@@ -1,0 +1,42 @@
+/* Fix KaTeX formula rendering */
+.katex {
+  font-size: 1em !important;
+  line-height: 1.5 !important;
+}
+
+.katex-display {
+  font-size: 1.1em !important;
+  margin: 1.2em 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Fix subscripts and superscripts */
+.katex .msupsub {
+  font-size: 0.7em !important;
+}
+
+/* Fix fraction rendering */
+.katex .mfrac {
+  font-size: 0.95em !important;
+}
+
+/* Fix spacing */
+.katex .mspace {
+  margin: 0 0.1em !important;
+}
+
+/* Fix letter spacing */
+.katex .mord {
+  letter-spacing: normal !important;
+}
+
+/* Fix italic variables */
+.katex .mathdefault {
+  font-style: italic;
+}
+
+/* Improve overall readability */
+.katex .base {
+  line-height: 1.4 !important;
+}
