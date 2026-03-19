@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useVirtual } from '@/store/blackslon'
+import { useBotOrders } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { generateOrderBook, generateBSEIHistory, generateLiquiditySnapshots } from '@/data/markets/orderBookGenerator'
 import { getMarketColors } from '@/lib/marketColors'
@@ -27,6 +28,7 @@ interface Props {
 
 export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props) {
   const storeData = useVirtual()
+  const { botOrders } = useBotOrders()
   const colors = getMarketColors(selectedMarketId)
 
   // Get current cycle data for this specific market
@@ -49,8 +51,25 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const userBids = storeData.orderBook.bids.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
   const userAsks = storeData.orderBook.asks.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
 
-  const displayBids = [...generated.bids, ...userBids].sort((a, b) => b.price - a.price)
-  const displayAsks = [...generated.asks, ...userAsks].sort((a, b) => a.price - b.price)
+  // Add bot orders
+  const botBids = (botOrders[selectedMarketId] ?? []).filter(o => o.side === 'BUY').map(o => ({ 
+    id: o.id, 
+    price: o.price, 
+    volume: o.quantity, 
+    units: Math.ceil(o.quantity / 100),
+    ownedByUser: false 
+  }))
+  const botAsks = (botOrders[selectedMarketId] ?? []).filter(o => o.side === 'SELL').map(o => ({ 
+    id: o.id, 
+    price: o.price, 
+    volume: o.quantity, 
+    units: Math.ceil(o.quantity / 100),
+    ownedByUser: false 
+  }))
+
+  // Merge all orders and sort
+  const finalBids = [...generated.bids, ...userBids, ...botBids].sort((a,b) => b.price - a.price).slice(0,5)
+  const finalAsks = [...generated.asks, ...userAsks, ...botAsks].sort((a,b) => a.price - b.price).slice(0,5)
 
   // Get market-specific last trade
   const marketLastTrade = storeData.orderBook.lastTradeByMarket?.[selectedMarketId as MarketId]
@@ -75,7 +94,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const displayLiquidity = generateLiquiditySnapshots()
   const displayMarketId = selectedMarketId
 
-  const { bids, asks, lastTrade } = { bids: displayBids, asks: displayAsks, lastTrade: displayLastTrade }
+  const { bids, asks, lastTrade } = { bids: finalBids, asks: finalAsks, lastTrade: displayLastTrade }
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">

@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react'
 import { BotManager, type TradeEvent, type BotOrder } from '@/lib/tradingBots'
 import { useTradeHistory } from '@/components/TradeActivityFeed'
 import { useDemoUser } from '@/components/DemoLogin'
+import { useBotOrders } from '@/store/blackslon'
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
@@ -14,8 +15,8 @@ export function useDemoMode() {
   const { user, isLoggedIn, login, reset, updateBalance } = useDemoUser()
   const { trades, addTrade, clearTrades } = useTradeHistory(300)
 
-  // Zustand store actions - disabled
-  const setBotOrders = (marketId: string, orders: any[]) => {}
+  // Zustand store actions
+  const { setBotOrders } = useBotOrders()
   const setMarketPrice = (marketId: string, price: number) => {}
 
   const botManagerRef = useRef<BotManager | null>(null)

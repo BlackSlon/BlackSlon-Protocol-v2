@@ -6,9 +6,10 @@ import VirtualMarketPanel from "@/components/VirtualMarketPanel"
 import TradingPanel from "@/components/TradingPanel"
 import UserAccountPanel from "@/components/UserAccountPanel"
 import DealConfirmationOverlay from "@/components/DealConfirmationOverlay"
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { getMarketColors } from '@/lib/marketColors'
+import { useDemoMode } from '@/hooks/useDemoMode'
 
 const activeMarkets = [
   { id: 'BS-P-DE', name: 'BlackSlon Power — Germany' },
@@ -19,7 +20,7 @@ const activeMarkets = [
   { id: 'BS-G-DE', name: 'BlackSlon Gas — Germany' },
   { id: 'BS-G-PL', name: 'BlackSlon Gas — Poland' },
   { id: 'BS-G-BG', name: 'BlackSlon Gas — Bulgaria' },
-  ]
+]
 const dormantMarkets = [
   { id: 'BS-P-FR', name: 'BlackSlon Power — France' },
   { id: 'BS-P-IT', name: 'BlackSlon Power — Italy' },
@@ -34,16 +35,17 @@ const dormantMarkets = [
 
 export default function MarketPage() {
   const params = useParams()
+  const router = useRouter()
   const id = params?.id as string
   const [selectedInstrument, setSelectedInstrument] = useState(id || 'BS-P-PL')
   const mColors = getMarketColors(selectedInstrument)
 
-  // Synchronizuj wybrany instrument z URL tylko przy starcie
+  // Synchronizuj wybrany instrument z URL przy każdej zmianie trasy
   useEffect(() => {
-    if (id && selectedInstrument === 'BS-P-PL') {
+    if (id && selectedInstrument !== id) {
       setSelectedInstrument(id)
     }
-  }, [id])
+  }, [id, selectedInstrument])
 
   const PanelLogo = () => {
     let logoSrc = "/BS_image.jpg"
@@ -83,7 +85,10 @@ export default function MarketPage() {
             return (
               <button
                 key={inst.id}
-                onClick={() => setSelectedInstrument(inst.id)}
+                onClick={() => {
+                  setSelectedInstrument(inst.id)
+                  router.push(`/markets/${inst.id}`)
+                }}
                 className={`text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-sm border transition-all ${
                   ic.isGas
                     ? isActive

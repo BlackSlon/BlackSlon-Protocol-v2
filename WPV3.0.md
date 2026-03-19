@@ -245,13 +245,15 @@ Malewicz did not simplify painting. He stripped it to its irreducible essence �
 
 ## 6. Founder's Heritage
 
-BlackSlon was built by an energy trader who spent decades inside the system that BlackSlon is now replacing.
+BlackSlon was not built in a venture capital office. It was built by me - energy trader who spent 2 decades inside the system that BlackSlon is now replacing.
 
-Forged in the **post-Soviet energy frontier** — Central-Eastern Europe (CEE), a landscape defined by tectonic shifts. The dissolution of the Soviet Union, the reunification of Germany, the collapse of Yugoslavia, the War in Ukraine. A region where legacy systems collapse under pressure — repeatedly, predictably, and always at the worst possible moment.
+I emerged from the **post-Soviet energy frontier** — Central - Eastern Europe (CEE), a landscape defined by tectonic shifts. In the span of a few decades, I witnessed the dissolution of the Soviet Union and Czechoslovakia, the reunification of Germany, the collapse of Yugoslavia, and the War in Ukraine. This is not a region where stability is taken for granted. It is a region where legacy systems collapse under pressure.
 
-Trading Natural Gas, Power, Crude Oil, Refined Products, Carbon Emissions Allowances, Green Certificates, and complex cross-commodity spreads — as Trader, Originator, Partner, and CEO in tier-one global trading houses. Operations on ICE, EEX, EPEX Spot and TGE. Navigating the chronic illiquidity of CEE markets and the deep liquidity of North-Western Europe (NWE).
+I have traded Natural Gas, Power, Oil Refined Products, Carbon Emissions Allowances, Green Certificates, and complex cross-commodity spreads — as Trader, Originator, Partner, and CEO in tier-one global trading houses. I have operated on ICE, EEX, EPEX Spot and TGE. For years, I was one of the largest natural gas suppliers from the European Union to Ukraine. I have navigated the chronic illiquidity of CEE/SEE markets and the deep liquidity of North-Western Europe (NWE) to capture the profound anomalies that exist in the space between them.
 
-Most critically: operating in the frontier markets of Eastern Europe **before digital benchmarks or centralised exchanges existed**. That era taught what no Bloomberg terminal can: how markets really work when the infrastructure fails, the regulator intervenes, and the counterparty disappears.
+Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. Two decades ago, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system—fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.
+
+That intelligence — boots-on-the-ground, relationship-driven, battle-tested across 20 years of European energy transformation — is the edge that no algorithm alone can replicate. And it is the foundation upon which BlackSlon's protocol is built.
 
 **Energy as the Base Currency of Macro Arbitrage**
 
@@ -271,7 +273,7 @@ I believe that Energy will dictate economic trends for decades to come, function
 
 In my view, energy flow may be the pure geometry of the modern market, yet its complexity has kept it out of reach for too many, for too long. BlackSlon changes this by bringing transparency and liquidity to regional energy pricing. It's opening the gates for everyone - from individual participants to small and big enterprises - allowing them to gain direct exposure and hedge against energy price movements. By removing the barriers that once made these markets invisible to the public, BlackSlon empowers every user to navigate energy volatility using a simple, tokenized standard that was previously reserved only for global institutions.
 
-I am alumnus of the University of Warsaw (UW), St. Petersburg State University (SPbGU), and Moscow State University of International Relations (MGIMO), with studies in International Relations and PhD studies at the University of Warsaw.
+I am an alumnus of the University of Warsaw (UW), St. Petersburg State University (SPbGU), and Moscow State University of International Relations (MGIMO) in International Relations, as well as PhD studies at the University of Warsaw.
 
 ---
 

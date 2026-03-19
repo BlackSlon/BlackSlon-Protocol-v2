@@ -139,11 +139,11 @@ function getFullOrderBook(marketId: string) {
     'BS-P-PL': 9.938,
     'BS-P-UK': 8.773,
   }
-  const anchor: number =
-    md?.bsszPositions?.[0]?.bssz?.anchor ??
-    md?.bsszCalculation?.anchor ??
-    marketPrices[marketId] ??
-    10.59
+  // Get anchor from cycle data (same logic as VirtualMarketPanel)
+  const cycleAnchor = md?.bsszPositions?.[0]?.bssz?.anchor ?? md?.bsszCalculation?.anchor
+  const anchor: number = cycleAnchor 
+    ? cycleAnchor / 10  // Divide by 10 to match VirtualMarketPanel
+    : marketPrices[marketId] ?? 10.59
 
   // Generated market-maker orders (recreated on every call, not persisted)
   const generated = generateOrderBook(anchor, marketId)
@@ -155,12 +155,16 @@ function getFullOrderBook(marketId: string) {
   const userBids = vs.orderBook.bids.filter(o => (o as any).marketId === marketId)
   const userAsks = vs.orderBook.asks.filter(o => (o as any).marketId === marketId)
 
+  // Bot orders from bot store - TEMPORARILY DISABLED FOR TESTING
+  const botBids: any[] = []
+  const botAsks: any[] = []
+
   return {
-    bids: [...genBids, ...userBids].sort((a, b) => {
+    bids: [...genBids, ...userBids, ...botBids].sort((a, b) => {
       if (b.price !== a.price) return b.price - a.price
       return a.timestamp - b.timestamp // FIFO - earlier orders first
     }),
-    asks: [...genAsks, ...userAsks].sort((a, b) => {
+    asks: [...genAsks, ...userAsks, ...botAsks].sort((a, b) => {
       if (a.price !== b.price) return a.price - b.price
       return a.timestamp - b.timestamp // FIFO - earlier orders first
     }),
@@ -337,7 +341,8 @@ export const useTrading = create<TradingState>((set, get) => {
       // generated market-maker orders (anchored to this market's BSSZ) +
       // any user-placed resting orders.
       const { bids: bookBids, asks: bookAsks } = getFullOrderBook(marketId)
-
+      
+      
       let remainingQty = quantity
       let filledQty    = 0
       let fillPrice    = price
@@ -351,7 +356,7 @@ export const useTrading = create<TradingState>((set, get) => {
         const survivingUserAsks: typeof sortedAsks = []
 
         for (const ask of sortedAsks) {
-          if (remainingQty <= 0 || ask.price > price) {
+          if (remainingQty <= 0 || ask.price > price || (ask as any).ownedByUser === true) {
             if ((ask as any).ownedByUser) survivingUserAsks.push(ask)
             continue
           }
@@ -399,7 +404,7 @@ export const useTrading = create<TradingState>((set, get) => {
         const survivingUserBids: typeof sortedBids = []
 
         for (const bid of sortedBids) {
-          if (remainingQty <= 0 || bid.price < price) {
+          if (remainingQty <= 0 || bid.price < price || (bid as any).ownedByUser === true) {
             if ((bid as any).ownedByUser) survivingUserBids.push(bid)
             continue
           }
@@ -570,4 +575,16 @@ export const useUserAccount = create<UserAccountState>((set, get) => ({
       return null
     }
   },
+}))
+
+interface BotOrdersState {
+  botOrders: Record<string, any[]>
+  setBotOrders: (marketId: string, orders: any[]) => void
+}
+
+export const useBotOrders = create<BotOrdersState>((set) => ({
+  botOrders: {},
+  setBotOrders: (marketId, orders) => set((state) => ({
+    botOrders: { ...state.botOrders, [marketId]: orders }
+  })),
 }))

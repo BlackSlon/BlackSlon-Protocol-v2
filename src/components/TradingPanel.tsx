@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useTrading } from '@/store/blackslon'
+import { useTrading, useVirtual } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
 import { getCurrentCycleData } from '@/lib/marketCycle'
-import type { BSSZState } from '@/store/types'
+import type { BSSZState, MarketId } from '@/store/types'
 
 // ─── Tiering Matrix ───────────────────────────────────────────────────────────
 // Source: Risk-Management-Micro.md + Economic-Equilibrium-Treasury-Governance.md
@@ -35,6 +35,8 @@ interface Props {
 
 export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const marketColors = getMarketColors(selectedMarketId)
+  const virtualStore = useVirtual()
+  
   const colors = marketColors.isGas
     ? {
         title: 'text-cyan-400',
@@ -67,6 +69,49 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
   const [bssz, setBssz] = useState<BSSZState>(storeBssz)
 
+  const fallbackBssz: Record<string, { floor: number; ceiling: number }> = {
+    'BS-P-DE': { floor: 8.21, ceiling: 10.94 },
+    'BS-P-NO': { floor: 4.57, ceiling: 6.09 },
+    'BS-P-UK': { floor: 8.14, ceiling: 10.86 },
+    'BS-P-PL': { floor: 9.53, ceiling: 12.71 },
+    'BS-G-NL': { floor: 3.50, ceiling: 6.00 },
+    'BS-G-DE': { floor: 3.50, ceiling: 6.00 },
+    'BS-G-PL': { floor: 3.50, ceiling: 6.00 },
+    'BS-G-BG': { floor: 3.50, ceiling: 6.00 },
+  }
+
+  const fallbackLastTrade: Record<string, number> = {
+    'BS-G-NL': 4.43,
+    'BS-G-DE': 4.50,
+    'BS-G-PL': 4.78,
+    'BS-G-BG': 4.13,
+    'BS-P-DE': 9.12,
+    'BS-P-NO': 4.97,
+    'BS-P-PL': 9.94,
+    'BS-P-UK': 8.77,
+  }
+
+  const getDisplayLastTradePrice = () => {
+    const marketLastTrade = virtualStore.orderBook.lastTradeByMarket?.[selectedMarketId as MarketId]
+    if (marketLastTrade && Number.isFinite(marketLastTrade.price) && (Date.now() - marketLastTrade.timestamp < 86400000)) {
+      return marketLastTrade.price
+    }
+
+    const explicitLastTrade = fallbackLastTrade[selectedMarketId]
+    if (typeof explicitLastTrade === 'number') {
+      return explicitLastTrade
+    }
+
+    try {
+      const cycleData = getCurrentCycleData(selectedMarketId)
+      if (cycleData?.anchor) {
+        return cycleData.anchor / 10
+      }
+    } catch {}
+
+    return selectedMarketId.startsWith('BS-P') ? 9.50 : 3.50
+  }
+
   useEffect(() => {
     if (selectedMarketId) {
       try {
@@ -80,6 +125,17 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
             lockReason: null,
           })
         } else {
+          const explicitFallback = fallbackBssz[selectedMarketId]
+          if (explicitFallback) {
+            setBssz({
+              floor: explicitFallback.floor,
+              ceiling: explicitFallback.ceiling,
+              isLocked: false,
+              lockReason: null,
+            })
+            return
+          }
+
           // Fallback to market data
           const marketData = getMarketData(selectedMarketId as any) as any
           if (marketData?.bsszPositions?.[0]?.bssz) {
@@ -90,36 +146,36 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
               lockReason: null,
             })
           } else {
-            setBssz(storeBssz)
+            const range = fallbackBssz[selectedMarketId]
+            if (range) {
+              setBssz({
+                floor: range.floor,
+                ceiling: range.ceiling,
+                isLocked: false,
+                lockReason: null,
+              })
+            } else {
+              setBssz(storeBssz)
+            }
           }
         }
       } catch {
-        setBssz(storeBssz)
+        setBssz({ floor: 1.0, ceiling: 20.0, isLocked: false, lockReason: null })
       }
     } else {
-      setBssz(storeBssz)
-    }
-  }, [selectedMarketId, storeBssz])
-
-  const getAnchorPrice = () => {
-    try {
-      // Get current cycle data for this market
-      const cycleData = getCurrentCycleData(selectedMarketId)
-      if (cycleData) {
-        // Use DA (Day-Ahead) price as last trade price
-        return (cycleData.DA / 10).toFixed(2)
+      if (storeBssz.floor > 0 && storeBssz.ceiling > 0) {
+        setBssz(storeBssz)
+      } else {
+        setBssz({ floor: 1.0, ceiling: 20.0, isLocked: false, lockReason: null })
       }
-      // Fallback to market data
-      const md = getMarketData(selectedMarketId as any) as any
-      if (md?.bsszPositions?.[0]?.bssz?.anchor) return md.bsszPositions[0].bssz.anchor.toFixed(2)
-      if (md?.bsszCalculation?.anchor) return md.bsszCalculation.anchor.toFixed(2)
-    } catch {}
-    // Better fallback: check if it's a power market and use appropriate default
-    const isPower = selectedMarketId.startsWith('BS-P')
-    return isPower ? '9.50' : '3.50'
+    }
+  }, [selectedMarketId])
+
+  const getLastTradePrice = () => {
+    return getDisplayLastTradePrice().toFixed(2)
   }
 
-  const [price, setPrice] = useState(getAnchorPrice())
+  const [price, setPrice] = useState(getLastTradePrice())
   const [quantity, setQuantity] = useState(5)
   const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
 
@@ -128,12 +184,22 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const [bsrTier, setBsrTier] = useState<BsrTier>(50)
   const [orderError, setOrderError] = useState<string | null>(null)
   const [orderSuccess, setOrderSuccess] = useState(false)
+  const normalizedFloor = Number.isFinite(bssz.floor) ? bssz.floor : 0
+  const normalizedCeiling = Number.isFinite(bssz.ceiling) ? bssz.ceiling : 0
+  const hasValidBssz = normalizedFloor > 0 && normalizedCeiling > normalizedFloor
+  const corridorEpsilon = 0.0001
 
   useEffect(() => {
-    setPrice(getAnchorPrice())
+    const nextPrice = parseFloat(getLastTradePrice().replace(',', '.'))
+    if (Number.isFinite(nextPrice) && hasValidBssz) {
+      const clampedPrice = Math.min(Math.max(nextPrice, normalizedFloor), normalizedCeiling)
+      setPrice(clampedPrice.toFixed(2))
+    } else {
+      setPrice(getLastTradePrice())
+    }
     setOrderError(null)
     setOrderSuccess(false)
-  }, [selectedMarketId])
+  }, [selectedMarketId, hasValidBssz, normalizedFloor, normalizedCeiling])
 
   // Effective BSR stake: 0 when eEURO-only mandate is active, otherwise the chosen tier
   const isForcedEuroOnly = solvencyTier === 'III' || solvencyTier === 'IV'
@@ -183,8 +249,8 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
       setOrderError('Invalid price or quantity')
       return
     }
-    if (p < bssz.floor || p > bssz.ceiling) {
-      setOrderError(`Price ${p.toFixed(2)} outside BSSZ corridor [${bssz.floor.toFixed(2)} – ${bssz.ceiling.toFixed(2)}]`)
+    if (hasValidBssz && (p < normalizedFloor - corridorEpsilon || p > normalizedCeiling + corridorEpsilon)) {
+      setOrderError(`Price ${p.toFixed(2)} outside BSSZ corridor [${normalizedFloor.toFixed(2)} – ${normalizedCeiling.toFixed(2)}]`)
       return
     }
     const error = placeOrder(side, p, quantity, effectiveBsrStake, selectedMarketId || 'BS-P-PL')
@@ -197,7 +263,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   }
 
   const priceNum = parseFloat(price.replace(',', '.'))
-  const priceOutOfBSSZ = !isNaN(priceNum) && (priceNum < bssz.floor || priceNum > bssz.ceiling)
+  const priceOutOfBSSZ = hasValidBssz && !isNaN(priceNum) && (priceNum < normalizedFloor - corridorEpsilon || priceNum > normalizedCeiling + corridorEpsilon)
   const isBlocked = solvencyTier === 'IV'
 
   // Get margin info for current effective tier
@@ -286,7 +352,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
         <div className="border-b border-gray-900/50 pb-2 mb-2 shrink-0">
           <div className="flex items-center justify-between mb-1">
             <div className="text-[9px] text-gray-500">SET ORDER PRICE (EUR/100kWh)</div>
-            <div className={`text-[7px] ${colors.title}`}>[{bssz.floor.toFixed(2)} – {bssz.ceiling.toFixed(2)}]</div>
+            <div className={`text-[7px] ${colors.title}`}>[{normalizedFloor.toFixed(2)} – {normalizedCeiling.toFixed(2)}]</div>
           </div>
           <div className="flex items-center justify-center">
             <div className={`bg-zinc-800/70 border rounded-sm flex items-center w-fit mx-auto transition-colors ${priceOutOfBSSZ ? 'border-red-600' : 'border-gray-700'}`}>

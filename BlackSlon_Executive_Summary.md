@@ -8,8 +8,6 @@ The European wholesale power & gas market is valued at **~€500 billion** in an
 
 Unlike crude oil, copper, Gasoline or any other major commodity — no platform exists offering access to European natural gas or wholesale power markets to anyone outside this institutional inner circle. This is not a market inefficiency. **It is the architecture.**
 
-The volatility that once defined opportunity has become a structural barrier. Following the Iran conflict of March 2026, TTF gas surged **+114.8% in 8 trading days** — then collapsed **-19.5% in a single session**. VaR models disintegrated. Clearinghouses amplified the crisis instead of absorbing it. At the moment of maximum stress, global banks and hedge funds see opportunity — and open new positions. Meanwhile, independent traders and industrial consumers with index price formulas faced with one question: how to avoid forced liquidation. **Across all retail and non-institutional trading platforms, 60–80% of participants lose capital** — not because their directional view was wrong, but because today's volatility eliminates them before the market proves them right.
-
 **BlackSlon is not designed to replicate these markets. It is their replacement.**
 
 ---
@@ -63,7 +61,11 @@ In the event of sudden geopolitical disruptions, since the onset of the conflict
 
 ## Founder
 
-Built by an energy trader who spent 20+ years inside the system BlackSlon is replacing. Trading Natural Gas, Power, Crude Oil, Carbon Emissions and cross-commodity spreads as Trader, Originator, Partner and CEO in tier-one global trading houses across ICE, EEX, EPEX and TGE. One of the largest natural gas suppliers from the EU to Ukraine. Operated in CEE/SEE frontier markets before digital benchmarks existed — when infrastructure failed, regulators intervened, and counterparties disappeared.
+Built by an energy trader who spent 20+ years inside the system BlackSlon is replacing. Trading Natural Gas, Power, Oil Products, Carbon Emissions and cross-commodity spreads as Trader, Originator, Partner and CEO in tier-one global trading houses. For years, one of the largest natural gas suppliers from the EU to Ukraine. 
+
+Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. 
+
+Two decades ago, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.
 
 *Alumnus: University of Warsaw · St. Petersburg State University · MGIMO Moscow*
 
