@@ -333,6 +333,14 @@ export const useTrading = create<TradingState>((set, get) => {
       if (newHFactor < 1.0)
         return `Trade rejected: would push H_user to ${newHFactor.toFixed(2)} (min 1.00)`
 
+      // ── BSSZ CORRIDOR VALIDATION ──────────────────────────────────────────
+      const { anchor } = getFullOrderBook(marketId)
+      const bsszFloor = anchor * 0.90
+      const bsszCeiling = anchor * 1.20
+      if (price < bsszFloor || price > bsszCeiling) {
+        return `Price ${price.toFixed(2)} outside BSSZ corridor [${bsszFloor.toFixed(2)} – ${bsszCeiling.toFixed(2)}]`
+      }
+
       // ── MATCHING ENGINE ───────────────────────────────────────────────────
       // getFullOrderBook returns the same book VirtualDimension renders:
       // generated market-maker orders (anchored to this market's BSSZ) +

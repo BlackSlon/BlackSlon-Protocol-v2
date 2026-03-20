@@ -37,7 +37,7 @@ export interface MarketData {
 const markets: Record<string, MarketData> = {
   'BS-P-PL': bsPPL as MarketData,
   'BS-P-DE': bsPPL as MarketData,
-  'BS-P-N':  bsPPL as MarketData,
+  'BS-P-NO': bsPPL as MarketData,
   'BS-P-UK': bsPPL as MarketData,
   'BS-G-NL': bsGNL as MarketData,
   'BS-G-DE': bsGNL as MarketData,
