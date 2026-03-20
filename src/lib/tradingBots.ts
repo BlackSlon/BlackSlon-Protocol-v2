@@ -222,8 +222,10 @@ class TradingBot {
 
     // Market maker: both sides
     if (this.strategy.type === 'market-maker') {
+      console.log(`[BOT MANAGER] marketId=${this.strategy.markets[0]}, anchor=${anchor}, minSpread=${config.minSpread}`)
       const buyPrice = anchor * (1 - config.minSpread / 100)
       const sellPrice = anchor * (1 + config.minSpread / 100)
+      console.log(`[BOT MANAGER] buyPrice=${buyPrice}, sellPrice=${sellPrice}`)
       const volume = this.randomBetween(config.minVolume, config.maxVolume)
 
       orders.push(

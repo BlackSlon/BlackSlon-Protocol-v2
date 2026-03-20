@@ -16,7 +16,7 @@ Unlike crude oil, copper, Gasoline or any other major commodity — no platform 
 
 **Zero Expiry. Zero Barriers. 100 kWh = 1 Token.**
 
-BlackSlon is the first decentralised protocol built specifically for European wholesale energy markets. It eliminates the structural failures of the legacy system and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
+BlackSlon is the first decentralised protocol built specifically for European wholesale gas & power markets. It eliminates the structural failures of the legacy system and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
 
 **Universal Access. Perpetual Instruments**
 
@@ -38,9 +38,9 @@ European energy markets are structurally backwardated. Cal+1 and Cal+2 contracts
 
 **Physical Liquidity Providers (PLPs)**
 
-BlackSlon Protocol builds a bridge between Virtual and Physical Energy Markets through licensed European energy trading entities. Structural upward trends in European energy drive most participants to accumulate (buy) BS-P/G tokens, creating a persistent market imbalance. For sophisticated PLPs, this imbalance offers an opportunity to harvest roll yield by providing short-side liquidity. Rather than betting against prices, PLPs earn systematic returns as the ADR mechanism rolls expiring contracts into cheaper long-dated ones capitalizing on the structural backwardation that has dominated European gas and power markets. Current market conditions offer a 3–5% monthly roll decay in gas and an additional 23% in power across the Cal27 to Cal29 horizon. This positions liquidity provision as a structural yield-generation strategy rather than pure price speculation.This yield is further amplified during systemic shocks. 
+BlackSlon Protocol builds a bridge between Virtual and Physical Energy Markets through licensed European energy trading entities. Structural upward trends in European gas & power drive most participants to accumulate (buy) BS-P/G tokens, creating a persistent market imbalance. For sophisticated PLPs, this imbalance offers an opportunity to harvest roll yield by providing short-side liquidity. Rather than betting against prices, PLPs earn systematic returns as the ADR mechanism rolls expiring contracts into cheaper long-dated ones capitalizing on the structural backwardation that has dominated European gas and power markets. Current market conditions offer a 3–5% monthly roll decay in gas and an additional 23% in power across the Cal27 to Cal29 horizon. This positions liquidity provision as a structural yield-generation strategy rather than pure price speculation.
 
-In the event of sudden geopolitical disruptions, since the onset of the conflict in Iran in 2026, the spread between the front-end and the long-dated curve widens aggressively. In these moments of maximum dislocation, the ADR mechanism captures the widening spread, accelerating roll decay and transforming extreme market volatility into unprecedented yield for liquidity providers.
+This yield is further amplified during systemic shocks. In the event of sudden geopolitical disruptions, such as conflict in Iran'26, the spread between the front-end and the long-dated curve widens aggressively. In these moments of maximum dislocation, the ADR mechanism captures the widening spread, accelerating roll decay and transforming extreme market volatility into unprecedented yield for liquidity providers.
 
 ---
 
@@ -83,9 +83,9 @@ In 1973, Marc Rich executed the first spot oil trade — bypassing the long-term
 
 **Blockchain / Technology Partner** — Smart contract development, CASP infrastructure, matching engine. Protocol specification is complete. We need builders.
 
-**Seed Capital — €1.5–3M** — CASP licensing (Lithuania/Bulgaria), smart contract audit, oracle infrastructure, regulatory counsel, 12-month runway to live trading.
+**Seed Capital — €2–5M** — CASP licensing (Lithuania/Bulgaria), smart contract audit, oracle infrastructure, regulatory counsel, 12-month runway to live trading.
 
-**Strategic Energy Partner / First PLP** — A licensed energy trading entity with national/regional gas & power markets access. Minimum €500K commitment. Genesis tier €BSR allocation. Preferred: utility, trading house or balancing operator with CEE/NWE exposure.
+**Strategic Energy Partner / First PLP** — A licensed energy trading entity with national/regional gas & power markets access. Minimum €500K commitment. Genesis tier €BSR allocation. Preferred: utility, trading house or broker with CEE/NWE exposure.
 
 ---
 

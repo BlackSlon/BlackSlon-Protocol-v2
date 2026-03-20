@@ -139,11 +139,8 @@ function getFullOrderBook(marketId: string) {
     'BS-P-PL': 9.938,
     'BS-P-UK': 8.773,
   }
-  // Get anchor from cycle data (same logic as VirtualMarketPanel)
-  const cycleAnchor = md?.bsszPositions?.[0]?.bssz?.anchor ?? md?.bsszCalculation?.anchor
-  const anchor: number = cycleAnchor 
-    ? cycleAnchor / 10  // Divide by 10 to match VirtualMarketPanel
-    : marketPrices[marketId] ?? 10.59
+  // FORCE USE OF MARKET PRICES - cycleData causing issues
+  const anchor: number = marketPrices[marketId] ?? 10.59
 
   // Generated market-maker orders (recreated on every call, not persisted)
   const generated = generateOrderBook(anchor, marketId)

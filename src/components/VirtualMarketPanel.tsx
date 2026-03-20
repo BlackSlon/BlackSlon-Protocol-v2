@@ -43,30 +43,19 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
     'BS-P-PL': 9.938,
     'BS-P-UK': 8.773,
   }
-  const anchor = cycleData ? cycleData.anchor / 10 : marketPrices[selectedMarketId] || 10.59
-
+  // FORCE USE OF MARKET PRICES - cycleData causing issues
+  const anchor = marketPrices[selectedMarketId] || 10.59
+  
   const generated = generateOrderBook(anchor, selectedMarketId)
 
   // Merge generated orders with user orders from store
   const userBids = storeData.orderBook.bids.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
   const userAsks = storeData.orderBook.asks.filter(o => o.ownedByUser && (o as any).marketId === selectedMarketId)
 
-  // Add bot orders
-  const botBids = (botOrders[selectedMarketId] ?? []).filter(o => o.side === 'BUY').map(o => ({ 
-    id: o.id, 
-    price: o.price, 
-    volume: o.quantity, 
-    units: Math.ceil(o.quantity / 100),
-    ownedByUser: false 
-  }))
-  const botAsks = (botOrders[selectedMarketId] ?? []).filter(o => o.side === 'SELL').map(o => ({ 
-    id: o.id, 
-    price: o.price, 
-    volume: o.quantity, 
-    units: Math.ceil(o.quantity / 100),
-    ownedByUser: false 
-  }))
-
+  // TEMPORARILY DISABLE BOT ORDERS TO FIX MATCHING
+  const botBids: any[] = []
+  const botAsks: any[] = []
+  
   // Merge all orders and sort
   const finalBids = [...generated.bids, ...userBids, ...botBids].sort((a,b) => b.price - a.price).slice(0,5)
   const finalAsks = [...generated.asks, ...userAsks, ...botAsks].sort((a,b) => a.price - b.price).slice(0,5)
