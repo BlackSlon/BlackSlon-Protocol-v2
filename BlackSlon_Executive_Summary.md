@@ -49,10 +49,10 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 | Token | Market | Reference |
 |:------|:-------|:----------|
 | BS-P-DE | German Power | EEX/EPEX |
-| BS-P-UK | British Power | EEX/EPEX |
-| BS-P-PL | Polish Power | TGE/EEX |
+| BS-P-UK | British Power | ICE |
+| BS-P-PL | Polish Power | TGE |
 | BS-P-NO | Nordic Power | Nasdaq Commodities/EEX|
-| BS-G-NL | Dutch Gas | ICE/EEX |
+| BS-G-NL | Dutch Gas | ICE |
 | BS-G-DE | German Gas | EEX |
 | BS-G-PL | Polish Gas | TGE |
 | BS-G-BG | Bulgarian Gas | Balkan Gas Hub |
@@ -61,7 +61,7 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 
 ## Founder
 
-Built by an energy trader who spent 20+ years inside the system BlackSlon is replacing. Trading Natural Gas, Power, Oil Products, Carbon Emissions and cross-commodity spreads as Trader, Originator, Partner and CEO in tier-one global trading houses. For years, one of the largest natural gas suppliers from the EU to Ukraine. 
+Built by an energy commodity trader who spent 20+ years inside the system BlackSlon is built to transform. Trading Natural Gas, Power, Oil Products, Carbon Emissions and cross-commodity spreads as Trader, Originator, Partner and CEO in tier-one global trading houses. For years, one of the largest natural gas suppliers from the EU to Ukraine. 
 
 Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. 
 

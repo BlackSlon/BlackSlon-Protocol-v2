@@ -335,20 +335,18 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                     </Tooltip>
                     <span className="text-[7px] text-gray-400 normal-case">BlackSlon Energy Index</span>
                   </div>
-                  <div className="flex items-baseline justify-between gap-2">
-                    <span className={`text-sm font-black leading-none ${colors.value}`}>
-                      {displayBsei.It.toFixed(3)}
-                    </span>
-                    <span className="text-[7px] uppercase tracking-wide text-gray-400">EUR/100kWh</span>
-                  </div>
-                  <div className="mt-1.5 grid grid-cols-2 gap-x-2 text-[9px]">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400 uppercase text-[7px]">D-1</span>
-                      <span className="text-gray-400">{displayBsei.d1.toFixed(3)}</span>
+                  <div className="mt-1 grid grid-cols-3 gap-x-1 text-center">
+                    <div>
+                      <div className="text-[7px] text-gray-500 uppercase mb-0.5">NOW</div>
+                      <div className={`text-sm font-black leading-none ${colors.value}`}>{displayBsei.It.toFixed(3)}</div>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400 uppercase text-[7px]">D-2</span>
-                      <span className="text-gray-400">{displayBsei.d2.toFixed(3)}</span>
+                    <div>
+                      <div className="text-[7px] text-gray-500 uppercase mb-0.5">D-1</div>
+                      <div className="text-[11px] text-gray-400 leading-none">{displayBsei.d1.toFixed(3)}</div>
+                    </div>
+                    <div>
+                      <div className="text-[7px] text-gray-500 uppercase mb-0.5">D-2</div>
+                      <div className="text-[11px] text-gray-400 leading-none">{displayBsei.d2.toFixed(3)}</div>
                     </div>
                   </div>
                 </div>

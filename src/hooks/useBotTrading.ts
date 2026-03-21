@@ -3,6 +3,19 @@
 import { useEffect, useRef } from 'react'
 import { useVirtual, useBotOrders, useTrading, useUserAccount, useDealConfirmation } from '@/store/blackslon'
 
+// ── Liquidity tiers ────────────────────────────────────────────────────────
+const LIQUIDITY_TIERS = {
+  high:   { maxConcurrent: 9,  cycleMin: 1500,  cycleMax: 3500,  matchMin: 800,  matchMax: 2000,  firstMin: 400,  firstMax: 900  },
+  medium: { maxConcurrent: 5,  cycleMin: 4000,  cycleMax: 8000,  matchMin: 2000, matchMax: 4500,  firstMin: 1000, firstMax: 2500 },
+  low:    { maxConcurrent: 2,  cycleMin: 8000,  cycleMax: 16000, matchMin: 3500, matchMax: 7000,  firstMin: 2000, firstMax: 5000 },
+}
+
+function getLiquidityTier(marketId: string) {
+  if (['BS-G-NL', 'BS-P-DE'].includes(marketId))            return LIQUIDITY_TIERS.high
+  if (['BS-G-DE', 'BS-P-UK', 'BS-P-NO'].includes(marketId)) return LIQUIDITY_TIERS.medium
+  return LIQUIDITY_TIERS.low // BS-P-PL, BS-G-PL, BS-G-BG
+}
+
 const marketPrices: Record<string, number> = {
   'BS-G-NL': 4.43,
   'BS-G-DE': 4.50,
@@ -245,7 +258,16 @@ export function useBotTrading(marketId: string) {
   useEffect(() => {
     const anchor = marketPrices[marketId] || 10.00
 
+    const liq = getLiquidityTier(marketId)
+
     function runBotCycle() {
+      // Respect max concurrent orders for this liquidity tier
+      const currentBotOrders = useBotOrders.getState().botOrders[marketId] || []
+      if (currentBotOrders.length >= liq.maxConcurrent) {
+        timerRef.current = setTimeout(runBotCycle, randomBetween(liq.cycleMin, liq.cycleMax))
+        return
+      }
+
       const side: 'BUY' | 'SELL' = Math.random() > 0.5 ? 'BUY' : 'SELL'
       const deviation = randomBetween(-0.015, 0.015)
       const price = Math.round((anchor * (1 + deviation)) * 100) / 100
@@ -264,8 +286,8 @@ export function useBotTrading(marketId: string) {
         },
       }))
 
-      // ── Phase 2: execute after 1.5-3s ────────────────────────────────────
-      const matchDelay = randomBetween(1500, 3000)
+      // ── Phase 2: execute after tier-appropriate delay ─────────────────────
+      const matchDelay = randomBetween(liq.matchMin, liq.matchMax)
       setTimeout(() => {
         // Remove bot order from order book
         useBotOrders.setState(s => ({
@@ -308,12 +330,12 @@ export function useBotTrading(marketId: string) {
         }
       }, matchDelay)
 
-      // ── Schedule next bot order in 2-5s ──────────────────────────────────
-      timerRef.current = setTimeout(runBotCycle, randomBetween(2000, 5000))
+      // ── Schedule next bot order per tier ─────────────────────────────────
+      timerRef.current = setTimeout(runBotCycle, randomBetween(liq.cycleMin, liq.cycleMax))
     }
 
-    // First order after 0.5-1s
-    timerRef.current = setTimeout(runBotCycle, randomBetween(500, 1000))
+    // First order after tier-appropriate delay
+    timerRef.current = setTimeout(runBotCycle, randomBetween(liq.firstMin, liq.firstMax))
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current)

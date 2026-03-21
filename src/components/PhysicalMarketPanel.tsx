@@ -300,15 +300,24 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
               {selectedMarketId}
             </div>
           </div>
-          <div className="grid grid-cols-12 text-[8px] uppercase pb-1 border-b border-gray-800 mb-0.5">
-            <div className="col-span-1 text-gray-400">Ref</div>
-            <div className="col-span-3 text-gray-400">Date</div>
-            <div className="col-span-2 text-center text-gray-400">Floor</div>
+          <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-800 mb-1">
+            <div className="col-span-2 text-gray-400">Ref</div>
+            <div className="col-span-2 text-gray-400">Date</div>
+            <div className="col-span-2 text-center text-gray-400">
+              <Tooltip content={tt.fm}><span className="cursor-help">FM</span></Tooltip>
+            </div>
             <div className="col-span-2 text-center text-gray-400">Anchor</div>
-            <div className="col-span-2 text-center text-gray-400">Ceil.</div>
-            <div className="col-span-2 text-right text-gray-400">Trend</div>
+            <div className="col-span-4 flex flex-col items-center">
+              <Tooltip content={tt.spread}>
+                <span className="text-gray-400 cursor-help">SPREAD</span>
+              </Tooltip>
+              <div className="w-full grid grid-cols-2 text-[7px] normal-case mt-0.5 text-gray-500">
+                <div className="text-center">(%)</div>
+                <div className="text-right">(EUR/100kWh)</div>
+              </div>
+            </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {(() => {
               // FM data for each market
               const fmData: Record<string, Array<{label: string; date: string; anchor: number; fm?: number}>> = {
@@ -388,26 +397,25 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
               
               const marketFmData = fmData[selectedMarketId] || []
               
-              return marketFmData.map((row, idx) => {
-                const floor = row.anchor * 0.9
-                const ceiling = row.anchor * 1.2
-                const nextRow = marketFmData[idx + 1]
-                const trendPct = nextRow ? ((row.anchor - nextRow.anchor) / nextRow.anchor * 100) : null
-                const isUp = trendPct !== null && trendPct >= 0
-                const [dd, mm, yy] = row.date.split('.')
-                const isoDate = `20${yy}-${mm}-${dd}`
+              return marketFmData.map((row) => {
+                const spreadPct = ((row.fm! - row.anchor) / row.anchor * 100)
+                const spreadNominal = row.fm! - row.anchor
 
                 return (
-                  <div key={row.label} className="grid grid-cols-12 items-center py-0.5 border-b border-gray-900/30">
-                    <div className="col-span-1 text-[10px] text-gray-300">{row.label}</div>
-                    <div className="col-span-3 text-[7px] text-gray-500">{isoDate}</div>
-                    <div className="col-span-2 text-[10px] text-gray-400 text-center">{floor.toFixed(2)}</div>
-                    <div className="col-span-2 text-[10px] text-gray-300 text-center font-bold">{row.anchor.toFixed(2)}</div>
-                    <div className="col-span-2 text-[10px] text-gray-400 text-center">{ceiling.toFixed(2)}</div>
-                    <div className={`col-span-2 text-[10px] text-right ${
-                      trendPct === null ? 'text-gray-500' : isUp ? 'text-green-600' : 'text-red-500'
+                  <div key={row.label} className="grid grid-cols-12 items-center py-0.25 border-b border-gray-900/30">
+                    <div className="col-span-2 text-[11px] text-gray-300">{row.label}</div>
+                    <div className="col-span-2 text-[7px] text-gray-500">{row.date}</div>
+                    <div className="col-span-2 text-[11px] text-gray-400 text-center">{row.fm!.toFixed(2)}</div>
+                    <div className="col-span-2 text-[11px] text-gray-400 text-center">{row.anchor.toFixed(2)}</div>
+                    <div className={`col-span-2 text-[11px] text-center ${
+                      spreadPct >= 0 ? 'text-green-600' : 'text-red-500'
                     }`}>
-                      {trendPct === null ? '—' : `${isUp ? '▲' : '▼'} ${Math.abs(trendPct).toFixed(1)}%`}
+                      {spreadPct >= 0 ? '+' : ''}{spreadPct.toFixed(2)}%
+                    </div>
+                    <div className={`col-span-2 text-[11px] text-right ${
+                      spreadNominal >= 0 ? 'text-green-600' : 'text-red-500'
+                    }`}>
+                      {spreadNominal >= 0 ? '+' : ''}{spreadNominal.toFixed(3)}
                     </div>
                   </div>
                 )
