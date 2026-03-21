@@ -81,11 +81,22 @@ export interface LastTrade {
   timestamp: number
 }
 
+export interface TradeRecord {
+  price: number
+  units: number
+  volume: number
+  timestamp: number
+  side: 'BUY' | 'SELL'
+}
+
 export interface OrderBook {
   bids: Order[]
   asks: Order[]
   lastTrade: LastTrade | null
   lastTradeByMarket: Record<MarketId, LastTrade>
+  tradeHistoryByMarket: Record<string, TradeRecord[]>
+  consumedBidVolumeByMarket: Record<string, number>
+  consumedAskVolumeByMarket: Record<string, number>
 }
 
 export interface BSEISnapshot {
@@ -147,7 +158,7 @@ export interface TradingState {
   emergencyLock: boolean
   marketId: MarketId
   placeOrder: (side: 'BUY' | 'SELL', price: number, quantity: number, bsrStake: number, marketId: string) => string | null
-  setPendingOrder: (side: 'BUY' | 'SELL', price: number, quantity: number, bsrStake: number) => void
+  setPendingOrder: (side: 'BUY' | 'SELL', price: number, quantity: number, bsrStake: number, marketId?: string) => void
   cancelOrder: (orderId: string) => void
 }
 
@@ -180,6 +191,7 @@ export interface UserData {
   eEuroBalance: number
   walletConnected: boolean
   walletAddress?: string
+  walletEmail?: string
 }
 
 export interface UserAccountState {
@@ -190,6 +202,8 @@ export interface UserAccountState {
   hFactor: number
   bsrEuroRate: number
   setWalletConnected: (connected: boolean) => void
+  activateWallet: (email: string) => void
+  disconnectWallet: () => void
   checkLiquidation: () => Promise<boolean>
   convertTokens: (direction: 'BSR_TO_EURO' | 'EURO_TO_BSR', amount: number) => string | null
 }

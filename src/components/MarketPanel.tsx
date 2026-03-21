@@ -115,12 +115,12 @@ export default function MarketPanel() {
               ADR Protocol Active
             </span>
             {/* H_solv live value */}
-            <span className="text-[8px] text-gray-600 uppercase tracking-widest">
+            <span className="text-[8px] text-gray-400 uppercase tracking-widest">
               H<sub>solv</sub>:{' '}
               <span className={tier.color}>{solvency.hSolv.toFixed(3)}</span>
             </span>
             {/* P_BSR live */}
-            <span className="text-[8px] text-gray-600 uppercase tracking-widest">
+            <span className="text-[8px] text-gray-400 uppercase tracking-widest">
               €BSR:{' '}
               <span className="text-amber-700">{bsrReserve.pBsr.toFixed(4)}</span>
             </span>
@@ -133,14 +133,14 @@ export default function MarketPanel() {
             <span className="text-[11px] text-gray-500 font-bold tracking-tighter uppercase">
               BSEI PRICE INDEX · {activeMarketId}
             </span>
-            <span className="text-[8px] text-gray-700 font-mono">
+            <span className="text-[8px] text-gray-500 font-mono">
               BSSZ corridor displayed in Physical Panel · ω = 0.80
             </span>
           </div>
 
           <span className="text-3xl font-bold text-yellow-500 font-mono tracking-tighter">
             {currentPrice.toFixed(2)}{' '}
-            <span className="text-[12px] text-gray-600 ml-1 font-sans">EUR/100kWh</span>
+            <span className="text-[12px] text-gray-400 ml-1 font-sans">EUR/100kWh</span>
           </span>
         </div>
       </div>

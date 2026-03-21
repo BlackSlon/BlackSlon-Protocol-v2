@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useTrading, useVirtual } from '@/store/blackslon'
+import { useTrading, useVirtual, useUserAccount } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
 import { getCurrentCycleData } from '@/lib/marketCycle'
+import Tooltip from '@/components/Tooltip'
+import { getMarketTooltips } from '@/lib/marketTooltips'
 import type { BSSZState, MarketId } from '@/store/types'
 
 // ─── Tiering Matrix ───────────────────────────────────────────────────────────
@@ -45,6 +47,8 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
         border: 'border-cyan-800/30',
         pulse: 'bg-cyan-700',
         isGas: true,
+        badgeText: 'text-cyan-400',
+        badgeBorder: 'border-cyan-500/40',
       }
     : {
         title: 'text-yellow-600',
@@ -53,6 +57,8 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
         border: 'border-yellow-800/30',
         pulse: 'bg-yellow-700',
         isGas: false,
+        badgeText: 'text-yellow-500',
+        badgeBorder: 'border-yellow-500/40',
       }
 
   const {
@@ -71,7 +77,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
   const fallbackBssz: Record<string, { floor: number; ceiling: number }> = {
     'BS-P-DE': { floor: 8.21, ceiling: 10.94 },
-    'BS-P-NO': { floor: 4.57, ceiling: 6.09 },
+    'BS-P-NO': { floor: 5.59, ceiling: 7.46 },
     'BS-P-UK': { floor: 8.14, ceiling: 10.86 },
     'BS-P-PL': { floor: 9.53, ceiling: 12.71 },
     'BS-G-NL': { floor: 3.50, ceiling: 6.00 },
@@ -86,7 +92,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
     'BS-G-PL': 4.78,
     'BS-G-BG': 4.13,
     'BS-P-DE': 9.12,
-    'BS-P-NO': 4.97,
+    'BS-P-NO': 6.21,
     'BS-P-PL': 9.94,
     'BS-P-UK': 8.77,
   }
@@ -113,62 +119,27 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   }
 
   useEffect(() => {
-    if (selectedMarketId) {
-      try {
-        // Get current cycle data for this market
-        const cycleData = getCurrentCycleData(selectedMarketId)
-        if (cycleData) {
-          setBssz({
-            floor: cycleData.floor / 10,
-            ceiling: cycleData.ceiling / 10,
-            isLocked: false,
-            lockReason: null,
-          })
-        } else {
-          const explicitFallback = fallbackBssz[selectedMarketId]
-          if (explicitFallback) {
-            setBssz({
-              floor: explicitFallback.floor,
-              ceiling: explicitFallback.ceiling,
-              isLocked: false,
-              lockReason: null,
-            })
-            return
-          }
-
-          // Fallback to market data
-          const marketData = getMarketData(selectedMarketId as any) as any
-          if (marketData?.bsszPositions?.[0]?.bssz) {
-            setBssz({
-              floor: marketData.bsszPositions[0].bssz.floor,
-              ceiling: marketData.bsszPositions[0].bssz.ceiling,
-              isLocked: false,
-              lockReason: null,
-            })
-          } else {
-            const range = fallbackBssz[selectedMarketId]
-            if (range) {
-              setBssz({
-                floor: range.floor,
-                ceiling: range.ceiling,
-                isLocked: false,
-                lockReason: null,
-              })
-            } else {
-              setBssz(storeBssz)
-            }
-          }
-        }
-      } catch {
-        setBssz({ floor: 1.0, ceiling: 20.0, isLocked: false, lockReason: null })
-      }
-    } else {
-      if (storeBssz.floor > 0 && storeBssz.ceiling > 0) {
-        setBssz(storeBssz)
-      } else {
-        setBssz({ floor: 1.0, ceiling: 20.0, isLocked: false, lockReason: null })
-      }
+    // Always prefer fallbackBssz hardcoded values — cycle data raw values are
+    // stored ×10 and day-0 ceiling is sometimes incorrect in cycle-data.json
+    const hardcoded = fallbackBssz[selectedMarketId]
+    if (hardcoded) {
+      setBssz({ floor: hardcoded.floor, ceiling: hardcoded.ceiling, isLocked: false, lockReason: null })
+      return
     }
+    // For unknown markets, compute from anchor price directly (same as matching engine)
+    try {
+      const cycleData = getCurrentCycleData(selectedMarketId)
+      if (cycleData) {
+        const f = cycleData.floor / 10
+        const c = cycleData.ceiling / 10
+        // Sanity check: ceiling must be 1.05–1.50× floor
+        if (c > f * 1.05 && c < f * 1.50) {
+          setBssz({ floor: f, ceiling: c, isLocked: false, lockReason: null })
+          return
+        }
+      }
+    } catch {}
+    setBssz({ floor: 1.0, ceiling: 20.0, isLocked: false, lockReason: null })
   }, [selectedMarketId])
 
   const getLastTradePrice = () => {
@@ -184,6 +155,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const [bsrTier, setBsrTier] = useState<BsrTier>(50)
   const [orderError, setOrderError] = useState<string | null>(null)
   const [orderSuccess, setOrderSuccess] = useState(false)
+  const [walletWarning, setWalletWarning] = useState(false)
   const normalizedFloor = Number.isFinite(bssz.floor) ? bssz.floor : 0
   const normalizedCeiling = Number.isFinite(bssz.ceiling) ? bssz.ceiling : 0
   const hasValidBssz = normalizedFloor > 0 && normalizedCeiling > normalizedFloor
@@ -206,6 +178,14 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const effectiveBsrStake = isForcedEuroOnly ? 0 : bsrTier
   const euroStake = 100 - effectiveBsrStake
 
+  // Detect closing position: SELL when long, BUY when short
+  const { inventory, user } = useUserAccount()
+  const currentPosition = inventory.find(p => p.token === selectedMarketId)
+  const currentUnits = currentPosition?.units || 0
+  const isClosingPosition =
+    (side === 'SELL' && currentUnits > 0) ||
+    (side === 'BUY' && currentUnits < 0)
+
   // Tier III/IV resets chosen tier to minimum (will snap back when mandate lifts)
   useEffect(() => {
     if (isForcedEuroOnly) {
@@ -217,14 +197,14 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   useEffect(() => {
     const p = parseFloat(price.replace(',', '.'))
     if (!isNaN(p) && quantity > 0) {
-      setPendingOrder(side, p, quantity, effectiveBsrStake)
+      setPendingOrder(side, p, quantity, effectiveBsrStake, selectedMarketId)
     }
-  }, [side, price, quantity, effectiveBsrStake])
+  }, [side, price, quantity, effectiveBsrStake, selectedMarketId])
 
   useEffect(() => {
     const p = parseFloat(price.replace(',', '.'))
     if (!isNaN(p) && quantity > 0) {
-      setPendingOrder(side, p, quantity, effectiveBsrStake)
+      setPendingOrder(side, p, quantity, effectiveBsrStake, selectedMarketId)
     }
   }, [])
 
@@ -237,13 +217,18 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
     setBsrTier(snapped)
     const p = parseFloat(price.replace(',', '.'))
     if (!isNaN(p) && quantity > 0) {
-      setPendingOrder(side, p, quantity, snapped)
+      setPendingOrder(side, p, quantity, snapped, selectedMarketId)
     }
   }
 
-  const handleConfirm = () => {
+  const handleSubmit = (side: 'BUY' | 'SELL') => {
     setOrderError(null)
     setOrderSuccess(false)
+    if (!user.walletConnected) {
+      setWalletWarning(true)
+      setTimeout(() => setWalletWarning(false), 10000)
+      return
+    }
     const p = parseFloat(price.replace(',', '.'))
     if (isNaN(p) || quantity <= 0) {
       setOrderError('Invalid price or quantity')
@@ -267,12 +252,42 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
   const isBlocked = solvencyTier === 'IV'
 
   // Get margin info for current effective tier
-  const currentTierData = isForcedEuroOnly
-    ? { marginLong: 0.50, marginShort: 1.00, fee: 0.0100 } // eEURO-only = 10% BSR tier rates
+  const CLOSING_FEE = 0.002 // 0.20% fixed for closing positions
+  const currentTierData = isClosingPosition
+    ? { marginLong: 0, marginShort: 0, fee: CLOSING_FEE }
+    : isForcedEuroOnly
+    ? { marginLong: 0.50, marginShort: 1.00, fee: 0.0100 }
     : TIER_MATRIX[bsrTier]
 
   return (
     <div className="flex flex-col h-full bg-black font-mono text-white p-0">
+
+      {/* ── Wallet Required Overlay ── */}
+      {walletWarning && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+          <div
+            className="pointer-events-auto bg-black/95 border-2 border-amber-700 rounded-sm px-10 py-8 text-center font-mono animate-pulse shadow-2xl"
+            style={{ boxShadow: '0 0 60px rgba(180,83,9,0.4)' }}
+          >
+            <div className="text-4xl mb-3">🔒</div>
+            <div className="text-xl font-black tracking-[0.3em] uppercase mb-3 text-amber-600">
+              CONNECT WALLET FIRST
+            </div>
+            <div className="text-[11px] text-gray-400 uppercase tracking-widest mb-1">
+              Open the User Account panel and click Connect Wallet
+            </div>
+            <div className="text-[9px] text-gray-400 uppercase tracking-widest mt-3">
+              Email verification required to trade
+            </div>
+            <button
+              onClick={() => setWalletWarning(false)}
+              className="mt-4 px-6 py-1.5 border border-gray-700 text-[8px] text-gray-500 uppercase tracking-widest rounded-sm hover:border-amber-700 hover:text-amber-600 transition-all"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="w-full pt-1 pb-1 flex flex-col items-center shrink-0">
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
@@ -285,10 +300,12 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
         <div className="pt-2 pb-1 bg-gradient-to-b from-black to-gray-950 w-full">
           <div className="flex items-center justify-center gap-2">
-            <div className="text-[10px] tracking-widest font-bold text-amber-700">
-              BlackSlon Trading Terminal
-            </div>
-            <div className={`px-2 py-0.5 rounded text-[7px] uppercase tracking-widest font-bold border ${colors.border} ${colors.title}`}>
+            <Tooltip content={getMarketTooltips(selectedMarketId).tradingTerminal}>
+              <div className="text-[10px] tracking-widest font-bold text-amber-700">
+                BlackSlon Trading Terminal
+              </div>
+            </Tooltip>
+            <div className={`px-2 py-0.5 rounded text-[7px] uppercase tracking-widest font-bold border ${colors.badgeBorder} ${colors.badgeText}`}>
               {selectedMarketId}
             </div>
           </div>
@@ -399,7 +416,7 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
           </div>
         ) : (
           <button
-            onClick={handleConfirm}
+            onClick={() => handleSubmit(side)}
             disabled={isBlocked || priceOutOfBSSZ}
             className={`w-full py-2 mb-4 border uppercase tracking-[0.3em] text-[10px] transition-all duration-300 rounded-sm shrink-0 disabled:opacity-30 disabled:cursor-not-allowed ${
               side === 'BUY'
@@ -419,55 +436,74 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
 
         {/* ── BSR/eEURO Collateral Configuration ── */}
         <div className="space-y-1 mb-2 shrink-0 px-1">
-          <div className="text-[9px] text-gray-500 uppercase tracking-tighter mb-1">
-            Collateral Configuration
+          <div className="mb-1 flex justify-start">
+            <Tooltip content={getMarketTooltips(selectedMarketId).collateral}>
+              <div className="text-[9px] text-gray-500 uppercase tracking-tighter">
+                Collateral Configuration
+              </div>
+            </Tooltip>
           </div>
 
-          {/* Tier selector — 5 discrete protocol tiers */}
-          <div className="px-2 py-1.5 rounded-sm border border-gray-900">
-            <div className="flex justify-between text-[9px] tracking-[0.2em] mb-2">
-              <span className="text-amber-700">€BSR RATIO</span>
-              <span className="text-amber-700">
-                {isForcedEuroOnly ? '0% (Tier III/IV override)' : `${bsrTier}%`}
-              </span>
+          {isClosingPosition ? (
+            /* Closing position — fixed 0.20% fee, no ratio selector */
+            <div className="px-2 py-1.5 rounded-sm border border-gray-900 text-center">
+              <div className="text-[8px] text-gray-500 mb-0.5">Closing position — no deposit required</div>
+              <div className="text-[9px] text-amber-700 font-bold">Fee: 0.20% (fixed)</div>
+              {pendingOrder && (
+                <div className="text-[7px] text-gray-500 mt-0.5">
+                  {(parseFloat(price.replace(',', '.')) * quantity * CLOSING_FEE).toFixed(2)} eEURO
+                </div>
+              )}
             </div>
+          ) : (
+            <>
+              {/* Tier selector — 5 discrete protocol tiers */}
+              <div className="px-2 py-1.5 rounded-sm border border-gray-900">
+                <div className="flex justify-between text-[9px] tracking-[0.2em] mb-2">
+                  <span className="text-amber-700">€BSR RATIO</span>
+                  <span className="text-amber-700">
+                    {isForcedEuroOnly ? '0% (Tier III/IV override)' : `${bsrTier}%`}
+                  </span>
+                </div>
 
-            {/* Discrete tier buttons */}
-            <div className="flex gap-1">
-              {BSR_TIERS.map((tier) => (
-                <button
-                  key={tier}
-                  onClick={() => !isForcedEuroOnly && handleBsrSliderChange(tier)}
-                  disabled={isForcedEuroOnly}
-                  className={`flex-1 py-1 text-[7px] rounded-sm border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${
-                    bsrTier === tier && !isForcedEuroOnly
-                      ? 'border-amber-700 bg-amber-700/20 text-amber-700'
-                      : 'border-gray-800 text-gray-600 hover:border-amber-700/50 hover:text-amber-800'
-                  }`}
-                >
-                  {tier}%
-                </button>
-              ))}
-            </div>
+                {/* Discrete tier buttons */}
+                <div className="flex gap-1">
+                  {BSR_TIERS.map((tier) => (
+                    <button
+                      key={tier}
+                      onClick={() => !isForcedEuroOnly && handleBsrSliderChange(tier)}
+                      disabled={isForcedEuroOnly}
+                      className={`flex-1 py-1 text-[7px] rounded-sm border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${
+                        bsrTier === tier && !isForcedEuroOnly
+                          ? 'border-amber-700 bg-amber-700/20 text-amber-700'
+                          : 'border-gray-800 text-gray-600 hover:border-amber-700/50 hover:text-amber-800'
+                      }`}
+                    >
+                      {tier}%
+                    </button>
+                  ))}
+                </div>
 
-            {/* Fee info for selected tier */}
-            <div className="mt-1.5 text-[7px] text-gray-400 text-center">
-              <span>
-                Fee: <span className="text-gray-400">{(currentTierData.fee * 100).toFixed(2)}%</span>
-                {pendingOrder && (
-                  <span className="text-gray-400"> ({(parseFloat(price.replace(',', '.')) * quantity * currentTierData.fee).toFixed(2)} eEURO)</span>
-                )}
-              </span>
-            </div>
-          </div>
+                {/* Fee info for selected tier */}
+                <div className="mt-1.5 text-[7px] text-gray-400 text-center">
+                  <span>
+                    Fee: <span className="text-gray-400">{(currentTierData.fee * 100).toFixed(2)}%</span>
+                    {pendingOrder && (
+                      <span className="text-gray-400"> ({(parseFloat(price.replace(',', '.')) * quantity * currentTierData.fee).toFixed(2)} eEURO)</span>
+                    )}
+                  </span>
+                </div>
+              </div>
 
-          {/* eEURO display (read-only) */}
-          <div className="px-2 py-1 rounded-sm border border-gray-900">
-            <div className="flex justify-between text-[9px] tracking-[0.2em]">
-              <span className="text-[#003399]">eEURO RATIO</span>
-              <span className="text-[#003399]">{euroStake}%</span>
-            </div>
-          </div>
+              {/* eEURO display (read-only) */}
+              <div className="px-2 py-1 rounded-sm border border-gray-900">
+                <div className="flex justify-between text-[9px] tracking-[0.2em]">
+                  <span className="text-[#003399]">eEURO RATIO</span>
+                  <span className="text-[#003399]">{euroStake}%</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Margin summary */}
@@ -480,7 +516,11 @@ export default function TradingPanel({ selectedMarketId = 'BS-P-PL' }: Props) {
               </div>
             </div>
             <div className="text-center flex-1">
-              <div className="text-[9px] text-gray-400 uppercase tracking-tighter">REQUIRED MARGIN</div>
+              <div className="flex justify-center">
+                <Tooltip content={getMarketTooltips(selectedMarketId).requiredMargin}>
+                  <div className="text-[9px] text-gray-400 uppercase tracking-tighter">REQUIRED MARGIN</div>
+                </Tooltip>
+              </div>
               <div className="text-sm text-gray-400 leading-none">
                 {pendingOrder ? `${pendingOrder.marginPct}%` : '—'}
               </div>

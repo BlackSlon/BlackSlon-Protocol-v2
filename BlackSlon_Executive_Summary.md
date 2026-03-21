@@ -6,13 +6,13 @@
 
 The European wholesale power & gas market is valued at **~€500 billion** in annual physical delivery — with true financial turnover running into the **trillions**. And yet this trillion-euro market is effectively controlled by fewer than **250 real institutional actors**. The entry gate: **€3–5 million in capital**, **6–12 months for regulatory** licensing and negotiation of transmission and distribution agreements, and another **6–12 months of exchange onboarding** before a single trade is executed.
 
-Unlike crude oil, copper, Gasoline or any other major commodity — no platform exists offering access to European natural gas or wholesale power markets to anyone outside this institutional inner circle. This is not a market inefficiency. **It is the architecture.**
-
-**BlackSlon is not designed to replicate these markets. It is their replacement.**
+Unlike crude oil, copper, gasoline or any other major commodity — no platform exists offering access to European natural gas or wholesale power markets to anyone outside this institutional inner circle. This is not a market inefficiency. **It is the architecture.**
 
 ---
 
 ## The Answer
+
+BlackSlon is not designed to replicate these markets. It is a new infrastructure layer built alongside them — blockchain-settled, algorithmically governed, physically anchored, and open to every participant the legacy system excludes.
 
 **Zero Expiry. Zero Barriers. 100 kWh = 1 Token.**
 
@@ -55,7 +55,7 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 | BS-G-NL | Dutch Gas | ICE/EEX |
 | BS-G-DE | German Gas | EEX |
 | BS-G-PL | Polish Gas | TGE |
-| BS-G-BG | Balkan Gas | Balkan Gas Hub |
+| BS-G-BG | Bulgarian Gas | Balkan Gas Hub |
 
 ---
 
@@ -65,7 +65,7 @@ Built by an energy trader who spent 20+ years inside the system BlackSlon is rep
 
 Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. 
 
-Two decades ago, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.
+Exactly two decades ago in 2006, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.
 
 *Alumnus: University of Warsaw · St. Petersburg State University · MGIMO Moscow*
 
@@ -75,13 +75,13 @@ Two decades ago, I was part of the first private challenger to enter a market un
 
 In 1973, Marc Rich executed the first spot oil trade — bypassing the long-term contract structures that had governed oil markets since their inception. The established players called it reckless. Regulators called it destabilising. Within a decade, the spot market he created **is** the oil market.
 
-**BlackSlon is that moment for European energy.**
+**BlackSlon is that moment for European gas & power markets**
 
 ---
 
 ## I am Looking For
 
-**Blockchain / Technology Partner** — Smart contract development, CASP infrastructure, matching engine. Protocol specification is complete. We need builders.
+**Blockchain / Technology Partner** — Smart contract development, CASP infrastructure, matching engine. Protocol specification is complete. I need builders.
 
 **Seed Capital — €2–5M** — CASP licensing (Lithuania/Bulgaria), smart contract audit, oracle infrastructure, regulatory counsel, 12-month runway to live trading.
 

@@ -41,7 +41,7 @@ export default function BlackSlonMatrix() {
       {/* ORDERBOOK TABLE */}
       <div className="flex-grow overflow-hidden flex flex-col">
         {/* TABLE HEADER */}
-        <div className="grid grid-cols-3 px-2 mb-2 text-[8px] text-gray-600 uppercase font-bold">
+        <div className="grid grid-cols-3 px-2 mb-2 text-[8px] text-gray-400 uppercase font-bold">
           <span>Price (EUR)</span>
           <span className="text-right">Amount (MW)</span>
           <span className="text-right">Total (€BSR)</span>
@@ -80,12 +80,12 @@ export default function BlackSlonMatrix() {
 
       {/* DEPTH VISUALIZATION AREA */}
       <div className="mt-6 pt-4 border-t border-gray-900">
-        <div className="text-[8px] text-gray-600 uppercase font-bold mb-2 px-1 text-center">Market Depth (MWh)</div>
+        <div className="text-[8px] text-gray-400 uppercase font-bold mb-2 px-1 text-center">Market Depth (MWh)</div>
         <div className="flex h-1 bg-gray-900 rounded-full overflow-hidden mx-2">
           <div className="bg-green-600 h-full shadow-[0_0_8px_rgba(22,163,74,0.5)]" style={{ width: '55%' }} />
           <div className="bg-red-600 h-full shadow-[0_0_8px_rgba(220,38,38,0.5)]" style={{ width: '45%' }} />
         </div>
-        <div className="flex justify-between px-2 mt-1 text-[7px] font-mono text-gray-700">
+        <div className="flex justify-between px-2 mt-1 text-[7px] font-mono text-gray-500">
           <span>870 MW</span>
           <span>430 MW</span>
         </div>

@@ -10,6 +10,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { getMarketColors } from '@/lib/marketColors'
 import { useDemoMode } from '@/hooks/useDemoMode'
+import { useBotTrading } from '@/hooks/useBotTrading'
 
 const activeMarkets = [
   { id: 'BS-P-DE', name: 'BlackSlon Power — Germany' },
@@ -39,6 +40,9 @@ export default function MarketPage() {
   const id = params?.id as string
   const [selectedInstrument, setSelectedInstrument] = useState(id || 'BS-P-PL')
   const mColors = getMarketColors(selectedInstrument)
+
+  // Bot trading — simulates market activity
+  useBotTrading(selectedInstrument)
 
   // Synchronizuj wybrany instrument z URL przy każdej zmianie trasy
   useEffect(() => {

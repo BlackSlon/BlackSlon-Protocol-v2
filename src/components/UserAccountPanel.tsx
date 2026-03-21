@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { useUserAccount } from '@/store/blackslon'
+import Tooltip from '@/components/Tooltip'
+import { STATIC_TOOLTIPS } from '@/lib/marketTooltips'
 import WalletConnect from '@/components/WalletConnect'
 
 // ─── Ecosystem Solvency Tiers (H_solv) ──────────────────────────────────────
@@ -29,6 +31,20 @@ function getSolvencyTier(hSolv: number) {
 function hSolvToPercent(hSolv: number): number {
   const pct = ((hSolv - H_SOLV_MIN_DISPLAY) / (H_SOLV_MAX_DISPLAY - H_SOLV_MIN_DISPLAY)) * 100
   return Math.min(100, Math.max(0, pct))
+}
+
+function getHealthGradient(h: number): string {
+  if (h <= 1.00) return 'linear-gradient(90deg, #ef4444 0%, #f97316 100%)'
+  if (h <= 1.05) return 'linear-gradient(90deg, #f97316 0%, #f59e0b 100%)'
+  if (h <= 1.10) return 'linear-gradient(90deg, #f59e0b 0%, #eab308 100%)'
+  return 'linear-gradient(90deg, #84cc16 0%, #22c55e 100%)'
+}
+
+function getSolvencyGradient(hSolv: number): string {
+  if (hSolv < 1.00) return 'linear-gradient(90deg, #ef4444 0%, #f97316 100%)'
+  if (hSolv < 1.05) return 'linear-gradient(90deg, #f97316 0%, #f59e0b 100%)'
+  if (hSolv < 1.15) return 'linear-gradient(90deg, #f59e0b 0%, #eab308 100%)'
+  return 'linear-gradient(90deg, #84cc16 0%, #22c55e 100%)'
 }
 
 // ─── H-Factor (H_user) Health Zones ─────────────────────────────────────────
@@ -75,6 +91,7 @@ export default function UserAccountPanel() {
   const solvPct = Math.round(hSolvToPercent(hSolv))
 
   const healthZone = getHealthZone(hFactor)
+  const healthPct = Math.min(100, Math.max(0, ((hFactor - 0.90) / (1.30 - 0.90)) * 100))
 
   const totalBSRinEUR = user.bsrBalance * bsrEuroRate
   const totalBalance = user.eEuroBalance + totalBSRinEUR
@@ -111,11 +128,19 @@ export default function UserAccountPanel() {
         {/* ── Section: Available Liquidity & Vault ── */}
         <div className="pt-3">
           <div className="grid grid-cols-2 gap-4 mb-2">
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
-              Available Liquidity
+            <div className="flex justify-center">
+              <Tooltip content={STATIC_TOOLTIPS.availableLiquidity}>
+                <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
+                  Available Liquidity
+                </div>
+              </Tooltip>
             </div>
-            <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
-              BlackSlon Vault
+            <div className="flex justify-center">
+              <Tooltip content={STATIC_TOOLTIPS.vault}>
+                <div className="text-[10px] tracking-widest text-amber-700 font-bold text-center">
+                  BlackSlon Vault
+                </div>
+              </Tooltip>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -140,23 +165,12 @@ export default function UserAccountPanel() {
 
         {/* ── Section: Portfolio ── */}
         <div>
-          <div className="text-[9px] tracking-widest text-amber-700 font-bold mb-0.5 text-center">
-            BlackSlon Tokens Portfolio
-          </div>
-          
-          {/* P&L Total */}
-          <div className="mb-1 px-2 py-0.5 border border-gray-800 rounded-sm bg-gray-900/30">
-            <div className="flex justify-between items-center">
-              <span className="text-[8px] text-gray-500 uppercase tracking-widest">P&L Total</span>
-              <span className={`text-[9px] font-bold ${
-                inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0) >= 0 
-                  ? 'text-green-700' 
-                  : 'text-red-600'
-              }`}>
-                {inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0) >= 0 ? '+' : ''}
-                {inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0).toFixed(2)} EUR
-              </span>
-            </div>
+          <div className="mb-0.5 flex justify-center">
+            <Tooltip content={STATIC_TOOLTIPS.portfolio}>
+              <div className="text-[9px] tracking-widest text-amber-700 font-bold text-center">
+                BlackSlon Tokens Portfolio
+              </div>
+            </Tooltip>
           </div>
           
           <div className="grid grid-cols-6 text-[7px] uppercase text-gray-400 pb-1 border-b border-gray-900 mb-1">
@@ -164,7 +178,7 @@ export default function UserAccountPanel() {
             <div className="text-center tracking-widest">Units</div>
             <div className="text-center tracking-widest">Vol (kWh)</div>
             <div className="text-center tracking-widest">Avg P.</div>
-            <div className="text-center tracking-widest">Last Trade</div>
+            <div className="text-center tracking-widest">BSEI</div>
             <div className="text-right tracking-widest">PnL (EUR)</div>
           </div>
           {inventory.filter(item => item.units !== 0).map((item) => (
@@ -184,24 +198,42 @@ export default function UserAccountPanel() {
               </div>
             </div>
           ))}
+          {/* P&L Total — below table */}
+          <div className="mt-1 px-2 py-0.5 border border-gray-800 rounded-sm bg-gray-900/30">
+            <div className="flex justify-between items-center">
+              <span className="text-[8px] text-gray-500 uppercase tracking-widest">P&L Total</span>
+              <span className={`text-[9px] font-bold ${
+                inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0) >= 0
+                  ? 'text-green-700'
+                  : 'text-red-600'
+              }`}>
+                {inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0) >= 0 ? '+' : ''}
+                {inventory.filter(item => item.units !== 0).reduce((sum, item) => sum + item.pnl, 0).toFixed(2)} EUR
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* ── Section: User's Portfolio Risk Management ── */}
         <div>
-          <div className="text-[9px] tracking-widest text-amber-700 font-bold mb-1">
-            User's Portfolio Risk Management
+          <div className="mb-1 flex justify-start">
+            <Tooltip content={STATIC_TOOLTIPS.healthFactor}>
+              <div className="text-[9px] tracking-widest text-amber-700 font-bold">
+                User's Portfolio Risk Management
+              </div>
+            </Tooltip>
           </div>
 
           {/* H_user value + zone - compact */}
           <div className="flex justify-between items-center mb-1">
             <div className="flex items-baseline gap-2">
               <span className="text-[7px] text-gray-600 uppercase">H-Factor</span>
-              <span className="text-sm font-normal tracking-tighter" style={{ color: healthZone.color }}>
+              <span className="text-[9px] font-bold tracking-tighter" style={{ color: healthZone.color }}>
                 {hFactor.toFixed(3)}
               </span>
             </div>
             <div
-              className={`text-[10px] font-black tracking-widest ${
+              className={`text-[9px] font-black tracking-widest ${
                 healthZone.label === 'SAFE' ? 'animate-none' : 'animate-pulse'
               }`}
               style={{ color: healthZone.color }}
@@ -210,14 +242,20 @@ export default function UserAccountPanel() {
             </div>
           </div>
 
-          {/* Compact progress bar */}
-          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800 mb-0.5">
+          {/* Gradient zone bar */}
+          <div className="relative w-full h-[3px] rounded-full overflow-hidden mb-0.5">
             <div
-              className="h-full rounded-full transition-all duration-1000 ease-out"
+              className="absolute inset-0 rounded-full"
               style={{
-                width: `${Math.min(100, Math.max(0, ((hFactor - 0.90) / (1.30 - 0.90)) * 100))}%`,
+                background: 'linear-gradient(90deg, #dc2626 0%, #ea580c 25%, #eab308 50%, #65a30d 75%, #16a34a 100%)',
+              }}
+            />
+            <div
+              className="absolute top-[-2px] w-[4px] h-[7px] rounded-sm transition-all duration-1000 ease-out"
+              style={{
+                left: `calc(${healthPct}% - 2px)`,
                 background: healthZone.color,
-                boxShadow: `0 0 6px ${healthZone.color}`,
+                boxShadow: `0 0 4px ${healthZone.color}`,
               }}
             />
           </div>
@@ -231,31 +269,41 @@ export default function UserAccountPanel() {
 
         {/* ── Section: BlackSlon Ecosystem Solvency Index ── */}
         <div>
-          <div className="text-[9px] tracking-widest text-amber-700 font-bold mb-1">
-            BlackSlon Ecosystem Solvency Index
+          <div className="mb-1 flex justify-start">
+            <Tooltip content={STATIC_TOOLTIPS.solvency}>
+              <div className="text-[9px] tracking-widest text-amber-700 font-bold">
+                BlackSlon Ecosystem Solvency Index
+              </div>
+            </Tooltip>
           </div>
 
           {/* H_solv value + tier - compact */}
           <div className="flex justify-between items-center mb-1">
             <div className="flex items-baseline gap-2">
               <span className="text-[7px] text-gray-600 uppercase">H<sub>solv</sub></span>
-              <span className="text-sm font-normal tracking-tighter" style={{ color: activeTier.color }}>
+              <span className="text-[9px] font-bold tracking-tighter" style={{ color: activeTier.color }}>
                 {hSolv.toFixed(3)}
               </span>
             </div>
-            <div className="text-[10px] font-black tracking-widest" style={{ color: activeTier.color }}>
-              Tier {activeTier.tier} — {activeTier.label}
+            <div className="text-[9px] font-black tracking-widest" style={{ color: activeTier.color }}>
+              {activeTier.label.toUpperCase()}
             </div>
           </div>
 
-          {/* Compact progress bar */}
-          <div className="w-full h-1 rounded-full overflow-hidden bg-gray-900 border border-gray-800 mb-0.5">
+          {/* Gradient zone bar */}
+          <div className="relative w-full h-[3px] rounded-full overflow-hidden mb-0.5">
             <div
-              className="h-full rounded-full transition-all duration-1000 ease-out"
+              className="absolute inset-0 rounded-full"
               style={{
-                width: `${solvPct}%`,
-                background: `linear-gradient(90deg, ${activeTier.color}80, ${activeTier.color})`,
-                boxShadow: `0 0 6px ${activeTier.glow}`,
+                background: 'linear-gradient(90deg, #dc2626 0%, #ea580c 25%, #eab308 50%, #65a30d 75%, #16a34a 100%)',
+              }}
+            />
+            <div
+              className="absolute top-[-2px] w-[4px] h-[7px] rounded-sm transition-all duration-1000 ease-out"
+              style={{
+                left: `calc(${solvPct}% - 2px)`,
+                background: activeTier.color,
+                boxShadow: `0 0 4px ${activeTier.glow}`,
               }}
             />
           </div>
@@ -269,8 +317,12 @@ export default function UserAccountPanel() {
 
         {/* ── Section: BSR Reserve & Exchange ── */}
         <div>
-          <div className="text-[10px] tracking-widest text-amber-700 font-bold mb-1 text-left">
-            €BSR/eEURO Portal
+          <div className="mb-1 flex justify-start">
+            <Tooltip content={STATIC_TOOLTIPS.portal}>
+              <div className="text-[10px] tracking-widest text-amber-700 font-bold text-left">
+                €BSR/eEURO Portal
+              </div>
+            </Tooltip>
           </div>
           <div className="border border-gray-900 rounded-sm px-3 py-1.5">
             {/* Live rate */}
@@ -280,6 +332,10 @@ export default function UserAccountPanel() {
               <span className="text-[11px] text-amber-700 tracking-tighter">1 €BSR</span>
               <span className="text-[11px] text-gray-600">=</span>
               <span className="text-[11px] text-[#003399] tracking-tighter">{bsrEuroRate.toFixed(2)} eEURO</span>
+            </div>
+            {/* Info hint */}
+            <div className="text-[7px] text-gray-600 mb-1.5 leading-relaxed">
+              To trade, you need <span className="text-amber-700 font-bold">€BSR</span> collateral. Convert your <span className="text-[#003399] font-bold">eEURO</span> to <span className="text-amber-700 font-bold">€BSR</span> below.
             </div>
             {/* Exchange row */}
             <div className="flex gap-1.5 items-center">
@@ -300,15 +356,6 @@ export default function UserAccountPanel() {
               >
                 {convertDirection === 'BSR_TO_EURO' ? '€BSR → eEURO' : 'eEURO → €BSR'}
               </button>
-              <span className="text-[8px] text-gray-600">
-                Receive: <span className={convertDirection === 'BSR_TO_EURO' ? 'text-[#003399]' : 'text-amber-700'}>
-                  {convertAmount && !isNaN(parseFloat(convertAmount))
-                    ? convertDirection === 'BSR_TO_EURO'
-                      ? `${(parseFloat(convertAmount) * bsrEuroRate).toFixed(2)} eEURO`
-                      : `${(parseFloat(convertAmount) / bsrEuroRate).toFixed(2)} €BSR`
-                    : convertDirection === 'BSR_TO_EURO' ? '0.00 eEURO' : '0.00 €BSR'}
-                </span>
-              </span>
               <button
                 onClick={() => {
                   setConvertError(null)
@@ -324,7 +371,7 @@ export default function UserAccountPanel() {
                     setConvertError(error)
                   }
                 }}
-                className={`ml-auto px-2 py-0.5 text-[7px] uppercase tracking-widest border transition-all rounded-sm ${
+                className={`px-2 py-0.5 text-[7px] uppercase tracking-widest border transition-all rounded-sm ${
                   convertDirection === 'BSR_TO_EURO'
                     ? 'border-[#003399] text-[#003399] hover:bg-[#003399] hover:text-white'
                     : 'border-amber-700 text-amber-700 hover:bg-amber-700 hover:text-white'
@@ -333,6 +380,14 @@ export default function UserAccountPanel() {
                 CONVERT
               </button>
               {convertSuccess && <span className="text-[7px] text-green-700">✓</span>}
+              <span className="text-[7px] text-gray-500 ml-1">Receive:</span>
+              <span className={`text-[11px] font-bold tracking-tight ${convertDirection === 'BSR_TO_EURO' ? 'text-[#003399]' : 'text-amber-700'}`}>
+                {convertAmount && !isNaN(parseFloat(convertAmount))
+                  ? convertDirection === 'BSR_TO_EURO'
+                    ? `${(parseFloat(convertAmount) * bsrEuroRate).toFixed(2)} eEURO`
+                    : `${(parseFloat(convertAmount) / bsrEuroRate).toFixed(2)} €BSR`
+                  : convertDirection === 'BSR_TO_EURO' ? '0.00 eEURO' : '0.00 €BSR'}
+              </span>
             </div>
             {convertError && (
               <div className="text-[7px] text-red-600 mt-1">{convertError}</div>

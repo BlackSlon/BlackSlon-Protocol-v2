@@ -43,7 +43,7 @@ export const useMarketPanel = create<MarketPanelState>((set, get) => ({
       'BS-G-PL': 4.78,
       'BS-G-BG': 4.13,
       'BS-P-DE': 9.121,
-      'BS-P-NO': 4.972,
+      'BS-P-NO': 6.213,
       'BS-P-PL': 9.938,
       'BS-P-UK': 8.773,
     }
@@ -100,6 +100,9 @@ export const useVirtual = create<VirtualState>(() => ({
     ],
     lastTrade: { price: 10.59, units: 10, volume: 1000, timestamp: Date.now() },
     lastTradeByMarket: {} as Record<string, any>,
+    tradeHistoryByMarket: {} as Record<string, Array<{ price: number; units: number; volume: number; timestamp: number; side: 'BUY' | 'SELL' }>>,
+    consumedBidVolumeByMarket: {} as Record<string, number>,
+    consumedAskVolumeByMarket: {} as Record<string, number>,
   },
   bsei: {
     It: 10.59, omega: 0.80, pRvwap: 10.58, anchor: 10.59,
@@ -135,7 +138,7 @@ function getFullOrderBook(marketId: string) {
     'BS-G-PL': 4.78,
     'BS-G-BG': 4.13,
     'BS-P-DE': 9.121,
-    'BS-P-NO': 4.972,
+    'BS-P-NO': 6.213,
     'BS-P-PL': 9.938,
     'BS-P-UK': 8.773,
   }
@@ -191,12 +194,13 @@ export const useTrading = create<TradingState>((set, get) => {
     emergencyLock: false,
     marketId: 'BS-P-PL',
 
-    setPendingOrder: (side, price, quantity, bsrStake) => {
+    setPendingOrder: (side, price, quantity, bsrStake, marketId) => {
       const state = get()
       const us = useUserAccount.getState()
+      const effectiveMarketId = marketId || state.marketId
       
       // Check current position in this market
-      const currentPosition = us.inventory.find(p => p.token === state.marketId)
+      const currentPosition = us.inventory.find(p => p.token === effectiveMarketId)
       const currentUnits = currentPosition?.units || 0
       
       // Calculate net position change
@@ -379,15 +383,21 @@ export const useTrading = create<TradingState>((set, get) => {
         }
 
         if (filledQty > 0) {
-          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() }
-          useVirtual.setState(vs => ({
-            orderBook: {
-              ...vs.orderBook,
-              asks: survivingUserAsks,   // only user resting asks persist
-              lastTrade: tradeData,
-              lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
-            },
-          }))
+          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now(), side: 'BUY' as const }
+          useVirtual.setState(vs => {
+            const prevHistory = vs.orderBook.tradeHistoryByMarket?.[marketId] || []
+            const prevConsumed = vs.orderBook.consumedAskVolumeByMarket?.[marketId] || 0
+            return {
+              orderBook: {
+                ...vs.orderBook,
+                asks: survivingUserAsks,
+                lastTrade: tradeData,
+                lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
+                tradeHistoryByMarket: { ...vs.orderBook.tradeHistoryByMarket, [marketId]: [tradeData, ...prevHistory].slice(0, 20) },
+                consumedAskVolumeByMarket: { ...vs.orderBook.consumedAskVolumeByMarket, [marketId]: prevConsumed + filledQty },
+              },
+            }
+          })
           useDealConfirmation.getState().showDeal({ side: 'BUY', price: fillPrice, filledQty, remainingQty, marketId, timestamp: Date.now() })
         }
 
@@ -423,15 +433,21 @@ export const useTrading = create<TradingState>((set, get) => {
         }
 
         if (filledQty > 0) {
-          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now() }
-          useVirtual.setState(vs => ({
-            orderBook: {
-              ...vs.orderBook,
-              bids: survivingUserBids,
-              lastTrade: tradeData,
-              lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
-            },
-          }))
+          const tradeData = { price: fillPrice, units: filledQty, volume: filledQty * 100, timestamp: Date.now(), side: 'SELL' as const }
+          useVirtual.setState(vs => {
+            const prevHistory = vs.orderBook.tradeHistoryByMarket?.[marketId] || []
+            const prevConsumed = vs.orderBook.consumedBidVolumeByMarket?.[marketId] || 0
+            return {
+              orderBook: {
+                ...vs.orderBook,
+                bids: survivingUserBids,
+                lastTrade: tradeData,
+                lastTradeByMarket: { ...vs.orderBook.lastTradeByMarket, [marketId]: tradeData },
+                tradeHistoryByMarket: { ...vs.orderBook.tradeHistoryByMarket, [marketId]: [tradeData, ...prevHistory].slice(0, 20) },
+                consumedBidVolumeByMarket: { ...vs.orderBook.consumedBidVolumeByMarket, [marketId]: prevConsumed + filledQty },
+              },
+            }
+          })
           useDealConfirmation.getState().showDeal({ side: 'SELL', price: fillPrice, filledQty, remainingQty, marketId, timestamp: Date.now() })
         }
 
@@ -444,6 +460,26 @@ export const useTrading = create<TradingState>((set, get) => {
           set(s => ({ activeOrders: [...s.activeOrders, { id: resting.id, side, price, quantity: remainingQty, bsrStake, marginPct, bsrLocked: bsrNeeded * (remainingQty / quantity), eEuroLocked: eEuroDeposit * (remainingQty / quantity), timestamp: Date.now(), marketId: marketId as MarketId }] }))
         }
       }
+
+      // ── Determine if closing position (release vault collateral) ─────────
+      const closingUnits = (() => {
+        if (side === 'SELL' && currentUnits > 0) return Math.min(filledQty, currentUnits)
+        if (side === 'BUY' && currentUnits < 0) return Math.min(filledQty, Math.abs(currentUnits))
+        return 0
+      })()
+
+      // Release proportional vault collateral for closed portion
+      let vaultReleaseBSR = 0
+      let vaultReleaseEuro = 0
+      if (closingUnits > 0) {
+        const totalLockedUnits = Math.abs(currentUnits)
+        const releaseFraction = totalLockedUnits > 0 ? closingUnits / totalLockedUnits : 0
+        vaultReleaseBSR = us.vault.lockedBSR * releaseFraction
+        vaultReleaseEuro = us.vault.lockedEuro * releaseFraction
+      }
+
+      const finalLockedBSR = newLockedBSR - vaultReleaseBSR
+      const finalLockedEuro = newLockedEuro - vaultReleaseEuro
 
       // ── Update user account ───────────────────────────────────────────────
       useUserAccount.setState(u => {
@@ -510,10 +546,13 @@ export const useTrading = create<TradingState>((set, get) => {
         const feeInEUR = (fillPrice * filledQty) * feePct
         const newEuroBalance = u.user.eEuroBalance - eEuroDeposit - feeInEUR
         
+        // Release BSR back to balance when closing
+        const bsrBalanceAfter = u.user.bsrBalance - bsrNeeded + vaultReleaseBSR
+        
         return {
-          user: { ...u.user, bsrBalance: u.user.bsrBalance - bsrNeeded, eEuroBalance: newEuroBalance },
+          user: { ...u.user, bsrBalance: bsrBalanceAfter, eEuroBalance: newEuroBalance + vaultReleaseEuro },
           inventory: inv,
-          vault: { lockedBSR: newLockedBSR, lockedEuro: newLockedEuro },
+          vault: { lockedBSR: Math.max(0, finalLockedBSR), lockedEuro: Math.max(0, finalLockedEuro) },
           hFactor: newHFactor,
           solvency: newHFactor > 1.15 ? 1.25 : newHFactor > 1.05 ? 1.10 : newHFactor > 1.00 ? 1.02 : 0.95,
         }
@@ -562,6 +601,34 @@ export const useUserAccount = create<UserAccountState>((set, get) => ({
   setWalletConnected: (connected) =>
     set(s => ({
       user: { ...s.user, walletConnected: connected, walletAddress: connected ? '0x4aB3c1D2e5F6a7B8c9D0e1F2a3B4c5D6e7F8a9B0' : undefined },
+    })),
+  activateWallet: (email: string) =>
+    set(() => ({
+      user: {
+        name: email.split('@')[0].toUpperCase(),
+        id: `BS-${email.split('@')[0].slice(0, 6).toUpperCase()}-${Math.floor(Math.random() * 900 + 100)}`,
+        bsrBalance: 1000.00,
+        eEuroBalance: 0,
+        walletConnected: true,
+        walletAddress: `0x${Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+        walletEmail: email,
+      },
+      inventory: [],
+      vault: { lockedBSR: 0, lockedEuro: 0 },
+      solvency: 1.25,
+      hFactor: 2.50,
+    })),
+  disconnectWallet: () =>
+    set(() => ({
+      user: {
+        name: 'BS-PRO-001', id: 'BS-PRO-001',
+        bsrBalance: 0, eEuroBalance: 0,
+        walletConnected: false, walletAddress: undefined, walletEmail: undefined,
+      },
+      inventory: [],
+      vault: { lockedBSR: 0, lockedEuro: 0 },
+      solvency: 1.25,
+      hFactor: 2.50,
     })),
   checkLiquidation: async () => {
     await new Promise(r => setTimeout(r, 1200))

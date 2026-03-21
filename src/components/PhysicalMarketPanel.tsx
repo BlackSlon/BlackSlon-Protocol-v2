@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { getMarketData } from '@/data/markets'
 import { getMarketColors } from '@/lib/marketColors'
 import { getCycleBsszPositions } from '@/lib/marketCycle'
+import Tooltip from '@/components/Tooltip'
+import { getMarketTooltips } from '@/lib/marketTooltips'
 
 interface Props {
   selectedMarketId?: string
@@ -12,6 +14,7 @@ interface Props {
 export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Props) {
   const colors = getMarketColors(selectedMarketId)
   const marketData = getMarketData(selectedMarketId as any) as any
+  const tt = getMarketTooltips(selectedMarketId)
   
   const [timeRemaining, setTimeRemaining] = useState('')
 
@@ -188,8 +191,15 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
 
         {/* ── Section title ── */}
         <div className="pt-2 pb-1 bg-gradient-to-b from-black to-gray-950 w-full">
-          <div className={`text-[10px] tracking-widest font-bold mb-1 text-center ${colors.title}`}>
-            BlackSlon Settlement Zone (BSSZ)
+          <div className="flex items-center justify-center gap-2">
+            <Tooltip content={tt.bssz}>
+              <div className={`text-[10px] tracking-widest font-bold mb-1 text-center ${colors.title}`}>
+                BlackSlon Settlement Zone (BSSZ)
+              </div>
+            </Tooltip>
+            <div className={`px-2 py-0.5 rounded text-[7px] uppercase tracking-widest font-bold border ${colors.badgeBorder} ${colors.badgeText}`}>
+              {selectedMarketId}
+            </div>
           </div>
         </div>
 
@@ -204,7 +214,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
 
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Floor (−10%)</span>
+              <Tooltip content={tt.floor}>
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Floor (−10%)</span>
+              </Tooltip>
               <span className={`text-sm leading-tight font-normal ${colors.value}`}>
                 {currentFloor.toFixed(2)}
               </span>
@@ -213,7 +225,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
             <div className="text-gray-800 text-[10px]">——</div>
 
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor (a)</span>
+              <Tooltip content={tt.anchor}>
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Anchor (a)</span>
+              </Tooltip>
               <span className="text-sm text-gray-300 leading-tight font-normal">
                 {currentAnchor.toFixed(2)}
               </span>
@@ -222,7 +236,9 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
             <div className="text-gray-800 text-[10px]">——</div>
 
             <div className="flex flex-col items-center">
-              <span className="text-[7px] text-gray-500 uppercase mb-0">Cap (+20%)</span>
+              <Tooltip content={tt.cap}>
+                <span className="text-[7px] text-gray-500 uppercase mb-0">Cap (+20%)</span>
+              </Tooltip>
               <span className={`text-sm leading-tight font-normal ${colors.value}`}>
                 {currentCap.toFixed(2)}
               </span>
@@ -262,7 +278,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
                     {position.bssz.cap ? position.bssz.cap.toFixed(2) : position.bssz.ceiling.toFixed(2)}
                   </div>
                   <div className={`col-span-2 text-[11px] text-right ${
-                    trendPct === null ? 'text-gray-700' : trendPct >= 0 ? 'text-green-700' : 'text-red-600'
+                    trendPct === null ? 'text-gray-500' : trendPct >= 0 ? 'text-green-700' : 'text-red-600'
                   }`}>
                     {trendPct === null ? '—' : `${trendPct >= 0 ? '▲' : '▼'} ${Math.abs(trendPct).toFixed(1)}%`}
                   </div>
@@ -274,92 +290,108 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
 
         {/* ── FM Comparison Table ── */}
         <div className="mt-3 border-t border-gray-800 pt-3">
-          <div className={`text-[9px] tracking-wider font-bold mb-1 text-center ${colors.title}`}>
-            Anchor (BSSZ) vs Physical Forward Market (FM)
+          <div className="flex items-center justify-center gap-2">
+            <Tooltip content={tt.bsszVsFwd}>
+              <div className={`text-[9px] tracking-wider font-bold mb-1 text-center ${colors.title}`}>
+                Anchor (BSSZ) vs Physical Market (FM)
+              </div>
+            </Tooltip>
+            <div className={`px-2 py-0.5 rounded text-[7px] uppercase tracking-widest font-bold border ${colors.badgeBorder} ${colors.badgeText}`}>
+              {selectedMarketId}
+            </div>
           </div>
-          <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-900 mb-1">
-            <div className="col-span-2 text-gray-400 font-bold">Ref</div>
-            <div className="col-span-2 text-gray-400 font-bold">Date</div>
-            <div className="col-span-2 text-center text-gray-400 font-normal">FM</div>
-            <div className="col-span-2 text-center text-gray-400 font-normal">Anchor</div>
-            <div className="col-span-2 text-center text-gray-500 font-bold">Spread %</div>
-            <div className="col-span-2 text-right text-gray-500 font-bold">Spread €</div>
+          <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-800 mb-1">
+            <div className="col-span-2 text-gray-400">Ref</div>
+            <div className="col-span-2 text-gray-400">Date</div>
+            <div className="col-span-2 text-center text-gray-400">
+              <Tooltip content={tt.fm}><span className="cursor-help">FM</span></Tooltip>
+            </div>
+            <div className="col-span-2 text-center text-gray-400">Anchor</div>
+            <div className="col-span-4 flex flex-col items-center">
+              <Tooltip content={tt.spread}>
+                <span className="text-gray-400 cursor-help">SPREAD</span>
+              </Tooltip>
+              <div className="w-full grid grid-cols-2 text-[7px] normal-case mt-0.5 text-gray-500">
+                <div className="text-center">(%)</div>
+                <div className="text-right">(EUR/100kWh)</div>
+              </div>
+            </div>
           </div>
           <div className="space-y-0.5">
             {(() => {
               // FM data for each market
               const fmData: Record<string, Array<{label: string; date: string; anchor: number; fm: number}>> = {
                 'BS-G-NL': [
-                  {label: 'D-1', date: '09.03', anchor: 5.03, fm: 5.677},
-                  {label: 'D-2', date: '06.03', anchor: 4.85, fm: 5.257},
-                  {label: 'D-3', date: '05.03', anchor: 4.53, fm: 4.920},
-                  {label: 'D-4', date: '04.03', anchor: 4.49, fm: 4.672},
-                  {label: 'D-5', date: '03.03', anchor: 4.83, fm: 5.246},
-                  {label: 'D-6', date: '02.03', anchor: 4.03, fm: 4.244},
-                  {label: 'W-1', date: '27.02', anchor: 3.07, fm: 2.655},
+                  {label: 'D-1', date: '09.03.26', anchor: 5.03, fm: 5.677},
+                  {label: 'D-2', date: '06.03.26', anchor: 4.85, fm: 5.257},
+                  {label: 'D-3', date: '05.03.26', anchor: 4.53, fm: 4.920},
+                  {label: 'D-4', date: '04.03.26', anchor: 4.49, fm: 4.672},
+                  {label: 'D-5', date: '03.03.26', anchor: 4.83, fm: 5.246},
+                  {label: 'D-6', date: '02.03.26', anchor: 4.03, fm: 4.244},
+                  {label: 'W-1', date: '27.02.26', anchor: 3.07, fm: 2.655},
                 ],
                 'BS-G-DE': [
-                  {label: 'D-1', date: '09.03', anchor: 5.10, fm: 5.223},
-                  {label: 'D-2', date: '06.03', anchor: 4.91, fm: 5.062},
-                  {label: 'D-3', date: '05.03', anchor: 4.58, fm: 4.922},
-                  {label: 'D-4', date: '04.03', anchor: 4.54, fm: 4.673},
-                  {label: 'D-5', date: '03.03', anchor: 4.88, fm: 5.246},
-                  {label: 'D-6', date: '02.03', anchor: 4.08, fm: 4.273},
-                  {label: 'W-1', date: '27.02', anchor: 3.12, fm: 2.671},
+                  {label: 'D-1', date: '09.03.26', anchor: 5.10, fm: 5.223},
+                  {label: 'D-2', date: '06.03.26', anchor: 4.91, fm: 5.062},
+                  {label: 'D-3', date: '05.03.26', anchor: 4.58, fm: 4.922},
+                  {label: 'D-4', date: '04.03.26', anchor: 4.54, fm: 4.673},
+                  {label: 'D-5', date: '03.03.26', anchor: 4.88, fm: 5.246},
+                  {label: 'D-6', date: '02.03.26', anchor: 4.08, fm: 4.273},
+                  {label: 'W-1', date: '27.02.26', anchor: 3.12, fm: 2.671},
                 ],
                 'BS-G-PL': [
-                  {label: 'D-1', date: '09.03', anchor: 5.59, fm: 6.174},
-                  {label: 'D-2', date: '06.03', anchor: 5.45, fm: 5.989},
-                  {label: 'D-3', date: '05.03', anchor: 5.02, fm: 5.246},
-                  {label: 'D-4', date: '04.03', anchor: 4.88, fm: 5.400},
-                  {label: 'D-5', date: '03.03', anchor: 5.33, fm: 5.791},
-                  {label: 'D-6', date: '02.03', anchor: 4.52, fm: 5.345},
-                  {label: 'W-1', date: '27.02', anchor: 3.43, fm: 3.486},
+                  {label: 'D-1', date: '09.03.26', anchor: 5.59, fm: 6.174},
+                  {label: 'D-2', date: '06.03.26', anchor: 5.45, fm: 5.989},
+                  {label: 'D-3', date: '05.03.26', anchor: 5.02, fm: 5.246},
+                  {label: 'D-4', date: '04.03.26', anchor: 4.88, fm: 5.400},
+                  {label: 'D-5', date: '03.03.26', anchor: 5.33, fm: 5.791},
+                  {label: 'D-6', date: '02.03.26', anchor: 4.52, fm: 5.345},
+                  {label: 'W-1', date: '27.02.26', anchor: 3.43, fm: 3.486},
                 ],
                 'BS-G-BG': [
-                  {label: 'D-1', date: '09.03', anchor: 3.72, fm: 4.120},
-                  {label: 'D-2', date: '06.03', anchor: 3.56, fm: 3.743},
-                  {label: 'D-3', date: '05.03', anchor: 3.70, fm: 4.047},
-                  {label: 'D-4', date: '04.03', anchor: 4.05, fm: 4.294},
-                  {label: 'D-5', date: '03.03', anchor: 3.96, fm: 4.405},
-                  {label: 'D-6', date: '02.03', anchor: 3.16, fm: 4.275},
-                  {label: 'W-1', date: '27.02', anchor: 2.80, fm: 4.188},
+                  {label: 'D-1', date: '09.03.26', anchor: 3.72, fm: 4.120},
+                  {label: 'D-2', date: '06.03.26', anchor: 3.56, fm: 3.743},
+                  {label: 'D-3', date: '05.03.26', anchor: 3.70, fm: 4.047},
+                  {label: 'D-4', date: '04.03.26', anchor: 4.05, fm: 4.294},
+                  {label: 'D-5', date: '03.03.26', anchor: 3.96, fm: 4.405},
+                  {label: 'D-6', date: '02.03.26', anchor: 3.16, fm: 4.275},
+                  {label: 'W-1', date: '27.02.26', anchor: 2.80, fm: 4.188},
                 ],
                 'BS-P-DE': [
-                  {label: 'D-1', date: '09.03', anchor: 9.117, fm: 9.941},
-                  {label: 'D-2', date: '06.03', anchor: 9.081, fm: 9.777},
-                  {label: 'D-3', date: '05.03', anchor: 8.971, fm: 9.746},
-                  {label: 'D-4', date: '04.03', anchor: 8.762, fm: 9.811},
-                  {label: 'D-5', date: '03.03', anchor: 8.568, fm: 9.714},
-                  {label: 'D-6', date: '02.03', anchor: 7.925, fm: 9.454},
-                  {label: 'W-1', date: '27.02', anchor: 7.563, fm: 9.211},
+                  {label: 'D-1', date: '09.03.26', anchor: 9.117, fm: 9.941},
+                  {label: 'D-2', date: '06.03.26', anchor: 9.081, fm: 9.777},
+                  {label: 'D-3', date: '05.03.26', anchor: 8.971, fm: 9.746},
+                  {label: 'D-4', date: '04.03.26', anchor: 8.762, fm: 9.811},
+                  {label: 'D-5', date: '03.03.26', anchor: 8.568, fm: 9.714},
+                  {label: 'D-6', date: '02.03.26', anchor: 7.925, fm: 9.454},
+                  {label: 'W-1', date: '27.02.26', anchor: 7.563, fm: 9.211},
                 ],
                 'BS-P-NO': [
-                  {label: 'D-1', date: '09.03', anchor: 6.368, fm: 6.674},
-                  {label: 'D-2', date: '06.03', anchor: 6.220, fm: 6.674},
-                  {label: 'D-3', date: '05.03', anchor: 6.217, fm: 6.674},
-                  {label: 'D-4', date: '04.03', anchor: 6.356, fm: 6.674},
-                  {label: 'D-5', date: '03.03', anchor: 6.472, fm: 6.674},
-                  {label: 'D-6', date: '02.03', anchor: 6.360, fm: 6.674},
-                  {label: 'W-1', date: '27.02', anchor: 6.203, fm: 6.674},
+                  {label: 'D-1', date: '09.03.26', anchor: 6.368, fm: 6.674},
+                  {label: 'D-2', date: '06.03.26', anchor: 6.220, fm: 6.674},
+                  {label: 'D-3', date: '05.03.26', anchor: 6.217, fm: 6.674},
+                  {label: 'D-4', date: '04.03.26', anchor: 6.356, fm: 6.674},
+                  {label: 'D-5', date: '03.03.26', anchor: 6.472, fm: 6.674},
+                  {label: 'D-6', date: '02.03.26', anchor: 6.360, fm: 6.674},
+                  {label: 'W-1', date: '27.02.26', anchor: 6.203, fm: 6.674},
                 ],
                 'BS-P-PL': [
-                  {label: 'D-1', date: '09.03', anchor: 9.952, fm: 10.012},
-                  {label: 'D-2', date: '06.03', anchor: 9.844, fm: 9.534},
-                  {label: 'D-3', date: '05.03', anchor: 9.955, fm: 9.387},
-                  {label: 'D-4', date: '04.03', anchor: 9.979, fm: 9.537},
-                  {label: 'D-5', date: '03.03', anchor: 10.050, fm: 9.293},
-                  {label: 'D-6', date: '02.03', anchor: 9.692, fm: 9.293},
-                  {label: 'W-1', date: '27.02', anchor: 9.554, fm: 9.596},
+                  {label: 'D-1', date: '09.03.26', anchor: 9.952, fm: 10.012},
+                  {label: 'D-2', date: '06.03.26', anchor: 9.844, fm: 9.534},
+                  {label: 'D-3', date: '05.03.26', anchor: 9.955, fm: 9.387},
+                  {label: 'D-4', date: '04.03.26', anchor: 9.979, fm: 9.537},
+                  {label: 'D-5', date: '03.03.26', anchor: 10.050, fm: 9.293},
+                  {label: 'D-6', date: '02.03.26', anchor: 9.692, fm: 9.293},
+                  {label: 'W-1', date: '27.02.26', anchor: 9.554, fm: 9.596},
                 ],
                 'BS-P-UK': [
-                  {label: 'D-1', date: '09.03', anchor: 9.051, fm: 9.157},
-                  {label: 'D-2', date: '06.03', anchor: 8.677, fm: 8.674},
-                  {label: 'D-3', date: '05.03', anchor: 8.321, fm: 8.257},
-                  {label: 'D-4', date: '04.03', anchor: 8.271, fm: 8.211},
-                  {label: 'D-5', date: '03.03', anchor: 7.731, fm: 7.731},
-                  {label: 'D-6', date: '02.03', anchor: 7.719, fm: 7.719},
-                  {label: 'W-1', date: '27.02', anchor: 6.784, fm: 6.674},
+                  {label: 'D-1', date: '09.03.26', anchor: 9.051, fm: 9.157},
+                  {label: 'D-2', date: '06.03.26', anchor: 8.677, fm: 8.674},
+                  {label: 'D-3', date: '05.03.26', anchor: 8.321, fm: 8.257},
+                  {label: 'D-4', date: '04.03.26', anchor: 8.271, fm: 8.211},
+                  {label: 'D-5', date: '03.03.26', anchor: 7.731, fm: 7.731},
+                  {label: 'D-6', date: '02.03.26', anchor: 7.719, fm: 7.719},
+                  {label: 'W-1', date: '27.02.26', anchor: 6.784, fm: 6.674},
                 ],
               }
               

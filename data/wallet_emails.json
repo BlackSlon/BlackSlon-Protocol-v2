@@ -1,0 +1,36 @@
+[
+  {
+    "email": "kdynkiewicz@gmail.com",
+    "timestamp": "2026-03-21T09:31:20.260Z",
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "verified": true
+  },
+  {
+    "email": "kdynkiewicz@gmail.com",
+    "timestamp": "2026-03-21T09:49:54.173Z",
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+  },
+  {
+    "email": "s@k.pl",
+    "timestamp": "2026-03-21T11:22:04.265Z",
+    "verified": true,
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+  },
+  {
+    "email": "k@ks.pl",
+    "timestamp": "2026-03-21T13:54:18.518Z",
+    "verified": true,
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+  },
+  {
+    "email": "wd@wdd.pl",
+    "timestamp": "2026-03-21T14:02:00.528Z",
+    "verified": true,
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+  }
+]

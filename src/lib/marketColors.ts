@@ -11,5 +11,8 @@ export function getMarketColors(marketId: string) {
       ? 'from-cyan-700/40 via-green-700/40 to-cyan-700/40'
       : 'from-yellow-700/40 via-green-700/40 to-yellow-700/40',
     label:       isGas ? 'text-cyan-400'       : 'text-yellow-500',
+    // Badge: market-specific pill for section titles
+    badgeText:   isGas ? 'text-cyan-400'       : 'text-yellow-500',
+    badgeBorder: isGas ? 'border-cyan-500/40'  : 'border-yellow-500/40',
   }
 }

@@ -1,161 +1,210 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { BrowserProvider } from 'ethers'
-import { Button } from './ui/Button'
+import { useState } from 'react'
+import { useUserAccount } from '@/store/blackslon'
 
-declare global {
-  interface Window {
-    ethereum?: any
-  }
-}
+type WalletStep = 'idle' | 'email' | 'otp' | 'activating' | 'connected'
 
 export default function WalletConnect() {
-  const [address, setAddress] = useState<string | null>(null)
-  const [isConnecting, setIsConnecting] = useState(false)
+  const { user, activateWallet, disconnectWallet } = useUserAccount()
+  const [step, setStep] = useState<WalletStep>(user.walletConnected ? 'connected' : 'idle')
+  const [email, setEmail] = useState('')
+  const [otp, setOtp] = useState('')
+  const [devCode, setDevCode] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [showWalletModal, setShowWalletModal] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    // Check if already connected
-    const checkConnection = async () => {
-      if (typeof window !== 'undefined' && window.ethereum) {
-        try {
-          const provider = new BrowserProvider(window.ethereum)
-          const accounts = await provider.listAccounts()
-          if (accounts.length > 0) {
-            setAddress(accounts[0].address)
-          }
-        } catch (error) {
-          console.error('Failed to check connection:', error)
-        }
-      }
+  const handleSendOtp = async () => {
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      setError('Enter a valid email address')
+      return
     }
-    checkConnection()
-  }, [])
-
-  const handleConnect = async (walletType: string) => {
-    setIsConnecting(true)
     setError(null)
-    setShowWalletModal(false)
-    
+    setLoading(true)
     try {
-      if (walletType === 'metamask') {
-        if (typeof window !== 'undefined' && window.ethereum) {
-          const provider = new BrowserProvider(window.ethereum)
-          await provider.send('eth_requestAccounts', [])
-          const signer = await provider.getSigner()
-          setAddress(signer.address)
-        } else {
-          setError('Please install MetaMask')
-        }
-      } else if (walletType === 'walletconnect') {
-        // WalletConnect implementation would go here
-        setError('WalletConnect coming soon')
-      } else if (walletType === 'coinbase') {
-        // Coinbase Wallet implementation would go here  
-        setError('Coinbase Wallet coming soon')
-      }
-    } catch (error: any) {
-      setError(error.message || 'Connection failed')
-    } finally {
-      setIsConnecting(false)
+      const res = await fetch('/api/wallet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error || 'Error sending code'); setLoading(false); return }
+      if (data.devCode) setDevCode(data.devCode)
+      setStep('otp')
+    } catch {
+      setError('Network error — try again')
     }
+    setLoading(false)
+  }
+
+  const handleVerifyOtp = async () => {
+    if (otp.length !== 6) { setError('Enter the 6-digit code'); return }
+    setError(null)
+    setLoading(true)
+    try {
+      const res = await fetch('/api/wallet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'verify', email, code: otp }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error || 'Invalid code'); setLoading(false); return }
+      setStep('activating')
+      setTimeout(() => {
+        activateWallet(email)
+        setStep('connected')
+      }, 1500)
+    } catch {
+      setError('Network error — try again')
+    }
+    setLoading(false)
   }
 
   const handleDisconnect = () => {
-    setAddress(null)
+    disconnectWallet()
+    setStep('idle')
+    setEmail('')
+    setOtp('')
+    setDevCode(null)
     setError(null)
   }
 
-  if (address) {
+  const closeModal = () => { setStep('idle'); setError(null) }
+
+  // Connected state
+  if (user.walletConnected || step === 'connected') {
     return (
-      <div className="flex items-center gap-2">
-        <div className="text-[9px] text-gray-400">
-          {address.slice(0, 6)}...{address.slice(-4)}
+      <div className="border border-gray-800 rounded-sm p-2">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-[9px] text-green-500 font-bold tracking-wider">BLACKSLON WALLET</span>
+          </div>
+          <button onClick={handleDisconnect} className="text-[7px] text-gray-600 hover:text-red-500 uppercase tracking-widest transition-colors">
+            Disconnect
+          </button>
         </div>
-        <Button
-          onClick={handleDisconnect}
-          variant="outline"
-          size="sm"
-          className="text-[8px] px-2 py-1 border-gray-700 text-gray-400 hover:border-red-600 hover:text-red-600"
-        >
-          Disconnect
-        </Button>
+        <div className="text-[8px] text-gray-500">
+          {user.walletAddress?.slice(0, 6)}...{user.walletAddress?.slice(-4)}
+        </div>
+        {user.walletEmail && (
+          <div className="text-[7px] text-gray-600 mt-0.5">{user.walletEmail}</div>
+        )}
       </div>
     )
   }
 
   return (
     <div className="space-y-2">
-      <Button
-        onClick={() => setShowWalletModal(true)}
-        disabled={isConnecting}
-        className="w-full text-[9px] py-2 bg-gray-800 text-gray-400 hover:bg-amber-700 hover:text-black disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-      >
-        {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-      </Button>
+      {step === 'idle' && (
+        <button
+          onClick={() => setStep('email')}
+          className="w-full text-[9px] py-2 border border-gray-700 bg-gray-900 text-gray-400 hover:border-amber-700 hover:text-amber-600 transition-all rounded-sm uppercase tracking-widest"
+        >
+          Connect Wallet
+        </button>
+      )}
 
-      {error && (
-        <div className="text-[8px] text-red-600 text-center">
-          {error}
+      {/* ── Email input modal ── */}
+      {step === 'email' && (
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
+          <div className="bg-black border border-gray-800 rounded-sm p-5 w-80">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-amber-700 flex items-center justify-center">
+                  <span className="text-black text-[8px] font-black">BS</span>
+                </div>
+                <h3 className="text-[11px] text-gray-300 font-bold tracking-wider">BlackSlon Wallet</h3>
+              </div>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-300 text-[16px]">×</button>
+            </div>
+            <div className="text-[8px] text-gray-500 mb-3">
+              Enter your email. A 6-digit verification code will be sent to confirm your identity.
+            </div>
+            <input
+              type="email"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setError(null) }}
+              placeholder="your@email.com"
+              autoFocus
+              className="w-full bg-gray-900 border border-gray-700 rounded-sm px-3 py-2 text-[10px] text-white placeholder-gray-600 outline-none focus:border-amber-700 transition-colors mb-2"
+              onKeyDown={e => e.key === 'Enter' && handleSendOtp()}
+            />
+            {error && <div className="text-[8px] text-red-600 mb-2">{error}</div>}
+            <button
+              onClick={handleSendOtp}
+              disabled={loading}
+              className="w-full py-2 border border-amber-700 text-amber-600 text-[9px] uppercase tracking-widest rounded-sm hover:bg-amber-700 hover:text-black transition-all disabled:opacity-50"
+            >
+              {loading ? 'Sending...' : 'Send Verification Code'}
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Wallet Selection Modal */}
-      {showWalletModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-black border border-gray-800 rounded-sm p-4 w-80">
+      {/* ── OTP verification modal ── */}
+      {step === 'otp' && (
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
+          <div className="bg-black border border-gray-800 rounded-sm p-5 w-80">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-[12px] text-gray-300 font-bold">Select Wallet</h3>
-              <button
-                onClick={() => setShowWalletModal(false)}
-                className="text-gray-500 hover:text-gray-300 text-[16px]"
-              >
-                ×
-              </button>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-amber-700 flex items-center justify-center">
+                  <span className="text-black text-[8px] font-black">BS</span>
+                </div>
+                <h3 className="text-[11px] text-gray-300 font-bold tracking-wider">BlackSlon Wallet</h3>
+              </div>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-300 text-[16px]">×</button>
             </div>
-            
-            <div className="space-y-2">
-              <button
-                onClick={() => handleConnect('metamask')}
-                className="w-full flex items-center gap-3 p-3 border border-gray-800 rounded-sm hover:border-amber-700 transition-all"
-              >
-                <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[10px] font-bold">M</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-[10px] text-gray-300">MetaMask</div>
-                  <div className="text-[7px] text-gray-500">Connect to your MetaMask wallet</div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => handleConnect('walletconnect')}
-                className="w-full flex items-center gap-3 p-3 border border-gray-800 rounded-sm hover:border-blue-700 transition-all"
-              >
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[10px] font-bold">W</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-[10px] text-gray-300">WalletConnect</div>
-                  <div className="text-[7px] text-gray-500">Connect to WalletConnect</div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => handleConnect('coinbase')}
-                className="w-full flex items-center gap-3 p-3 border border-gray-800 rounded-sm hover:border-blue-500 transition-all"
-              >
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[10px] font-bold">C</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-[10px] text-gray-300">Coinbase Wallet</div>
-                  <div className="text-[7px] text-gray-500">Connect to Coinbase Wallet</div>
-                </div>
-              </button>
+            <div className="text-center mb-4">
+              <div className="text-[10px] text-green-500 mb-1">✓ Code sent</div>
+              <div className="text-[9px] text-amber-600 font-bold">{email}</div>
             </div>
+            {devCode && (
+              <div className="mb-3 px-3 py-2 bg-gray-900 border border-gray-700 rounded-sm text-center">
+                <div className="text-[7px] text-gray-500 mb-1 uppercase tracking-widest">Dev mode — your code</div>
+                <div className="text-[18px] font-bold text-amber-500 tracking-[0.4em]">{devCode}</div>
+              </div>
+            )}
+            {!devCode && (
+              <div className="text-[8px] text-gray-500 mb-3 text-center">
+                Check your inbox and enter the 6-digit code below.
+              </div>
+            )}
+            <input
+              type="text"
+              value={otp}
+              onChange={e => { setOtp(e.target.value.replace(/\D/g, '').slice(0, 6)); setError(null) }}
+              placeholder="_ _ _ _ _ _"
+              maxLength={6}
+              autoFocus
+              className="w-full bg-gray-900 border border-gray-700 rounded-sm px-3 py-2 text-[16px] text-white text-center tracking-[0.5em] placeholder-gray-700 outline-none focus:border-amber-700 transition-colors mb-2"
+              onKeyDown={e => e.key === 'Enter' && handleVerifyOtp()}
+            />
+            {error && <div className="text-[8px] text-red-600 mb-2 text-center">{error}</div>}
+            <button
+              onClick={handleVerifyOtp}
+              disabled={loading || otp.length !== 6}
+              className="w-full py-2 border border-green-700 text-green-600 text-[9px] uppercase tracking-widest rounded-sm hover:bg-green-700 hover:text-black transition-all disabled:opacity-30 font-bold"
+            >
+              {loading ? 'Verifying...' : 'Verify & Activate Wallet'}
+            </button>
+            <button
+              onClick={() => { setStep('email'); setOtp(''); setDevCode(null); setError(null) }}
+              className="w-full mt-2 py-1.5 text-[8px] text-gray-600 hover:text-gray-400 uppercase tracking-widest transition-colors"
+            >
+              ← Back
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Activating animation ── */}
+      {step === 'activating' && (
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
+          <div className="bg-black border border-gray-800 rounded-sm p-5 w-80 text-center">
+            <div className="text-[10px] text-amber-600 animate-pulse tracking-widest mb-2">ACTIVATING WALLET...</div>
+            <div className="text-[8px] text-gray-500">Verifying your identity</div>
+            <div className="text-[8px] text-gray-500 mt-1">Crediting 1,000 €BSR to your balance</div>
           </div>
         </div>
       )}

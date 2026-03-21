@@ -32,11 +32,11 @@ export default function DealConfirmationOverlay() {
         <div className="text-[11px] text-gray-400 uppercase tracking-widest mb-1">
           {deal.side} {deal.filledQty} units @ {deal.price.toFixed(2)} EUR
         </div>
-        <div className="text-[10px] text-gray-600 uppercase tracking-widest">
+        <div className="text-[10px] text-gray-400 uppercase tracking-widest">
           {deal.marketId} · {deal.filledQty * 100} kWh
         </div>
         {deal.remainingQty > 0 && (
-          <div className="text-[9px] text-gray-700 mt-2 uppercase tracking-widest">
+          <div className="text-[9px] text-gray-500 mt-2 uppercase tracking-widest">
             + {deal.remainingQty} units resting in order book
           </div>
         )}
