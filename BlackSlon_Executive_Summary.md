@@ -89,6 +89,6 @@ In 1973, Marc Rich executed the first spot oil trade — bypassing the long-term
 
 ---
 
-**Website:** blackslon.org | **White Paper v3.0:** blackslon.org/whitepaper | **Protocol Demo:** blackslon.org/markets
+**Website:** [blackslon.org](https://blackslon.org) | **White Paper v3.0:** [blackslon.org/whitepaper](https://blackslon.org/whitepaper) | **Protocol Demo:** [blackslon.org/markets](https://blackslon.org/markets)
 
 *© BlackSlon Protocol. All rights reserved. March 2026.*
