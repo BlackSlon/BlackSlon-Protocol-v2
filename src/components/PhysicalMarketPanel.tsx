@@ -184,7 +184,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
           Physical Market Panel
         </div>
-        <div className="w-[80%] border-b border-gray-800 mt-2" />
+        <div className="w-[80%] border-b border-gray-800 mt-1" />
       </div>
 
       <div className="flex-grow px-6 pb-6 flex flex-col min-h-0">
@@ -203,8 +203,11 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
           </div>
         </div>
 
+        {/* ── BSSZ Corridor + Table — fixed height matching Virtual order book ── */}
+        <div className="overflow-hidden flex flex-col" style={{ height: '255px' }}>
+
         {/* ── BSSZ Corridor — today's values ── */}
-        <div className={`mb-2 px-2 py-2 border rounded-sm ${isLocked ? 'border-red-500/60 bg-red-900/10' : colors.border}`}>
+        <div className={`mb-2 px-2 py-2 border rounded-sm shrink-0 ${isLocked ? 'border-red-500/60 bg-red-900/10' : colors.border}`}>
           <div className="flex justify-between items-center mb-1">
             <div className={`text-[6px] uppercase tracking-widest ${colors.title}`}>
               Active until: {timeRemaining}
@@ -247,7 +250,7 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
         </div>
 
         {/* ── Historical anchor table ── */}
-        <div className="flex-grow overflow-hidden">
+        <div className="flex-grow overflow-hidden min-h-0">
           <div className="grid grid-cols-12 text-[9px] uppercase pb-1 border-b border-gray-900 mb-1">
             <div className="col-span-2 text-gray-400 font-bold">Ref</div>
             <div className="col-span-2 text-gray-400 font-bold">Date</div>
@@ -288,8 +291,10 @@ export default function PhysicalDimension({ selectedMarketId = 'BS-P-PL' }: Prop
           </div>
         </div>
 
+        </div>{/* end fixed-height BSSZ+table container */}
+
         {/* ── FM Comparison Table ── */}
-        <div className="mt-3 border-t border-gray-800 pt-3">
+        <div className="mt-2 border-t border-gray-800 pt-2">
           <div className="flex items-center justify-center gap-2">
             <Tooltip content={tt.bsszVsFwd}>
               <div className={`text-[9px] tracking-wider font-bold mb-1 text-center ${colors.title}`}>

@@ -150,7 +150,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
         <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-bold">
           Virtual Market Panel
         </div>
-        <div className="w-[80%] border-b border-gray-800 mt-2" />
+        <div className="w-[80%] border-b border-gray-800 mt-1" />
       </div>
 
       {/* ── Order Book title ── */}
@@ -189,7 +189,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
               </div>
             </div>
             <div className="overflow-hidden">
-              {Array.from({ length: 10 }, (_, i) => {
+              {Array.from({ length: 9 }, (_, i) => {
                 const o = bids[i]
                 if (!o) return (
                   <div key={`eb-${i}`} className="grid grid-cols-3 px-4 border-b border-gray-900/10" style={{ height: '22px' }} />
@@ -210,7 +210,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                     <div className="text-center text-[11px] self-center text-gray-400">
                       {o.units}
                     </div>
-                    <div className="text-right text-[11px] self-center text-green-600">
+                    <div className={`text-right self-center text-green-600 ${i === 0 ? 'text-sm font-normal' : 'text-[11px]'}`}>
                       {o.price.toFixed(2)}
                       {o.ownedByUser && <span className="ml-1 text-[7px] text-green-900">●</span>}
                     </div>
@@ -237,7 +237,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
               </div>
             </div>
             <div className="overflow-hidden">
-              {Array.from({ length: 10 }, (_, i) => {
+              {Array.from({ length: 9 }, (_, i) => {
                 const o = asks[i]
                 if (!o) return (
                   <div key={`ea-${i}`} className="grid grid-cols-3 px-4 border-b border-gray-900/10" style={{ height: '22px' }} />
@@ -252,7 +252,7 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                         : `grid grid-cols-3 px-4 border-b border-gray-900/50 hover:bg-red-500/10 transition-all ${o.ownedByUser ? 'bg-red-900/20' : ''}`
                     }
                   >
-                    <div className="text-left text-[11px] self-center text-red-500">
+                    <div className={`text-left self-center text-red-500 ${i === 0 ? 'text-sm font-normal' : 'text-[11px]'}`}>
                       {o.price.toFixed(2)}
                       {o.ownedByUser && <span className="ml-1 text-[7px] text-red-900">●</span>}
                     </div>
@@ -292,8 +292,8 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                   }`}>
                     <div className={`col-span-1 text-[9px] font-black self-center ${isBuy ? 'text-green-600' : 'text-red-500'}`}>{isBuy ? 'B' : 'S'}</div>
                     <div className={`col-span-3 text-[9px] self-center ${isBuy ? 'text-green-600' : 'text-red-500'}`}>{new Date(t.timestamp).toLocaleTimeString('pl-PL')}</div>
-                    <div className={`col-span-3 text-center text-[13px] font-black self-center ${isBuy ? 'text-green-600' : 'text-red-500'}`}>{t.price.toFixed(2)}</div>
-                    <div className="col-span-2 text-center text-[11px] font-bold self-center text-gray-300">{t.units}</div>
+                    <div className={`col-span-3 text-center text-sm font-normal self-center ${isBuy ? 'text-green-600' : 'text-red-500'}`}>{t.price.toFixed(2)}</div>
+                    <div className="col-span-2 text-center text-sm font-normal self-center text-gray-300">{t.units}</div>
                     <div className="col-span-3 text-right text-[9px] self-center text-gray-300">{formatVolume(t.volume)}</div>
                   </div>
                 )
@@ -338,15 +338,15 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
                   <div className="mt-1 grid grid-cols-3 gap-x-1 text-center">
                     <div>
                       <div className="text-[7px] text-gray-500 uppercase mb-0.5">NOW</div>
-                      <div className={`text-sm font-black leading-none ${colors.value}`}>{displayBsei.It.toFixed(3)}</div>
+                      <div className={`text-sm font-normal leading-none ${colors.value}`}>{displayBsei.It.toFixed(2)}</div>
                     </div>
                     <div>
                       <div className="text-[7px] text-gray-500 uppercase mb-0.5">D-1</div>
-                      <div className="text-[11px] text-gray-400 leading-none">{displayBsei.d1.toFixed(3)}</div>
+                      <div className="text-sm font-normal text-gray-400 leading-none">{displayBsei.d1.toFixed(2)}</div>
                     </div>
                     <div>
                       <div className="text-[7px] text-gray-500 uppercase mb-0.5">D-2</div>
-                      <div className="text-[11px] text-gray-400 leading-none">{displayBsei.d2.toFixed(3)}</div>
+                      <div className="text-sm font-normal text-gray-400 leading-none">{displayBsei.d2.toFixed(2)}</div>
                     </div>
                   </div>
                 </div>
