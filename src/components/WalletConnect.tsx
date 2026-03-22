@@ -71,22 +71,18 @@ export default function WalletConnect() {
   // Connected state
   if (user.walletConnected || step === 'connected') {
     return (
-      <div className="border border-gray-800 rounded-sm p-2">
-        <div className="flex items-center justify-between mb-1">
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[9px] text-green-500 font-bold tracking-wider">BLACKSLON WALLET</span>
-          </div>
-          <button onClick={handleDisconnect} className="text-[7px] text-gray-400 hover:text-red-500 uppercase tracking-widest transition-colors">
-            Disconnect
-          </button>
+      <div className="border border-gray-800 rounded-sm px-2 py-1.5 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
+          <span className="text-[8px] text-green-500 font-bold tracking-wider uppercase shrink-0">BLACKSLON WALLET</span>
+          <span className="text-[8px] text-gray-500 shrink-0">{user.walletAddress?.slice(0, 6)}...{user.walletAddress?.slice(-4)}</span>
+          {user.walletEmail && (
+            <span className="text-[7px] text-gray-400 truncate">{user.walletEmail}</span>
+          )}
         </div>
-        <div className="text-[8px] text-gray-500">
-          {user.walletAddress?.slice(0, 6)}...{user.walletAddress?.slice(-4)}
-        </div>
-        {user.walletEmail && (
-          <div className="text-[7px] text-gray-400 mt-0.5">{user.walletEmail}</div>
-        )}
+        <button onClick={handleDisconnect} className="text-[7px] text-gray-400 hover:text-red-500 uppercase tracking-widest transition-colors shrink-0">
+          Disconnect
+        </button>
       </div>
     )
   }

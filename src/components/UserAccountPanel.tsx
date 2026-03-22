@@ -81,7 +81,7 @@ export default function UserAccountPanel() {
   const fundsAlert = useInsufficientFundsAlert(s => s.active)
 
   const [convertAmount, setConvertAmount] = useState('')
-  const [convertDirection, setConvertDirection] = useState<'BSR_TO_EURO' | 'EURO_TO_BSR'>('EURO_TO_BSR')
+  const [convertDirection, setConvertDirection] = useState<'BSR_TO_EURO' | 'EURO_TO_BSR'>('BSR_TO_EURO')
   const [convertError, setConvertError] = useState<string | null>(null)
   const [convertSuccess, setConvertSuccess] = useState(false)
   const [liquidationRisk, setLiquidationRisk] = useState<boolean | null>(null)
@@ -326,7 +326,7 @@ export default function UserAccountPanel() {
               </div>
             </Tooltip>
           </div>
-          <div className={`border rounded-sm px-3 py-1.5 transition-all ${fundsAlert ? 'border-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'border-gray-900'}`}>
+          <div className={`border rounded-sm px-3 py-1.5 transition-all ${fundsAlert ? 'border-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'border-gray-700'}`}>
             {/* Live rate */}
             <div className="flex items-center gap-2 mb-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-amber-700 animate-pulse shrink-0" />
