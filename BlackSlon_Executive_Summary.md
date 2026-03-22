@@ -48,12 +48,12 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 
 | Token | Market | Reference |
 |:------|:-------|:----------|
-| BS-P-DE | German Power | EEX/EPEX |
+| BS-P-DE | German Power | Phelix-EEX/EPEX |
 | BS-P-UK | British Power | ICE |
 | BS-P-PL | Polish Power | TGE |
 | BS-P-NO | Nordic Power | Nasdaq Commodities/EEX|
-| BS-G-NL | Dutch Gas | ICE |
-| BS-G-DE | German Gas | EEX |
+| BS-G-NL | Dutch Gas | TTF-ICE |
+| BS-G-DE | German Gas | THE-EEX |
 | BS-G-PL | Polish Gas | TGE |
 | BS-G-BG | Bulgarian Gas | Balkan Gas Hub |
 
@@ -61,11 +61,11 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 
 ## Founder
 
-Built by an energy commodity trader who spent 20+ years inside the system BlackSlon is built to transform. Trading Natural Gas, Power, Oil Products, Carbon Emissions and cross-commodity spreads as Trader, Originator, Partner and CEO in tier-one global trading houses. For years, one of the largest natural gas suppliers from the EU to Ukraine. 
+Built by an energy commodity trader who spent 20+ years inside the system BlackSlon is built to transform. Trading Natural Gas, Power, Oil Products, Carbon Emissions and cross-commodity spreads as Trader, Originator, Director and Partner in state-owned, private and global trading houses.
 
-Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks. 
+*Exactly two decades ago in 2006, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.*
 
-Exactly two decades ago in 2006, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.
+*Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks.*
 
 *Alumnus: University of Warsaw · St. Petersburg State University · MGIMO Moscow*
 

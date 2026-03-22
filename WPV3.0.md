@@ -6,7 +6,7 @@ Language: English | Classification: Public*
 
 **"I don't add layers of complexity. I strip them away"**
 
-*— K. Malewicz (Founder of Suprematism, 1915) | K. Dynkiewicz (Founder of BlackSlon, 2026)*
+*— K Malewicz (Founder of Suprematism, 1915) | K Dynkiewicz (Founder of BlackSlon, 2026)*
 
 
 ## Table of Contents
@@ -22,7 +22,7 @@ Language: English | Classification: Public*
 9. [BSEI Benchmark: The Virtual Settlement Index](#9-blackslon-energy-index-bsei-the-rolling-valuation--risk-benchmark)
 10. [BS-P & BS-G Token Specification](#10-bs-p--bs-g-token-specification)
 11. [Economic Equilibrium & Treasury Governance](#11-economic-equilibrium--treasury-governance)
-12. [Ecosystem Solvency: Macro Level](#12-ecosystem-solvency-macro-system-level)
+12. [Protocol Solvency: Macro Level](#12-protocol-solvency-macro-system-level)
 13. [Risk Management: Micro Level](#13-risk-management-user-level-portfolio-protection)
 14. [Liquidity Layer](#14-liquidity-layer-market-depth--continuous-settlement)
 15. [Physical Liquidity Provider (PLP)](#15-physical-liquidity-provider-plp-the-bridge-between-virtual-and-physical-energy-markets)
@@ -38,7 +38,7 @@ The European wholesale energy market is one of the largest and most consequentia
 
 Power alone: approximately **3,570,000,000 MWh** traded annually at an average of **€70/MWh** — a market valued at **~€250 billion** in physical delivery. Natural gas: approximately **5,100,000,000 MWh** equivalent at **€50/MWh** — another **~€250 billion**. Combined physical delivery value: **~€500 billion per year**.
 
-But physical delivery is only the tip of the iceberg. On the TTF gas hub alone (by far the biggest European energy exchange), physically settled contracts represent an estimated 3–5% of total traded volume. The rest is financial — hedges, spreads, rollovers, and speculative flow. The true notional turnover of European energy markets runs into the **trillions of euros annually**.
+But physical delivery is only the tip of the iceberg. On the TTF gas hub alone (by far the biggest European energy hub), physically settled contracts represent an estimated 3–5% of total traded volume. The rest is financial — hedges, spreads, rollovers, and speculative flow. The true notional turnover of European energy markets runs into the **trillions of euros annually**.
 
 And yet — this trillion-euro market is effectively controlled by fewer than a few hundred of entities.
 
@@ -48,21 +48,21 @@ And yet — this trillion-euro market is effectively controlled by fewer than a 
 
 The European wholesale energy market does not have one centre. It has two interlocking institutional pillars — and together, they define the price and who is allowed to participate in a trillion-euro flow.
 
-**The European Energy Exchange (EEX)**, headquartered in Leipzig, officially lists between 800 and 1,000 members. Consolidate subsidiaries into their parent holding groups and the number narrows further: approximately 700 to 800 unique players. Roughly 30% are pure financial institutions — banks, hedge funds, and proprietary trading desks with no physical energy interest whatsoever.
+**The European Energy Exchange (EEX)**, headquartered in Leipzig, Germany officially lists between 800 and 1,000 members. Consolidate subsidiaries into their parent holding groups and the number narrows further: approximately 700 to 800 unique players. Roughly 30% are pure financial institutions — banks, hedge funds, and proprietary trading desks with no physical energy interest whatsoever.
 
-**ICE Futures Europe**, headquartered in London, operates the benchmarks that price the world's energy: TTF Natural Gas Futures — the reference price for European gas — and ICE Brent Crude, the global oil benchmark. Its official membership list counts 316 direct participants. Not small firms. The global financial and energy elite: Goldman Sachs, J.P. Morgan, Morgan Stanley, Barclays, BNP Paribas, Shell, BP, TotalEnergies, RWE, Vattenfall, Equinor, Citadel, Virtu Financial, Optiver, TP ICAP.
+**ICE Futures Europe**, headquartered in London, UK operates the benchmarks that price the world's energy: TTF Natural Gas Futures — the reference price for European gas — and ICE Brent Crude, the global oil benchmark. Its official membership list counts 316 direct participants. Not small firms. The global financial and energy elite: Goldman Sachs, J.P. Morgan, Morgan Stanley, Barclays, BNP Paribas, Shell, BP, TotalEnergies, RWE, Vattenfall, Equinor, Citadel, Virtu Financial, Optiver, TP ICAP.
 
 Consolidate subsidiaries to real holding groups and the number falls to approximately **200–220** unique institutional actors and the majority of volume concentrates in the hands of perhaps 50.
 
 These EEX and ICE members are not a homogeneous mass. They are a precisely stratified ecosystem:
 
-- **75 global banks (G-SIBs)** — They don't just clear they also trade. Every transaction on ICE/EEX passes through their balance sheets. When prices spike 15% in a single session and clearinghouses double margin requirements, these are the the bst positioned to capture momentum and trade. Their capital is unconstrained. Their margin calls are self-financed. Financial giants accumulate positions at distressed prices — legally, algorithmically, and at scale. The market is not merely unfair at the moment of maximum stress. It is architecturally designed to transfer wealth at precisely that moment.
+- **75 global banks (G-SIBs)** — They don't just clear, they also trade. Every transaction on ICE/EEX passes through their balance sheets. When prices spike 30% in a single session and clearinghouses double margin requirements, these are the the bst positioned to capture momentum and trade. Their capital is unconstrained. Their margin calls are self-financed. Financial giants accumulate positions at distressed prices — legally, algorithmically, and at scale. The market is not merely unfair at the moment of maximum stress. It is architecturally designed to transfer wealth at precisely that moment.
 
-- **65 proprietary trading firms and hedge funds** — the liquidity layer. Citadel, Optiver, Flow Traders, Virtu. They hold no physical energy interest. They trade their own capital through high-frequency algorithms. They are why the price on your screen updates every millisecond. They are also why, in conditions of extreme volatility — a Middle East escalation, a Gazprom supply cut, a cold snap across the continent — price movements are amplified rather than absorbed.
+- **65 proprietary trading firms and hedge funds** — the liquidity layer. Citadel, Optiver, Flow Traders, Virtu. They hold no physical energy expousure. They trade their own capital through high-frequency algorithms. They are why the price on your screen updates every millisecond. They are also why, in conditions of extreme volatility — a Middle East escalation, a Gazprom supply cut, a cold snap across the continent — price movements are amplified rather than absorbed.
 
 - **120 brokers and inter-dealer brokers** — From institutional giants like TP ICAP, Marex, and BGC Partners to professional gateways like Interactive Brokers and retail platforms like XTB. This layer acts as the gatekeeper. Every smaller participant pays a heavy toll in the form of commissions, widening spreads, and "onboarding friction." Broker-published transparency data consistently confirms that **60–80%** of non-institutional participants lose capital while attempting to navigate these opaque, high-leverage environments.
 
-- **55 physical energy giants and commodity houses** — the anchor layer. Shell, BP, TotalEnergies, Equinor, RWE, Engie, Vattenfall. These are the participants that give the futures market its fundamental value. Shell does not sell TTF/Phelix Power to speculate. It sells to hedge its exposure to physical gas or power. This is the layer that anchors the forward curve to reality — the gravitational pull that no purely financial market possesses. However, these prefer trading on OTC market inder bilateral EFET agreements, with more preferable collateral terms, and no sos trict margin calls regimes.
+- **55 physical energy giants and commodity houses** — the anchor layer. Shell, BP, TotalEnergies, Equinor, RWE, Engie, Vattenfall, Orlen, Eni, Axpo. These are the participants that give the futures market its fundamental value. Shell does not sell TTF/Phelix Power to speculate (at least not as a core business activity). It sells to hedge its exposure to physical gas or power. This is the layer that anchors the forward curve to reality — the gravitational pull that no purely financial market possesses. However, these prefer trading on OTC market inder bilateral EFET agreements, with more preferable collateral terms, and no sos trict margin calls regimes.
 
 What is not on either list is as revealing as what is. No municipal heating utilities. No small power plants. No small renewable energy producers. No industrial consumers. No SMEs. No individuals. No entity without a **€3–5 million capital base** and six to twelve months of regulatory onboarding. EEX and ICE Futures Europe are, by architectural intention, closed to everyone outside a narrow institutional stratum.
 
@@ -80,15 +80,21 @@ The European wholesale energy market suffers from structural failures that no in
 
 Entry requires €3–5 million in liquid capital or bank guarantees — before a single trade is executed. Independent traders are forced to compete against state-backed giants with investment-grade ratings and unlimited access to cheap capital, using nothing but their own equity. These assets must be held for years to cover long-term obligations, creating a hidden, compounding cost. 
 
-To make matters worse, energy trading activity is essentially an unbankable business. In most industries, capital can be leveraged to scale. In energy, the banking sector is paralyzed by risk aversion. From my experience, a trader must usually demonstrate 2-3 years of consistent performance, before a bank even considers opening a credit line or providing a bank guarantee. This creates a brutal, uneven playing field. Independent traders are forced to use 100% of their own equity to compete directly with state-backed giants who enjoy investment - grade ratings and unlimited access to cheap capital. 
+To make matters worse, gas & power trading activity is essentially an unbankable business. In most industries, capital can be leveraged to scale. In energy, the banking sector is paralyzed by risk aversion. From my experience, a trader must usually demonstrate 2-3 years of consistent performance, before a bank even considers opening a credit line or providing a bank guarantee. This creates a brutal, uneven playing field. Independent traders are forced to use 100% of their own equity to compete directly with state-backed giants who enjoy investment - grade ratings and unlimited access to cheap capital. 
 
 Its not only about the amount of capital, but system architecture. To be able to trade with a few counterparties on OTC market, you cannot simply show your balance sheet or P&L. You are required to provide individual bank guarantees for every single counterparty just to receive a price quote, so befor you start trading with them. You must lock up millions in cash with 2 or 3 different players just for the privilege of seeing their prices.
 
+And then the payment asymmetry begins. Under the standard EFET framework agreement — the backbone of European OTC gas & power trading — an established counterparty such as Shell, Equinor, Orlen or BP will demand that you prepay for every volume you purchase, while they themselves operate on 30 to 45-day deferred payment terms as a matter of course. As a new entrant without credit history and hard assets, you finance their working capital while they hold yours. The cost of bridging that funding gap — runs into millions of euros annually. It is not a market fee. It is a rookie tax.
+
 **The Collapse of Risk Management** 
 
-CRO (Chief Risk Officer) in the energy sector over the last few years was the most frustrating seat at the table. Risk managers were like pilots watching the plane entered a storm no one had ever mapped. Their influence over reality dropped to zero. For decades, the industry lived by the gospel of Monte Carlo simulations and Value-at-Risk (VaR) models. But in today’s reality, these tools have become useless. They were built for a different world - one where annual price volatility stayed within a few percent, with low interest rates and regulations more predictable. They were never designed to survive a reality where prices swing by double digits in a single day. When the market moves 25% in a few hours, models simply disintegrate.
+CRO in the energy sector over the last few years was the most frustrating seat at the table. Risk managers were like pilots watching the plane entered a storm no one had ever mapped. Their influence over reality dropped to zero. For decades, the industry lived by the gospel of Monte Carlo simulations and Value-at-Risk (VaR) models. But in today’s reality, these tools have become useless. They were built for a different world - one where annual price volatility stayed within a few percent, with low interest rates and regulations more predictable. They were never designed to survive a reality where prices swing by double digits in a single day. When the market moves 25% in a few hours, models simply disintegrate.
 
-The summer 2022 (several months after the outbreak of the Russian-Ukrainian War, when physical gas flows were still largely intact) European gas prices surged from €70/MWh to an irrational €350/MWh. This was not driven by a physical shortage or actual demand, but by a systemic collapse of risk management mechanisms. Following the termination of long-term contracts with Russian Gazprom, the European market's largest gas trader was caught with a massive, unhedged short position. As prices rose, the company faced billions in margin calls they could not meet, triggering a forced buying spree to cover positions. The entire European market became a hostage to the insolvency of a single player, which drove prices to artificial levels that everyone knew were detached from reality, yet the system remained powerless to stop the spiral. To make matters worse, during such stress events, clearinghouses and brokers usually aggressively hike risk coefficients. This forces participants to post exponentially higher collateral just to maintain the exact same position. Instead of acting as a stabilizer, the system effectively cannibalizes its own participants, draining their remaining liquidty at the very moment they need it most. Instead of providing a safety, these institutions are creating a downward/upward spiral that destroys market.
+The summer of 2022 — several months after the outbreak of the Russian-Ukrainian War, when physical gas flows were still largely intact — European gas prices surged from 70 EUR/MWh to an irrational 350 EUR/MWh. This was not driven by a physical shortage or actual demand, but by a systemic collapse of risk management mechanisms. Following the termination of long-term contracts with Russian Gazprom — which at the time supplied over 40% of all gas imported into the European Union — the European market's largest gas trader was caught with a massive, unhedged short position. As prices rose, the company faced billions in margin calls they could not meet, triggering a forced buying spree to cover positions. The entire European market became a hostage to the insolvency of a single player, which drove prices to artificial levels that everyone knew were detached from reality, yet the system remained powerless to stop the spiral.
+
+The contagion did not stop at gas. German baseload power — the Cal+1 2023 forward contract — surged from approximately 100 EUR/MWh to over 900 EUR/MWh, a move of nearly 800%. The driver was not a physical shortage of electricity, but the structural mechanics of a marginal pricing system where gas-fired generation sets the clearing price — amplifying every move in TTF into the power market with devastating force.
+
+To make matters worse, during such stress events, clearinghouses and brokers aggressively hike risk coefficients, forcing participants to post exponentially higher collateral just to maintain the exact same position. Instead of acting as a stabilizer, the system effectively cannibalizes its own participants — draining their remaining liquidity at the very moment they need it most. These institutions do not absorb the crisis. They accelerate it.
 
 That episode was not an anomaly. It was a preview.
 
@@ -96,17 +102,17 @@ Annualised volatility in European energy markets now regularly exceeds 50% — s
 
 The result is a structural collapse of the forward curve as a hedging instrument. Beyond the front month, liquidity has effectively disappeared for most participants. Year-ahead contracts — once the backbone of industrial energy procurement — are now the exclusive domain of entities with unlimited capital buffers.
 
-This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls like Goldman Sachs and JPMorgan hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. When the market moves 50% in hours, the models disintegrate — and clearinghouses respond by hiking margin requirements, cannibalising the remaining liquidity of their own participants at the worst possible moment.
+This creates the most dangerous asymmetry in modern financial markets: **at the exact moment of a shock — when prices spike, volatility explodes, and positions are being force-closed across the industry — financial moguls hold an unconstrained structural advantage and are best positioned to open new positions.** The market does not just disadvantage smaller participants during crises. It is structurally designed to transfer wealth from them to the institutions at the precise moment of maximum stress. 
 
 I spent over twenty years embracing volatility. It was never the trader's enemy — it was the point. Volatility is where mispricing lives, where prepared traders find edge. **But we have arrived somewhere different.** The volatility we face today is not opportunity. It is a carousel rotating fast enough that entry and exit are both impossible — not because you lack skill, but because the system can't handle that level of volatility. The game itself has been redesigned.
 
 **Legal Gatekeeping** 
 
-Energy Exchanges onboarding takes 6–12 months. A single standardised EFET framework agreement "negotiations" costs up to €50,000 in legal fees plus 6-12 months of "administrative overhead" — for a document that offers almost no room for actual negotiation. This is not compliance. It is a manufactured entry fee designed to maintain exclusivity.
+Energy Exchanges onboarding takes 6–12 months. A single standardised gas or power EFET framework agreement "negotiations" costs up to €50,000 in legal fees plus 6-12 months of "administrative overhead" — for a document that offers almost no room for actual negotiation. This is not compliance. It is a manufactured entry fee designed to maintain exclusivity.
 
 **Counterparty Risk** 
 
-Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022 without consequences. US LNG tankers performed mid-ocean U-turns in 2022, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded contractual penalties. 
+Over 30 energy suppliers collapsed in the UK alone since 2020. Gazprom terminated long-term contracts across Europe in 2022, which at the time supplied over 40% of all gas imported into the European Union. US LNG tankers performed mid-ocean U-turns in 2022, breaking delivery contracts with Asian buyers because spot premiums in Europe exceeded contractual penalties. 
 
 The ultimate example of credit and counterparty risk is the entire Ukrainian market. Ukraine represents one of the most significant energy hubs in Europe, but it operates under extreme financial friction. For years, even long before the outbreak of the war in 2022, it has remained a premium market, where energy prices were consistently among the highest in the region. It serves as the good example of a "broken system" operating in a 1990s-era paradigm due to a total lack of trust and efficiency.
 
@@ -132,35 +138,37 @@ The Summer/Winter storage spread — the foundational carry trade of European ga
 
 Furthermore, the traditional Peak/Off-Peak regime in power markets has become obsolete. In the legacy world, the afternoon window from 13:00 to 15:00 was the "Daily Peak" — the most expensive hours of the day. Today, in the era of mass solar generation, these same hours during summer often witness negative prices across major European wholesale markets. Producers are forced to pay consumers to offload their energy, a phenomenon known as "Renewable Cannibalization."
 
-**The Illusion of Unbundling and the Failure of Market Coupling** 
+**The Illusion of Unbundling**
 
-The European unbundling regulations were strictly designed to separate power generation from energy trading to ensure a fair, competitive market. However, state-backed entities have found ways to circumvent these laws, effectively bypassing the legal firewall between production and trade.
+The European Union unbundling regulations were strictly designed to separate assets (power plants, UGS, networks) from trading activity to ensure a fair, competitive market. However, state-backed entities have found ways to circumvent these laws, effectively bypassing the legal firewall between infrastructure and trade.
 
 One of examples of this system’s failure is the case of Kozienice Power Plant - the largest hard coal-fired plant in EU, owned by Poland’s second largest power producer, Enea SA. In 2022, this massive physical asset was effectively used as collateral at Polish Commodity Exchange (TGE) to meet multi-billion € margin call of  its trading subsidiary - ENEA Trading SA. While legally questionable under strict unbundling directives, and clearinghouse regulations, Enea/Kozienice case proved that state-backed giants are deemed "Too Big to Fail".
 
 While European unbundling was designed to separate infrastructure from trade to foster competition, the market is now dominated by the trading subsidiaries of energy giants who receive unsecured contracts and Parent Company Guarantees (PCG). This structural rigging makes it impossible for independent traders to compete on the same level.
 
-Market Coupling - the mechanism intended to harmonize electricity prices across Europe by linking national markets - has proven to be an illusion. Despite billions invested in infrastructure, massive price spreads between neighboring countries persist.
+**The Failure of Market Coupling** 
+
+Market Coupling - the mechanism intended to harmonize power prices across Europe by linking national markets - has proven to be an illusion. Despite billions invested in infrastructure, massive price spreads between neighboring countries persist.
 
 To make matters worse the system is now facing a structural rebellion:
 
-- Norway, traditionally the green battery of Europe, has begun to challenge the market coupling model. Facing domestic political pressure over high energy prices driven by exports, Norwegian authorities are increasingly reluctant to ship through interconnectors while their own citizens bear the cost. It is a profound paradox that Norway with cheap, zero emission hydro-power, is forced to impose skyrocketing energy bills on its own citizens due to the flawed Market Coupling mechanism.
+- Norway, traditionally the green battery of Europe, has begun to challenge the market coupling model. Facing domestic political pressure over high energy prices driven by exports, Norwegian authorities are increasingly reluctant to ship through interconnectors while their own citizens bear the cost. It is a profound paradox that Norway with cheap, zero emission 100% hydro-power generation, is forced to impose skyrocketing energy bills on its own citizens due to the flawed Market Coupling mechanism.
 
-- When a crisis hits, European solidarity vanishes. Countries prioritize national grid stability and cheaper domectic prices over market-clearing mechanisms. This environment of regulatory hypocrisy and national protectionism proves that the current "Single European Energy Market" is a fiction and structural failure, where wealth transfer mechanism fuels a national backlash and proves that the current protocol of cross-border/ trading is fundamentally broken. 
+- When a crisis hits, European solidarity vanishes. Countries prioritize national grid stability and cheaper domectic prices over market-clearing mechanisms. This environment of regulatory hypocrisy and national protectionism proves that the current "Single European Energy Market" is a fiction and structural failure.
 
 **Political and Regulatory Arbitrariness**
 
-Energy markets in the EU increasingly subject to retroactive Windfall Taxes and sudden regulatory shifts. While many European nations imposed various windfall taxes in 2022, the most extreme examples occurred in Poland and Romania, where retrospective laws effectively confiscated more than 98% of profits from power traders. These levies were often applied to gains from risky positions closed months prior, punishing participants who had successfully managed their exposure long before the legislation was introduced. This creates a toxic environment of private risk, public profit - a system where traders bear 100% of the potential losses, while the state claims nearly all of the success. Such unpredictable and predatory interventionism destroys market liquidty and trust.
+Gas & Power markets in the EU are increasingly subject to retroactive Windfall Taxes and sudden regulatory shifts. While many European nations imposed various windfall taxes in 2022, the most extreme examples occurred in Poland and Romania, where retrospective laws effectively confiscated more than 98% of profits from wholesale power trading activity. These levies were often applied to gains from risky positions closed months prior, punishing participants who had successfully managed their exposure long before the legislation was introduced. This creates a toxic environment of private risk, public profit - a system where traders bear 100% of the potential losses, while the state claims nearly all of the success. Such unpredictable and predatory interventionism destroys market liquidty and trust.
 
 **The Forward Curve: Illusion & Reality**
 
 In the legacy world of energy finance, banks and institutional investors still demand 15-to-30-year price projections to approve investments in nuclear, gas, or renewable assets. However, the reality on the trading floor is different.
 
-- The 3-Year Horizon: Beyond a 2-to-3-year window, there is no real market, even in the most liquid ones. You cannot get a fixed price per kWh — whether as a consumer buying or a producer selling. You can sign a 15 or 30-year contract, but only with price formulas that reference the spot market — the very instrument most sensitive to short-term shocks. 95% of actual trading happens in the near-term. Geopolitical shocks, rapid regulatory shifts, and the Green Transition have made long-term price discovery nothing more than reading tea leaves.
+- The 3-Year Horizon: Beyond a 3-to-4-year window, there is no real market, even in the most liquid ones. You cannot get a fixed price per kWh — whether as a consumer buying or a producer selling. You can sign a 15 or 30-year contract, but only with price formulas that reference the spot market — the very instrument most sensitive to short-term shocks. 95% of actual trading happens in the near-term. Geopolitical shocks, rapid regulatory shifts, and the Green Transition have made long-term price discovery nothing more than reading tea leaves.
 
 - The Projection Paradox: Analysts still produce 20-year models, but they lack any merit-based foundation or proven predictive framework. These are paper realities built for banking compliance — completely disconnected from the actual risks that market participants face every day.
 
-- The Spot-Centric Shift: Because seasonality is almost dead and risks are systemic, the entire energy market is collapsing into a continuous present. The distinction between front-month, quarter, and year-ahead prices is blurring — not as a temporary anomaly, but as a structural feature of a market permanently reshaped by geopolitics and the energy transition.
+- The Spot-Centric Shift: Because seasonality is almost dead and risks are systemic, the entire gas & power market is collapsing into a continuous present. The distinction between front-month, quarter, and year-ahead prices is blurring — not as a temporary anomaly, but as a structural feature of a market permanently reshaped by geopolitics and the energy transition.
 
 - The Capital Paradox of Backwardation: Yet within this collapsing curve, one structural truth persists: European energy markets are backwardated — Cal+1 and Cal+2 contracts trade at a significant discount to spot, embedding cheaper future energy into their price. Every sophisticated institutional player knows this. Every major utility, every investment-grade trading house actively harvests this discount — buying cheap forward exposure today, locking in margins that smaller participants cannot access. The minimum ticket to participate in this trade on EEX or ICE is not a market decision. It is a capital gate: hundreds of thousands of euros in posted guarantees, held idle for 12 to 24 months, just to hold the position. Only entities with investment-grade credit ratings and balance sheets large enough to absorb multi-year margin obligations can afford to play at that end of the curve. For everyone else, the cheapest and most structurally advantaged part of the forward market is simply out of reach — not because of a lack of market access, but because of the cost of money itself.
 
@@ -168,22 +176,25 @@ In the legacy world of energy finance, banks and institutional investors still d
 
 The entry barrier for energy trading is not just capital, but the staggering cost and complexity of the IT infrastructure required to operate.
 
-- ETRM Oligopoly: Current market participants are forced to rely on a handful of specialized IT providers. These systems cost millions of euros in licensing fees and require teams of consultants for implementations that often last months.
+- ETRM Oligopoly: Current market participants are forced to rely on a handful of specialized IT providers. These systems often cost hundreds of thousands of euros in licensing fees and require teams of consultants for implementations and maintainance.
 
 - Operational Paralysis: These platforms are notoriously rigid. In a market where regulations and price dynamics change almost daily, these "legacy giants" take quarters to adapt. This delay leaves traders exposed to risks that their software cannot yet calculate or manage.
 
-- The Maintenance Trap: Continuous regulatory shifts (REMIT II, EU directives, national regulations) require constant, expensive updates. For many players, the IT overhead grows faster than their trading margins.
 ---
 
 ## 4. The BlackSlon Answer
 
 **Zero expiry. Zero formality. Zero barriers. Standard 100 kWh of energy in 1 Token.**
 
-BlackSlon is the first decentralised protocol built specifically for the European wholesale energy market. It does not attempt to replicate the legacy system on a blockchain. It eliminates the structural failures and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
+BlackSlon is the first decentralised protocol built specifically for the European wholesale gas & power market. It does not attempt to replicate the legacy system on a blockchain. It eliminates the structural failures and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
 
 **Universal Market Access** 
 
-We reduce the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract at wholesale market (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
+It reduces the minimum entry threshold by four orders of magnitude. Instead of €744,600 for the smallest German yearly power contract at wholesale market (1 MW Baseload × 8,760 hours × €85/MWh), participation begins at **100 kWh** — the price of a small energy unit. The same market, accessible to any participant, anywhere, at any time.
+
+**Perpetual Instruments**
+
+BlackSlon tokens are perpetual virtual instruments tracking the real-time value of power and gas within specific European markets. There is no forced roll, no year-end liquidity crunch, no expiry mechanics. A position opened today remains valid indefinitely — its price determined by supply and demand within the BlackSlon Protocol, continuously anchored to physical market reality through the weighted forward curve and smoothed by the ADR mechanism. In Phase 2, BS-P/G tokens gain physical redemption rights — becoming direct claims on energy delivery for eligible participants.
 
 **No Physical Delivery Clauses**
 
@@ -193,21 +204,17 @@ BlackSlon breaks this trap. BS-G/P tokens hedge price exposure without delivery 
 
 **The Democratisation of the Forward Curve**
 
-The BS-P and BS-G token price operates within a corridor anchored to physical market reality through the Physical Meridian — a weighted basket that permanently embeds 25% Calendar Year exposure into every token, regardless of size. Critically, both Cal+1 and Cal+2 are active components of this basket from July 1st — when the Dormant ADR activates and begins its weekly migration from Cal+1 toward Cal+2. The protocol is continuously rolling into the cheapest part of the forward curve, mechanically and without friction, harvesting the backwardation discount that institutional players spend millions in capital and legal overhead to access manually. When you buy 100 kWh of power token (ie. BS-P-DE) for a few euros, you are not buying spot-price exposure. You are buying utility token that already contains the structural discount of the forward curve — the same economic advantage that Goldman Sachs and Shell extract through multi-million euro Cal+1 and Cal+2 positions — compressed into a single token, accessible without a credit rating, without a bank guarantee, and without a six-month onboarding process.
+The BlackSlon tokens price operates within a corridor anchored to physical market reality through the Settlement Anchor — a weighted basket that permanently embeds 25% Calendar Year exposure into every token, regardless of size. Critically, both Cal+1 and Cal+2 are active components of this basket from July 1st — when the Dormant ADR activates and begins its weekly migration from Cal+1 toward Cal+2. The protocol is continuously rolling into the cheapest part of the forward curve, mechanically and without friction, harvesting the backwardation discount that institutional players spend millions in capital and legal overhead to access manually. When you buy 100 kWh of power token (ie. BS-P-DE) for a few euros, you are not buying spotshort-term-price exposure. You are buying utility token that already contains the structural discount of the forward curve — the same economic advantage that financial and energy moguls extract through multi-million euro Cal+1 and Cal+2 positions — compressed into a single token, accessible without a credit rating, without a bank guarantee, and without a six-month onboarding process.
 
 For the first time, the cheapest part of the energy market is also the most accessible.
 
-**Perpetual Instruments** 
+**Algorithmic Price Benchmark: BlackSlon Energy Settlement Index (BSEI)**
 
-BS-P and BS-G tokens — BlackSlon Power and Gas — are non-expiring claims on the real-time value of energy within specific European markets. There is no forced roll, no year-end liquidity crunch, no expiry mechanics. A position opened today remains valid indefinitely — its price determined by supply and demand within the BlackSlon Ecosystem, which is continuously anchored to physical market reality through the weighted forward curve - BlackSlon Settlement Zone and smoothed by the ADR mechanism. 
+Unlike crude oil markets where the last executed deal becomes the settlement reference — amplifying noise from thin or distressed trading — and unlike gas and power benchmarks that rely on end of the day fixings, which lag real market conditions and create manipulation windows at the close, the BSEI employs a three-tier Segmented R-VWAP over a 72-hour window: the most recent 24 hours carry 50% of the weight, the preceding 24–48 hours carry 25%, and the oldest 48–72 hours carry the remaining 25%. To manipulate the BSEI, a single actor would need to dominate trading volume across three consecutive days — making single-session manipulation economically unviable. The BSEI is not a price peg — it is a dynamic benchmark for mark-to-market valuation and risk management across all virtual energy markets of BlackSlon Protocol.
 
-**Algorithmic Price Truth — BlackSlon Energy Settlement Index (BSEI)**
+**Structural Volatility Filter: BlackSlon Settlement Zone (BSSZ)**
 
-Unlike crude oil markets where the last executed deal becomes the settlement reference — amplifying noise from thin or distressed trading — and unlike gas and power benchmarks that rely on daily fixings which lag real market conditions and create manipulation windows at the close, the BSEI employs a three-tier Segmented R-VWAP over a 72-hour window: the most recent 24 hours carry 50% of the weight, the preceding 24–48 hours carry 25%, and the oldest 48–72 hours carry the remaining 25%. To manipulate the BSEI, a single actor would need to dominate trading volume across three consecutive days — making single-session manipulation economically unviable. The BSEI is not a price peg — it is a dynamic benchmark for mark-to-market valuation and risk management across all virtual energy markets of BlackSlon Ecosystem.
-
-**Structural Volatility Filter — BlackSlon Settlement Zone (BSSZ)**
-
-The BSSZ does not suppress price discovery — it filters noise from signal. Token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th, The BlackSlon Settlement Anchor absorbed this shock, over those same eight trading days, the Anchor appreciated +55% — capturing the full directional trend — with a maximum single-day move of +19%, no single-session crashes, and zero transmission of the -19.5% daily collapse on March 10th. The trend was captured. The noise was not.
+The BSSZ does not suppress price discovery — it filters noise from signal. BlackSlon token prices are determined by supply and demand within a physically-anchored corridor, smoothed by the ADR mechanism and the weighted forward curve. When TTF gas market surged +114.8% in 8 trading days following the Iran '26 conflict — from 31.96 EUR/MWh on February 27th to a peak of 68.63 EUR/MWh on March 9th, only to crash -33.8% by March 10th, The BlackSlon Settlement Anchor absorbed this shock, over those same eight trading days, the Anchor appreciated +55% — capturing the full directional trend — with a maximum single-day move of +19%, no single-session crashes, and zero transmission of the -19.5% daily collapse on March 10th. The trend was captured. The noise was not.
 
 **Instant Settlement. No Intermediaries** 
 
@@ -215,11 +222,11 @@ eEURO — MiCA-compliant Euro stablecoin — settles positions in seconds. No cl
 
 **Institutional-Grade Risk Architecture** 
 
-The protocol operates a dual-layer risk framework: individual account health monitored in real time through the Health Factor ($H_{user}$), and systemic solvency tracked through the Ecosystem Solvency Index ($H_{solv}$). Smart Incremental Liquidation replaces catastrophic forced closures with surgical, 10% position reductions that protect both users and the protocol Vault simultaneously.
+The protocol operates a dual-layer risk framework: individual account health monitored in real time through the Health Factor ($H_{user}$), and systemic protocol solvency tracked through the Protocol Solvency Index ($H_{solv}$). Smart Incremental Liquidation replaces catastrophic forced closures with surgical, 10% position reductions that protect both users and the protocol Vault simultaneously.
 
 **Physical Market Tether** 
 
-BlackSlon is not a purely synthetic protocol. The BSSZ — anchored daily to physical exchange/OTC prices via the weighted forward curve and Settlement Anchor — ensures that virtual token prices can never decouple from physical market reality. Physical Liquidity Providers — licensed European energy trading entities with direct access to TTF, EEX, EPEX, CEGH and TGE — will underpin every market. In Phase 2, BS-P/G tokens become redeemable for physical energy delivery. The virtual and physical markets are not separated — they are the same market, accessed through different interfaces.
+BlackSlon is not a purely synthetic protocol. The BSSZ — anchored daily to physical exchanges' prices via the weighted forward curve and Settlement Anchor — ensures that virtual token prices can never decouple from physical market reality. Physical Liquidity Providers — licensed European energy trading entities with direct access to TTF, EEX, EPEX, CEGH and TGE — will underpin every market. In Phase 2, BS-P/G tokens become redeemable for physical energy delivery. The virtual and physical markets are not separated — they are the same market, accessed through different interfaces.
 
 ---
 
@@ -616,17 +623,17 @@ The integrity of the €BSR reserve is based on real-time, verifiable on-chain d
 
 ---
 
-## 12. Ecosystem Solvency: Macro (System) Level
+## 12. Protocol Solvency: Macro (System) Level
 
 ### 12.1. Overview
 
-While Risk Management (Micro) governs the health of individual user accounts, Ecosystem Solvency (Macro) ensures the integrity of the entire BlackSlon Protocol. It answers one question at all times:
+While Risk Management (Micro) governs the health of individual user accounts, Protocol Solvency (Macro) ensures the integrity of the entire BlackSlon Protocol. It answers one question at all times:
 
 **Is the protocol solvent — can it honour every outstanding obligation to every participant?**
 
-The primary metric is the **Ecosystem Solvency Index** ($H_{solv}$) — a real-time ratio between the protocol's total adjusted asset base and its total outstanding liabilities. $H_{solv}$ is calculated continuously, published on-chain, and triggers automated responses when it breaches defined thresholds.
+The primary metric is the **Protocol Solvency Index** ($H_{solv}$) — a real-time ratio between the protocol's total adjusted asset base and its total outstanding liabilities. $H_{solv}$ is calculated continuously, published on-chain, and triggers automated responses when it breaches defined thresholds.
 
-### 12.2. The Ecosystem Solvency Index ($H_{solv}$)
+### 12.2. The Protocol Solvency Index ($H_{solv}$)
 
 $$H_{solv} = \frac{V_{eEURO} + BSR\text{-}SR_{balance}}{\sum |PnL_{ITM}| + \sum IM_{total} + Reserve_{Op}}$$
 
@@ -869,9 +876,9 @@ The User-Level Risk Engine operates in coordination with two higher-order system
 
 All orders and settlements must occur within the **BSSZ corridor** ($A - 10\%, A + 20\%$), where $A$ is the Settlement Anchor. Orders outside the BSSZ corridor cannot be placed — the Trading Panel/BlackSlon Trading Terminal enforces corridor boundaries at input level, making out-of-range submissions technically impossible. A secondary validation at the matching engine level provides an additional systemic safeguard.
 
-**Ecosystem Solvency Index ($H_{solv}$)**
+**Protocol Solvency Index ($H_{solv}$)**
 
-While $H_{user}$ monitors individual user health, the **Ecosystem Solvency Index** ($H_{solv}$) monitors the protocol's aggregate capital adequacy. When $H_{solv}$ drops into Tier III or IV, the protocol restricts new position openings **globally** — preventing further liquidity obligations from accumulating when the capital base is under stress.
+While $H_{user}$ monitors individual user health, the **Protocol Solvency Index** ($H_{solv}$) monitors the protocol's aggregate capital adequacy. When $H_{solv}$ drops into Tier III or IV, the protocol restricts new position openings **globally** — preventing further liquidity obligations from accumulating when the capital base is under stress.
 
 ### 13.7. Practical Example: Health Factor Calculation
 
@@ -1033,7 +1040,7 @@ In Phase 2, liquidity gains a physical dimension as BS-P/G tokens become redeema
 
 **The $H_{solv}$ Macro Circuit Breaker**
 
-The ultimate liquidity safeguard is the Ecosystem Solvency Index ($H_{solv}$). When solvency drops into Tier III or IV, the protocol automatically restricts new position openings — preventing further liquidity obligations from accumulating when the capital base is under stress.
+The ultimate liquidity safeguard is the Protocol Solvency Index ($H_{solv}$). When solvency drops into Tier III or IV, the protocol automatically restricts new position openings — preventing further liquidity obligations from accumulating when the capital base is under stress.
 
 **Concentration Risk**
 

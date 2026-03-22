@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
       subject: 'Your BlackSlon Wallet verification code',
       html: `
         <div style="background:#000;color:#fff;font-family:monospace;padding:40px;max-width:480px;">
-          <div style="color:#b45309;font-size:18px;font-weight:bold;letter-spacing:4px;margin-bottom:24px;">BLACKSLON</div>
+          <div style="color:#b45309;font-size:18px;font-weight:bold;letter-spacing:4px;margin-bottom:24px;">BlackSlon</div>
           <div style="color:#9ca3af;font-size:12px;margin-bottom:16px;">Your wallet verification code:</div>
           <div style="color:#fff;font-size:36px;font-weight:bold;letter-spacing:12px;padding:16px;border:1px solid #374151;text-align:center;margin-bottom:24px;">${code}</div>
           <div style="color:#6b7280;font-size:11px;">This code expires in 15 minutes. Do not share it with anyone.</div>
