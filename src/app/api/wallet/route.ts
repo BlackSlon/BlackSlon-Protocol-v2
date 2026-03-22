@@ -142,30 +142,22 @@ export async function POST(req: NextRequest) {
     memOtps.push({ email: normalEmail, code, expires })
     persistToDisk()
 
-    console.log(`[BlackSlon Wallet] OTP for ${normalEmail}: ${code}`)
-
-    // Send email via Resend if API key is configured
+    // Send email via Resend
     const resendKey = process.env.RESEND_API_KEY
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@blackslon.org'
+    
     if (!resendKey) {
-      // Dev mode: no email sent, return code directly so UI can show it
-      // Also set HttpOnly cookie so verification works across serverless lambdas
-      const resp = NextResponse.json({ ok: true, devCode: code })
-      resp.cookies.set('bs_otp', `${normalEmail}:${code}`, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 900, // 15 min
-        path: '/api/wallet',
-        sameSite: 'strict',
-      })
-      return resp
+      console.error('[BlackSlon Wallet] RESEND_API_KEY not configured')
+      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
     }
 
     const { Resend } = await import('resend')
     const resend = new Resend(resendKey)
-    const fromDomain = process.env.RESEND_FROM_EMAIL || 'BlackSlon <onboarding@resend.dev>'
 
-    await resend.emails.send({
-      from: fromDomain,
+    console.log(`[BlackSlon Wallet] Sending OTP to ${normalEmail} from ${fromEmail}`)
+
+    const { data, error: resendError } = await resend.emails.send({
+      from: `BlackSlon <${fromEmail}>`,
       to: normalEmail,
       subject: 'Your BlackSlon Wallet verification code',
       html: `
@@ -178,7 +170,23 @@ export async function POST(req: NextRequest) {
       `,
     })
 
-    return NextResponse.json({ ok: true })
+    if (resendError) {
+      console.error('[BlackSlon Wallet] Resend error:', JSON.stringify(resendError))
+      return NextResponse.json({ error: 'Failed to send verification email' }, { status: 500 })
+    }
+
+    console.log('[BlackSlon Wallet] Email sent successfully, id:', data?.id)
+
+    // Set HttpOnly cookie for cross-lambda verification on Vercel
+    const resp = NextResponse.json({ ok: true })
+    resp.cookies.set('bs_otp', `${normalEmail}:${code}`, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 900, // 15 min
+      path: '/api/wallet',
+      sameSite: 'strict',
+    })
+    return resp
   } catch (err) {
     console.error('[BlackSlon Wallet] Error:', err)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })

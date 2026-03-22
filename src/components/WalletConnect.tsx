@@ -10,7 +10,6 @@ export default function WalletConnect() {
   const [step, setStep] = useState<WalletStep>(user.walletConnected ? 'connected' : 'idle')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const [devCode, setDevCode] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -29,7 +28,6 @@ export default function WalletConnect() {
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error || 'Error sending code'); setLoading(false); return }
-      if (data.devCode) setDevCode(data.devCode)
       setStep('otp')
     } catch {
       setError('Network error — try again')
@@ -65,7 +63,6 @@ export default function WalletConnect() {
     setStep('idle')
     setEmail('')
     setOtp('')
-    setDevCode(null)
     setError(null)
   }
 
@@ -159,17 +156,9 @@ export default function WalletConnect() {
               <div className="text-[10px] text-green-500 mb-1">✓ Code sent</div>
               <div className="text-[9px] text-amber-600 font-bold">{email}</div>
             </div>
-            {devCode && (
-              <div className="mb-3 px-3 py-2 bg-gray-900 border border-gray-700 rounded-sm text-center">
-                <div className="text-[7px] text-gray-500 mb-1 uppercase tracking-widest">Dev mode — your code</div>
-                <div className="text-[18px] font-bold text-amber-500 tracking-[0.4em]">{devCode}</div>
-              </div>
-            )}
-            {!devCode && (
-              <div className="text-[8px] text-gray-500 mb-3 text-center">
-                Check your inbox and enter the 6-digit code below.
-              </div>
-            )}
+            <div className="text-[8px] text-gray-500 mb-3 text-center">
+              Check your inbox and enter the 6-digit code below.
+            </div>
             <input
               type="text"
               value={otp}
@@ -189,7 +178,7 @@ export default function WalletConnect() {
               {loading ? 'Verifying...' : 'Verify & Activate Wallet'}
             </button>
             <button
-              onClick={() => { setStep('email'); setOtp(''); setDevCode(null); setError(null) }}
+              onClick={() => { setStep('email'); setOtp(''); setError(null) }}
               className="w-full mt-2 py-1.5 text-[8px] text-gray-400 hover:text-gray-200 uppercase tracking-widest transition-colors"
             >
               ← Back

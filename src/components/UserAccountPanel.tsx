@@ -269,12 +269,12 @@ export default function UserAccountPanel() {
           </div>
         </div>
 
-        {/* ── Section: BlackSlon Ecosystem Solvency Index ── */}
+        {/* ── Section: BlackSlon Protocol Solvency Index ── */}
         <div>
           <div className="mb-1 flex justify-start">
             <Tooltip content={STATIC_TOOLTIPS.solvency}>
               <div className="text-[9px] tracking-widest text-amber-700 font-bold">
-                BlackSlon Ecosystem Solvency Index
+                BlackSlon Protocol Solvency Index
               </div>
             </Tooltip>
           </div>
