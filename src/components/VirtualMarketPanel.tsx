@@ -4,7 +4,7 @@ import React from 'react'
 import { useVirtual } from '@/store/blackslon'
 import { useBotOrders } from '@/store/blackslon'
 import { getMarketData } from '@/data/markets'
-import { generateOrderBook, generateBSEIHistory, generateLiquiditySnapshots } from '@/data/markets/orderBookGenerator'
+import { generateOrderBook, generateBSEIHistory, generateLiquiditySnapshots, getMinVisibleDepth } from '@/data/markets/orderBookGenerator'
 import { getMarketColors } from '@/lib/marketColors'
 import { getCurrentCycleData } from '@/lib/marketCycle'
 import Tooltip from '@/components/Tooltip'
@@ -94,8 +94,37 @@ export default function VirtualDimension({ selectedMarketId = 'BS-P-PL' }: Props
   const botAsks = marketBotOrders.filter(o => o.side === 'SELL')
 
   // Merge all orders and sort
-  const finalBids = [...adjustedGenBids, ...userBids, ...botBids].sort((a,b) => b.price - a.price).slice(0,10)
-  const finalAsks = [...adjustedGenAsks, ...userAsks, ...botAsks].sort((a,b) => a.price - b.price).slice(0,10)
+  const mergedBids = [...adjustedGenBids, ...userBids, ...botBids].sort((a,b) => b.price - a.price)
+  const mergedAsks = [...adjustedGenAsks, ...userAsks, ...botAsks].sort((a,b) => a.price - b.price)
+
+  // Market maker refill: always maintain minimum visible depth
+  const minDepth = getMinVisibleDepth(selectedMarketId)
+  const r2 = (v: number) => Math.round(v * 100) / 100
+  const refillUnits = [150, 120, 180, 95, 200, 135, 165, 110]
+  const padOrders = (orders: typeof mergedBids, side: 'bid' | 'ask') => {
+    if (orders.length >= minDepth) return orders
+    const needed = minDepth - orders.length
+    const refBase = side === 'bid'
+      ? (orders.length > 0 ? orders[orders.length - 1].price : anchor)
+      : (orders.length > 0 ? orders[orders.length - 1].price : anchor)
+    return [
+      ...orders,
+      ...Array.from({ length: needed }, (_, k) => {
+        const tick = side === 'bid' ? -0.01 * (k + 1) : 0.01 * (k + 1)
+        const units = refillUnits[k % refillUnits.length]
+        return {
+          id: `${selectedMarketId}-${side}-refill-${k}`,
+          price: r2(refBase + tick),
+          units,
+          volume: units * 100,
+          ownedByUser: false,
+          timestamp: Date.now() - (k + 1) * 500,
+        }
+      }),
+    ]
+  }
+  const finalBids = padOrders(mergedBids, 'bid').slice(0, 10)
+  const finalAsks = padOrders(mergedAsks, 'ask').slice(0, 10)
 
   // Get market-specific last trade and trade history from store
   const marketLastTrade = storeData.orderBook.lastTradeByMarket?.[selectedMarketId as MarketId]

@@ -12,7 +12,7 @@ Unlike crude oil, copper, gasoline or any other major commodity — no platform 
 
 ## The Answer
 
-**BlackSlon is not an optimization of this system. It is not designed to replicate legacy energy markets. It is a new dimension of them.** - a new infrastructure layer built alongside them — blockchain-settled, algorithmically governed, physically anchored, and open to every participant the legacy system excludes.
+**BlackSlon is not an optimization of this system. It is not designed to replicate legacy energy markets. It is a new dimension of them** - a new infrastructure layer built alongside them — blockchain-settled, algorithmically governed, physically anchored, and open to every participant the legacy system excludes.
 
 **Zero Expiry. Zero Barriers. 100 kWh = 1 Token.**
 
@@ -65,9 +65,7 @@ Built by an energy commodity trader who spent 20+ years inside the system BlackS
 
 *Exactly two decades ago in 2006, I was part of the first private challenger to enter a market under the 100% stranglehold of a state - owned incumbent. I saw firsthand how a legacy system — fortified by regulators, state officials, and a dominant monopolist — desperately fights to preserve an old order that is structurally broken and inevitably destined to collapse. That era taught me something no Bloomberg terminal can: how markets really work when the power structures are rigged to block change, and why the old guard is always the last to admit that the paradigm has already shifted.*
 
-*Most critically: **I operated in the frontier markets of Eastern Europe before digital benchmarks or centralised exchanges existed.** Price discovery happened over phone calls and through boots-on-the-ground intelligence networks.*
-
-*Alumnus: University of Warsaw · St. Petersburg State University · MGIMO Moscow*
+*Alumnus: University of Warsaw (UW) · St. Petersburg State University (SPBGU)· Moscow State Institute of International Relations (MGIMO)*
 
 ---
 

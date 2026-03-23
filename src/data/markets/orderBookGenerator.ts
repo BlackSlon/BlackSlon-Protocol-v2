@@ -2,9 +2,16 @@ import { Order } from '@/store/types'
 
 // Liquidity depth: how many static resting orders per side
 function getStaticDepth(marketId: string): number {
-  if (['BS-G-NL', 'BS-P-DE'].includes(marketId))            return 8  // high liquidity
-  if (['BS-G-DE', 'BS-P-UK', 'BS-P-NO'].includes(marketId)) return 5  // medium liquidity
-  return 2 // low liquidity: BS-P-PL, BS-G-PL, BS-G-BG
+  if (['BS-G-NL', 'BS-P-DE'].includes(marketId))            return 16 // high liquidity
+  if (['BS-G-DE', 'BS-P-UK', 'BS-P-NO'].includes(marketId)) return 10 // medium liquidity
+  return 6 // low liquidity: BS-P-PL, BS-G-PL, BS-G-BG
+}
+
+// Minimum visible levels always maintained in the UI (market maker always refills)
+export function getMinVisibleDepth(marketId: string): number {
+  if (['BS-G-NL', 'BS-P-DE'].includes(marketId))            return 8
+  if (['BS-G-DE', 'BS-P-UK', 'BS-P-NO'].includes(marketId)) return 5
+  return 3
 }
 
 /**
@@ -18,25 +25,41 @@ export function generateOrderBook(anchor: number, marketId: string): { bids: Ord
   const depth = getStaticDepth(marketId)
 
   const allBids: Order[] = [
-    { id: `${marketId}-bid-1`, price: r2(a - 0.04), units: 150, volume: 15000, ownedByUser: false, timestamp: baseTime - 8000 },
-    { id: `${marketId}-bid-2`, price: r2(a - 0.05), units: 120, volume: 12000, ownedByUser: false, timestamp: baseTime - 7000 },
-    { id: `${marketId}-bid-3`, price: r2(a - 0.06), units: 180, volume: 18000, ownedByUser: false, timestamp: baseTime - 6000 },
-    { id: `${marketId}-bid-4`, price: r2(a - 0.07), units: 95, volume: 9500, ownedByUser: false, timestamp: baseTime - 5000 },
-    { id: `${marketId}-bid-5`, price: r2(a - 0.08), units: 200, volume: 20000, ownedByUser: false, timestamp: baseTime - 4000 },
-    { id: `${marketId}-bid-6`, price: r2(a - 0.09), units: 135, volume: 13500, ownedByUser: false, timestamp: baseTime - 3000 },
-    { id: `${marketId}-bid-7`, price: r2(a - 0.10), units: 165, volume: 16500, ownedByUser: false, timestamp: baseTime - 2000 },
-    { id: `${marketId}-bid-8`, price: r2(a - 0.11), units: 110, volume: 11000, ownedByUser: false, timestamp: baseTime - 1000 },
+    { id: `${marketId}-bid-1`,  price: r2(a - 0.04), units: 150, volume: 15000, ownedByUser: false, timestamp: baseTime - 16000 },
+    { id: `${marketId}-bid-2`,  price: r2(a - 0.05), units: 120, volume: 12000, ownedByUser: false, timestamp: baseTime - 15000 },
+    { id: `${marketId}-bid-3`,  price: r2(a - 0.06), units: 180, volume: 18000, ownedByUser: false, timestamp: baseTime - 14000 },
+    { id: `${marketId}-bid-4`,  price: r2(a - 0.07), units: 95,  volume: 9500,  ownedByUser: false, timestamp: baseTime - 13000 },
+    { id: `${marketId}-bid-5`,  price: r2(a - 0.08), units: 200, volume: 20000, ownedByUser: false, timestamp: baseTime - 12000 },
+    { id: `${marketId}-bid-6`,  price: r2(a - 0.09), units: 135, volume: 13500, ownedByUser: false, timestamp: baseTime - 11000 },
+    { id: `${marketId}-bid-7`,  price: r2(a - 0.10), units: 165, volume: 16500, ownedByUser: false, timestamp: baseTime - 10000 },
+    { id: `${marketId}-bid-8`,  price: r2(a - 0.11), units: 110, volume: 11000, ownedByUser: false, timestamp: baseTime - 9000  },
+    { id: `${marketId}-bid-9`,  price: r2(a - 0.12), units: 145, volume: 14500, ownedByUser: false, timestamp: baseTime - 8000  },
+    { id: `${marketId}-bid-10`, price: r2(a - 0.13), units: 175, volume: 17500, ownedByUser: false, timestamp: baseTime - 7000  },
+    { id: `${marketId}-bid-11`, price: r2(a - 0.14), units: 130, volume: 13000, ownedByUser: false, timestamp: baseTime - 6000  },
+    { id: `${marketId}-bid-12`, price: r2(a - 0.15), units: 190, volume: 19000, ownedByUser: false, timestamp: baseTime - 5000  },
+    { id: `${marketId}-bid-13`, price: r2(a - 0.16), units: 100, volume: 10000, ownedByUser: false, timestamp: baseTime - 4000  },
+    { id: `${marketId}-bid-14`, price: r2(a - 0.17), units: 155, volume: 15500, ownedByUser: false, timestamp: baseTime - 3000  },
+    { id: `${marketId}-bid-15`, price: r2(a - 0.18), units: 125, volume: 12500, ownedByUser: false, timestamp: baseTime - 2000  },
+    { id: `${marketId}-bid-16`, price: r2(a - 0.19), units: 140, volume: 14000, ownedByUser: false, timestamp: baseTime - 1000  },
   ]
 
   const allAsks: Order[] = [
-    { id: `${marketId}-ask-1`, price: r2(a + 0.01), units: 110, volume: 11000, ownedByUser: false, timestamp: baseTime - 8000 },
-    { id: `${marketId}-ask-2`, price: r2(a + 0.02), units: 85, volume: 8500, ownedByUser: false, timestamp: baseTime - 7000 },
-    { id: `${marketId}-ask-3`, price: r2(a + 0.03), units: 140, volume: 14000, ownedByUser: false, timestamp: baseTime - 6000 },
-    { id: `${marketId}-ask-4`, price: r2(a + 0.04), units: 75, volume: 7500, ownedByUser: false, timestamp: baseTime - 5000 },
-    { id: `${marketId}-ask-5`, price: r2(a + 0.05), units: 160, volume: 16000, ownedByUser: false, timestamp: baseTime - 4000 },
-    { id: `${marketId}-ask-6`, price: r2(a + 0.06), units: 125, volume: 12500, ownedByUser: false, timestamp: baseTime - 3000 },
-    { id: `${marketId}-ask-7`, price: r2(a + 0.07), units: 190, volume: 19000, ownedByUser: false, timestamp: baseTime - 2000 },
-    { id: `${marketId}-ask-8`, price: r2(a + 0.08), units: 105, volume: 10500, ownedByUser: false, timestamp: baseTime - 1000 },
+    { id: `${marketId}-ask-1`,  price: r2(a + 0.01), units: 110, volume: 11000, ownedByUser: false, timestamp: baseTime - 16000 },
+    { id: `${marketId}-ask-2`,  price: r2(a + 0.02), units: 85,  volume: 8500,  ownedByUser: false, timestamp: baseTime - 15000 },
+    { id: `${marketId}-ask-3`,  price: r2(a + 0.03), units: 140, volume: 14000, ownedByUser: false, timestamp: baseTime - 14000 },
+    { id: `${marketId}-ask-4`,  price: r2(a + 0.04), units: 75,  volume: 7500,  ownedByUser: false, timestamp: baseTime - 13000 },
+    { id: `${marketId}-ask-5`,  price: r2(a + 0.05), units: 160, volume: 16000, ownedByUser: false, timestamp: baseTime - 12000 },
+    { id: `${marketId}-ask-6`,  price: r2(a + 0.06), units: 125, volume: 12500, ownedByUser: false, timestamp: baseTime - 11000 },
+    { id: `${marketId}-ask-7`,  price: r2(a + 0.07), units: 190, volume: 19000, ownedByUser: false, timestamp: baseTime - 10000 },
+    { id: `${marketId}-ask-8`,  price: r2(a + 0.08), units: 105, volume: 10500, ownedByUser: false, timestamp: baseTime - 9000  },
+    { id: `${marketId}-ask-9`,  price: r2(a + 0.09), units: 145, volume: 14500, ownedByUser: false, timestamp: baseTime - 8000  },
+    { id: `${marketId}-ask-10`, price: r2(a + 0.10), units: 170, volume: 17000, ownedByUser: false, timestamp: baseTime - 7000  },
+    { id: `${marketId}-ask-11`, price: r2(a + 0.11), units: 130, volume: 13000, ownedByUser: false, timestamp: baseTime - 6000  },
+    { id: `${marketId}-ask-12`, price: r2(a + 0.12), units: 185, volume: 18500, ownedByUser: false, timestamp: baseTime - 5000  },
+    { id: `${marketId}-ask-13`, price: r2(a + 0.13), units: 100, volume: 10000, ownedByUser: false, timestamp: baseTime - 4000  },
+    { id: `${marketId}-ask-14`, price: r2(a + 0.14), units: 155, volume: 15500, ownedByUser: false, timestamp: baseTime - 3000  },
+    { id: `${marketId}-ask-15`, price: r2(a + 0.15), units: 120, volume: 12000, ownedByUser: false, timestamp: baseTime - 2000  },
+    { id: `${marketId}-ask-16`, price: r2(a + 0.16), units: 140, volume: 14000, ownedByUser: false, timestamp: baseTime - 1000  },
   ]
 
   return { bids: allBids.slice(0, depth), asks: allAsks.slice(0, depth) }

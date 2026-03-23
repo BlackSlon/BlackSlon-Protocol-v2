@@ -466,14 +466,14 @@ As an autonomous benchmark, the BSEI maintains its own calculation logic while r
 
 | Ticker | Instrument | Reference Market |
 |:-------|:-----------|:----------------|
-| BS-G-NL | BlackSlon Gas — Netherlands | TTF/ICE |
-| BS-G-DE | BlackSlon Gas — Germany | THE |
+| BS-G-NL | BlackSlon Gas — Netherlands | TTF-ICE |
+| BS-G-DE | BlackSlon Gas — Germany | THE-EEX |
 | BS-G-PL | BlackSlon Gas — Poland | TGE |
 | BS-G-BG | BlackSlon Gas — Bulgaria | Balkan Hub |
-| BS-P-DE | BlackSlon Power — Germany | EEX Phelix DE |
-| BS-P-FR | BlackSlon Power — France | EPEX France |
-| BS-P-PL | BlackSlon Power — Poland | TGE Power |
-| BS-P-NO | BlackSlon Power — Nordic Region | Nasdaq Commodities Nordic |
+| BS-P-DE | BlackSlon Power — Germany | Phelix DE-EEX |
+| BS-P-UK | BlackSlon Power — United Kingdom | ICE |
+| BS-P-PL | BlackSlon Power — Poland | TGE |
+| BS-P-NO | BlackSlon Power — Nordic Region | Nasdaq Commodities |
 
 Each market has its own isolated BSSZ corridor and Physical Meridian. Markets do not cross-contaminate each other's price dynamics.
 
