@@ -24,13 +24,13 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <Providers>
           {children}
-          <footer className="w-full border-t border-gray-900 py-3 mt-8">
+          <footer className="w-full border-t border-gray-800 py-3 mt-8">
             <div className="flex flex-col items-center gap-1">
-              <p className="text-[8px] text-gray-700 uppercase tracking-[0.25em]">
+              <p className="text-[8px] text-gray-500 uppercase tracking-[0.25em]">
                 © {new Date().getFullYear()} BlackSlon Protocol · All Rights Reserved
               </p>
-              <p className="text-[8px] text-gray-700 tracking-wide">
-                Contact: <a href="mailto:trading@blackslon.org" className="text-gray-500 hover:text-amber-600 transition-colors">trading@blackslon.org</a>
+              <p className="text-[8px] text-gray-500 tracking-wide">
+                Contact: <a href="mailto:trading@blackslon.org" className="text-gray-400 hover:text-amber-600 transition-colors">trading@blackslon.org</a>
               </p>
             </div>
           </footer>
