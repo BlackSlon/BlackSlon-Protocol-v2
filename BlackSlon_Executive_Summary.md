@@ -48,12 +48,12 @@ This yield is further amplified during systemic shocks. In the event of sudden g
 
 | Token | Market | Reference |
 |:------|:-------|:----------|
-| BS-P-DE | German Power | Phelix-EEX/EPEX |
+| BS-P-DE | German Power | EEX/EPEX |
 | BS-P-UK | British Power | ICE |
 | BS-P-PL | Polish Power | TGE |
 | BS-P-NO | Nordic Power | Nasdaq Commodities/EEX|
-| BS-G-NL | Dutch Gas | TTF-ICE |
-| BS-G-DE | German Gas | THE-EEX |
+| BS-G-NL | Dutch Gas | ICE |
+| BS-G-DE | German Gas | EEX |
 | BS-G-PL | Polish Gas | TGE |
 | BS-G-BG | Bulgarian Gas | Balkan Gas Hub |
 
