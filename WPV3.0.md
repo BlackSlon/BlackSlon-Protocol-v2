@@ -20,7 +20,7 @@ Language: English | Classification: Public*
 7. [The Name: Black Swan × Black Elephant](#7-the-name-black-swan-×-black-elephant)
 8. [BSSZ Framework: The Physical Energy Foundation](#8-blackslon-settlement-zone-bssz-the-physical-energy-framework-for-virtual-energy-trading)
 9. [BSEI Benchmark: The Virtual Settlement Index](#9-blackslon-energy-index-bsei-the-rolling-valuation--risk-benchmark)
-10. [BS-P & BS-G Token Specification](#10-bs-p--bs-g-token-specification)
+10. [BS-P & BS-G Token Specification](#10-bs-p-bs-g-token-specification)
 11. [Economic Equilibrium & Treasury Governance](#11-economic-equilibrium--treasury-governance)
 12. [Protocol Solvency: Macro Level](#12-protocol-solvency-macro-system-level)
 13. [Risk Management: Micro Level](#13-risk-management-user-level-portfolio-protection)

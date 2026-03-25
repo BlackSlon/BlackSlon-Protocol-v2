@@ -29,21 +29,30 @@ export default function WhitepaperPage() {
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
             components={{
-              h1: ({ children, ...props }) => (
-                <h1 id={children?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-')} {...props}>
-                  {children}
-                </h1>
-              ),
-              h2: ({ children, ...props }) => (
-                <h2 id={children?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-')} {...props}>
-                  {children}
-                </h2>
-              ),
-              h3: ({ children, ...props }) => (
-                <h3 id={children?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-')} {...props}>
-                  {children}
-                </h3>
-              ),
+              h1: ({ children, ...props }) => {
+                const id = children?.toString().toLowerCase()
+                  .replace(/\s*&\s*/g, '-')
+                  .replace(/\s*\/\s*/g, '-')
+                  .replace(/[^a-z0-9]+/g, '-')
+                  .replace(/^-+|-+$/g, '');
+                return <h1 id={id} {...props}>{children}</h1>;
+              },
+              h2: ({ children, ...props }) => {
+                const id = children?.toString().toLowerCase()
+                  .replace(/\s*&\s*/g, '-')
+                  .replace(/\s*\/\s*/g, '-')
+                  .replace(/[^a-z0-9]+/g, '-')
+                  .replace(/^-+|-+$/g, '');
+                return <h2 id={id} {...props}>{children}</h2>;
+              },
+              h3: ({ children, ...props }) => {
+                const id = children?.toString().toLowerCase()
+                  .replace(/\s*&\s*/g, '-')
+                  .replace(/\s*\/\s*/g, '-')
+                  .replace(/[^a-z0-9]+/g, '-')
+                  .replace(/^-+|-+$/g, '');
+                return <h3 id={id} {...props}>{children}</h3>;
+              },
               a: ({ href, children, ...props }) => (
                 <a href={href} {...props}>
                   {children}
