@@ -1,0 +1,281 @@
+'use client'
+
+import React from 'react'
+
+interface MarketCubeProps {
+  marketId: string
+  marketName: string
+  type: 'Power' | 'Gas'
+  size?: number
+  idx?: number
+}
+
+// Unique chaotic keyframes per cube index
+const ANIM_VARIANTS = [
+  // idx 0 — FULL SPIN: forward Y rotation with slight X drift
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(4deg)   rotateY(0deg)   rotateZ(-2deg); }
+    25%  { transform: rotateX(-7deg)  rotateY(90deg)  rotateZ(3deg); }
+    50%  { transform: rotateX(5deg)   rotateY(180deg) rotateZ(-4deg); }
+    75%  { transform: rotateX(-9deg)  rotateY(270deg) rotateZ(2deg); }
+    100% { transform: rotateX(4deg)   rotateY(360deg) rotateZ(-2deg); }
+  }`,
+  // idx 1 — CHAOTIC: tumbles diagonally
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+    33%  { transform: rotateX(120deg) rotateY(80deg)  rotateZ(60deg); }
+    66%  { transform: rotateX(240deg) rotateY(200deg) rotateZ(130deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); }
+  }`,
+  // idx 2 — FRONT-FRIENDLY: slow rocking, stays mostly front-facing ±40deg
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(-5deg)  rotateY(-10deg) rotateZ(2deg); }
+    20%  { transform: rotateX(8deg)   rotateY(30deg)  rotateZ(-3deg); }
+    40%  { transform: rotateX(-4deg)  rotateY(-40deg) rotateZ(4deg); }
+    60%  { transform: rotateX(10deg)  rotateY(25deg)  rotateZ(-2deg); }
+    80%  { transform: rotateX(-7deg)  rotateY(-20deg) rotateZ(3deg); }
+    100% { transform: rotateX(-5deg)  rotateY(-10deg) rotateZ(2deg); }
+  }`,
+  // idx 3 — CHAOTIC: barrel roll on Z
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(10deg)  rotateY(0deg)   rotateZ(0deg); }
+    50%  { transform: rotateX(-10deg) rotateY(40deg)  rotateZ(180deg); }
+    100% { transform: rotateX(10deg)  rotateY(0deg)   rotateZ(360deg); }
+  }`,
+  // idx 4 — CHAOTIC: slow X flip
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(0deg)   rotateY(-10deg) rotateZ(0deg); }
+    50%  { transform: rotateX(180deg) rotateY(15deg)  rotateZ(-8deg); }
+    100% { transform: rotateX(360deg) rotateY(-10deg) rotateZ(0deg); }
+  }`,
+  // idx 5 — FULL SPIN: Y rotation with wobble on X
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(-8deg)  rotateY(0deg)   rotateZ(3deg); }
+    25%  { transform: rotateX(10deg)  rotateY(90deg)  rotateZ(-4deg); }
+    50%  { transform: rotateX(-6deg)  rotateY(180deg) rotateZ(5deg); }
+    75%  { transform: rotateX(12deg)  rotateY(270deg) rotateZ(-3deg); }
+    100% { transform: rotateX(-8deg)  rotateY(360deg) rotateZ(3deg); }
+  }`,
+  // idx 6 — FULL SPIN: reverse Y with X tilt
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(6deg)   rotateY(0deg)    rotateZ(-2deg); }
+    25%  { transform: rotateX(-10deg) rotateY(-90deg)  rotateZ(4deg); }
+    50%  { transform: rotateX(8deg)   rotateY(-180deg) rotateZ(-3deg); }
+    75%  { transform: rotateX(-5deg)  rotateY(-270deg) rotateZ(5deg); }
+    100% { transform: rotateX(6deg)   rotateY(-360deg) rotateZ(-2deg); }
+  }`,
+  // idx 7 — CHAOTIC: diagonal slow tumble
+  (n: string) => `@keyframes ${n} {
+    0%   { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+    25%  { transform: rotateX(-90deg) rotateY(60deg)  rotateZ(-30deg); }
+    50%  { transform: rotateX(-180deg)rotateY(120deg) rotateZ(-60deg); }
+    75%  { transform: rotateX(-270deg)rotateY(60deg)  rotateZ(-30deg); }
+    100% { transform: rotateX(-360deg)rotateY(0deg)   rotateZ(0deg); }
+  }`,
+]
+
+const DURATIONS = [22, 16, 12, 18, 25, 14, 32, 20]
+
+export default function MarketCube({ marketId, marketName, type, size = 120, idx = 0 }: MarketCubeProps) {
+  const h = size / 2
+  const country = marketName.split(' ')[0]
+  const isPower = type === 'Power'
+  const logoSrc = isPower ? '/BSyellow_image.png' : '/BSblue_image.png'
+
+  const symbol = marketId.toUpperCase()
+
+  const faces = [
+    'LOGO',
+    type,
+    country,
+    'BlackSlon',
+    symbol,
+    'Token',
+  ]
+  const borderColor   = isPower ? 'rgba(251,191,36,0.55)'  : 'rgba(34,211,238,0.55)'
+  const bgColor       = isPower ? 'rgba(180,120,0,0.08)'    : 'rgba(6,120,180,0.08)'
+  const textColor     = isPower ? 'rgba(253,224,71,0.95)'   : 'rgba(103,232,249,0.95)'
+  const glowColor     = isPower ? 'rgba(251,191,36,0.12)'   : 'rgba(34,211,238,0.12)'
+
+  const animName = `mc-spin-${marketId.replace(/-/g, '')}`
+
+  const faceSize = size + 2
+  const faceOffset = -1
+
+  const faceBase: React.CSSProperties = {
+    position: 'absolute',
+    width: faceSize,
+    height: faceSize,
+    top: faceOffset,
+    left: faceOffset,
+    border: `1px solid ${borderColor}`,
+    background: isPower ? 'rgba(180,120,0,0.04)' : 'rgba(6,120,180,0.04)',
+    boxShadow: `inset 0 0 8px ${glowColor}`,
+    backdropFilter: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: textColor,
+    fontSize: size * 0.145,
+    fontWeight: 100,
+    fontFamily: 'var(--font-raleway), sans-serif',
+    letterSpacing: '0.04em',
+    textAlign: 'center',
+    padding: 4,
+    userSelect: 'none',
+    lineHeight: 1.2,
+    overflow: 'hidden',
+    willChange: 'transform',
+  }
+
+  const logoFaceStyle: React.CSSProperties = {
+    position: 'absolute',
+    width: faceSize,
+    height: faceSize,
+    top: faceOffset,
+    left: faceOffset,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0,
+    overflow: 'hidden',
+    border: `1px solid ${borderColor}`,
+    background: 'transparent',
+    willChange: 'transform',
+  }
+
+  const faceTransforms = [
+    `translateZ(${h}px)`,
+    `rotateY(180deg) translateZ(${h}px)`,
+    `rotateY(90deg) translateZ(${h}px)`,
+    `rotateY(-90deg) translateZ(${h}px)`,
+    `rotateX(90deg) translateZ(${h}px)`,
+    `rotateX(-90deg) translateZ(${h}px)`,
+  ]
+
+  const variantIdx = idx % ANIM_VARIANTS.length
+  const duration = DURATIONS[variantIdx]
+
+  const electricAnim = `mc-zap-${marketId.replace(/-/g, '')}`
+  const gasAnim = `mc-vapor-${marketId.replace(/-/g, '')}`
+
+  return (
+    <>
+      <style>{`
+        ${ANIM_VARIANTS[variantIdx](animName)}
+        @keyframes ${electricAnim} {
+          0%   { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.4), 2px -1px 0 rgba(255,255,255,0), -1px 2px 0 rgba(255,255,255,0); }
+          10%  { opacity: 0.9; text-shadow: 0 0 2px rgba(253,224,71,0.5), 4px -2px 2px rgba(253,224,71,0.7), -3px 1px 1px rgba(251,191,36,0.4); }
+          12%  { opacity: 1;   text-shadow: 0 0 3px #fff, 6px -3px 3px rgba(253,224,71,0.9), -2px 4px 2px rgba(253,224,71,0.6), 0 0 8px rgba(251,191,36,0.3); }
+          14%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.3), -4px -1px 0 rgba(255,255,255,0); }
+          30%  { opacity: 0.85; text-shadow: 0 0 1px rgba(253,224,71,0.4), -2px 3px 2px rgba(253,224,71,0.6), 3px -2px 1px rgba(251,191,36,0.3); }
+          32%  { opacity: 1;   text-shadow: 0 0 4px #fff, -5px 2px 3px rgba(253,224,71,0.8), 4px -3px 2px rgba(253,224,71,0.7), 0 0 10px rgba(251,191,36,0.4); }
+          34%  { opacity: 0.75; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
+          60%  { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.3), 3px 2px 1px rgba(253,224,71,0.5); }
+          62%  { opacity: 1;   text-shadow: 0 0 3px #fff, -3px -3px 3px rgba(253,224,71,0.8), 5px 1px 2px rgba(253,224,71,0.6), 0 0 12px rgba(251,191,36,0.3); }
+          64%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
+          100% { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.4), 2px -1px 0 rgba(255,255,255,0), -1px 2px 0 rgba(255,255,255,0); }
+        }
+        @keyframes ${gasAnim} {
+          0%   { opacity: 0.1;  filter: blur(5px);  letter-spacing: 0.2em;  text-shadow: 0 0 20px rgba(56,189,248,0.2); transform: scale(0.95); }
+          10%  { opacity: 0.6;  filter: blur(1.5px);letter-spacing: 0.1em;  text-shadow: 0 0 12px rgba(56,189,248,0.5); transform: scale(0.98); }
+          20%  { opacity: 0.9;  filter: blur(0.3px);letter-spacing: 0.05em; text-shadow: 0 0 6px rgba(56,189,248,0.7), 0 0 14px rgba(56,189,248,0.3); transform: scale(1); }
+          65%  { opacity: 0.9;  filter: blur(0px);  letter-spacing: 0.04em; text-shadow: 0 0 4px rgba(56,189,248,0.6), 0 0 10px rgba(56,189,248,0.2); transform: scale(1); }
+          80%  { opacity: 0.5;  filter: blur(2px);  letter-spacing: 0.12em; text-shadow: 0 -4px 15px rgba(56,189,248,0.3); transform: scale(1.02); }
+          92%  { opacity: 0.15; filter: blur(5px);  letter-spacing: 0.2em;  text-shadow: 0 -8px 20px rgba(56,189,248,0.1); transform: scale(1.05); }
+          100% { opacity: 0.1;  filter: blur(5px);  letter-spacing: 0.2em;  text-shadow: 0 0 20px rgba(56,189,248,0.2); transform: scale(0.95); }
+        }
+      `}</style>
+      <div
+        style={{
+          width: size,
+          height: size,
+          perspective: 2000,
+          perspectiveOrigin: '50% 50%',
+        }}
+      >
+        <div
+          style={{
+            width: size,
+            height: size,
+            transformStyle: 'preserve-3d',
+            animation: `${animName} ${duration}s linear infinite`,
+            position: 'relative',
+          }}
+        >
+          {/* 100 kWh — front-facing (hidden when cube back faces viewer) */}
+          <div style={{
+            position: 'absolute',
+            width: size,
+            height: size,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}>
+            <span style={{
+              color: isPower ? 'rgba(253,224,71,0.85)' : '#38bdf8',
+              fontSize: size * 0.145,
+              fontWeight: isPower ? 100 : 700,
+              fontFamily: 'var(--font-raleway), sans-serif',
+              letterSpacing: '0.04em',
+              textAlign: 'center',
+              lineHeight: 1.2,
+              animation: isPower
+                ? `${electricAnim} 3s ease-in-out infinite`
+                : `${gasAnim} 7s ease-in-out infinite`,
+            }}>100 kWh</span>
+          </div>
+          {/* 100 kWh — back-facing (visible when Gas/Power text face is at front) */}
+          <div style={{
+            position: 'absolute',
+            width: size,
+            height: size,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+            transform: 'rotateY(180deg)',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}>
+            <span style={{
+              color: isPower ? 'rgba(253,224,71,0.85)' : '#38bdf8',
+              fontSize: size * 0.145,
+              fontWeight: isPower ? 100 : 700,
+              fontFamily: 'var(--font-raleway), sans-serif',
+              letterSpacing: '0.04em',
+              textAlign: 'center',
+              lineHeight: 1.2,
+              animation: isPower
+                ? `${electricAnim} 3s ease-in-out infinite`
+                : `${gasAnim} 7s ease-in-out infinite`,
+            }}>100 kWh</span>
+          </div>
+
+          {faceTransforms.map((transform, i) => (
+            faces[i] === 'LOGO'
+              ? <div key={i} style={{ ...logoFaceStyle, transform }}>
+                  <img src={logoSrc} alt="logo" style={{ width: faceSize, height: faceSize, objectFit: 'cover', display: 'block', imageRendering: 'auto' }} />
+                </div>
+              : <div key={i} style={{ ...faceBase, transform }}>
+                  <span style={{
+                    color: textColor,
+                    fontSize: size * 0.145,
+                    fontWeight: 100,
+                    letterSpacing: '0.04em',
+                    textAlign: 'center',
+                    opacity: 0.85,
+                    fontFamily: 'var(--font-raleway), sans-serif',
+                  }}>
+                    {faces[i]}
+                  </span>
+                </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}

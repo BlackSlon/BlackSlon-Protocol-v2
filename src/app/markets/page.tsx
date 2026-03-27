@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { BSR_MARKETS } from '../markets_config'
+import MarketCube from '@/components/MarketCube'
 
 export default function MarketsPage() {
   const activePower   = BSR_MARKETS.filter(m => m.status === 'active'  && m.type === 'Power')
@@ -15,42 +16,32 @@ export default function MarketsPage() {
   const getCode        = (id: string)       => id.split('-')[2]
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="min-h-screen bg-black text-white p-8 relative">
 
-      {/* ── Header ── */}
-      <div className="text-center mb-12">
-        <Link href="/">
-          <Image
-            src="/BS_image.jpg"
-            alt="BlackSlon"
-            width={120}
-            height={120}
-            className="mx-auto mb-6 cursor-pointer transition-transform hover:scale-105"
-          />
-        </Link>
-      </div>
+      {/* ── Spacer ── */}
+      <div className="h-36" />
 
-      {/* ── Active Markets ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-16">
-        {activePower.map(market => (
+      {/* ── Active Markets — Power ── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-16">
+        {activePower.map((market, i) => (
           <Link key={market.id} href={`/markets/${market.id}`}>
-            <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer">
-              <div className="w-20 h-20 mx-auto mb-3">
-                <Image src="/BSyellow_image.png" alt="Power Market" width={80} height={80} />
+            <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer flex flex-col items-center">
+              <div className="flex items-center justify-center" style={{ width: 120, height: 120 }}>
+                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={120} idx={i} />
               </div>
-              <p className="text-yellow-500 text-sm">{getCountryName(market.name)}</p>
-              <p className="text-yellow-400 text-[10px] opacity-80">{getMarketType(market.name)}</p>
             </div>
           </Link>
         ))}
-        {activeGas.map(market => (
+      </div>
+
+      {/* ── Active Markets — Gas ── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-16">
+        {activeGas.map((market, i) => (
           <Link key={market.id} href={`/markets/${market.id}`}>
-            <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer">
-              <div className="w-20 h-20 mx-auto mb-3">
-                <Image src="/BSblue_image.png" alt="Gas Market" width={80} height={80} />
+            <div className="bg-black p-4 text-center transition-all hover:scale-110 cursor-pointer flex flex-col items-center">
+              <div className="flex items-center justify-center" style={{ width: 120, height: 120 }}>
+                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={120} idx={[6, 5, 7, 4][i] ?? i + 4} />
               </div>
-              <p className="text-cyan-400 text-sm">{getCountryName(market.name)}</p>
-              <p className="text-cyan-400 text-[10px] opacity-80">{getMarketType(market.name)}</p>
             </div>
           </Link>
         ))}
@@ -79,15 +70,15 @@ export default function MarketsPage() {
           <div className="flex-1 border-t border-gray-900" />
           <span className="text-[7px] text-gray-800 shrink-0">{dormantPower.length}</span>
         </div>
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-          {dormantPower.map(market => (
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4">
+          {dormantPower.map((market, i) => (
             <div
               key={market.id}
               title={market.name}
-              className="flex flex-col items-center gap-0.5 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
+              className="flex flex-col items-center gap-1 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
             >
-              <div className="w-8 h-8">
-                <Image src="/BSyellow_image.png" alt="" width={32} height={32} />
+              <div className="flex items-center justify-center" style={{ width: 36, height: 36 }}>
+                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={36} idx={i % 8} />
               </div>
               <span className="text-[8px] text-gray-500 uppercase tracking-wider font-bold leading-none mt-0.5">
                 {getCode(market.id)}
@@ -108,15 +99,15 @@ export default function MarketsPage() {
           <div className="flex-1 border-t border-gray-900" />
           <span className="text-[7px] text-gray-800 shrink-0">{dormantGas.length}</span>
         </div>
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-          {dormantGas.map(market => (
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4">
+          {dormantGas.map((market, i) => (
             <div
               key={market.id}
               title={market.name}
-              className="flex flex-col items-center gap-0.5 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
+              className="flex flex-col items-center gap-1 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
             >
-              <div className="w-8 h-8">
-                <Image src="/BSblue_image.png" alt="" width={32} height={32} />
+              <div className="flex items-center justify-center" style={{ width: 36, height: 36 }}>
+                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={36} idx={(i + 4) % 8} />
               </div>
               <span className="text-[8px] text-gray-500 uppercase tracking-wider font-bold leading-none mt-0.5">
                 {getCode(market.id)}

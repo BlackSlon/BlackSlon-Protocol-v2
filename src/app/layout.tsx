@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Raleway } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 
 const montserrat = Montserrat({ 
   subsets: ['latin'],
-  weight: ['200', '400', '700']
+  weight: ['100', '200', '400', '700']
+})
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['100'],
+  variable: '--font-raleway',
 })
 
 export const metadata: Metadata = {
@@ -21,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
+      <body className={`${montserrat.className} ${raleway.variable}`}>
         <Providers>
           {children}
           <footer className="w-full border-t border-gray-800 py-3 mt-8">
