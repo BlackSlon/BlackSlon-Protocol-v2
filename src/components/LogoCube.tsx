@@ -68,7 +68,7 @@ export default function LogoCube({ size = 300, duration = 24 }: LogoCubeProps) {
   ]
 
   // Faces: front=logo, back=logo, sides=text
-  const faces = ['LOGO', 'LOGO', 'BlackSlon', 'Protocol', 'Energy', 'Markets']
+  const faces = ['LOGO', 'LOGO', 'BlackSlon', 'Protocol', 'Gas & Power', 'Markets']
 
   const floatAnim = 'logo-float'
 
