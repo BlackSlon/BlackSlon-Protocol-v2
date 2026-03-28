@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 
 interface MarketCubeProps {
   marketId: string
@@ -11,21 +11,24 @@ interface MarketCubeProps {
   duration?: number
 }
 
-// Alternating rotations: one full spin LEFT then one full spin DOWN (and vice versa)
-const SPIN_LEFT_FIRST = (n: string) => `@keyframes ${n} {
-  0%      { transform: rotateY(0deg); }
-  49.99%  { transform: rotateY(-360deg); }
-  50%     { transform: rotateX(0deg); }
-  100%    { transform: rotateX(-360deg); }
+// Single-axis rotation keyframes
+const SPIN_LEFT = (n: string) => `@keyframes ${n} {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(-360deg); }
 }`
-const SPIN_DOWN_FIRST = (n: string) => `@keyframes ${n} {
-  0%      { transform: rotateX(0deg); }
-  49.99%  { transform: rotateX(-360deg); }
-  50%     { transform: rotateY(0deg); }
-  100%    { transform: rotateY(-360deg); }
+const SPIN_DOWN = (n: string) => `@keyframes ${n} {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-360deg); }
 }`
 
 export default function MarketCube({ marketId, marketName, type, size = 120, direction = 'left', duration = 20 }: MarketCubeProps) {
+  const [phase, setPhase] = useState(0)
+  const handleAnimEnd = useCallback(() => setPhase(p => p + 1), [])
+
+  // Alternate direction each phase
+  const isLeftPhase = direction === 'left' ? phase % 2 === 0 : phase % 2 !== 0
+  const phaseDuration = duration / 2
+
   const h = size / 2
   const country = marketName.split(' ')[0]
   const isPower = type === 'Power'
@@ -46,7 +49,9 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
   const textColor     = isPower ? 'rgba(253,224,71,0.95)'   : 'rgba(103,232,249,0.95)'
   const glowColor     = isPower ? 'rgba(251,191,36,0.12)'   : 'rgba(34,211,238,0.12)'
 
-  const animName = `mc-spin-${marketId.replace(/-/g, '')}`
+  const leftAnimName = `mc-left-${marketId.replace(/-/g, '')}`
+  const downAnimName = `mc-down-${marketId.replace(/-/g, '')}`
+  const currentAnimName = isLeftPhase ? leftAnimName : downAnimName
 
   const faceSize = size + 2
   const faceOffset = -1
@@ -99,14 +104,14 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
 
   const faceTransforms = [
     `translateZ(${h}px)`,
-    `rotateY(180deg) translateZ(${h}px)`,
+    isLeftPhase ? `rotateY(180deg) translateZ(${h}px)` : `rotateX(180deg) translateZ(${h}px)`,
     `rotateY(90deg) translateZ(${h}px)`,
     `rotateY(-90deg) translateZ(${h}px)`,
     `rotateX(90deg) translateZ(${h}px)`,
     `rotateX(-90deg) translateZ(${h}px)`,
   ]
 
-  const spinFn = direction === 'left' ? SPIN_LEFT_FIRST : SPIN_DOWN_FIRST
+  const labelOrientations = isLeftPhase ? ['', 'rotateY(180deg)'] : ['', 'rotateX(180deg)']
 
   const electricAnim = `mc-zap-${marketId.replace(/-/g, '')}`
   const gasAnim = `mc-vapor-${marketId.replace(/-/g, '')}`
@@ -114,7 +119,8 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
   return (
     <>
       <style>{`
-        ${spinFn(animName)}
+        ${SPIN_LEFT(leftAnimName)}
+        ${SPIN_DOWN(downAnimName)}
         @keyframes ${electricAnim} {
           0%   { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
           7%   { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
@@ -156,12 +162,13 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
             width: size,
             height: size,
             transformStyle: 'preserve-3d',
-            animation: `${animName} ${duration}s linear infinite`,
+            animation: `${currentAnimName} ${phaseDuration}s linear 1`,
             position: 'relative',
           }}
+          onAnimationEnd={handleAnimEnd}
         >
-          {/* 100 kWh labels — 4 copies facing front/back/top/bottom so always visible */}
-          {['', 'rotateY(180deg)', 'rotateX(90deg)', 'rotateX(-90deg)'].map((rot, li) => (
+          {/* 100 kWh labels — front + back matched to current rotation axis */}
+          {labelOrientations.map((rot, li) => (
             <div key={`label-${li}`} style={{
               position: 'absolute',
               width: size,
