@@ -112,17 +112,22 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
       <style>{`
         ${spinFn(animName)}
         @keyframes ${electricAnim} {
-          0%   { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.4), 2px -1px 0 rgba(255,255,255,0), -1px 2px 0 rgba(255,255,255,0); }
-          10%  { opacity: 0.9; text-shadow: 0 0 2px rgba(253,224,71,0.5), 4px -2px 2px rgba(253,224,71,0.7), -3px 1px 1px rgba(251,191,36,0.4); }
-          12%  { opacity: 1;   text-shadow: 0 0 3px #fff, 6px -3px 3px rgba(253,224,71,0.9), -2px 4px 2px rgba(253,224,71,0.6), 0 0 8px rgba(251,191,36,0.3); }
-          14%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.3), -4px -1px 0 rgba(255,255,255,0); }
-          30%  { opacity: 0.85; text-shadow: 0 0 1px rgba(253,224,71,0.4), -2px 3px 2px rgba(253,224,71,0.6), 3px -2px 1px rgba(251,191,36,0.3); }
-          32%  { opacity: 1;   text-shadow: 0 0 4px #fff, -5px 2px 3px rgba(253,224,71,0.8), 4px -3px 2px rgba(253,224,71,0.7), 0 0 10px rgba(251,191,36,0.4); }
-          34%  { opacity: 0.75; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
-          60%  { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.3), 3px 2px 1px rgba(253,224,71,0.5); }
-          62%  { opacity: 1;   text-shadow: 0 0 3px #fff, -3px -3px 3px rgba(253,224,71,0.8), 5px 1px 2px rgba(253,224,71,0.6), 0 0 12px rgba(251,191,36,0.3); }
-          64%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
-          100% { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.4), 2px -1px 0 rgba(255,255,255,0), -1px 2px 0 rgba(255,255,255,0); }
+          0%   { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
+          7%   { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
+          9%   { opacity: 1;   text-shadow: 0 0 14px #fff, 0 0 28px rgba(253,224,71,0.9), 0 0 45px rgba(251,191,36,0.5); }
+          12%  { opacity: 0.85; text-shadow: 0 0 2px rgba(253,224,71,0.5), 4px -2px 2px rgba(253,224,71,0.7), -3px 1px 1px rgba(251,191,36,0.4); }
+          18%  { opacity: 1;   text-shadow: 0 0 3px #fff, 6px -3px 3px rgba(253,224,71,0.9), -2px 4px 2px rgba(253,224,71,0.6), 0 0 8px rgba(251,191,36,0.3); }
+          20%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.3), -4px -1px 0 rgba(255,255,255,0); }
+          35%  { opacity: 0.85; text-shadow: 0 0 1px rgba(253,224,71,0.4), -2px 3px 2px rgba(253,224,71,0.6), 3px -2px 1px rgba(251,191,36,0.3); }
+          37%  { opacity: 1;   text-shadow: 0 0 4px #fff, -5px 2px 3px rgba(253,224,71,0.8), 4px -3px 2px rgba(253,224,71,0.7), 0 0 10px rgba(251,191,36,0.4); }
+          39%  { opacity: 0.75; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
+          55%  { opacity: 0.8; text-shadow: 0 0 1px rgba(253,224,71,0.3), 3px 2px 1px rgba(253,224,71,0.5); }
+          57%  { opacity: 1;   text-shadow: 0 0 3px #fff, -3px -3px 3px rgba(253,224,71,0.8), 5px 1px 2px rgba(253,224,71,0.6), 0 0 12px rgba(251,191,36,0.3); }
+          59%  { opacity: 0.7; text-shadow: 0 0 1px rgba(253,224,71,0.2); }
+          72%  { opacity: 0.85; text-shadow: 0 0 2px rgba(253,224,71,0.4), 2px -1px 1px rgba(253,224,71,0.5); }
+          74%  { opacity: 1;   text-shadow: 0 0 14px #fff, 0 0 28px rgba(253,224,71,0.9), 0 0 45px rgba(251,191,36,0.5); }
+          77%  { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
+          100% { opacity: 0;   text-shadow: 0 0 0px rgba(253,224,71,0); }
         }
         @keyframes ${gasAnim} {
           0%   { opacity: 0.1;  filter: blur(5px);  letter-spacing: 0.2em;  text-shadow: 0 0 20px rgba(56,189,248,0.2); transform: scale(0.95); }
