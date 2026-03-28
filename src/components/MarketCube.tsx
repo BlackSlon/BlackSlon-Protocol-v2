@@ -75,7 +75,9 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
     lineHeight: 1.2,
     overflow: 'hidden',
     willChange: 'transform',
-  }
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
+  } as React.CSSProperties
 
   const logoFaceStyle: React.CSSProperties = {
     position: 'absolute',
@@ -91,6 +93,8 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
     border: `1px solid ${borderColor}`,
     background: 'transparent',
     willChange: 'transform',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   }
 
   const faceTransforms = [
