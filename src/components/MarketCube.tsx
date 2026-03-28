@@ -181,50 +181,25 @@ export default function MarketCube({ marketId, marketName, type, size = 120, dir
               paddingTop: size * 0.2,
               pointerEvents: 'none',
               transform: rot || undefined,
-              transformStyle: isPower ? undefined : 'preserve-3d' as const,
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
             }}>
-              {isPower ? (
-                <span style={{
-                  color: 'rgba(253,224,71,0.85)',
-                  fontSize: size * 0.145,
-                  fontWeight: 100,
-                  fontFamily: 'var(--font-raleway), sans-serif',
-                  letterSpacing: '0.04em',
-                  textAlign: 'center',
-                  lineHeight: 1.2,
-                  animation: `${electricAnim} 3s ease-in-out infinite`,
-                }}>100 kWh</span>
-              ) : (
-                /* Gas: 3D extruded text — multiple Z-stacked slices for donut/tube depth */
-                <>
-                  {Array.from({ length: 12 }, (_, z) => {
-                    const depth = (z - 5.5) * 0.8
-                    const isEdge = z === 0 || z === 11
-                    const isMid = z >= 4 && z <= 7
-                    const alpha = isEdge ? 0.4 : isMid ? 1 : 0.7
-                    const color = isMid ? '#b8e8ff' : isEdge ? 'rgba(20,120,180,0.6)' : 'rgba(56,189,248,0.8)'
-                    return (
-                      <span key={z} style={{
-                        position: z === 0 ? 'relative' as const : 'absolute' as const,
-                        color,
-                        fontSize: size * 0.145,
-                        fontWeight: 900,
-                        fontFamily: 'var(--font-raleway), sans-serif',
-                        letterSpacing: '0.04em',
-                        textAlign: 'center',
-                        lineHeight: 1.2,
-                        transform: `translateZ(${depth}px)`,
-                        opacity: alpha,
-                        WebkitTextStroke: isEdge ? `${size * 0.008}px rgba(56,189,248,0.5)` : undefined,
-                        paintOrder: 'stroke fill' as const,
-                        animation: `${gasAnim} 7s ease-in-out infinite`,
-                      }}>100 kWh</span>
-                    )
-                  })}
-                </>
-              )}
+              <span style={{
+                color: isPower ? 'rgba(253,224,71,0.85)' : '#b8e8ff',
+                fontSize: size * 0.145,
+                fontWeight: isPower ? 100 : 900,
+                fontFamily: 'var(--font-raleway), sans-serif',
+                letterSpacing: '0.04em',
+                textAlign: 'center',
+                lineHeight: 1.2,
+                animation: isPower
+                  ? `${electricAnim} 3s ease-in-out infinite`
+                  : `${gasAnim} 7s ease-in-out infinite`,
+                ...(isPower ? {} : {
+                  WebkitTextStroke: `${size * 0.012}px rgba(56,189,248,0.7)`,
+                  paintOrder: 'stroke fill' as const,
+                }),
+              }}>100 kWh</span>
             </div>
           ))}
 
