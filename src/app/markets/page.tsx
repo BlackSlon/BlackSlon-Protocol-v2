@@ -16,7 +16,64 @@ export default function MarketsPage() {
   const getCode        = (id: string)       => id.split('-')[2]
 
   return (
-    <div className="min-h-screen bg-black text-white p-8 relative">
+    <div className="min-h-screen bg-black text-white p-8 relative overflow-hidden">
+      {/* ── Starfield background ── */}
+      <style>{`
+        .starfield {
+          position: fixed; inset: 0; z-index: 0; pointer-events: none;
+          background:
+            radial-gradient(1px 1px at 10% 15%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.8) 50%, transparent 100%),
+            radial-gradient(1.5px 1.5px at 50% 10%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 75% 25%, rgba(255,255,255,0.7) 50%, transparent 100%),
+            radial-gradient(1px 1px at 90% 45%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.6) 50%, transparent 100%),
+            radial-gradient(1.5px 1.5px at 35% 65%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 60% 50%, rgba(255,255,255,0.8) 50%, transparent 100%),
+            radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.7) 50%, transparent 100%),
+            radial-gradient(1px 1px at 15% 80%, #fff 50%, transparent 100%),
+            radial-gradient(1.5px 1.5px at 45% 85%, rgba(255,255,255,0.9) 50%, transparent 100%),
+            radial-gradient(1px 1px at 70% 90%, rgba(255,255,255,0.6) 50%, transparent 100%),
+            radial-gradient(1px 1px at 95% 15%, rgba(255,255,255,0.5) 50%, transparent 100%),
+            radial-gradient(1px 1px at 30% 5%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,0.7) 50%, transparent 100%),
+            radial-gradient(1px 1px at 80% 55%, rgba(255,255,255,0.5) 50%, transparent 100%),
+            radial-gradient(1px 1px at 20% 45%, rgba(255,255,255,0.6) 50%, transparent 100%),
+            radial-gradient(1.5px 1.5px at 65% 30%, #fff 50%, transparent 100%),
+            radial-gradient(1px 1px at 40% 95%, rgba(255,255,255,0.7) 50%, transparent 100%),
+            radial-gradient(1px 1px at 12% 68%, rgba(255,255,255,0.5) 50%, transparent 100%);
+        }
+        .starfield2 {
+          position: fixed; inset: 0; z-index: 0; pointer-events: none;
+          background:
+            radial-gradient(0.8px 0.8px at 8% 22%, rgba(255,255,255,0.4) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 18% 58%, rgba(255,255,255,0.35) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 33% 12%, rgba(255,255,255,0.3) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 42% 42%, rgba(255,255,255,0.4) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 58% 88%, rgba(255,255,255,0.35) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 72% 18%, rgba(255,255,255,0.3) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 82% 62%, rgba(255,255,255,0.4) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 92% 82%, rgba(255,255,255,0.3) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 3% 92%, rgba(255,255,255,0.35) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 48% 28%, rgba(255,255,255,0.3) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 68% 48%, rgba(255,255,255,0.4) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 28% 78%, rgba(255,255,255,0.3) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 88% 38%, rgba(255,255,255,0.35) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 52% 58%, rgba(255,255,255,0.25) 50%, transparent 100%),
+            radial-gradient(0.8px 0.8px at 78% 8%, rgba(255,255,255,0.3) 50%, transparent 100%);
+          animation: twinkle 4s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+          0%   { opacity: 0.4; }
+          50%  { opacity: 0.7; }
+          100% { opacity: 0.4; }
+        }
+      `}</style>
+      <div className="starfield" />
+      <div className="starfield2" />
+
+      {/* ── Content above stars ── */}
+      <div className="relative z-10">
 
       {/* ── Spacer ── */}
       <div className="h-20 md:h-36" />
@@ -149,6 +206,7 @@ export default function MarketsPage() {
         </p>
       </div>
 
+      </div>{/* end z-10 content wrapper */}
     </div>
   )
 }
