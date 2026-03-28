@@ -21,7 +21,7 @@ export default function ExecutiveSummaryPage() {
             </a>
           </div>
           <h1 className="text-4xl mb-6 text-amber-600 text-center">BlackSlon<br/>Executive Summary</h1>
-          <p className="text-gray-400 text-center">The New Dimension of European Gas & Power Wholesale Markets</p>
+          <p className="text-gray-400 text-center">The New Dimension of European Gas & Power Markets</p>
         </div>
 
         <div className="prose prose-invert prose-headings:text-amber-500 prose-h1:text-amber-600 prose-h2:text-amber-500 prose-h3:text-amber-400 prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-white prose-hr:border-gray-700 prose-blockquote:border-l-amber-500 prose-blockquote:text-gray-300 prose-a:no-underline prose-a:text-amber-400 hover:prose-a:text-amber-300 prose-code:text-amber-300 max-w-none">

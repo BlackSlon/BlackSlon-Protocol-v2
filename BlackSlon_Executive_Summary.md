@@ -4,7 +4,7 @@
 
 ## The Problem
 
-The European wholesale power & gas market is valued at **~€500 billion** in annual physical delivery — with true financial turnover running into the **trillions**. And yet this trillion-euro market is effectively controlled by fewer than **250 real institutional actors**. The entry gate: **€3–5 million in capital**, **6–12 months for regulatory** licensing and negotiation of transmission and distribution agreements, and another **6–12 months of exchange onboarding** before a single trade is executed.
+The European power & gas market is valued at **~€500 billion** in annual physical delivery — with true financial turnover running into the **trillions**. And yet this trillion-euro market is effectively controlled by fewer than **250 real institutional actors**. The entry gate: **€3–5 million in capital**, **6–12 months for regulatory** licensing and negotiation of transmission and distribution agreements, and another **6–12 months of exchange onboarding** before a single trade is executed.
 
 Unlike crude oil, copper, gasoline or any other major commodity — no platform exists offering access to European natural gas or wholesale power markets to anyone outside this institutional inner circle. This is not a market inefficiency. **It is the architecture.**
 
@@ -16,7 +16,7 @@ Unlike crude oil, copper, gasoline or any other major commodity — no platform 
 
 **Zero Expiry. Zero Barriers. 100 kWh = 1 Token.**
 
-BlackSlon is the first decentralised protocol built specifically for European wholesale gas & power markets. It eliminates the structural failures of the legacy system and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
+BlackSlon is the first decentralised protocol built specifically for European gas & power markets. It eliminates the structural failures of the legacy system and replaces them with a mathematically governed, 24/7/365 open market infrastructure.
 
 **Universal Access. Perpetual Instruments**
 

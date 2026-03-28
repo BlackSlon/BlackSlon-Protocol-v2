@@ -34,7 +34,7 @@ Language: English | Classification: Public*
 
 ## 1. Preface: The Scale of the Problem
 
-The European wholesale energy market is one of the largest and most consequential financial ecosystems on the planet.
+The European gas & power markets are one of the largest and most consequential financial ecosystems on the planet.
 
 Power alone: approximately **3,570,000,000 MWh** traded annually at an average of **€70/MWh** — a market valued at **~€250 billion** in physical delivery. Natural gas: approximately **5,100,000,000 MWh** equivalent at **€50/MWh** — another **~€250 billion**. Combined physical delivery value: **~€500 billion per year**.
 
@@ -46,7 +46,7 @@ And yet — this trillion-euro market is effectively controlled by fewer than a 
 
 ## 2. The Two Gates of the Private Club
 
-The European wholesale energy market does not have one centre. It has two interlocking institutional pillars — and together, they define the price and who is allowed to participate in a trillion-euro flow.
+The European gas & power markets do not have one centre. They have two interlocking institutional pillars — and together, they define the price and who is allowed to participate in a trillion-euro flow.
 
 **The European Energy Exchange (EEX)**, headquartered in Leipzig, Germany officially lists between 800 and 1,000 members. Consolidate subsidiaries into their parent holding groups and the number narrows further: approximately 700 to 800 unique players. Roughly 30% are pure financial institutions — banks, hedge funds, and proprietary trading desks with no physical energy interest whatsoever.
 
@@ -74,7 +74,7 @@ For the entire remainder of the European economy the door has always been closed
 
 ## 3. The Failures BlackSlon is Solving
 
-The European wholesale energy market suffers from structural failures that no incremental reform has been able to address:
+The European gas & power markets suffer from structural failures that no incremental reform has been able to address:
 
 **The Capital Barrier** 
 

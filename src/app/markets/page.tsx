@@ -27,7 +27,7 @@ export default function MarketsPage() {
           <Link key={market.id} href={`/markets/${market.id}`}>
             <div className="bg-black p-2 md:p-4 text-center transition-all hover:scale-110 cursor-pointer flex flex-col items-center">
               <div className="flex items-center justify-center scale-[0.7] md:scale-100" style={{ width: 120, height: 120 }}>
-                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={120} idx={i} />
+                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={120} direction={i % 2 === 0 ? 'left' : 'down'} duration={[20, 22, 18, 24][i]} />
               </div>
             </div>
           </Link>
@@ -40,7 +40,7 @@ export default function MarketsPage() {
           <Link key={market.id} href={`/markets/${market.id}`}>
             <div className="bg-black p-2 md:p-4 text-center transition-all hover:scale-110 cursor-pointer flex flex-col items-center">
               <div className="flex items-center justify-center scale-[0.7] md:scale-100" style={{ width: 120, height: 120 }}>
-                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={120} idx={[6, 5, 7, 4][i] ?? i + 4} />
+                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={120} direction={i % 2 === 0 ? 'down' : 'left'} duration={[24, 20, 22, 18][i]} />
               </div>
             </div>
           </Link>
@@ -78,7 +78,7 @@ export default function MarketsPage() {
               className="flex flex-col items-center gap-1 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
             >
               <div className="flex items-center justify-center" style={{ width: 36, height: 36 }}>
-                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={36} idx={i % 8} />
+                <MarketCube marketId={market.id} marketName={market.name} type="Power" size={36} direction={i % 2 === 0 ? 'left' : 'down'} duration={20} />
               </div>
               <span className="text-[8px] text-gray-500 uppercase tracking-wider font-bold leading-none mt-0.5">
                 {getCode(market.id)}
@@ -107,7 +107,7 @@ export default function MarketsPage() {
               className="flex flex-col items-center gap-1 p-2 rounded-sm border border-gray-900 opacity-35 hover:opacity-55 transition-opacity cursor-default"
             >
               <div className="flex items-center justify-center" style={{ width: 36, height: 36 }}>
-                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={36} idx={(i + 4) % 8} />
+                <MarketCube marketId={market.id} marketName={market.name} type="Gas" size={36} direction={i % 2 === 0 ? 'down' : 'left'} duration={20} />
               </div>
               <span className="text-[8px] text-gray-500 uppercase tracking-wider font-bold leading-none mt-0.5">
                 {getCode(market.id)}
