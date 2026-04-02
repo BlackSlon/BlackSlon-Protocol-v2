@@ -92,7 +92,7 @@ export default function LandingPage() {
       <div className="hp-saturn" />
 
       <div className="relative z-10">
-        <Link href="/markets">
+        <Link href="/profile">
           <div className="cursor-pointer transition-transform hover:scale-105">
             <LogoCube size={300} duration={24} />
           </div>

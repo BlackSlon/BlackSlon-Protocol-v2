@@ -1104,9 +1104,9 @@ The relationship between the BlackSlon Protocol and its PLPs is symbiotic, not e
 
 European energy prices have trended structurally higher over the past decade, and that narrative drives the majority of participants toward the long (buy) side of BS-P/G tokens. This consensus creates a persistent, structural imbalance — and for a sophisticated PLP, imbalance is opportunity.
 
-A PLP providing liquidity on the short (sell) side is not betting against energy prices. They are harvesting the roll yield embedded in backwardated forward curves — earning a systematicreturn as the ADR mechanism mechanically rolls expiring contracts into cheaper long-dated ones, regardless of where spot prices move. In the current European gas market, this roll decay runs at 3–5% monthly on the FM cycle alone. In power, the structural decline from Cal27 to Cal29 represents an additional 23% of embedded decay over the Phase 2 redemption horizon.
+A PLP providing liquidity on the short (sell) side is not betting against energy prices. They are harvesting the roll yield embedded in backwardated forward curves — earning a systematicreturn as the ADR mechanism mechanically rolls expiring contracts into cheaper long-dated ones, regardless of where spot prices move. **In the current European gas market, this roll decay runs at 3–5% monthly on the FM cycle alone. In power, the structural decline from Cal27 to Cal29 represents an additional 23% of embedded decay over the Phase 2 redemption horizon.**
 
-Layered on top of roll yield are three additional return streams that require no directional view: cross-market arbitrage between isolated BlackSlon markets with divergent curve structures, delta-neutral hedging with an anchor decay overlay that converts the roll into positive carry, and spark-spread positioning between BS-G and BS-P markets using the physical exchange access that PLP status provides.
+Layered on top of roll yield are three additional return streams that require no directional view: **cross-market arbitrage between isolated BlackSlon markets with divergent curve structures, delta-neutral hedging with an anchor decay overlay that converts the roll into positive carry, and spark-spread positioning between BS-G and BS-P markets using the physical exchange access that PLP status provides.**
 
 **Additional PLP Benefits**
 
