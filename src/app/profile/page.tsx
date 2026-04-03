@@ -54,7 +54,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-G-NL",
   },
   {
-    id: "producer-baseload",
+    id: "baseload",
     num: "02",
     icon: "⚛️",
     title: "Baseload Producer",
@@ -81,7 +81,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-P-DE",
   },
   {
-    id: "producer-renewables",
+    id: "renewable",
     num: "03",
     icon: "☀️",
     title: "Renewable Producer",
@@ -107,7 +107,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-P-DE",
   },
   {
-    id: "industrial-consumer",
+    id: "industrial",
     num: "04",
     icon: "🏭",
     title: "Large Industrial Consumer",
@@ -133,7 +133,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-G-NL",
   },
   {
-    id: "energy-investor",
+    id: "investor",
     num: "05",
     icon: "💡",
     title: "Energy Investor",
@@ -187,7 +187,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-G-NL",
   },
   {
-    id: "household-passive",
+    id: "passive",
     num: "07",
     icon: "🛡️",
     title: "Passive Protection",
@@ -213,7 +213,7 @@ const SEGMENTS: Segment[] = [
     defaultMarket: "/markets/BS-G-NL",
   },
   {
-    id: "speculator",
+    id: "tech-trader",
     num: "08",
     icon: "🎰",
     title: "Speculator",

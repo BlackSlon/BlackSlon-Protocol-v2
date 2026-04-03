@@ -6,7 +6,9 @@ import VirtualMarketPanel from "@/components/VirtualMarketPanel"
 import TradingPanel from "@/components/TradingPanel"
 import UserAccountPanel from "@/components/UserAccountPanel"
 import DealConfirmationOverlay from "@/components/DealConfirmationOverlay"
-import { useParams, useRouter } from 'next/navigation'
+import AIAdvisor from "@/components/AIAdvisor"
+import type { ProfileId } from "@/components/AIAdvisor"
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { getMarketColors } from '@/lib/marketColors'
 import { useDemoMode } from '@/hooks/useDemoMode'
@@ -37,9 +39,23 @@ const dormantMarkets = [
 export default function MarketPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const id = params?.id as string
   const [selectedInstrument, setSelectedInstrument] = useState(id || 'BS-P-PL')
   const mColors = getMarketColors(selectedInstrument)
+  const [aiOpen, setAiOpen] = useState(false)
+
+  // Resolve profile from URL ?profile= or localStorage
+  const profileParam = searchParams.get('profile')
+  const [profileId, setProfileId] = useState<ProfileId | null>(null)
+  useEffect(() => {
+    if (profileParam) {
+      setProfileId(profileParam as ProfileId)
+    } else if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('bs_profile')
+      if (stored) setProfileId(stored as ProfileId)
+    }
+  }, [profileParam])
 
   // Bot trading — simulates market activity
   useBotTrading(selectedInstrument)
@@ -109,7 +125,19 @@ export default function MarketPage() {
             )
           })}
         </div>
-        <div className="flex items-center gap-2 ml-auto shrink-0">
+        <div className="flex items-center gap-3 ml-auto shrink-0">
+          {profileId && (
+            <button
+              onClick={() => setAiOpen(prev => !prev)}
+              className={`text-[9px] uppercase tracking-widest px-2.5 py-0.5 border transition-all ${
+                aiOpen
+                  ? 'border-yellow-400 bg-yellow-500 text-black'
+                  : 'border-yellow-500/40 text-yellow-500 hover:border-yellow-400 hover:bg-yellow-500/10'
+              }`}
+            >
+              {aiOpen ? '✕ AI' : '⚡ AI Advisor'}
+            </button>
+          )}
           <div className="w-1.5 h-1.5 rounded-full bg-green-700 animate-pulse"></div>
           <span className="text-[10px] text-green-700 uppercase tracking-widest font-black">LIVE</span>
         </div>
@@ -150,6 +178,13 @@ export default function MarketPage() {
         </section>
 
       </div>
+
+      {/* AI Advisor floating panel */}
+      {aiOpen && profileId && (
+        <div className="fixed top-0 right-0 w-[420px] h-full z-[100] border-l border-gray-900 shadow-2xl shadow-black/80">
+          <AIAdvisor profileId={profileId} onClose={() => setAiOpen(false)} mode="panel" />
+        </div>
+      )}
 
       {/* Deal Confirmation Overlay */}
       <DealConfirmationOverlay />
